@@ -78,13 +78,16 @@ public class DruidConnectionProvider implements ConnectionProvider {
     *
     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     */
+    @Override
     public Connection getConnection() throws SQLException {
         return datasource.getConnection();
     }
 
+    @Override
     public void shutdown() throws SQLException {
         datasource.close();
     }
+    @Override
     public void initialize() throws SQLException{
         if (this.URL == null) {
             throw new SQLException("DBPool could not be created: DB URL cannot be null");
@@ -114,14 +117,16 @@ public class DruidConnectionProvider implements ConnectionProvider {
         datasource.setMaxActive(this.maxConnection);
         datasource.setMinIdle(1);
         datasource.setMaxWait(0);
-        datasource.setMaxPoolPreparedStatementPerConnectionSize(this.DEFAULT_DB_MAX_CACHED_STATEMENTS_PER_CONNECTION);
+        datasource.setMaxPoolPreparedStatementPerConnectionSize(DEFAULT_DB_MAX_CACHED_STATEMENTS_PER_CONNECTION);
 
         if (this.validationQuery != null) {
             datasource.setValidationQuery(this.validationQuery);
-            if(!this.validateOnCheckout)
+            if(!this.validateOnCheckout){
                 datasource.setTestOnReturn(true);
-            else
+            }
+            else{
                 datasource.setTestOnBorrow(true);
+            }
             datasource.setValidationQueryTimeout(this.idleConnectionValidationSeconds);
         }
     }
