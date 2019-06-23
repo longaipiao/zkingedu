@@ -26,12 +26,11 @@ public class ShiroConfig {
         //配置登录的url和登录成功的url
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/index");
+        shiroFilterFactoryBean.setSuccessUrl("/yesRole");
         //配置访问权限
 //        Map<String,String> filterChainDefinitionMap = new HashMap<String,String>();
-//        shiroFilterFactoryBean.setSuccessUrl("/yesRole");
-//        filterChainDefinitionMap.put("/admin","perms[查看用户,增加用户]");
-//        filterChainDefinitionMap.put("/*","anon");
-//
+//        filterChainDefinitionMap.put("/login","anon");//表示可以匿名访问
+//        filterChainDefinitionMap.put("/*","authc");//表示需要认证才可以访问
 //        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -43,7 +42,6 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setHashAlgorithmName(PasswordHelper.ALGORITHM_NAME);
         //散列次数
         hashedCredentialsMatcher.setHashIterations(PasswordHelper.HASH_ITERATIONS);
-        System.out.println();
         hashedCredentialsMatcher.toString();
         return hashedCredentialsMatcher;
     }
@@ -51,7 +49,6 @@ public class ShiroConfig {
     @Bean
     public MyRealm shiroRealm() {
         MyRealm shiroRealm = new MyRealm();
-        System.out.println();
         //shiroRealm.setCredentialsMatcher(hashedCredentialsMatcher()); // 原来在这里
         return shiroRealm;
     }
