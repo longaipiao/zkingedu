@@ -56,4 +56,12 @@ public class PageController {
     }
 
 
+    /**
+     * 测试git
+     */
+    public void test(){
+        System.out.println("hello");
+    }
+
+
 }

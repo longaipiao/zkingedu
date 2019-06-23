@@ -16,7 +16,7 @@ public class Post implements Serializable {
     private static final long serialVersionUID = 915849261054909969L;
     //帖子id
     private Integer postID;
-    //用户id
+    //用户id 
     private Integer postUid;
     //帖子标题
     private String postName;
