@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 课程体系表
@@ -27,5 +28,8 @@ public class System implements Serializable {
     private String systemDesc;
     //体系图片
     private String systemImg;
+
+    //对应多个课程
+    private List<Course> courses;
 
 }
