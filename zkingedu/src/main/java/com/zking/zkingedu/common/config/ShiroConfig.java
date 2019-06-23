@@ -23,17 +23,16 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager());
-
-        Map<String,String> filterChainDefinitionMap = new HashMap<String,String>();
+        //配置登录的url和登录成功的url
         shiroFilterFactoryBean.setLoginUrl("/login");
-        /*shiroFilterFactoryBean.setUnauthorizedUrl("/index");
-        shiroFilterFactoryBean.setSuccessUrl("/yesRole");*/
-
-
-        //filterChainDefinitionMap.put("/admin","perms[查看用户,增加用户]");
-        filterChainDefinitionMap.put("/*","anon");
-
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        shiroFilterFactoryBean.setUnauthorizedUrl("/index");
+        //配置访问权限
+//        Map<String,String> filterChainDefinitionMap = new HashMap<String,String>();
+//        shiroFilterFactoryBean.setSuccessUrl("/yesRole");
+//        filterChainDefinitionMap.put("/admin","perms[查看用户,增加用户]");
+//        filterChainDefinitionMap.put("/*","anon");
+//
+//        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 
