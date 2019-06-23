@@ -212,6 +212,7 @@
 							<a href="#get3" class="list-group-item" id="huida">我的回答</a>
 							<a href="#get4" class="list-group-item" id="shoucang">我的收藏</a>
 							<a href="#get5" class="list-group-item" id="xiaoxi">消息中心</a>
+							<a href="#get9" class="list-group-item" id="tiezi">我的文章</a>
 						</div>
 					</ul>
 					<ul class="list-group">
@@ -333,9 +334,56 @@
 					</div>
 					<div class="col-md-11 layout-body" id="get5" >
 						<div class="content" style="height: 300px;">
-							<h3>消息中心</h3>						
+							<h3>消息中心</h3>
+
 						</div>
 					</div>
+				<div class="col-md-11 layout-body" id="get9" >
+					<div class="content" style="height: 300px;">
+						<h3>我的文章</h3>
+						<div class="col-sm-10">
+							<h4>
+
+								<img src="/user/img/topQuestion.png">
+
+								<a class="question-item-title" href="show.html" target="_blank">
+									实验楼百楼俱乐部成立，欢迎100楼的你加入！</a>
+
+							</h4>
+							<div class="question-item-summary">
+
+
+								<div class="user-username ">
+									<a class="avatar" href="/user/user/13/study.html" target="_blank">
+										shiyanlouadmin
+									</a>
+									<span class="user-level">L14</span>
+								</div>
+
+
+								<span class="question-item-date">3小时前</span>
+									最后回复 <span class="question-item-date">
+									<div class="user-username ">
+										<a class="username" href="/user/256544" target="_blank">
+												芃逆明
+										</a>
+										<span class="user-level">L38</span>
+									</div>
+                             </span>
+
+							</div>
+						</div>
+						<div class="col-md-2 question-item-rank">
+							<div class="question-item-answered">
+								<div>89</div>
+								<div>回复</div>
+							</div>
+							<div class="question-item-views">
+								<div>2409</div>
+								<div>查看</div>
+							</div>
+						</div>
+
 					<div class="col-md-11 layout-body" id="get6" >
 						<div class="content" style="height: 300px;">
 							<h3>个人信息</h3>						
@@ -424,6 +472,7 @@
 				$("#get6").hide();
 				$("#get7").hide();
 				$("#get8").hide();
+			    $("#get9").hide();
 				$("#kecheng").click(function(){
 					$("#get1").hide();
 					$("#get3").hide();
@@ -432,6 +481,7 @@
 					$("#get6").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 					
 					$("#get2").show();
 				});
@@ -444,6 +494,7 @@
 					$("#get6").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#huida").click(function(){
 					$("#get2").hide();
@@ -454,6 +505,7 @@
 					$("#get6").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#shoucang").click(function(){
 					$("#get2").hide();
@@ -464,6 +516,7 @@
 					$("#get6").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#xiaoxi").click(function(){
 					$("#get2").hide();
@@ -474,6 +527,7 @@
 					$("#get6").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#xinxi").click(function(){
 					$("#get2").hide();
@@ -484,6 +538,7 @@
 					$("#get5").hide();
 					$("#get7").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#haoyou").click(function(){
 					$("#get2").hide();
@@ -494,6 +549,7 @@
 					$("#get5").hide();
 					$("#get6").hide();
 					$("#get8").hide();
+					$("#get9").hide();
 				});
 				$("#chongzhi").click(function(){
 					$("#get2").hide();
@@ -504,7 +560,18 @@
 					$("#get5").hide();
 					$("#get6").hide();
 					$("#get7").hide();
+					$("#get9").hide();
 				});
+			$("#tiezi").click(function(){
+				$("#get8").hide();
+				$("#get9").show();
+				$("#get2").hide();
+				$("#get3").hide();
+				$("#get4").hide();
+				$("#get5").hide();
+				$("#get6").hide();
+				$("#get7").hide();
+			});
 			
 			
 		</script>
