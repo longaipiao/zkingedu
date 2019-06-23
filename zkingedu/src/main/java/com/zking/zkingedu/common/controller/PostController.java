@@ -64,11 +64,32 @@ public class PostController {
 
     /*************************************************************************/
 
+
+    /**
+     * 增加帖子成功跳转的界面
+     * @return
+     */
     @RequestMapping(value = "/userinfo")
     public String tz(){
-
-        return "user/";
+        return "user/userinfo/userinfo";
     }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "/addtz")
+    public String t(){
+        return "user/questions/post";
+    }
+
+    @RequestMapping(value = "/qindex")
+    public String tlzym(){
+        return "user/questions/index";
+    }
+
+
+
 
 
 

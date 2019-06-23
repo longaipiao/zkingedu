@@ -32,9 +32,9 @@ layui.use(['table','layer','jquery','layedit', 'laydate'], function(){
             },
             success:function(data){
                 if(data>0){
-                    parent.layer.msg('发布成功！', {icon: 1,time:5000,shade:0.2});
+                    parent.layer.msg('发布成功！', {icon: 1,time:10000,shade:0.2});
                     /*layer.close("iframe");*/
-                    location.href="/user/pst";//跳转界面
+                    location.href="/pst/userinfo";//跳转界面
                 }else{
                     parent.layer.msg('发布失败！', {icon: 2,time:3000,shade:0.2});
                     layer.close("iframe");
