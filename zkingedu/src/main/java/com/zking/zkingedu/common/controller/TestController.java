@@ -46,7 +46,7 @@ public class TestController {
     @RequestMapping(value = "/login")
     public String testShiro1(){
         System.err.println("来了login");
-        return "login";
+        return "user/index";
     }
 
     @RequestMapping(value = "index")
@@ -71,7 +71,6 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/redis")
     public List<Emp> getEmps(){
-        log.info("请求成功。。。");
         return empDao.getemps();
     }
 
