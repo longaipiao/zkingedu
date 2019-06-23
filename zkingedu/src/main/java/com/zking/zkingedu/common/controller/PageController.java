@@ -72,4 +72,13 @@ public class PageController {
         return "user/courses/index";
     }
 
+
+    /**
+     * 个人中心的路径
+     */
+    @RequestMapping(value = "/userinfo/index")
+    public String userinfo(){
+        return "user/userinfo/userinfo";
+    }
+
 }
