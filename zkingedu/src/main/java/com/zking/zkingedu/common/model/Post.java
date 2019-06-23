@@ -21,11 +21,13 @@ public class Post implements Serializable {
     //帖子标题
     private String postName;
     //帖子内容
-    private String postConten;
+    private String postContent;
     //帖子发布时间
     private String postTime;
     //阅读数
     private Integer postNum;
     //状态0正常1封禁
     private Integer postState;
+    //类别
+    private Integer postCategory;
 }

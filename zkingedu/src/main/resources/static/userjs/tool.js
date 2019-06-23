@@ -9,7 +9,7 @@ $(function () {
         $.getJSON(url,config,function(res){
             //alert(res);
             laypage.render({
-                elem: 'page1',
+                elem: 'page1',//必须放id
                 count: 100,
                 first: '首页',
                 last: '尾页',

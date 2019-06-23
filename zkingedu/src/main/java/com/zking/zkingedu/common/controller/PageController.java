@@ -22,9 +22,8 @@ import java.util.List;
 public class PageController {
 
     @RequestMapping(value = "/admin")
-    public String testt(){
-        System.err.println("来了index");
-        return "admin";
+    public String alogin(){
+        return "admin/login";
     }
 
     @Resource
@@ -68,6 +67,21 @@ public class PageController {
     }
 
 
+    /**
+     * 全部课程的路径
+     */
+    @RequestMapping(value = "/courses/index")
+    public String courses(){
+        return "user/courses/index";
+    }
 
+
+    /**
+     * 个人中心的路径
+     */
+    @RequestMapping(value = "/userinfo/index")
+    public String userinfo(){
+        return "user/userinfo/userinfo";
+    }
 
 }

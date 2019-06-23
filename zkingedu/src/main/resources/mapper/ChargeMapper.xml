@@ -5,5 +5,13 @@
 
     <!--充值记录接口Mapper-->
 
+    <sql id="chargeall">
+        charge_id,charge_uid,charge_money,charge_integral,charge_time
+    </sql>
 
+    <!--充值积分的方法-->
+    <insert id="addCharge" parameterType="com.zking.zkingedu.common.model.Charge">
+        insert into t_charge(charge_uid,charge_money,charge_integral,charge_time)
+        values(#{chargeUid},#{chargeMoney},#{chargeIntegral},#{chargeTime})
+    </insert>
 </mapper>

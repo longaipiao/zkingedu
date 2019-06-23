@@ -4,6 +4,16 @@
 <mapper namespace="com.zking.zkingedu.common.dao.PostDao">
 
     <!--帖子接口Mapper-->
+     <insert id="addPost" parameterType="com.zking.zkingedu.common.model.Post">
+              insert  into
+                          t_post(post_id,post_uid,post_name,post_content,post_time,post_state,post_category)
+              values (#{postID},#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory})
+     </insert>
 
+<!--    获取所有分类的帖子-->
+    <select id="getpctae" resultType="com.zking.zkingedu.common.model.Pcata">
+              select * from
+                           t_pcata
+    </select>
 
 </mapper>

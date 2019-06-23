@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<meta charset="UTF-8">
 	<title>码奴堡后台管理中心</title>
@@ -8,19 +9,22 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/font.css">
-	<link rel="stylesheet" href="css/xadmin.css">
+    <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/admin/css/font.css">
+	<link rel="stylesheet" href="/admin/css/xadmin.css">
 	
-    <script src="js/jquery.min.js"></script>
-    <script src="lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="js/xadmin.js"></script>
+    <script src="/admin/js/jquery.min.js"></script>
+    <script src="/admin/lib/layui/layui.js" charset="utf-8"></script>
+
+<!--    <script type="text/javascript" src="/admin/js/zgqindex.js"></script>-->
+
+    <script type="text/javascript" src="/admin/js/xadmin.js"></script>
 
 </head>
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="index.html">码奴堡后台管理中心</a></div>
+        <div class="logo"><a href="/admin/index">码奴堡后台管理中心</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -40,7 +44,7 @@
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onClick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
               <dd><a onClick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-              <dd><a href="login.html">退出</a></dd>
+              <dd><a href="/admin/logOut">退出</a></dd>
             </dl>
           </li>
           <li class="layui-nav-item to-index"><a href="#">前台首页</a></li>
@@ -53,123 +57,120 @@
     <div class="left-nav">
       <div id="side-nav">
         <ul id="nav">
-             <li >
-                <a href="javascript:;">
+
+            <shiro:hasPermission name="首页"><li >
+                <a _href="/html/welcome">
                     <i class="iconfont">&#xe6eb;</i>
-                    <cite>主页</cite>
-                    <i class="iconfont nav_right">&#xe6a7;</i>
+                    <cite>首页</cite>
                 </a>
-                <ul class="sub-menu">
-                    <li><a _href="html/welcome.html"><i class="iconfont">&#xe6a7;</i><cite>控制台</cite></a></li >
-                </ul>
-            </li>
+            </li></shiro:hasPermission>
 
             <!-- 新增区域 -->
-            <li >
+            <shiro:hasPermission name="系统管理"><li >
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6e4;</i>
-                    <cite>系统设置</cite>
+                    <cite>系统管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/level-list.html"><i class="iconfont">&#xe6a7;</i><cite>会员等级</cite></a></li >
-                    <li><a _href="html/integral-list.html"><i class="iconfont">&#xe6a7;</i><cite>积分设置</cite></a></li >
-                    <li><a _href="html/recharge-list.html"><i class="iconfont">&#xe6a7;</i><cite>充值记录</cite></a></li >
+                    <shiro:hasPermission name="广告管理"><li><a _href="/html/level-list"><i class="iconfont">&#xe6a7;</i><cite>广告管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="开发者工具"><li><a _href="/html/integral-list"><i class="iconfont">&#xe6a7;</i><cite>开发者工具</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="员工管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>员工管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="菜单管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>菜单管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="角色管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>角色管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="管理员列表"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>管理员列表</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
+            </li></shiro:hasPermission>
 
-            <li>
+
+            <shiro:hasPermission name="用户管理"><li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe726;</i>
                     <cite>用户管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/member-list.html"><i class="iconfont">&#xe6a7;</i><cite>会员列表</cite></a></li >
-                    <li><a _href="html/tearch-list.html"><i class="iconfont">&#xe6a7;</i><cite>讲师列表</cite></a></li >
-                    <li><a _href="html/admin-list.html"><i class="iconfont">&#xe6a7;</i><cite>管理员列表</cite></a></li >
-                    <li><a _href="html/admin-role.html"><i class="iconfont">&#xe6a7;</i><cite>角色管理</cite></a></li >
-                    <li><a _href="html/admin-cate.html"><i class="iconfont">&#xe6a7;</i><cite>权限管理</cite></a></li >
+                    <shiro:hasPermission name="用户列表"><li><a _href="/html/member-list"><i class="iconfont">&#xe6a7;</i><cite>用户列表</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
+            </li></shiro:hasPermission>
+
+
+            <!--  平台资金预览  start -->
+            <shiro:hasPermission name="平台资金预览"><li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#59224;</i>
+                    <cite>平台资金预览</cite>
+                    <i class="iconfont nav_right">&#xe6a7;</i>
+                </a>
+                <ul class="sub-menu">
+                    <shiro:hasPermission name="订单列表"><li><a _href="/html/cate"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="账单列表"><li><a _href="/html/member-list"><i class="iconfont">&#xe6a7;</i><cite>账单列表</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="平台收入"><li><a _href="/html/member-list"><i class="iconfont">&#xe6a7;</i><cite>平台收入</cite></a></li ></shiro:hasPermission>
+                </ul>
+            </li></shiro:hasPermission>
+            <!--  平台资金预览  end -->
 
 
             <!--  课程体系  start -->
-            <li>
+            <shiro:hasPermission name="课程体系"><li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe6b4;</i>
+                    <i class="iconfont">&#xe705;</i>
                     <cite>课程体系</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/cate.html"><i class="iconfont">&#xe6a7;</i><cite>体系分类</cite></a></li >
-                    <li><a _href="html/member-list.html"><i class="iconfont">&#xe6a7;</i><cite>课程管理</cite></a></li >
-                    <li><a _href="html/member-list.html"><i class="iconfont">&#xe6a7;</i><cite>章节管理</cite></a></li >
-                    <li><a _href="html/member-list.html"><i class="iconfont">&#xe6a7;</i><cite>视频管理</cite></a></li >
+                    <shiro:hasPermission name="体系管理"><li><a _href="/html/article-cate"><i class="iconfont">&#xe6a7;</i><cite>体系管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="课程管理"><li><a _href="/html/article-list"><i class="iconfont">&#xe6a7;</i><cite>课程管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="视频/章节管理"><li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>视频/章节管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="文档管理"><li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>文档管理</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
+            </li></shiro:hasPermission>
             <!--  课程体系  end -->
 
-
-            <!--  文章评论  start -->
-            <li>
+            <!--  论坛管理  start -->
+            <shiro:hasPermission name="论坛管理"><li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe705;</i>
-                    <cite>文章评论</cite>
+                    <i class="iconfont">&#59077;</i>
+                    <cite>论坛管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/article-cate.html"><i class="iconfont">&#xe6a7;</i><cite>文章分类</cite></a></li >
-                    <li><a _href="html/article-list.html"><i class="iconfont">&#xe6a7;</i><cite>文章列表</cite></a></li >
-                    <li><a _href="html/message-list.html"><i class="iconfont">&#xe6a7;</i><cite>评论管理</cite></a></li >
+                    <shiro:hasPermission name="帖子列表"><li><a _href="/html/cate"><i class="iconfont">&#xe6a7;</i><cite>帖子列表</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
-            <!--  文章评论  end -->
+            </li></shiro:hasPermission>
+            <!--  论坛管理  end -->
+
 
             <!--  题库管理  start -->
-            <li>
+            <shiro:hasPermission name="题库管理"><li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe60a;</i>
+                    <i class="iconfont">&#xe69e;</i>
                     <cite>题库管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/cate.html"><i class="iconfont">&#xe6a7;</i><cite>题库类型</cite></a></li >
-                    <li><a _href="html/admin-role.html"><i class="iconfont">&#xe6a7;</i><cite>题目管理</cite></a></li >
-                    <li><a _href="html/admin-cate.html"><i class="iconfont">&#xe6a7;</i><cite>答案管理</cite></a></li >
-                    <li><a _href="html/admin-cate.html"><i class="iconfont">&#xe6a7;</i><cite>测评记录</cite></a></li >
+                    <shiro:hasPermission name="体系管理"><li><a _href="/html/download-cate"><i class="iconfont">&#xe6a7;</i><cite>体系管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="题目/答案管理"><li><a _href="/html/download-list"><i class="iconfont">&#xe6a7;</i><cite>题目/答案管理</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
+            </li></shiro:hasPermission>
             <!--  题库管理  end -->
 
-
-            <!--  资源管理  start -->
-            <li>
+            <shiro:hasPermission name="日志管理"><li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe857;</i>
-                    <cite>资源下载</cite>
+                    <i class="iconfont">&#xe6b4;</i>
+                    <cite>日志管理</cite>
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/download-cate.html"><i class="iconfont">&#xe6a7;</i><cite>资源分类</cite></a></li >
-                    <li><a _href="html/download-list.html"><i class="iconfont">&#xe6a7;</i><cite>资源管理</cite></a></li >
+                    <shiro:hasPermission name="日志记录"><li><a _href="/html/order-list"><i class="iconfont">&#xe6a7;</i><cite>日志记录</cite></a></li ></shiro:hasPermission>
                 </ul>
-            </li>
-            <!--  题库管理  end -->
-
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe69e;</i>
-                    <cite>订单管理</cite>
-                    <i class="iconfont nav_right">&#xe6a7;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li><a _href="html/order-list.html"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li >
-                </ul>
-            </li>
+            </li></shiro:hasPermission>
 
 
-            <!-- 新增区域 -->
+            <!-- 新增区域 -->s
+
+<!--------------------------------------------GG-------------------------------------------------->
+
             </ul>
       </div>
     </div>
@@ -183,7 +184,7 @@
           </ul>
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='html/welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                <iframe src='/html/welcome' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
             </div>
           </div>
         </div>
