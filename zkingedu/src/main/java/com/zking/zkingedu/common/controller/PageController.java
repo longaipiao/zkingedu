@@ -64,4 +64,12 @@ public class PageController {
     }
 
 
+    /**
+     * 全部课程的路径
+     */
+    @RequestMapping(value = "/courses/index")
+    public String courses(){
+        return "user/courses/index";
+    }
+
 }

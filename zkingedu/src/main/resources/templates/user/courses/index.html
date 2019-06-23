@@ -12,8 +12,8 @@
 	
 		
         <title>全部 - 课程 - 实验楼</title>
-		
-	
+
+
 
     
 <meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
@@ -74,22 +74,10 @@
         }
     </style>
 	
-    
 
-	
-    
 </head>
 
 <body>
-	
-        
-        
-            
-
-
-
-
-
 
 <nav class="navbar navbar-default navbar-fixed-top header">
     <div class="container">
@@ -100,66 +88,52 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../index.html">
-                <img src="../img/logo_03.png">
+            <a class="navbar-brand" href="/">
+                <img src="/user/img/logo_03.png">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="header-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown active">
+                <li class="dropdown ">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                         课程
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="active" href="../courses/index.html" >全部课程</a></li>
-                        <li><a class="" href="../courses/index.html?status=preview" >即将上线</a></li>
-                        <li><a class="" href="../developer/index.html">开发者</a></li>
+                        <li><a class="" href="/user/courses/index" >全部课程</a></li>
+                        <li><a class="" href="courses/index.html?status=preview" >即将上线</a></li>
+                        <li><a class="" href="/user/developer">开发者</a></li>
                     </ul>
                 </li>
                 <li class="">
-                    <a href="../paths/index.html">路径</a>
+                    <a href="paths/index.html">路径</a>
                 </li>
                 <li class="">
-                    <a href="../questions/index.html">讨论区</a>
+                    <a href="questions/index.html">讨论区</a>
                 </li>
                 <li class=" bootcamp new-nav logo-1111">
-                    <a href="../bootcamp/index.html">训练营</a>
-                    
+                    <a href="bootcamp/index.html">训练营</a>
+
                 </li>
                 <li class=" new-nav logo-1111">
-                    <a href="../vip/index.html">会员</a>
-                    
+                    <a href="vip/index.html">会员</a>
                 </li>
-                
             </ul>
-
-            
             <div class="navbar-right btns">
                 <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
                 <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
             </div>
-            
-
-            <form class="navbar-form navbar-right" action="../search" method="get" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
-                </div>
+            <form class="navbar-form navbar-right" action="search" method="get" role="search">
+                <select class="form-control">
+                    <option>课程</option>
+                    <option>帖子</option>
+                </select>
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/帖子">
+                <button type="button" class="layui-btn">搜索</button>
             </form>
         </div>
     </div>
 </nav>
-
-        
-	
-
-
-
-	
-	
-
-	
-
 
 <div class="container layout layout-margin-top">
     
@@ -367,10 +341,6 @@
         </div>
     </a>
 </div>
-
-            
-            
-
 
 <div class="col-md-4 col-sm-6  course">
     <a class="course-box" href="show.html">

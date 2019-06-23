@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
 	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
+	<link rel="stylesheet" href="/layui/css/layui.css">
 
 	<style>
 		@font-face {
@@ -73,7 +74,7 @@
         }
     </style>
 
-<style style="text/css">
+<style type="text/css">
 .navbar-banner {
     margin-top: 50px;
     background: url("/user/img/homepage-bg.png");
@@ -88,14 +89,6 @@
 </head>
 
 <body>
-
-
-
-
-
-
-
-
 
 
 <nav class="navbar navbar-default navbar-fixed-top header">
@@ -121,7 +114,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="" href="courses/index.html" >全部课程</a></li>
                         <li><a class="" href="courses/index.html?status=preview" >即将上线</a></li>
-                        <li><a class="" href="developer/index.html">开发者</a></li>
+                        <li><a class="" href="/user/developer">开发者</a></li>
                     </ul>
                 </li>
                 <li class="">
@@ -136,29 +129,23 @@
                 </li>
                 <li class=" new-nav logo-1111">
                     <a href="vip/index.html">会员</a>
-
                 </li>
-
             </ul>
-
-
             <div class="navbar-right btns">
                 <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
                 <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
             </div>
-
-
             <form class="navbar-form navbar-right" action="search" method="get" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
-                </div>
+                <select class="form-control">
+                    <option>课程</option>
+                    <option>帖子</option>
+                </select>
+                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/帖子">
+                    <button type="button" class="layui-btn">搜索</button>
             </form>
         </div>
     </div>
 </nav>
-
-
-
 
 
 <!-- 图片轮播部分 -->
@@ -899,6 +886,7 @@
     <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
     <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
+
     <script>
         Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
             release: '3.12.13'
