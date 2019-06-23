@@ -27,6 +27,7 @@ public class ScheduleTriggerServiceImpl implements IScheduleTriggerService {
     @Resource
     private ScheduleTriggerParamMapper scheduleTriggerParamMapper;
 
+    //@Scheduled(cron = "* * 23 * * ?")
     @Scheduled(cron = "* 01 23 * * ?")
     @Scheduled(cron = "0 * */1 * * ?")
     public void refreshScheduler(){
