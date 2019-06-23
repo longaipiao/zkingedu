@@ -33,4 +33,10 @@ public class User implements Serializable {
     private String userRegTime;
     //QQ登录id
     private String userOpenID;
+    //用户头像
+    private String userImg;
+    //用户邮箱
+    private String userEmail;
+    //用户手机号
+    private String userPhone;
 }

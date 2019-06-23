@@ -27,8 +27,8 @@ public class ScheduleTriggerServiceImpl implements IScheduleTriggerService {
     @Resource
     private ScheduleTriggerParamMapper scheduleTriggerParamMapper;
 
+    //@Scheduled(cron = "* * 23 * * ?")
     @Scheduled(cron = "* 01 23 * * ?")
-    @Scheduled(cron = "0 * */1 * * ?")
     public void refreshScheduler(){
         try {
             //循环获取数据库中的定时调度任务

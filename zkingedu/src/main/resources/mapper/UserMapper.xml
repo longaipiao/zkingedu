@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
+   <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
 
     <!--用户接口Mapper-->
 
@@ -9,4 +10,26 @@
       select * from t_user a, t_role b ,t_permission c ,t_user_role d ,t_role_permission e where a.uid=d.uid
 and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     </select>-->
+    <!-- 判断重复-->
+    <select id="pdcf" resultType="String" parameterType="String">
+        select user_phone from t_user where user_phone=#{phone}
+    </select>
+    <!-- 注册-->
+    <insert id="add" parameterType="user">
+        insert into t_user(user_name,user_password,user_integrsl,user_state,user_ip,user_lastTime,user_regTime,user_openid,user_phone,user_img,user_email)
+        values (#{userName},#{userPassword},#{userIntegrsl},#{userState},#{userIP},#{userLastTime},#{userRegTime},#{userOpenID},#{userPhone},#{userImg},#{userEmail})
+    </insert>
+    <!-- 登入 -->
+    <select id="userlogin" resultType="user">
+        select * from t_user where user_phone=#{user.userPhone} and user_password=#{user.userPassword} and user_state=0
+    </select>
+    <!-- 修改ip地址和最后访问时间-->
+    <update id="updateipaddrlastTime">
+        update t_user set user_lastTime=#{lastTime},user_IP=#{ipaddr} where user_id=#{uid}
+    </update>
+    <!-- 强制下线-->
+    <select id="getUser" resultType="user">
+        select * from t_user where user_id=#{uid}
+    </select>
+
 </mapper>

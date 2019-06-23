@@ -152,6 +152,43 @@
             <version>2.0.1</version>
         </dependency>
 
+        <!--引入qqSDK依赖-->
+        <dependency>
+            <groupId>com.sdk4j</groupId>
+            <artifactId>sdk4j</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--导入AspectJ-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+
+        <!-- 引入zhenxi -->
+        <dependency>
+            <groupId>com.zhenzi</groupId>
+            <artifactId>sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

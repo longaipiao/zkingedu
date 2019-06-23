@@ -16,10 +16,12 @@
     <meta content="实验楼,IT培训,IT教育,编程,在线编程,Linux,Linux教程,Linux操作系统,Python,Python教程,Python基础教程,Java,Java编程,C语言,大数据,Node.js,Hadoop,PHP,Docker" name="keywords">
 
     <meta content="实验楼,琛石科技" name="author">
-
 	<link rel="shortcut icon" href="/user/favicon.ico">
 	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="/static/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
@@ -71,7 +73,7 @@
         }
     </style>
 
-<style type="text/css">
+<style style="text/css">
 .navbar-banner {
     margin-top: 50px;
     background: url("/user/img/homepage-bg.png");
@@ -86,6 +88,14 @@
 </head>
 
 <body>
+
+
+
+
+
+
+
+
 
 
 <nav class="navbar navbar-default navbar-fixed-top header">
@@ -111,7 +121,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="" href="courses/index.html" >全部课程</a></li>
                         <li><a class="" href="courses/index.html?status=preview" >即将上线</a></li>
-                        <li><a class="" href="/user/developer">开发者</a></li>
+                        <li><a class="" href="developer/index.html">开发者</a></li>
                     </ul>
                 </li>
                 <li class="">
@@ -126,23 +136,29 @@
                 </li>
                 <li class=" new-nav logo-1111">
                     <a href="vip/index.html">会员</a>
+
                 </li>
+
             </ul>
+
+
             <div class="navbar-right btns">
                 <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
                 <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
             </div>
+
+
             <form class="navbar-form navbar-right" action="search" method="get" role="search">
-                <select class="form-control">
-                    <option>课程</option>
-                    <option>帖子</option>
-                </select>
-                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/帖子">
-                    <button type="button" class="layui-btn">搜索</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
+                </div>
             </form>
         </div>
     </div>
 </nav>
+
+
+
 
 
 <!-- 图片轮播部分 -->
@@ -156,13 +172,13 @@
     <!-- 图片区域 -->
     <div class="carousel-inner">
         <div class="item active">
-            <img src="/user/img/banner_001.jpg" >
+            <img src="img/banner_001.jpg" >
         </div>
         <div class="item">
-            <img src="/user/img/banner_002.jpg" >
+            <img src="img/banner_002.jpg" >
         </div>
         <div class="item">
-            <img src="/user/img/banner_003.jpg" >
+            <img src="img/banner_003.jpg" >
         </div>
     </div>
     <!-- 左右按钮 -->
@@ -186,7 +202,7 @@
                         <img src="/user/img/container-title-2.png" />
                     </a>
                     <div style="margin-top:24px;">
-                        <a id="course-btn" class="course-btn btn btn-lg" href="courses/userinfo.html">进入课程</a>
+                        <a id="course-btn" class="course-btn btn btn-lg" href="courses/index.html">进入课程</a>
                     </div>
                 </div>
 
@@ -206,7 +222,7 @@
                             <div class="help-block text-left"></div>
                         </div>
                         <button class="btn register" type="submit">加入实验楼</button>
-                        <p class="tip">点击"加入实验楼"，表示您已经同意我们的<a href="privacy/userinfo.html" target="_blank"> 隐私条款</a></P>
+                        <p class="tip">点击"加入实验楼"，表示您已经同意我们的<a href="privacy/index.html" target="_blank"> 隐私条款</a></P>
                     </form>
 
                 </div>
@@ -249,12 +265,8 @@
 		<div class="tab-content">
 			<div class="tab-pane clearfix active" id="study-line">
 
-                <!--绑定课程体系-->
-                <div id="course">
 
-                </div>
-
-                <!--<div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="col-xs-12 col-sm-6 col-md-4">
 					<a href="paths/show.html">
                         <div class="path-item">
                             <div class="col-xs-5 col-sm-4 path-img">
@@ -272,9 +284,249 @@
                             </div>
                         </div>
 					</a>
-                </div>-->
+                </div>
 
 
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471513769430.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">Python研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>83</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">Python技术路径中包含入门知识、Python基础、Web框架、基础项目、网络编程、数据与计算及综合项目七个模块。模块中的课程将带着你逐步深入，学会如何使用 Python 实现项目一个博客，桌面词典，微信机器人或网络安全软件等。完成本路径的实验课，将具备独立开发 Python 软件和 Web 应用的能力。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471513793360.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">C++ 研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>26</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">C++ 学习路径中将通过使用 C++ 语言实现 Web 服务器，Markdown 解析器，内存池以及 Docker 容器管理工具等，学习并实践 C++ 编程基础，C++ 11/14 标准，C++ 图像处理及增强现实技术。完成本路径的所有实验课，将能够使用 C++  独立实现复杂的应用程序。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471513926288.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">大数据工程师</div>
+                                <div class="path-course-num">
+                                    </span>36</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">大数据学习路径中会学习并实践 Java、Scala、Hadoop、HBase、Mahout、Sqoop及Spark等大数据技术，本路径通过大量的动手实验，在实验数据集上实践各种大数据工具，帮助你成长为具备动手能力的大数据工程师。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471513867033.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">信息安全工程师</div>
+                                <div class="path-course-num">
+                                    </span>38</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">信息安全学习路径首先完成 Linux、脚本编程、数据库和网络等基础知识学习，然后通过密码学实验、系统安全实验、Web安全实验、网络安全实验四个核心模块的动手实践，强化信息安全工程师必须要掌握的系统防护，Web渗透及网络攻防等基本技能。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514004752.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">Linux运维工程师</div>
+                                <div class="path-course-num">
+                                    </span>33</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">Linux运维技术路径中首先学习 Linux 相关的基本操作和系统管理，然后依次学习并实践服务部署、数据库管理、脚本编程、系统监控和安全防护、以及Web服务运维技术。最后学习 Docker 容器服务和 Windows Server的运维知识。本路径的实验将帮助你成为一名合格的 Linux 运维工程师。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514111981.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">Java研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>25</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">Java 学习路径中将首先完成 Java基础、JDK、JDBC、正则表达式等基础实验，然后进阶到 J2SE 和 SSH 框架学习。通过使用 Java 语言实现日记本，个人相册、编辑器、通讯录等，学习并实践 Java 编程基础，SSH 项目实战以及Java Web 应用开发。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514095761.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">PHP研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>30</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">PHP 技术路径中包含入门知识、PHP 编程基础、PHP Web 框架、项目实战和项目进阶五个模块。模块中的课程将带着你逐步深入，学会如何使用 PHP 实现项目一个博客，聊天室，MVC框架及搜索系统等。完成本路径所有实验课，将具备使用 PHP 独立开发 Web 应用的能力。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514153000.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">Web前端工程师</div>
+                                <div class="path-course-num">
+                                    </span>34</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">Web 前端学习路径中首先实践 HTML、CSS、JavaScript、jQuery、HTML5等基础知识，然后完成实现页面特效组件、网页游戏、Web应用等一系列项目，帮助你通过动手实践成长为合格的 Web 前端工程师。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514037180.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">Linux研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>27</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">Linux 研发学习路径中首先学习 Linux基础、C语言、Git、GDB、数据结构等基础知识，然后完成 TCP/IP、MySQL 数据库、操作系统等实验课程。项目阶段将实现 cp、ls、touch、ping等一系列Linux命令和端口扫描、Web服务器、聊天室等网络应用，帮助你通过动手实践入门 Linux 系统研发。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471513817808.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">NodeJS研发工程师</div>
+                                <div class="path-course-num">
+                                    </span>21</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">NodeJS 学习路径中将通过使用 NodeJS 实现博客、在线笔记、爬虫、即时搜索、漂流瓶、端口扫描器等应用，学习并实践 NodeJS 编程基础和Web 应用开发等技术。完成本路径的所有实验课，将能够使用 NodeJS 独立实现 Web 应用程序。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-6 col-md-4">
+					<a href="paths/show.html">
+                        <div class="path-item">
+                            <div class="col-xs-5 col-sm-4 path-img">
+                                <img src="/user/img/1471514058548.png">
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                <div class="path-name">MongoDB工程师</div>
+                                <div class="path-course-num">
+                                    </span>6</span>
+                                    门课程
+                                </div>
+                            </div>
+                            <div class="desc-layer">
+                                <div class="center">MongoDB 技术路径中首先学习 Linux、Bash、MySQL基础知识，然后依次学习并实践 Memcached、Redis 和 MongoDB技术。本路径的实验将帮助你逐步入门 MongoDB 这类 NoSQL 数据库。</div>
+                            </div>
+                        </div>
+					</a>
+                </div>
 
 
 			</div>
@@ -295,7 +547,7 @@
 
 
 <div class="col-md-3 col-sm-6  course">
-    <a class="course-box" href="/user/videoshow">
+    <a class="course-box" href="courses/show.html">
         <div class="sign-box">
 
 
@@ -321,6 +573,9 @@
                 85157
 
 			</span>
+
+
+
         </div>
     </a>
 </div>
@@ -644,7 +899,6 @@
     <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
     <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
-
     <script>
         Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
             release: '3.12.13'
@@ -756,59 +1010,13 @@
         <!-- 轮播图自动切换 -->
         <script type="text/javascript">
             $("#lb").carousel({
-                interval:3000 //每隔2秒自动切换图片
+                interval:5000 //每隔2秒自动切换图片
             })
         </script>
-
     </div>
 </div>
 
 
 
 </body>
-<script type="text/javascript">
-    $(function () {
-
-        /**
-         * 绑定学习路径数据
-         */
-        $.ajax({
-            type:"GET",
-            url:"/user/CourseEight",
-            dataType:"json", //预期服务器返回数据的类型
-            success:function(data){
-                mydata(data);
-            }
-        })
-    })
-
-    //绑定体系数据
-    function mydata(data){
-        var objs=data.data;
-        var str="";
-        for (var i=0;i<objs.length;i++){
-            str+="<div class=\"col-xs-12 col-sm-6 col-md-4\">" +
-            "<a href=\"/user/resourseShow?courseId="+objs[i].systemID+"\">" +
-            "<div class=\"path-item\">" +
-            "<div class=\"col-xs-5 col-sm-4 path-img\">" +
-            "<img src="+objs[i].systemImg+">" +
-            "</div>" +
-            "<div class=\"col-xs-7 col-sm-8\">" +
-            "<div class=\"path-name\">"+objs[i].systemName+"</div>" +
-            "<div class=\"path-course-num\">" +
-            "</span>"+objs[i].sourcesNum+"</span>" +
-            "门课程" +
-            "</div>" +
-            "</div>" +
-            "<div class=\"desc-layer\">" +
-            "<div class=\"center\">"+objs[i].systemDesc+"</div>" +
-            "</div>" +
-            "</div>" +
-            "</a>" +
-            "</div>";
-        }
-        console.log(str);
-        $("#course").html(str);
-    }
-</script>
 </html>
