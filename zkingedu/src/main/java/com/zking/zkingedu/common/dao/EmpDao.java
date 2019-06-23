@@ -15,4 +15,16 @@ public interface EmpDao {
      */
     List<Emp> getemps();
 
+    /**
+     * 登录
+     */
+    Emp login(String name,String pass);
+
+    /**
+     *根据emp名查emp
+     * @param empname
+     * @return emp
+     */
+    Emp findByEmpName(String empname);
+
 }

@@ -17,14 +17,12 @@ import java.util.List;
  * @create 2019-06-23 9:32
  */
 @Controller
-@RequestMapping(value = "/user")
 @Slf4j
 public class PageController {
 
     @RequestMapping(value = "/admin")
-    public String testt(){
-        System.err.println("来了index");
-        return "admin";
+    public String alogin(){
+        return "admin/login";
     }
 
     @Resource
@@ -41,9 +39,18 @@ public class PageController {
      * 主页
      * @return
      */
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/user/index")
     public String index(){
         return "user/index";
+    }
+
+    /**
+     * 后台主页
+     * @return
+     */
+    @RequestMapping(value = "/admin/index")
+    public String aindex(){
+        return "admin/index";
     }
 
     /**
