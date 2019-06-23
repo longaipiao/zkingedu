@@ -57,11 +57,17 @@ public class PageController {
 
 
     /**
-     * 测试git
+     * 颜
+     * @return
+     * 视频播放页面跳转
      */
-    public void test(){
-        System.out.println("hello");
+    @RequestMapping("videoshow")
+    public String videoShow(){
+        log.info("进来了");
+        return "user/courses/show";
     }
+
+
 
 
 }

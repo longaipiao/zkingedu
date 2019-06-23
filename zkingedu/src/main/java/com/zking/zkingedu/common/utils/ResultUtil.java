@@ -41,14 +41,12 @@ public class ResultUtil {
         this.data = data;
     }
 
-    public ResultUtil(Integer code, Object msg) {
-        this.code = code;
-        this.msg = msg;
+
+    public ResultUtil(Integer code,Object data){
+        this.data = data;
     }
 
-    public ResultUtil(Integer code){
-        this.code = code;
-    }
+
 
     public ResultUtil(Integer code, Object msg, Object data) {
         this.code = code;
@@ -57,6 +55,13 @@ public class ResultUtil {
     }
 
     public ResultUtil(Integer code, Object msg, String count, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.count = count;
+        this.data = data;
+    }
+
+    public ResultUtil(Integer code, String count,Object msg,  Object data) {
         this.code = code;
         this.msg = msg;
         this.count = count;

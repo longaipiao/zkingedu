@@ -6,4 +6,14 @@
     <!--视频接口Mapper-->
 
 
+    <sql id="VideoSql">
+        video_id,video_sid,video_duration,video_url
+    </sql>
+
+    <!--根据章节id  查询视频-->
+    <select id="getVideoById" resultType="com.zking.zkingedu.common.model.Video">
+        select <include refid="VideoSql"/> from t_video where video_sid=#{sid};
+    </select>
+    
+
 </mapper>

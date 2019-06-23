@@ -5,5 +5,19 @@
 
     <!--课程接口Mapper-->
 
+    <sql id="CourseSql">
+        course_id,course_sid,course_eid,course_name,course_desc,course_img,course_state,course_free,course_inte,course_num,course_time
+    </sql>
+
+    <!--根据课程体系id  查询对应的课程-->
+    <select id="getCoursesByCourseSid" resultType="com.zking.zkingedu.common.model.Course">
+        select * from t_course where course_state=0
+    </select>
+
+
+    <!--根据课程id  查询课程信息-->
+    <select id="getCourseBYcourseID" resultType="com.zking.zkingedu.common.model.Course">
+            select <include refid="CourseSql"/> from t_course where course_id=#{id};
+    </select>
 
 </mapper>

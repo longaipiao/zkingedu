@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zking.zkingedu.common.dao.AdvertisingDao">
+<mapper namespace="com.zking.zkingedu.common.dao.SystemDao">
 
+    <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+
+    <!--返回结果集，存在体系里面的课程-->
+    <resultMap id="resultSystems" type="com.zking.zkingedu.common.model.System">
+        <id column="system_id" property="systemID"></id>
+        <result column="system_name" property="systemName"/>
+        <result column="system_fid" property="systemFid"/>
+        <result column="system_state" property="systemState"/>
+        <result column="system_desc" property="systemDesc"/>
+        <result column="system_img" property="systemImg"/>
+        <result column="sources_num" property="sourcesNum"></result>
+        <!--课程配置-->
+        <collection property="courses" javaType="com.zking.zkingedu.common.model.Course">
+            <id column="course_id" property="courseID"></id>
+            <result column="course_sid" property="courseSid"></result>
+            <result column="course_eid" property="courseEid"></result>
+            <result column="course_name" property="courseName"></result>
+            <result column="course_desc" property="courseDesc"></result>
+            <result column="course_img" property="courseImg"></result>
+            <result column="course_state" property="courseState"></result>
+            <result column="course_inie" property="courseInie"></result>
+            <result column="course_num" property="courseNum"></result>
+            <result column="course_time" property="courseTime"></result>
+        </collection>
+    </resultMap>
     <!--课程体系接口Mapper-->
+    <!--字段-->
+    <sql id="systemSqlcol">
+        system_id,system_name,system_fid,system_state,system_desc,system_img
+    </sql>
 
+
+    <!--首页加载课程体系12个-->
+    <select id="getsystemsEight" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_state=0 and system_fid=0;
+    </select>
+
+
+    <!--根据fid查询子体系-->
+    <select id="getsystemsonByFId" resultMap="resultSystems">
+        select *,(select COUNT(*) from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}) from t_system a,t_course b where b.course_sid=a.system_id and a.system_fid=#{fid} and system_state=0
+    </select>
+
+    <!--根据体系id查询体系对应信息-->
+    <select id="getSystemBySid" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_state=0 and system_fid=0 and system_id=#{id}
+    </select>
+
+    <!--根据体系fid查询该体系下面有多少课程-->
+    <select id="getSystemCourseNum" resultType="com.zking.zkingedu.common.model.System">
+        select COUNT(*) as sources_num from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}
+    </select>
 
 </mapper>

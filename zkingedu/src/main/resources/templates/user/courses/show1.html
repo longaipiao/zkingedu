@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Lei Shi">
-  <meta http-equiv="Cache-Control" content="o-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
-        <title> Linux 基础入门（新版） - 实验楼</title>
-<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
-<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Lei Shi">
+    <meta http-equiv="Cache-Control" content="o-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
+
+
+    <title> Linux 基础入门（新版） - 实验楼</title>
+
+
+
+
+    <meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
+    <meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
 
     <meta content="实验楼,琛石科技" name="author">
 
-	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
-	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
+    <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
 
-	<style>
-		@font-face {
-			font-family: "lantingxihei";
-			src: url("../fonts/FZLTCXHJW.TTF");
-		}
+    <style>
+        @font-face {
+            font-family: "lantingxihei";
+            src: url("/user/fonts/FZLTCXHJW.TTF");
+        }
 
         /* modal 模态框*/
         #invite-user .modal-body {
             overflow: hidden;
         }
-		#invite-user .modal-body .form-label {
-			margin-bottom: 16px;
-			font-size:14px;
-		}
-		#invite-user .modal-body .form-invite {
-			width: 80%;
-			padding: 6px 12px;
-			background-color: #eeeeee;
-			border: 1px solid #cccccc;
-			border-radius: 5px;
-			float: left;
-			margin-right: 10px;
-		}
-		#invite-user .modal-body .msg-modal-style {
-			background-color: #7dd383;
-			margin-top: 10px;
-			padding: 6px 0;
-			text-align: center;
-			width: 100%;
-		}
-		#invite-user .modal-body .modal-flash {
-			position: absolute;
-			top: 53px;
-			right: 74px;
-			z-index: 999;
-		}
-		/* end modal */
+        #invite-user .modal-body .form-label {
+            margin-bottom: 16px;
+            font-size:14px;
+        }
+        #invite-user .modal-body .form-invite {
+            width: 80%;
+            padding: 6px 12px;
+            background-color: #eeeeee;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            float: left;
+            margin-right: 10px;
+        }
+        #invite-user .modal-body .msg-modal-style {
+            background-color: #7dd383;
+            margin-top: 10px;
+            padding: 6px 0;
+            text-align: center;
+            width: 100%;
+        }
+        #invite-user .modal-body .modal-flash {
+            position: absolute;
+            top: 53px;
+            right: 74px;
+            z-index: 999;
+        }
+        /* end modal */
 
         .en-footer {
             padding: 30px;
@@ -66,51 +72,50 @@
             font-size: 14px;
         }
     </style>
-<link rel="stylesheet" href="/user/restatic/js/libs/marked/katex/katex.min.css">
-<style>
-    .bootcamp-infobox {
-        margin: 50px 0 0;
-    }
-    .invite-friends-link {
-        margin-top:10px;
-        padding-left:8px;
-    }
-    .invite-friends-link input {
-        margin-left:-5px;
-    }
-    .invite-friends-link button {
-        float:left;
-        margin-top:5px;
-        margin-left:-5px;
-    }
-    .invite-friends-link .copy-msg {
-        float:left;
-        margin-top:10px;
-        margin-left:20px;
-        color:#42b1ad;
-    }
-    p.join-vip-faq {
-        margin-top:20px;
-        margin-bottom:-50px;
-        font-size:13px;
-    }
-    p.join-vip-faq img {
-        height:13px;
-        width:13px;
-        margin-top:-2px;
-    }
-    a.vip-without-bean {
-        font-size:18px;
-        line-height:30px;
-    }
-</style>
+    <link rel="stylesheet" href="/user/restatic/js/libs/marked/katex/katex.min.css">
+    <style>
+        .bootcamp-infobox {
+            margin: 50px 0 0;
+        }
+        .invite-friends-link {
+            margin-top:10px;
+            padding-left:8px;
+        }
+        .invite-friends-link input {
+            margin-left:-5px;
+        }
+        .invite-friends-link button {
+            float:left;
+            margin-top:5px;
+            margin-left:-5px;
+        }
+        .invite-friends-link .copy-msg {
+            float:left;
+            margin-top:10px;
+            margin-left:20px;
+            color:#42b1ad;
+        }
+        p.join-vip-faq {
+            margin-top:20px;
+            margin-bottom:-50px;
+            font-size:13px;
+        }
+        p.join-vip-faq img {
+            height:13px;
+            width:13px;
+            margin-top:-2px;
+        }
+        a.vip-without-bean {
+            font-size:18px;
+            line-height:30px;
+        }
+    </style>
 
 
 
 </head>
 
 <body>
-
 
 <nav class="navbar navbar-default navbar-fixed-top header">
     <div class="container">
@@ -121,7 +126,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../index.html">
+            <a class="navbar-brand" href="/user/index.html">
                 <img src="/user/img/logo_03.png">
             </a>
         </div>
@@ -162,7 +167,7 @@
             </div>
 
 
-            <form class="navbar-form navbar-right" action="../search" method="get" role="search">
+            <form class="navbar-form navbar-right" action="/user/search" method="get" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
                 </div>
@@ -177,43 +182,40 @@
 
 <div class="container layout layout-margin-top">
 
-<ol class="breadcrumb">
-    <li><a href="/courses/">全部课程</a></li>
-</ol>
+    <ol class="breadcrumb">
+        <li><a href="/user/index">全部课程</a></li>
+    </ol>
 
     <div class="row">
         <div class="col-md-9 layout-body">
-    <div class="side-image side-image-mobile">
-        <img src="https://dn-simplecloud.shiyanlou.com/ncn1.jpg?imageView2/0/h/300">
-    </div>
-    <div class="content course-infobox">
+            <div class="side-image side-image-mobile">
+                <img src="https://dn-simplecloud.shiyanlou.com/ncn1.jpg?imageView2/0/h/300">
+            </div>
+            <div class="content course-infobox">
+                <div class="clearfix course-infobox-header">
+                    <h4 class="pull-left course-infobox-title">
+                        <span th:text="${course.courseName}">Linux 基础入门（新版）</span>
+                    </h4>
+                    <div class="pull-right course-infobox-follow"
+                         data-follow-url="/courses/1/follow"
+                         data-unfollow-url="/courses/1/unfollow">
+                        <span class="course-infobox-followers">4401</span>
+                        <span>人关注</span>
+                        <i class="fa fa-star-o" data-next="/login?next=%2Fcourses%2F1"></i>
+                    </div>
+                </div>
+                <div class="clearfix course-infobox-body">
+                    <div class="course-infobox-content">
+                        <p th:text="${course.courseDesc}">要在实验楼愉快地学习，先要熟练地使用 Linux，本实验介绍 Linux 基本操作，shell 环境下的常用命令。</p>
+                    </div>
+                    <div class="pull-right course-infobox-price">
+                    </div>
+                </div>
+                <div class="clearfix course-infobox-footer">
+                    <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">85243</span> 人学过</div>
+                </div>
 
-        <div class="clearfix course-infobox-body">
-            <!--影藏标签 存放视频的id-->
-            <form>
-                <input type="hidden" id="videoId" th:value="${video.videoURL}" value=""/>
-            </form>
-            <!--视频播放器-->
-            <div id="youkuplayer"style="width:820px;height:403px"></div>
-            <script type="text/javascript" src="//player.youku.com/jsapi"></script>
-            <script type="text/javascript">
-                var player = new YKU.Player('youkuplayer',{
-                    styleid: '0',
-                    client_id: '59c9a21060e1d847',
-                    vid: document.getElementById("videoId").value,
-                    newPlayer: true,
-                    autoplay: true
-                });
-            </script>
-
-
-        </div>
-
-        <div class="clearfix course-infobox-footer">
-            <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">85243</span> 人学过</div>
-        </div>
-
-    </div>
+            </div>
             <div class="content">
                 <ul class="nav nav-tabs" role="tablist">
 
@@ -272,6 +274,10 @@
             <div class="side-image side-image-pc">
                 <img src="/user/img/ncn1.jpg?imageView2/0/h/300">
             </div>
+
+
+
+
 
             <div class="sidebox mooc-teacher">
                 <div class="sidebox-header mooc-header">
@@ -907,11 +913,6 @@
             })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
             ga('create', 'UA-89338452-1', 'auto');
             ga('send', 'pageview');
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                var url = $("#videoId").val();
-            })
         </script>
     </div>
 </div>

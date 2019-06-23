@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,10 @@ public class System implements Serializable {
     //体系图片
     private String systemImg;
 
+    //体系里面有多少个课程
+    private Integer sourcesNum;
+
     //对应多个课程
-    private List<Course> courses;
+    private List<Course> courses=new ArrayList<>();
 
 }
