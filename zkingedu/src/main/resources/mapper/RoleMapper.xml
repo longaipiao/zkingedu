@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zking.zkingedu.common.dao.AnswerDao">
+<mapper namespace="com.zking.zkingedu.common.dao.RoleDao">
 
     <!--角色接口Mapper-->
-
+    <select id="getRoles" resultType="role">
+        select * from t_role
+    </select>
 
 </mapper>

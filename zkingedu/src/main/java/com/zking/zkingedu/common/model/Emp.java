@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @ClassName Emp
@@ -27,4 +29,7 @@ public class Emp implements Serializable {
     private Integer empState;
     //错误次数
     private Integer empError;
+    //员工角色
+    private Set<Role> roles=new HashSet<>();
+
 }

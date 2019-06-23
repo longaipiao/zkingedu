@@ -7,12 +7,37 @@
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
     <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
-    
-    
+
+    <resultMap type="emp" id="empMap">
+        <id column="emp_id" property="empID"/>
+        <result column="emp_name" property="empName"/>
+        <result column="emp_password" property="empPassword"/>
+        <collection property="roles" ofType="role">
+            <id column="role_id" property="roleID"/>
+            <result column="role_name" property="roleName"/>
+            <collection property="menus" ofType="menu">
+                <id column="menu_id" property="menuID"/>
+                <result column="menu_name" property="menuName"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+
     <select id="getemps" resultType="emp">
-        select * from t_emp;
+        select * from t_emp
     </select>
 
+    <select id="login" resultType="emp">
+        select * from t_emp where emp_name = #{param1} and emp_password = #{param2}
+    </select>
 
+    <select id="findByEmpName" resultMap="empMap">
+        SELECT e.*,r.*,m.* FROM t_emp e inner join t_emp_role er on er.emp_id=e.emp_id
+         inner join t_role r on r.role_id=er.role_id
+         inner join t_menu_role mr on mr.role_id=r.role_id
+         inner join t_menu m on mr.menu_id=m.menu_id
+         WHERE emp_name=#{empname}
+    </select>
 
 </mapper>
