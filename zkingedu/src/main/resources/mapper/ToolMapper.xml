@@ -5,5 +5,19 @@
 
     <!--开发者工具接口Mapper-->
 
+    <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+
+    <!--sql字段-->
+   <sql id="toolsql">
+       tool_id,tool_name,tool_describe,tool_url,tool_img,tool_time
+   </sql>
+
+    <!--查询所有的工具信息-->
+    <select id="findAll" resultType="com.zking.zkingedu.common.model.Tool">
+        select  <include refid="toolsql"/> from t_tool
+    </select>
+
+
 
 </mapper>
