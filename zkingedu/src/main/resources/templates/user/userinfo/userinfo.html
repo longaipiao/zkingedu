@@ -398,19 +398,28 @@
             <div class="col-md-11 layout-body" id="get8" >
                 <div class="content" style="height: 330px;">
                     <h3>积分充值</h3><br>
-                    <form style="margin-left: 100px;">
+                    <form style="margin-left: 100px;" id="form" method="post">
                         <div class="form-group">
                             <label for="money" style="font-size: 16px;">充值金额</label>
-                            <input type="text" style="width: 200px;" class="form-control" id="money" placeholder="金额">
+                            <input type="text" style="width: 200px;" class="form-control" name="chargeMoney" id="money" placeholder="金额">
                         </div>
                         <div class="form-group">
                             <label for="integral" style="font-size: 16px;">充值积分</label>
-                            <input type="text" style="width: 200px;" class="form-control" id="integral" placeholder="积分">
+                            <input type="text" style="width: 200px;" class="form-control" name="chargeIntegral" id="integral" placeholder="积分">
                         </div>
-                        <button id="czjf" class="btn btn-default">充值</button>
-                    </form>
+						<input type="button" value="充值" onclick="submitForm('/pay')">
+                        <!--<button id="czjf" class="btn btn-default">充值</button>-->
+					</form>
                 </div>
             </div>
+
+				<script type="text/javascript">
+                    function submitForm(action) {
+                        document.getElementById("form").action = action;
+                        document.getElementById("form").submit();
+                    }
+				</script>
+
 
 			</div>
 		</div>
