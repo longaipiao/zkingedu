@@ -48,6 +48,7 @@ public class ResultUtil {
 
 
 
+
     public ResultUtil(Integer code, Object msg, Object data) {
         this.code = code;
         this.msg = msg;
