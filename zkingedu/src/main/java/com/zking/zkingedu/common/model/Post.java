@@ -30,4 +30,6 @@ public class Post implements Serializable {
     private Integer postState;
     //类别
     private Integer postCategory;
+
+
 }
