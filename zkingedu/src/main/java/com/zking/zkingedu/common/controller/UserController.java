@@ -145,11 +145,10 @@ public class UserController {
         user.setUserPassword(upwd);
         User userlogin = userService.userlogin(user);
         if(userlogin!=null){
-            System.out.println(userlogin.getUserID());
             Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             if(integer>0){
                 System.out.println("成功");
-                session.setAttribute("user",user);
+                session.setAttribute("user",userlogin);
             }
             else{
                 System.out.println("失败");
