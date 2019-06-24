@@ -4,11 +4,14 @@ import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.SectionService;
+import com.zking.zkingedu.common.utils.PageBean;
+import com.zking.zkingedu.common.utils.ResultUtil;
 import com.zking.zkingedu.common.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -78,5 +81,23 @@ public class CourseController {
         mv.setViewName("/user/courses/index");
         return mv;
     }
+
+
+    /**
+     * 用户课程搜索页面
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/searchCourse")
+    public ResultUtil userCourseSearch(Course course,Integer page,Integer limit){
+        log.info("===========================page:"+page+"____limit:"+limit);
+        PageBean<Course> pageBean = new PageBean<>();
+        pageBean.setT(course);
+        pageBean.setPageIndex(page);//当前页
+        pageBean.setPageSize(limit);//没页多少条
+       return courseService.SearchCourse(pageBean);
+    }
+
+
 
 }

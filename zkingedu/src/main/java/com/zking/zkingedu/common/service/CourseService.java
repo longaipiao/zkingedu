@@ -1,6 +1,9 @@
 package com.zking.zkingedu.common.service;
 
 import com.zking.zkingedu.common.model.Course;
+import com.zking.zkingedu.common.utils.PageBean;
+import com.zking.zkingedu.common.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,5 +37,23 @@ public interface CourseService {
      */
     public int findCourseIntegrsl(Integer courseid);
 
+
+
+    /**
+     * 添加查询课程  课程搜索页面
+     * @param course
+     * @return
+     * yan
+     */
+    List<Course> getCourseSearch(Course course);
+
+
+    /**
+     * 前台课程搜索多条件搜索
+     * @param pageBean
+     * @return
+     * yan
+     */
+    ResultUtil SearchCourse(PageBean<Course> pageBean);
 
 }

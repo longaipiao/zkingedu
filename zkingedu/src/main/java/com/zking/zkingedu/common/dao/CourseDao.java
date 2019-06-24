@@ -27,6 +27,15 @@ public interface CourseDao {
      */
     Course getCourseBYcourseID(Integer id);
 
+
+    /**
+     * 添加查询课程  课程搜索页面
+     * @param course
+     * @return
+     * yan
+     */
+    List<Course> getCourseSearch(@Param("course") Course course);
+
     /**
      * 根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频
      * @param courseid 课程id
