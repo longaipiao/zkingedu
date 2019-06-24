@@ -42,9 +42,10 @@ public class WebLogAcpect {
         System.out.println(user.getUserPassword()+"dasdasdsadasdasd");
         User user1 = userDao.getUser(user.getUserID());
         if(user1!=null){
-            if(user.getUserIP()!=user1.getUserIP()){
-                System.out.println("进来了");
+            System.out.println(user1.getUserIP()+"   SDASD"+user.getUserIP());
+            if(user.getUserIP().equals(user1.getUserIP())){
                 session.setAttribute("user",null);
+
             }
         }
         return  true;
