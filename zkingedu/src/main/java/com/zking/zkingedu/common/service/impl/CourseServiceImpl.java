@@ -1,9 +1,16 @@
 package com.zking.zkingedu.common.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.dao.CourseDao;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.service.CourseService;
+import com.zking.zkingedu.common.utils.PageBean;
+import com.zking.zkingedu.common.utils.ResultUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,6 +21,7 @@ import java.util.List;
  * 实现
  */
 @Service("courseService")
+@Slf4j
 public class CourseServiceImpl implements CourseService {
 
 
@@ -41,5 +49,50 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseBYcourseID(Integer id) {
         return courseDao.getCourseBYcourseID(id);
+    }
+
+
+    /**
+     * 添加查询课程  课程搜索页面
+     * @param course
+     * @return
+     * yan
+     */
+    @Override
+    public List<Course> getCourseSearch(Course course) {
+        return courseDao.getCourseSearch(course);
+    }
+
+
+    /**
+     * 前台课程搜索多条件搜索
+     * yan
+     * @param pageBean
+     * @return
+     */
+    @Transactional
+    @Override
+    public ResultUtil SearchCourse(PageBean<Course> pageBean) {
+        if(pageBean.getPageIndex()==null){
+            pageBean.setPageIndex(1);
+        }
+        if(pageBean.getPageSize()==null){
+            pageBean.setPageSize(9);
+        }
+        try {
+            //加一个分页
+            Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
+            List<Course> courseSearch = courseDao.getCourseSearch(pageBean.getT());
+
+            ResultUtil resul = new ResultUtil();
+            resul.setCode(200);//正常
+            resul.setCount(String.valueOf(objects.getTotal()));
+            resul.setData(courseSearch);
+            resul.setMsg("success");
+            return resul;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultUtil(500,"数据接口异常",e.getMessage());
+        }
     }
 }

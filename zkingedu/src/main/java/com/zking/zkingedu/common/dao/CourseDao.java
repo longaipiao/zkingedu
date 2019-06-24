@@ -1,6 +1,8 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.Course;
+import com.zking.zkingedu.common.utils.PageBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,5 +28,14 @@ public interface CourseDao {
      * yan
      */
     Course getCourseBYcourseID(Integer id);
+
+
+    /**
+     * 添加查询课程  课程搜索页面
+     * @param course
+     * @return
+     * yan
+     */
+    List<Course> getCourseSearch(@Param("course") Course course);
 
 }
