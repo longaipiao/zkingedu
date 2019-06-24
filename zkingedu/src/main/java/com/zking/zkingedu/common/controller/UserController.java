@@ -130,6 +130,7 @@ public class UserController {
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
                 System.out.println("openid:"+userOpenID+"————用户昵称："+userInfoBean.getNickname());
                 //4.根据openId和access_Token获取用户信息
+                System.out.println(userOpenID);
 
             }
         } catch (QQConnectException e) {
