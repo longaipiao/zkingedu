@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +61,8 @@ public class UserController {
         user.setUserName(getRandomJianHan(3));
         //图片
         user.setUserImg("share-reports.png");
+        //错误次数
+        user.setUserCwcs(0);
         Integer n = userService.add(user);
         if(n>0){
             return "1";
@@ -137,8 +140,10 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/login")
-    public String login(String userPhone,String upwd,HttpServletRequest request){
-       HttpSession session = request.getSession();
+    public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
+
+
+        HttpSession session = request.getSession();
         //手机号
         user.setUserPhone(userPhone);
         //密码
@@ -147,14 +152,23 @@ public class UserController {
         if(userlogin!=null){
             Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             if(integer>0){
-                System.out.println("成功");
                 session.setAttribute("user",userlogin);
-            }
-            else{
-                System.out.println("失败");
-            }
-        }
-        return "user/index";
+                return "1";
+                }
+           }
+        //密码错误
+         if(userlogin==null){
+             //修改错误次数加1
+             userService.updateCwcs(userPhone);
+             //查询错误次数
+             Integer cwcs = userService.getCwcs(userPhone);
+             if(cwcs>5){
+                //修改用户的状态然后启动定时任务
+
+
+             }
+         }
+        return "";
     }
 
     /**
