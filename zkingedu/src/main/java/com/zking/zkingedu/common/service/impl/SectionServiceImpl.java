@@ -20,12 +20,22 @@ public class SectionServiceImpl implements SectionService {
 
     /**
      * 根据课程id获取所有的章节
-     * @param cid
+     * @param cid 章节id
      * @return
      * yan
      */
     @Override
     public List<Section> getSectionsBycid(Integer cid) {
         return sectionDao.getSectionsBycid(cid);
+    }
+
+    /**
+     * 根据章节的id查询单个章节下的积分
+     * @param sectionID   章节id
+     * @return
+     */
+    @Override
+    public int findSectInteg(Integer sectionID) {
+        return sectionDao.findSectInteg(sectionID);
     }
 }

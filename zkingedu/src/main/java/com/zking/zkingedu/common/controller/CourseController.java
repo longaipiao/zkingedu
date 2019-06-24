@@ -4,12 +4,15 @@ import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.SectionService;
+import com.zking.zkingedu.common.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,13 +30,31 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+
+    @Autowired
+    private UserService userService;
+
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
-     * @return
+     * @return sid 是课程ID
      */
     @RequestMapping("/showCourse")
-    public ModelAndView SystemRequestCourse(Integer sid){
+    public ModelAndView SystemRequestCourse(Integer sid,HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
+        //获取登录过来的用户积分    需要后期改变用户ID
+        int integrsl = userService.findIntegrsl(2);
+        System.err.println("用户的积分是："+integrsl);
+        int courseIntegrsl = courseService.findCourseIntegrsl(sid);
+        System.err.println("整套课程的积分是："+courseIntegrsl);
+
+        request.getSession().setAttribute("userintegrsl",integrsl);
+        request.getSession().setAttribute("userintegrsl",integrsl);
+
+        //单个用户的积分
+        mv.addObject("userintegrsl",integrsl);
+        //整套课程的积分
+        mv.addObject("courseIntegrsl",courseIntegrsl);
+
         //获取所有的章节视频
         List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
         //获取课程信息

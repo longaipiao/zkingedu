@@ -40,5 +40,13 @@ public class UserServiceImpl implements UserService {
         return userDao.getUser(uid);
     }
 
+    /**
+     * 查询用户积分的方法
+     */
+    @Override
+    public int findIntegrsl(Integer userID) {
+        return userDao.findIntegrsl(userID);
+    }
+
 
 }

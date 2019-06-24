@@ -20,4 +20,9 @@
             select <include refid="CourseSql"/> from t_course where course_id=#{id};
     </select>
 
+    <!--根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频-->
+    <select id="findCourseIntegrsl" resultType="java.lang.Integer">
+        select course_inte from t_course where course_id = #{courseid}
+    </select>
+
 </mapper>

@@ -5,6 +5,7 @@ import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.model.Video;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.SectionService;
+import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class SectionController {
     private VideoService videoService;
 
 
+
     @Autowired
     private CourseService courseService;
 
@@ -45,6 +47,7 @@ public class SectionController {
     @RequestMapping("/video")
     public ModelAndView videoPlayer(@RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id){
         ModelAndView mv = new ModelAndView();
+
         //获取所有的章节视频
         List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
 

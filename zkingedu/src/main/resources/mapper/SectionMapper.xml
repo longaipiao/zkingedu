@@ -14,4 +14,9 @@
         select <include refid="sectionMap"/> from t_section where section_cid=#{cid}
     </select>
 
+    <!--根据章节的id查询单个章节下的积分-->
+    <select id="findSectInteg" resultType="java.lang.Integer">
+        select section_inte from t_section where section_id = #{sectionID}
+    </select>
+
 </mapper>
