@@ -54,4 +54,26 @@ public class HtmlController {
     }
 
 
+    /**
+     * 后台
+     * 跳转至课程体系管理
+     * yan
+     * @return
+     */
+    @RequestMapping("/adminCourse")
+    public String adminCourseManager(){
+        return "/admin/course/courseSystem";
+    }
+
+
+    /**
+     * admin
+     * 跳转至add体系添加
+     * @return
+     * yan
+     */
+    @RequestMapping("/pageSystemAdd")
+    public String adminPageAddCourse(){return "/admin/course/systemAdd";}
+
+
 }

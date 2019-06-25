@@ -153,11 +153,11 @@
         </dependency>
 
         <!--引入qqSDK依赖-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.sdk4j</groupId>
             <artifactId>sdk4j</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
 
         <!--导入AspectJ-->
         <dependency>
@@ -183,11 +183,11 @@
 
 
         <!-- 引入zhenxi -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.zhenzi</groupId>
             <artifactId>sms</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>

@@ -77,5 +77,27 @@ public class CourseController {
     }
 
 
+    /**
+     * index首页获取最热课程四个
+     * yan
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/indexGetFour")
+    public ResultUtil indexgetCoursefour(){
+        List<Course> coursefour;
+        try {
+            coursefour = courseService.getCoursefour();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultUtil(500,e.getMessage());
+        }
+        return new ResultUtil(200,coursefour);
+    }
+
+
+
+
+
 
 }

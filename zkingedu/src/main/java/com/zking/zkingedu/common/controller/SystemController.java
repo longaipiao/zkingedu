@@ -2,6 +2,7 @@ package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.model.System;
 import com.zking.zkingedu.common.service.SystemService;
+import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,25 @@ public class SystemController {
         mv.addObject("systems",systems);
         mv.setViewName("/user/paths/show");
         return mv;
+    }
+
+
+    /**
+     * 后台admin 管理课程体系   展示所有课程体系一级   搜索分页
+     * 作者：yan
+     * @param page
+     * @param limit
+     * @param system
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getSystems")
+    public Object getSystemMenu(Integer page,Integer limit,System system){
+        PageBean<System> systemPageBean = new PageBean<>();
+        systemPageBean.setPageIndex(page);
+        systemPageBean.setPageSize(limit);
+        systemPageBean.setT(system);
+        return  systemService.getAllSystems(systemPageBean);
     }
 
 }
