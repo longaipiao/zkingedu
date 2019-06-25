@@ -16,4 +16,30 @@
                            t_pcata
     </select>
 
+
+<!--    根据自己的uid找到所有的帖子-->
+    <select id="getAllPosts" parameterType="integer" resultType="com.zking.zkingedu.common.model.Post">
+               select post_id,post_name,post_time,post_state
+                               from t_post
+               where post_uid=#{postUid}
+    </select>
+
+
+
+<!--    查到所有的帖子-->
+    <select id="getPostandUse" parameterType="integer" resultType="java.util.HashMap">
+                 select a.*,b.user_id,b.user_name,b.user_img,count(c.give_id) jishu FROM
+                                                                 t_post a,t_user b,t_give c
+                 where a.post_id=#{id} and a.post_uid=b.user_id and c.give_pid=a.post_id
+    </select>
+
+
+<!--    根据帖子ID找到所有的评论-->
+    <select id="getTcomAll" parameterType="integer" resultType="com.zking.zkingedu.common.model.Tcomment">
+              select tcomment_id,tcomment_cid,tcomment_uid,tcomment_content,tcomment_time,tcomment_fid
+                         from t_tcomment
+              where tcomment_cid=#{id}
+    </select>
+
+
 </mapper>

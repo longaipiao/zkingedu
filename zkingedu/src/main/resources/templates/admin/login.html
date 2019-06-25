@@ -33,7 +33,6 @@
          success:function (data) {
              if(name==data.empName && pass==data.empPassword)
              {
-                 alert("登录成功！");
                  $("#user_name").val("");
                  $("#password").val("");
                  $(location).attr('href', '/admin/index');

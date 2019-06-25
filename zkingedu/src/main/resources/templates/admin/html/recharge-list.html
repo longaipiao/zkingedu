@@ -34,46 +34,7 @@
         </a>
       </div>
 
-      <table class="layui-table" id="test" lay-filter="test">
-<!--        <thead>-->
-<!--          <tr>-->
-<!--            <th>-->
-<!--              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>-->
-<!--            </th>-->
-<!--            <th>ID</th>-->
-<!--            <th>账户/手机</th>-->
-<!--            <th>充值金额</th>-->
-<!--            <th>充值时间</th>-->
-<!--            <th>充值状态</th>-->
-<!--            <th>充值方式</th>-->
-<!--            <th>操作</th></tr>-->
-<!--        </thead>-->
-
-<!--        <tbody>-->
-<!--          <tr>-->
-<!--            <td>-->
-<!--              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>-->
-<!--            </td>-->
-<!--            <td>1</td>-->
-<!--            <td>admin</td>-->
-<!--            <td>100.0</td>-->
-<!--            <td>2019-01-01 11:11:42</td>-->
-<!--            <td>成功</td>-->
-<!--            <td>支付宝</td>-->
-<!--            <td class="td-manage">-->
-<!--              <a title="编辑"  onclick="x_admin_show('编辑','/html/member-edit',600,400)" href="javascript:;">-->
-<!--                <i class="layui-icon">&#xe642;</i>-->
-<!--              </a>-->
-<!--              <a onclick="x_admin_show('修改密码','/html/member-password',600,400)" title="修改密码" href="javascript:;">-->
-<!--                <i class="layui-icon">&#xe631;</i>-->
-<!--              </a>-->
-<!--              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
-<!--                <i class="layui-icon">&#xe640;</i>-->
-<!--              </a>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </tbody>-->
-      </table>
+      <table class="layui-table" id="test" lay-filter="test"></table>
 
     </div>
     <script type="text/html" id="toolbarDemo">
@@ -83,13 +44,10 @@
     </script>
 
     <script type="text/html" id="barDemo">
-      <a title="编辑"  onclick="x_admin_show('编辑','/html/member-edit',600,400)" href="javascript:;">
+      <a title="编辑" lay-event="edit" href="javascript:;">
         <i class="layui-icon">&#xe642;</i>
       </a>
-      <a onclick="x_admin_show('修改密码','/html/member-password',600,400)" title="修改密码" href="javascript:;">
-        <i class="layui-icon">&#xe631;</i>
-      </a>
-      <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+      <a title="删除" lay-event="del" href="javascript:;">
         <i class="layui-icon">&#xe640;</i>
       </a>
     </script>
@@ -97,21 +55,14 @@
 
 
 
-      /*用户-删除*/
-      function member_del(obj,id){
-          layer.confirm('确认要删除吗？',function(index){
-              //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
-          });
-      }
+
 
 
 
       function delAll (argument) {
 
         // var data = tableCheck.getData()-1;
-  
+
         // layer.confirm('确认要删除吗？'+data,function(index){
         layer.confirm('确认要删除吗？',function(index){
             //捉到所有被选中的，发异步进行删除
@@ -134,7 +85,7 @@
               {type: 'checkbox', fixed: 'left',width:120}
               ,{field:'roleID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
               ,{field:'roleName', title:'角色名', width:350, edit: 'text'}
-              ,{title:'操作', toolbar: '#barDemo', width:400}
+              ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
             ]
           ]
           ,page: true
@@ -159,6 +110,32 @@
           };
         });
 
+          //监听行工具事件
+          table.on('tool(test)', function(obj){
+              var data = obj.data;
+              console.log(data)
+              if(obj.event === 'del'){
+                  layer.confirm('真的删除行么', function(index){
+                      $.ajax({
+                          url:"/admin/role/del",
+                          type:"post",
+                          data:{roleID:data.roleID},
+                          success:function (data) {
+                              if(true==data)
+                              {
+                                  obj.del();
+                                  layer.close(index);
+                                  layer.msg('已删除!',{icon:1,time:1000});
+                              }else{
+                                  layer.msg('删除失败!',{icon:1,time:1000});
+                              }
+                          }
+                      });
+                  });
+              }else if(obj.event === 'edit'){
+                  x_admin_show('编辑','/html/admin-cate?roleName='+data.roleName,1100,600)
+              }
+          });
 
       });
     </script>

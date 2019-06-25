@@ -4,8 +4,15 @@
 <mapper namespace="com.zking.zkingedu.common.dao.RoleDao">
 
     <!--角色接口Mapper-->
+
     <select id="getRoles" resultType="role">
         select * from t_role
     </select>
 
+    <delete id="delRoleByID" parameterType="int">
+        delete from t_role where role_id = #{roleID}
+    </delete>
+    <delete id="delMenuRoleByID" parameterType="int">
+        delete from t_menu_role where role_id = #{RoleID}
+    </delete>
 </mapper>

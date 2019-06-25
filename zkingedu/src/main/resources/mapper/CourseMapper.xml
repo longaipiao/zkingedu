@@ -5,8 +5,13 @@
 
     <!--课程接口Mapper-->
 
+    <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
+<!--
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+-->
+
     <sql id="CourseSql">
-        course_id,course_sid,course_eid,course_name,course_desc,course_img,course_state,course_free,course_inte,course_num,course_time
+        course_id,course_sid,course_eid,course_name,course_desc,course_img,course_state,course_free,course_inte,course_num,course_time,course_type
     </sql>
 
     <!--根据课程体系id  查询对应的课程-->
@@ -18,6 +23,22 @@
     <!--根据课程id  查询课程信息-->
     <select id="getCourseBYcourseID" resultType="com.zking.zkingedu.common.model.Course">
             select <include refid="CourseSql"/> from t_course where course_id=#{id};
+    </select>
+
+
+    <!--添加查询课程  课程搜索页面-->
+    <select id="getCourseSearch" resultType="com.zking.zkingedu.common.model.Course">
+        select * from t_course
+        <where>
+            <if test="course.courseName != null">
+                course_name like '%${course.courseName}%'
+            </if>
+            <if test="course.courseType != null">
+                <if test="course.courseType.tId != null and course.courseType.tId != 0">
+                    and course_type=#{course.courseType.tId}
+                </if>
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -3,7 +3,6 @@ $(function () {
     //方法二则直接使分用layui-v2.0.2里面的页功能，没有用到core.js里面的方法
     layui.use('laypage', function(){
         var laypage = layui.laypage;
-
         var config = {page:1,pageSize:9};
         var url = "/findTool";
         $.getJSON(url,config,function(res){
