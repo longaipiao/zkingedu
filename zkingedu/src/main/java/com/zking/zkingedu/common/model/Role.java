@@ -61,4 +61,12 @@ public class Role implements Serializable {
     public void setMenus(Set<Menu> menus) {
         this.menus = menus;
     }
+
+    public Role() {
+    }
+
+    public Role(Integer roleID, String roleName) {
+        this.roleID = roleID;
+        this.roleName = roleName;
+    }
 }

@@ -13,4 +13,13 @@ public interface RoleService {
      * @return
      */
     List<Role> getRoles();
+
+    /**
+     * 删除单个角色
+     * 并且删除对应权限关联表数据
+     * @return
+     */
+    int delRoleByID(Integer roleID);
+    int delMenuRoleByID(Integer roleID);
+
 }
