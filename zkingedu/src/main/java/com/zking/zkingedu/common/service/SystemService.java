@@ -1,6 +1,7 @@
 package com.zking.zkingedu.common.service;
 
 import com.zking.zkingedu.common.model.System;
+import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 
 import java.util.List;
@@ -45,5 +46,14 @@ public interface SystemService {
      * @return
      */
     System getSystemBySid(Integer id);
+
+
+    /**
+     * admin
+     * 获取所有的体系信息  1级
+     * @return
+     * yan
+     */
+    ResultUtil getAllSystems(PageBean<System> pageBean);
 
 }

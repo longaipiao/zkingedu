@@ -20,13 +20,14 @@
 	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/static/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/highlight.js/9.8.0/monokai-sublime.min.css">
+	<link rel="stylesheet" href="/user/static/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
 	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
-	<link rel="stylesheet" href="/layui/css/layui.css">
+	<link rel="stylesheet" href="/user/layui/css/layui.css">
+    <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
 
 	<style>
 		@font-face {
@@ -281,167 +282,55 @@
 	<div class="container">
         <div class="clearfix text-center item-header">
             <span class="line"></span>
-            <div class="text-center item-title">实验课程</div>
+            <div class="text-center item-title">最热课程</div>
             <span class="line"></span>
         </div>
-		<div class="clearfix courses">
+		<div class="clearfix courses" id="courseFour">
 
+            <!--============================================-->
+            <!--============================================-->
+            <!--===================最热课程数据绑定=========================-->
+            <!--============================================-->
+            <!--============================================-->
 
+<!--            <div class="col-md-3 col-sm-6  course">-->
+<!--    <a class="course-box" href="courses/show.html">-->
+<!--        <div class="sign-box">-->
 
 
-<div class="col-md-3 col-sm-6  course">
-    <a class="course-box" href="courses/show.html">
-        <div class="sign-box">
 
+<!--            <i class="fa fa-star-o course-follow pull-right"-->
+<!--                data-follow-url="/courses/1/follow"-->
+<!--                data-unfollow-url="/courses/1/unfollow"  style="display:none"  ></i>-->
 
+<!--        </div>-->
+<!--        <div class="course-img">-->
 
-            <i class="fa fa-star-o course-follow pull-right"
-                data-follow-url="/courses/1/follow"
-                data-unfollow-url="/courses/1/unfollow"  style="display:none"  ></i>
+<!--            <img alt="Linux 基础入门（新版）" src="/user/img/ncn1.jpg">-->
 
-        </div>
-        <div class="course-img">
+<!--        </div>-->
 
-            <img alt="Linux 基础入门（新版）" src="/user/img/ncn1.jpg">
+<!--        <div class="course-body">-->
+<!--            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Linux 基础入门（新版）">Linux 基础入门（新版）</span>-->
+<!--        </div>-->
+<!--        <div class="course-footer">-->
+<!--			<span class="course-per-num pull-left">-->
+<!--                <i class="fa fa-users"></i>-->
 
-        </div>
+<!--                85157-->
 
-        <div class="course-body">
-            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Linux 基础入门（新版）">Linux 基础入门（新版）</span>
-        </div>
-        <div class="course-footer">
-			<span class="course-per-num pull-left">
-                <i class="fa fa-users"></i>
+<!--			</span>-->
 
-                85157
 
-			</span>
 
-
-
-        </div>
-    </a>
-</div>
-
-
-
-
-
-<div class="col-md-3 col-sm-6  course">
-    <a class="course-box" href="courses/show.html">
-        <div class="sign-box">
-
-
-
-            <i class="fa fa-star-o course-follow pull-right"
-                data-follow-url="/courses/11/follow"
-                data-unfollow-url="/courses/11/unfollow"  style="display:none"  ></i>
-
-        </div>
-        <div class="course-img">
-
-            <img alt="Go语言编程" src="/user/img/ncn11.jpg">
-
-        </div>
-
-        <div class="course-body">
-            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Go语言编程">Go语言编程</span>
-        </div>
-        <div class="course-footer">
-			<span class="course-per-num pull-left">
-                <i class="fa fa-users"></i>
-
-                5741
-
-			</span>
-
-
-
-        </div>
-    </a>
-</div>
-
-
-
-
-
-<div class="col-md-3 col-sm-6  course">
-    <a class="course-box" href="courses/show.html">
-        <div class="sign-box">
-
-
-
-            <i class="fa fa-star-o course-follow pull-right"
-                data-follow-url="/courses/23/follow"
-                data-unfollow-url="/courses/23/unfollow"  style="display:none"  ></i>
-
-        </div>
-        <div class="course-img">
-
-            <img alt="PHP编程语言" src="/user/img/ncn23.jpg">
-
-        </div>
-
-        <div class="course-body">
-            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="PHP编程语言">PHP编程语言</span>
-        </div>
-        <div class="course-footer">
-			<span class="course-per-num pull-left">
-                <i class="fa fa-users"></i>
-
-                8093
-
-			</span>
-
-
-
-        </div>
-    </a>
-</div>
-
-
-
-
-
-<div class="col-md-3 col-sm-6  course">
-    <a class="course-box" href="courses/show.html">
-        <div class="sign-box">
-
-
-
-            <i class="fa fa-star-o course-follow pull-right"
-                data-follow-url="/courses/30/follow"
-                data-unfollow-url="/courses/30/unfollow"  style="display:none"  ></i>
-
-        </div>
-        <div class="course-img">
-
-            <img alt="Python Django Web框架" src="/user/img/ncn30.jpg">
-
-        </div>
-
-        <div class="course-body">
-            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Python Django Web框架">Python Django Web框架</span>
-        </div>
-        <div class="course-footer">
-			<span class="course-per-num pull-left">
-                <i class="fa fa-users"></i>
-
-                5691
-
-			</span>
-
-
-
-        </div>
-    </a>
-</div>
-
+<!--        </div>-->
+<!--    </a>-->
+<!--</div>-->
 
 		</div>
         <div class="clearfix item-footer">
             <div class="pull-right watch-all">
-                <a href="courses/index.html">查看更多 ></a>
+                <a href="/user/courseSearch">查看更多 ></a>
             </div>
         </div>
 	</div>
@@ -591,7 +480,7 @@
     </div>
     </div>
     <script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
-    <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
+
     <script src="/user/static/ace/1.2.5/ace.js"></script>
     <script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
     <script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
@@ -723,7 +612,109 @@
         </script>
 
         <!--映入首页Index.js-->
-        <script type="text/javascript" charset="UTF-8" src="/userjs/userIndex.js"></script>
+<!--        <script type="text/javascript" charset="UTF-8" src="/userjs/userIndex.js"></script>-->
+        <script type="text/javascript">
+            $(function () {
+                //绑定学习路径数据
+                mycourse();
+                //绑定最热课程四个
+                mycourseFour();
+            })
+
+
+            /**
+             * 绑定学习路径数据
+             */
+            function mycourse() {
+                $.ajax({
+                    type:"GET",
+                    url:"/user/CourseEight",
+                    dataType:"json", //预期服务器返回数据的类型
+                    success:function(data){
+                        mydata(data);
+                    }
+                })
+            }
+
+
+            //绑定体系数据
+            function mydata(data){
+                var objs=data.data;
+                var str="";
+                for (var i=0;i<objs.length;i++){
+                    str+="<div class=\"col-xs-12 col-sm-6 col-md-4\">" +
+                        "<a href=\"/user/resourseShow?courseId="+objs[i].systemID+"\">" +
+                        "<div class=\"path-item\">" +
+                        "<div class=\"col-xs-5 col-sm-4 path-img\">" +
+                        "<img src="+objs[i].systemImg+">" +
+                        "</div>" +
+                        "<div class=\"col-xs-7 col-sm-8\">" +
+                        "<div class=\"path-name\">"+objs[i].systemName+"</div>" +
+                        "<div class=\"path-course-num\">" +
+                        "</span>"+objs[i].sourcesNum+"</span>" +
+                        "门课程" +
+                        "</div>" +
+                        "</div>" +
+                        "<div class=\"desc-layer\">" +
+                        "<div class=\"center\">"+objs[i].systemDesc+"</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</a>" +
+                        "</div>";
+                }
+                //console.log(str);
+                $("#course").html(str);
+            }
+
+
+            /**
+             * 绑定最热课程四个
+             */
+            function mycourseFour() {
+                $.ajax({
+                    type:"GET",
+                    url:"/user/indexGetFour",
+                    dataType:"json", //预期服务器返回数据的类型
+                    success:function(data){
+                        myFourdata(data.data);
+                    }
+                })
+            }
+
+            /**
+             * 最热课程数据绑定
+             */
+            function myFourdata(data) {
+
+                var str="";
+
+                for (var i=0;i<data.length;i++){
+                    str+="<div class=\"col-md-3 col-sm-6  course\">\n" +
+                        "<a class=\"course-box\" href=\"/user/showCourse?sid="+data[i].courseID+"\">\n" +
+                        "<div class=\"sign-box\">\n" +
+                        "<i class=\"fa fa-star-o course-follow pull-right\"\n" +
+                        "                data-follow-url=\"/courses/1/follow\"\n" +
+                        "                data-unfollow-url=\"/courses/1/unfollow\"  style=\"display:none\"  ></i>\n" +
+                        "</div>\n" +
+                        "<div class=\"course-img\">\n" +
+                        "<img alt=\""+data[i].courseName+"\" src=\""+data[i].courseImg+"\">\n" +
+                        "</div>\n" +
+                        "<div class=\"course-body\">\n" +
+                        "<span class=\"course-title\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+data[i].courseName+"\">"+data[i].courseName+"</span>\n" +
+                        "</div>\n" +
+                        "<div class=\"course-footer\">\n" +
+                        "<span class=\"course-per-num pull-left\">\n" +
+                        "<i class=\"fa fa-users\"></i>"+data[i].courseNum+"</span>\n" +
+                        "</div>\n" +
+                        "</a>\n" +
+                        "</div>";
+                }
+                console.log(str);
+                //数据开始绑定
+                $("#courseFour").html(str);
+            }
+
+        </script>
     </div>
 </div>
 

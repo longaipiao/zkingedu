@@ -1,8 +1,11 @@
 package com.zking.zkingedu.common.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.zking.zkingedu.common.dao.SystemDao;
 import com.zking.zkingedu.common.model.System;
 import com.zking.zkingedu.common.service.SystemService;
+import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +89,38 @@ public class SystemServiceImpl implements SystemService {
             System systemCourseNum = systemDao.getSystemCourseNum(systemBySid.getSystemID());
             systemBySid.setSourcesNum(systemCourseNum.getSourcesNum());
         return systemBySid;
+    }
+
+
+    /**
+     * admin
+     * 获取所有的体系信息  1级
+     * 分页  查询
+     * @return
+     * yan
+     */
+    @Override
+    public ResultUtil getAllSystems(PageBean<System> pageBean) {
+
+        ArrayList<System> systems = new ArrayList<>();
+        Page<Object> objects;
+        try {
+            //分页
+            objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
+            List<System> allSystems = systemDao.getAllSystems(pageBean.getT());
+            for (System allSystem : allSystems) {
+                System systemCourseNum = systemDao.getSystemCourseNum(allSystem.getSystemID());
+                allSystem.setSourcesNum(systemCourseNum.getSourcesNum());
+                systems.add(allSystem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultUtil(500,e.getMessage());
+        }
+        ResultUtil result = new ResultUtil();
+        result.setData(systems);
+        result.setCount(String.valueOf(objects.getTotal()));
+        result.setCode(0);
+        return result;
     }
 }

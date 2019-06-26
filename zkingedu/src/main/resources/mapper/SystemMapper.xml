@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.SystemDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--返回结果集，存在体系里面的课程-->
     <resultMap id="resultSystems" type="com.zking.zkingedu.common.model.System">
@@ -55,6 +55,15 @@
     <!--根据体系fid查询该体系下面有多少课程-->
     <select id="getSystemCourseNum" resultType="com.zking.zkingedu.common.model.System">
         select COUNT(*) as sources_num from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}
+    </select>
+
+
+    <!--admin 获取所有的体系信息  1级-->
+    <select id="getAllSystems" resultType="com.zking.zkingedu.common.model.System" parameterType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_fid=0
+        <if test="system.systemName != null">
+            and system_name like  '%${system.systemName}%' || system_desc like '%${system.systemName}%'
+        </if>
     </select>
 
 </mapper>

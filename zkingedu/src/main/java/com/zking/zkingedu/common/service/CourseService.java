@@ -48,4 +48,12 @@ public interface CourseService {
      */
     ResultUtil SearchCourse(PageBean<Course> pageBean);
 
+
+    /**
+     * 获取最热课程 四个播放量排序
+     * @return
+     * yan
+     */
+    List<Course> getCoursefour();
+
 }

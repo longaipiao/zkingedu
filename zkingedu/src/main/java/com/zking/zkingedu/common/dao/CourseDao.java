@@ -38,4 +38,12 @@ public interface CourseDao {
      */
     List<Course> getCourseSearch(@Param("course") Course course);
 
+
+    /**
+     * 获取最热课程 四个播放量排序
+     * @return
+     * yan
+     */
+    List<Course> getCoursefour();
+
 }
