@@ -22,4 +22,23 @@ public class UrlController {
         return "admin/index";
     }
 
+
+    /**
+     * 后台开发者工具跳转路径
+     */
+    @RequestMapping(value = "/amdin/tool")
+    public String toolhref(){
+        return "admin/html/integral-list";
+    }
+
+
+    /**
+     * 后台增加开发者工具跳转路径
+     */
+    @RequestMapping(value = "/amdin/addtool")
+    public String addtool(){
+        return "admin/html/admin-addtool";
+    }
+
+
 }

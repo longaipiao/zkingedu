@@ -53,6 +53,17 @@ public class CourseServiceImpl implements CourseService {
 
 
     /**
+     * 根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频
+     * @param courseid 课程id
+     * @return
+     */
+    @Override
+    public int findCourseIntegrsl(Integer courseid) {
+        return courseDao.findCourseIntegrsl(courseid);
+    }
+
+
+    /**
      * 添加查询课程  课程搜索页面
      * @param course
      * @return
@@ -94,6 +105,17 @@ public class CourseServiceImpl implements CourseService {
             e.printStackTrace();
             return new ResultUtil(500,"数据接口异常",e.getMessage());
         }
+    }
+
+
+    /**
+     * 根据课程id查询课程名称
+     * @param courseid  课程id
+     * @return
+     */
+    @Override
+    public String findCourseName(Integer courseid) {
+        return courseDao.findCourseName(courseid);
     }
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th=" http://www.w3.org/1999/xhml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>课程体系管理</title>
@@ -16,6 +16,13 @@
 	</style>
 </head>
 <body>
+<div class="demoTable">
+	搜索：
+	<div class="layui-inline">
+		<input class="layui-input" name="search" id="demoReload" autocomplete="off">
+	</div>
+	<button class="layui-btn" id="search" data-type="reload">搜索</button>
+</div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script type="text/html" id="toolbarDemo">
 	<div class="layui-btn-container">
@@ -29,19 +36,29 @@
 
 </body>
 <script type="text/html" id="barDemo">
-	<a class="layui-btn layui-btn-xs" lay-event="edit">阶段管理</a>
+	<a class="layui-btn layui-btn-xs" lay-event="stagemanger">阶段管理</a>
 	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+
+<script type="text/html" id="checkboxTpl">
+	<!-- 这里的 checked 的状态只是演示 -->
+	<input type="checkbox" name="lock" value="{{d.systemID}}" title="展示体系" lay-filter="lockDemo" {{ d.systemState == 0 ? 'checked' : '' }}>
+</script>
+
 <script>
-	layui.use('table', function(){
+	layui.use(['table','layer','form','jquery'], function(){
 		var table = layui.table;
+		var layer = layui.layer;
+		var form = layui.form;
+		var $ = layui.jquery;
 
 		table.render({
 			elem: '#test'
 			,url:'/user/getSystems'
 			,toolbar: '#toolbarDemo'
 			,title: '体系数据表'
+			,id:"tableReload"
 			,limit:5
 			,cols: [
 					[
@@ -55,11 +72,25 @@
 				,{field:'systemImg', title:'体系图片',width:150,templet:function (res) {
 					return '<img src="'+res.systemImg+'"/>'
 				}}
+				,{field:'systemState', title:'课程状态', templet: '#checkboxTpl',unresize: true}
 				,{field:'sourcesNum', title:'体系课程数量'}
 				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
 			]
 			]
 			,page: true//开启分页
+		});
+
+
+		$("#search").on('click', function(){
+			//执行重载
+			table.reload('tableReload', {
+				page: {
+					curr: 1 //重新从第 1 页开始
+				}
+				,where: {
+					systemName:$('#demoReload').val()
+				}
+			});
 		});
 
 		//头工具栏事件
@@ -77,7 +108,7 @@
 				case 'isAll':
 					layer.msg(checkStatus.isAll ? '全选': '未全选');
 					break;
-				case 'add':
+				case 'add': //添加体系
 					layer.open({
 						type: 2,
 						title:"添加体系",
@@ -85,6 +116,29 @@
 						content:"/html/pageSystemAdd", //这里content是一个普通的String
 					})
 			};
+		});
+
+		//监听状态操作
+		form.on('checkbox(lockDemo)', function(obj){
+			$.ajax({
+				type: "post",
+				url: "/user/updateSystemState",
+				async:true,
+				data:{
+					state:obj.elem.checked,
+					systemId : this.value
+				},
+				dataType:"json",
+				success:function(d){
+					if(d.code==0){
+						layer.msg(d.msg);
+					}
+					else{
+						layer.msg(d.msg);
+					}
+				}
+			});
+			// console.log("value:"+this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
 		});
 
 		//监听行工具事件
@@ -97,15 +151,19 @@
 					layer.close(index);
 				});
 			} else if(obj.event === 'edit'){
-				layer.prompt({
-					formType: 2
-					,value: data.email
-				}, function(value, index){
-					obj.update({
-						email: value
-					});
-					layer.close(index);
-				});
+				layer.open({
+					type: 2,
+					title:"编辑体系",
+					area: ['500px', '600px'],
+					content:"/user/sysperedit?sid="+data.systemID, //这里content是一个普通的String
+				})
+			}else if(obj.event === 'stagemanger'){
+				layer.open({
+					type: 2,
+					title:"体系阶段管理",
+					area: ['600px', '500px'],
+					content:"/user/pageStageManager?systemID="+data.systemID //这里content是一个普通的String
+				})
 			}
 		});
 	});

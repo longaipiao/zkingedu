@@ -14,6 +14,23 @@ public interface ToolDao {
      * @param
      * @return
      */
-    public List<Tool> findAll();
+    public List<Tool> findAll(Tool tool);
+
+
+    /**
+     * 增加工具的方法
+     */
+    public int addTool(Tool tool);
+
+    /**
+     * 根据工具id查询图片
+     */
+    public Tool findImg(Integer toolID);
+
+    /**
+     * 根据工具id修改的方法
+     */
+    public int updateTool(Tool tool);
+
 
 }

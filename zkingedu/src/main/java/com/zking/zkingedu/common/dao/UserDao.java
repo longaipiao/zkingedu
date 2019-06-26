@@ -17,4 +17,10 @@ public interface UserDao {
     Integer updateipaddrlastTime(@Param("uid") Integer uid,@Param("ipaddr")String ipaddr,@Param("lastTime")String lastTime);
     //强制下线
     User getUser(@Param("uid") Integer uid);
+
+
+    /**
+     * 查询用户积分的方法
+     */
+    public int findIntegrsl(Integer userID);
 }

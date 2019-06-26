@@ -18,4 +18,9 @@ public interface SectionDao {
      */
     List<Section> getSectionsBycid(Integer cid);
 
+    /**
+     * 根据章节的id查询单个章节下的积分
+     */
+    public int findSectInteg(Integer sectionID);
+
 }

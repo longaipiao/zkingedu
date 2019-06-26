@@ -65,5 +65,42 @@
             and system_name like  '%${system.systemName}%' || system_desc like '%${system.systemName}%'
         </if>
     </select>
+    
 
+    <!--体系添加 yan-->
+    <insert id="adminAddSystem" keyProperty="systemID" useGeneratedKeys="true" >
+        insert into t_system (system_name,system_fid,system_state,system_desc,system_img) values (
+            #{system.systemName},#{system.systemFid},#{system.systemState},#{system.systemDesc},#{system.systemImg}
+        )
+    </insert>
+
+
+    <!--修改体系状态-->
+    <update id="updateSystemState">
+        update t_system set system_state = #{stateid} where system_id =#{systemid}
+    </update>
+
+    <!--体系信息修改-->
+    <update id="updateSystem">
+        update t_system set system_name=#{system.systemName},system_desc=#{system.systemDesc},system_img=#{system.systemImg} where system_id=#{system.systemID}
+    </update>
+
+
+    <!--admin添加体系阶段-->
+    <insert id="addSystemStage">
+        insert into t_system (system_name,system_fid,system_state) values (#{stageName},#{sid},0);
+    </insert>
+    
+    
+    <!--根据fid  查询对应的体系阶段-->
+    <select id="getSystemsAndStagesByFid" resultType="com.zking.zkingedu.common.model.System">
+        select system_id,system_name,system_fid,system_state from t_system where system_fid=#{fid}
+    </select>
+    
+    
+    <!--修改体系名称-->
+    <update id="updateSystemAndStageBySid" >
+        update t_system set system_name  = #{stageName} where system_id=#{sid}
+    </update>
+    
 </mapper>

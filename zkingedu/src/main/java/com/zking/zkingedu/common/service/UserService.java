@@ -18,4 +18,9 @@ public interface UserService {
     //强制下线
     User getUser(@Param("uid") Integer uid);
 
+    /**
+     * 查询用户积分的方法
+     */
+    public int findIntegrsl(Integer user_id);
+
 }

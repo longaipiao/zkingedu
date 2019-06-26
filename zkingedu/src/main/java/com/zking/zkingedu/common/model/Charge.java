@@ -24,4 +24,6 @@ public class Charge implements Serializable {
     private Integer chargeIntegral;
     //'账单时间
     private String chargeTime;
+    //状态
+    private Integer chargeState;
 }

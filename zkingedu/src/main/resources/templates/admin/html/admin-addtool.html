@@ -2,50 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>体系添加页面</title>
-    <meta name="renderer" content="webkit">
+    <title>工具添加</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script type="text/javascript" src="/layui/layui.js"></script>
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/admin/css/font.css">
+    <link rel="stylesheet" href="/admin/css/xadmin.css">
+    <link rel="stylesheet" href="/admin/lib/layui/css/layui.css">
+    <script src="/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/admin/js/xadmin.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
-<form class="layui-form" action="" lay-filter="example">
+<!--增加工具的界面-->
+<form class="layui-form" action="" id="tool">
+
+    <br/><br/>
+    <div align="center" style="font-size: 20px;">增加工具</div>
+    <br/><br/>
+
+    <input type="hidden" id="uid"/>
     <div class="layui-form-item">
-        <label class="layui-form-label">体系名称</label>
+        <label class="layui-form-label">工具标题：</label>
         <div class="layui-input-block">
-            <input type="text" name="systemName" lay-verify="title" autocomplete="off" placeholder="请输入体系名称" class="layui-input">
+            <input type="text" id="toolName" name="toolName" required lay-verify="required"  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">工具描述：</label>
+        <div class="layui-input-inline">
+            <input type="text" id="toolDescribe" name="toolDescribe" required lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">工具链接：</label>
+        <div class="layui-input-block">
+            <input type="text" id="toolUrl" name="toolURL" required lay-verify="required"  autocomplete="off" class="layui-input">
         </div>
     </div>
 
-
-    <!--轮播图片  -->
+    <!--工具图片-->
     <div class="layui-form-item">
-        <label class="layui-form-label">体系封面</label>
+        <label class="layui-form-label">工具图片</label>
         <div class="layui-input-block">
             <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button><br />
             <img class="layui-upload-img" id="preview" style="width: 150px;margin-top: 5px">
             <p id="uploadError"></p>
-            <input type="hidden" lay-verify="imgurl" name="systemImg" id="newsImg" value=""/>
-        </div>
-    </div>
-
-
-
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">体系描述</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="systemDesc"></textarea>
+            <input type="hidden" lay-verify="imgurl" name="toolImg" id="toolImg" value=""/>
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit=""  id="sub" lay-filter="demo1">立即提交</button>
+            <button class="layui-btn" lay-submit="" id="sub" lay-filter="demo1">立即提交</button>
         </div>
     </div>
 </form>
-</body>
+
 <script>
     layui.use(['form', 'layedit','upload'], function(){
         var form = layui.form
@@ -72,7 +91,7 @@
                 }
                 //上传成功
                 //设置src给图片隐藏域
-                $("#newsImg").val(res.data.src);
+                $("#toolImg").val(res.data.src);
                 layer.msg('上传成功')
             }
             ,error: function(){
@@ -87,12 +106,13 @@
 
         //监听提交
         form.on('submit(demo1)', function(data){
+            alert(data.field);
             //弹出loading
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
             var msg;
             $.ajax({
                 type: "post",
-                url: "/user/addSystem",
+                url: "/User/addTool",
                 data:data.field,
                 dataType:"json",
                 success:function(d){
@@ -115,4 +135,5 @@
 
     });
 </script>
+</body>
 </html>

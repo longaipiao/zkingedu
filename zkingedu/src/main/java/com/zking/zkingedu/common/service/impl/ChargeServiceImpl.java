@@ -5,6 +5,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.config.AlipayConfig;
 import com.zking.zkingedu.common.dao.ChargeDao;
 import com.zking.zkingedu.common.model.AlipayBean;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 充值记录接口服务层
@@ -82,4 +85,27 @@ public class ChargeServiceImpl implements ChargeService {
         return form;
 
     }
+
+    /**
+     * 根据用户id查询出所有的充值记录信息
+     * @param userId 用户id
+     * @return
+     */
+    @Override
+    public PageInfo<Charge> findCharge(Integer userId, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<Charge> charges = chargeDao.findCharge(userId);
+        return new PageInfo<>(charges);
+    }
+
+    /**
+     * 修改充值记录表的状态 为2 ，页面上的按钮是删除
+     * @return
+     */
+    @Override
+    public int updateState(Integer chargeID) {
+        return chargeDao.updateState(chargeID);
+    }
+
+
 }

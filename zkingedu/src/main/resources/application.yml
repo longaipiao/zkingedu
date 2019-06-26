@@ -2,7 +2,7 @@
 server:
    servlet:
      context-path:  /
-   port: 8080
+   port: 8899
 #配置数据库
 spring:
   datasource:

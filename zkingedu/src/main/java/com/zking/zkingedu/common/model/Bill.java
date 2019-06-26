@@ -26,4 +26,6 @@ public class Bill implements Serializable {
     private String billTime;
     //'账单内容
     private String billContent;
+    //状态
+    private Integer billState;
 }

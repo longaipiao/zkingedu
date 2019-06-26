@@ -1,16 +1,26 @@
 package com.zking.zkingedu.common.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.config.AlipayConfig;
+import com.zking.zkingedu.common.model.Bill;
+import com.zking.zkingedu.common.model.Charge;
+import com.zking.zkingedu.common.service.BillService;
 import com.zking.zkingedu.common.service.ChargeService;
 import com.zking.zkingedu.common.utils.PayUtils;
+import com.zking.zkingedu.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,10 +33,20 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
+@Transactional
 public class ChargeController {
 
+    //充值记录表的注入
     @Resource
     private ChargeService chargeService;
+    //账单表的记录
+    @Resource
+    private BillService billService;
+
+    @Autowired
+    private Charge charge;
+    @Autowired
+    private Bill bill;
 
 
     /**
@@ -38,16 +58,37 @@ public class ChargeController {
      * @param chargeMoney     商品名称
      * @param chargeIntegral 付款金额
      * @param body        商品描述
-     * @param type        支付方式 1 支付宝支付 2 连连支付
      * @return String
      */
     @RequestMapping(value = "/pay")
-    public String aliPay(String outTradeNo, String chargeIntegral, String chargeMoney, String body, String type, HttpServletRequest request, HttpServletResponse response) {
+    public String aliPay(String outTradeNo, String chargeIntegral, String chargeMoney, String body, HttpServletRequest request, HttpServletResponse response) {
         // 为防止订单号重否 此处模拟生成唯一订单号
         outTradeNo = PayUtils.createUnilCode();
+        log.info("获取金额和积分");
+        String Money = request.getParameter("chargeMoney");
+        String Integral = request.getParameter("chargeIntegral");
+        log.info("开始增加充值记录表的数据");
+        charge.setChargeUid(1);//用户id
+        charge.setChargeMoney(Double.parseDouble(Money));//收入金额
+        charge.setChargeIntegral(Integer.parseInt(Integral));//充值积分
+        //充值时间
+        charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        charge.setChargeState(1);//状态
+        chargeService.addCharge(charge);//开始执行充值的方法
+        log.info("结束增加充值记录表的数据");
+
+        log.info("开始增加账单表的数据");
+        bill.setBillUid(1);//用户id
+        bill.setBillType(0);//充值状态
+        bill.setBillIntegral(Integer.parseInt(Integral));//充值积分
+        //账单时间
+        bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        //账单内容
+        bill.setBillContent("本次在本平台消费金额为"+Double.parseDouble(Money)+"元，"+"充值积分为"+Integer.parseInt(Integral)+",充值完成。");
+        billService.addBill(bill);
+        log.info("结束增加账单表的数据");
         //支付宝支付
         return chargeService.alipay(outTradeNo, chargeIntegral, chargeMoney.toString(), body, AlipayConfig.NOTIFY_URL, request, response);
-
     }
 
 
@@ -55,23 +96,10 @@ public class ChargeController {
      * 支付宝异步回调
      */
    /* @RequestMapping(value = "/alipay/orderNotify", method = RequestMethod.POST)
-    private static Map<String,String> getReceiveMap(HttpServletRequest request){
-        Map<String,String> params = new HashMap<String,String>();
-        Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            //乱码解决，这段代码在出现乱码时使用。
-            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-            params.put(name, valueStr);
-        }
+    private String getReceiveMap(HttpServletRequest request){
 
-        return params;
+
+        return "http://localhost:8899/user/userinfo/index";
     }*/
 
 
@@ -79,5 +107,38 @@ public class ChargeController {
     public String returnUrl(HttpServletResponse response, HttpServletRequest request) throws Exception {
         return "paySuccess";
     }*/
+
+
+    /**
+     * 根据用户id查询出所有的充值记录信息
+     */
+    @RequestMapping(value = "/findCharge")
+    @ResponseBody
+    public Map<String,Object> findcharge(Integer page,Integer limit){
+        log.info("***********开始查询充值记录表的数据**************");
+        PageInfo<Charge> charge = chargeService.findCharge(1,page,limit);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",charge.getTotal());
+        maps.put("data",charge.getList());
+        log.info("***********结束查询充值记录表的数据**************");
+        return maps;
+    }
+
+
+    /**
+     * 修改充值记录表的状态 为2 ，页面上的按钮是删除
+     */
+    @RequestMapping(value = "/updateState")
+    public void updatestate(HttpServletResponse response,Integer chargeID) throws Exception {
+        log.info("**************开始删除充值记录的方法***********");
+        int state = chargeService.updateState(chargeID);
+        ResponseUtil.write(response,state);
+        log.info("**************结束删除充值记录的方法***********");
+    }
+
+
+
 
 }

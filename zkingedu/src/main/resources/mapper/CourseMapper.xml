@@ -41,6 +41,15 @@
         </where>
     </select>
 
+    <!--根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频-->
+    <select id="findCourseIntegrsl" resultType="java.lang.Integer">
+        select course_inte from t_course where course_id = #{courseid}
+    </select>
+
+    <!--根据课程id查询课程名称-->
+    <select id="findCourseName" parameterType="integer" resultType="string">
+        select course_name from t_course where course_id = #{courseid}
+    </select>
 
 
     <!-- 获取最热课程 四个播放量排序-->

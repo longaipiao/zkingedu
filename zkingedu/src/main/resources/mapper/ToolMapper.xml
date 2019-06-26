@@ -6,7 +6,7 @@
     <!--开发者工具接口Mapper-->
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--sql字段-->
    <sql id="toolsql">
@@ -14,10 +14,30 @@
    </sql>
 
     <!--查询所有的工具信息-->
-    <select id="findAll" resultType="com.zking.zkingedu.common.model.Tool">
-        select  <include refid="toolsql"/> from t_tool
+    <select id="findAll" resultType="com.zking.zkingedu.common.model.Tool" parameterType="com.zking.zkingedu.common.model.Tool">
+        select  <include refid="toolsql"/> from t_tool where 1 = 1
+        <if test="toolName != null">
+            and tool_name like '%${toolName}%'
+        </if>
     </select>
 
 
+    <!--增加工具的方法-->
+    <insert id="addTool" parameterType="com.zking.zkingedu.common.model.Tool">
+        insert into t_tool(tool_name,tool_describe,tool_url,tool_img,tool_time)
+        values(#{toolName},#{toolDescribe},#{toolURL},#{toolImg},#{toolTime})
+    </insert>
+
+    <!--根据工具id查询图片-->
+    <select id="findImg" parameterType="integer" resultType="com.zking.zkingedu.common.model.Tool">
+        select <include refid="toolsql"/> from t_tool where tool_id = #{toolID}
+    </select>
+
+    <!--根据工具id修改的方法-->
+    <update id="updateTool" parameterType="com.zking.zkingedu.common.model.Tool">
+        update t_tool set tool_name = #{toolName},tool_describe = #{toolDescribe},
+        tool_url = #{toolURL},tool_img = #{toolImg},tool_time = #{toolTime}
+        where tool_id = #{toolID}
+    </update>
 
 </mapper>

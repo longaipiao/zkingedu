@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>体系添加页面</title>
+    <title>体系修改页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,22 +11,23 @@
 </head>
 <body>
 <form class="layui-form" action="" lay-filter="example">
+    <!--影藏标签体系id-->
+    <input type="hidden" name="systemID" th:value="${system.systemID}"  value="" />
     <div class="layui-form-item">
         <label class="layui-form-label">体系名称</label>
         <div class="layui-input-block">
-            <input type="text" name="systemName" lay-verify="title" autocomplete="off" placeholder="请输入体系名称" class="layui-input">
+            <input type="text" name="systemName" th:value="${system.systemName}" lay-verify="title" autocomplete="off" placeholder="请输入体系名称" class="layui-input">
         </div>
     </div>
 
-
     <!--轮播图片  -->
     <div class="layui-form-item">
-        <label class="layui-form-label">体系封面</label>
+        <label class="layui-form-label">体系图片</label>
         <div class="layui-input-block">
             <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button><br />
-            <img class="layui-upload-img" id="preview" style="width: 150px;margin-top: 5px">
+            <img class="layui-upload-img" id="preview" th:src="${system.systemImg}" style="width: 150px;margin-top: 5px">
             <p id="uploadError"></p>
-            <input type="hidden" lay-verify="imgurl" name="systemImg" id="newsImg" value=""/>
+            <input type="hidden" lay-verify="imgurl" th:value="${system.systemImg}" name="systemImg" id="newsImg" value=""/>
         </div>
     </div>
 
@@ -35,7 +36,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">体系描述</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="systemDesc"></textarea>
+            <textarea placeholder="请输入内容" th:text="${system.systemDesc}" class="layui-textarea" name="systemDesc"></textarea>
         </div>
     </div>
 
@@ -92,7 +93,7 @@
             var msg;
             $.ajax({
                 type: "post",
-                url: "/user/addSystem",
+                url: "/user/editSystem",
                 data:data.field,
                 dataType:"json",
                 success:function(d){

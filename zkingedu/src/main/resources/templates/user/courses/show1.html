@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
     <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
-
+    <link rel="stylesheet" href="/user/layui/css/layui.css">
     <style>
         @font-face {
             font-family: "lantingxihei";
@@ -226,8 +226,11 @@
                     <li role="presentation">
                         <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(1194)</a>
                     </li>
-
+                    <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
                 </ul>
+
+
+
                 <div class="tab-content">
 
                     <div role="tabpanel" class="tab-pane active" id="labs">
@@ -243,6 +246,7 @@
                             <div class="lab-item-title" data-toggle="tooltip" data-placement="bottom" th:title="${se.sectionName}" th:text="${se.sectionName}" title="Linux 系统简介">Linux 系统简介</div>
                             <div class="pull-right lab-item-ctrl">
                                 <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
+                                <input type="hidden" id="courseID" th:value="${course.courseID}"/>
                             </div>
                         </div>
 
@@ -917,6 +921,63 @@
     </div>
 </div>
 
+<script src="/user/layui/layui.js"></script>
+
+
+
+
+<!--用户的所有积分-->
+<input type="hidden" id="userintegrsl" th:value="${session.userintegrsl}" />
+<!--课程是需要的积分-->
+<input type="hidden" id="courseIntegrsl" th:value="${session.courseIntegrsl}" />
+<script type="text/javascript">
+    $(function () {
+        //alert("用户:"+$("#userintegrsl").val());
+        //alert("课程:"+$("#courseIntegrsl").val());
+        var s1 = $("#userintegrsl").val();
+        var s2 = $("#courseIntegrsl").val();
+
+        layui.use('layer', function(){
+            var layer = layui.layer;
+                layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+        });
+
+
+        /**
+         * 购买全套视频的点击事件
+         */
+        $("#qtsp").click(function () {
+            alert("开始购买视频。。。。。");
+            //courseID sectionID
+            var courseid = $("#courseID").val();
+            alert(courseid);
+            layer.confirm('亲，您确定要购买本套视频吗？', function(){
+                layer.alert('本套视频共需要'+s2+'积分购买！');
+                //开始购买视频
+                $.ajax({
+                    type : "post",
+                    url : "/purchase",
+                    data : {
+                        courseID : courseid,
+                        integral : s2
+                    },
+                    success : function (data) {
+                        if(data==1){
+                            layer.msg("成功购买本套视频。",{icon: 1} );
+                        }else{
+                            layer.msg("购买本套视频失败。",{icon: 5});
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+
+        });
+
+
+    });
+
+</script>
 
 
 
