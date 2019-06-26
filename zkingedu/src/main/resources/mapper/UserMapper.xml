@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
-   <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+   <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--用户接口Mapper-->
 
@@ -16,8 +16,8 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     </select>
     <!-- 注册-->
     <insert id="add" parameterType="user">
-        insert into t_user(user_name,user_password,user_integrsl,user_state,user_ip,user_lastTime,user_regTime,user_openid,user_phone,user_img,user_email)
-        values (#{userName},#{userPassword},#{userIntegrsl},#{userState},#{userIP},#{userLastTime},#{userRegTime},#{userOpenID},#{userPhone},#{userImg},#{userEmail})
+        insert into t_user(user_name,user_password,user_integrsl,user_state,user_ip,user_lastTime,user_regTime,user_openid,user_phone,user_img,user_email,user_cwcs)
+        values (#{userName},#{userPassword},#{userIntegrsl},#{userState},#{userIP},#{userLastTime},#{userRegTime},#{userOpenID},#{userPhone},#{userImg},#{userEmail},#{userCwcs})
     </insert>
     <!-- 登入 -->
     <select id="userlogin" resultType="user">
@@ -31,6 +31,29 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <select id="getUser" resultType="user">
         select * from t_user where user_id=#{uid}
     </select>
+    <!-- 根据手机号查询错误次数-->
+    <select id="getCwcs" resultType="Integer">
+        select user_cwcs from t_user where user_phone=#{phone}
+    </select>
+
+    <!-- 根据手机号修改次数-->
+    <update id="updateCwcs" parameterType="String">
+        update t_user set user_cwcs=user_cwcs+1 where user_phone=#{phone}
+    </update>
+
+    <!-- 根据手机号修改密码-->
+    <update id="updatePhonePassword">
+        update t_user set user_password=#{password} where user_phone=#{phone}
+    </update>
+
+    <!-- 根据邮箱修改密码-->
+    <update id="updateEmmitPassword">
+        update t_user set user_password=#{password} where user_email=#{emit}
+    </update>
+    <!-- 根据openid查询用户-->
+    <select id="getopenid" resultType="user">
+        select * from t_user where user_openid=#{openid} and user_state=0
+    </select>
 
 
     <!--/**
@@ -41,4 +64,17 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
         select user_integrsl from t_user where user_id = #{userID}
     </select>
 
+    <!-- 根据openid修改用户-->
+    <update id="updateOpenid" >
+        update t_user set user_password=#{password},user_phone=#{phone} where user_openid=#{openid}
+    </update>
+
+    <!-- 根据手机号绑定openid -->
+    <update id="updateOpenids">
+        update t_user set  user_openid=#{openid},user_ip=#{ip} where user_phone=#{phone}
+    </update>
+    <!-- 根据用户id修改头像 -->
+    <update id="updateupload">
+        update  t_user set user_img=#{upload} where user_id=#{uid}
+    </update>
 </mapper>

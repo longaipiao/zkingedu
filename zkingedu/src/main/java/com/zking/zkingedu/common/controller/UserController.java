@@ -1,16 +1,17 @@
 package com.zking.zkingedu.common.controller;
 
 import com.alibaba.fastjson.JSONObject;
-/*import com.qq.connect.QQConnectException;
+import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
 import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
-import com.zhenzi.sms.ZhenziSmsClient;*/
+import com.zhenzi.sms.ZhenziSmsClient;
 import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.impl.UserServiceImpl;
-//import com.zking.zkingedu.common.utils.IpAddress;
+import com.zking.zkingedu.common.utils.IpAddress;
+import com.zking.zkingedu.common.utils.transferImgForRoundImgage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -22,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -44,7 +46,7 @@ public class UserController {
     private UserService userService;
 
     //用户注册
-   /* @ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/zc")
     public String zc(String phone,String password)throws Exception{
         //手机号
@@ -88,6 +90,40 @@ public class UserController {
         return "2";
     }
 
+
+
+    /**
+     * 测试
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cs")
+    public String cs(){
+        User user = userService.getUser(42);
+
+        System.out.println(user.getUserIP()+"ip地址");
+        return null;
+    }
+
+    /**
+     * 手机号修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updatePhonepassword")
+    public String updatePhonepassword(String phone,HttpServletRequest request,String password2){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Integer n = userService.updatePhonePassword(phone, password2);
+
+        if(n>0){
+            session.setAttribute("user",null);
+            return "1";
+        }
+        return null;
+
+    }
+
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
@@ -95,21 +131,55 @@ public class UserController {
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
         //发送短信
-       *//* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
-        String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*//*
+       /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+        String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
 
         //将验证码存到session中,同时存入创建时间
         //以json存放，这里使用的是阿里的fastjson
-       *//* json = new JSONObject();
+       /* json = new JSONObject();
         json.put("mobile", mobile);
         json.put("verifyCode", verifyCode);
-        json.put("createTime", System.currentTimeMillis());*//*
+        json.put("createTime", System.currentTimeMillis());*/
         // 将认证码存入SESSION
         System.out.println(verifyCode);
         return verifyCode;
 
     }
 
+    /**
+     * 修改头像
+     * @param request
+     * @param response
+     * @param upload
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateupload")
+    @ResponseBody
+    public String upload(HttpServletRequest request, HttpServletResponse response,String upload) throws Exception {
+        System.out.println(upload);
+        HttpSession session = request.getSession();
+        User user =(User) session.getAttribute("user");
+        Integer n = userService.updateupload(user.getUserID(), upload);
+        if(n>0){
+            //在根据手机号查一遍
+            User userlogin = userService.userlogin(user);
+            session.setAttribute("user",null);
+            session.setAttribute("user",userlogin);
+            return "1";
+        }
+        return "2";
+
+    }
+
+
+    /**
+     * qq接口
+     * @param request
+     * @param response
+     * @return
+     * @throws QQConnectException
+     */
     @ResponseBody
     @RequestMapping(value = "/LoginCallback2")
     public String  LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
@@ -139,6 +209,71 @@ public class UserController {
         return "user/index";
     }
 
+    /**
+     * qq登入绑定新用户
+     */
+    @RequestMapping(value = "/qqlogin")
+    @ResponseBody
+    public String qqlogin(String phone,String upwd,HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        //qqid
+        String userOpenID=(String) session.getAttribute("openid");
+        //qq头像
+        String Avatar=(String) session.getAttribute("Avatar");
+        //qq名字
+        String nickName=(String) session.getAttribute("nickName");
+        //qqid
+        user.setUserOpenID(userOpenID);
+        //注册时间
+        user.setUserRegTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        //状态
+        user.setUserState(0);
+        //积分
+        user.setUserIntegrsl(0);
+        //昵称
+        user.setUserName(nickName);
+        //图片
+        // System.out.println(new transferImgForRoundImgage().transferImgForRoundImgage(userInfoBean.getAvatar().getAvatarURL100()));
+
+        user.setUserImg(Avatar);
+        //错误次数
+        user.setUserCwcs(0);
+        //ip
+        user.setUserIP(IpAddress.getIpAddr(request));
+        //增加这个openid
+        Integer add = userService.add(user);
+        if(add>0){
+            Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
+            if(integer!=null){
+                System.out.println(integer);
+                User qquser = userService.getopenid(userOpenID);
+                session.setAttribute("user",qquser);
+                return "1";
+            }
+        }
+
+        return "2";
+    }
+    /**
+     * qq登入绑定老用户
+     */
+    @RequestMapping(value = "/yjqqlogin")
+    @ResponseBody
+    public String yjqqlogin(String phone,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String openid=(String) session.getAttribute("openid");
+        Integer integer = userService.updateOpenids(phone,openid,IpAddress.getIpAddr(request));//根据用户手机号增加openid
+        if(integer!=null){
+            System.out.println(integer);
+            User qquser = userService.getopenid(openid);
+            session.setAttribute("user",qquser);
+            return "1";
+        }
+        return "2";
+    }
+
+    //用户登入
     @ResponseBody
     @RequestMapping(value = "/login")
     public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
@@ -171,18 +306,34 @@ public class UserController {
          }
         return "";
     }
+    /**
+     * 注销
+     */
+    @RequestMapping(value = "/zhuxiao")
+    public String zhuxiao(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        //清空用户的session
+        session.setAttribute("user",null);
+        session.setAttribute("b",null);
+        session.setAttribute("a",null);
+        session.setAttribute("nickName",null);
+        session.setAttribute("Avatar",null);
+        session.setAttribute("openid",null);
 
-    *//**
+        return "user/index";
+    }
+
+    /**
      * 用户点击qq联合登陆
      * @return
-     *//*
+     */
     @RequestMapping("/qqLogin")
     public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
         //自动组装qq登陆连接，重定向到qq登陆页面
         String authorizeURL = new Oauth().getAuthorizeURL(request);
         System.out.println("联合登陆请求地址:"+authorizeURL);
         return "redirect:"+authorizeURL;
-    }*/
+    }
 
 
     //随机昵称
@@ -206,12 +357,5 @@ public class UserController {
         }
         return ret;
     }
-
-
-
-
-
-
-
 
 }

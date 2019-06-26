@@ -39,4 +39,6 @@ public class User implements Serializable {
     private String userEmail;
     //用户手机号
     private String userPhone;
+    //密码错误次数
+    private Integer userCwcs;
 }

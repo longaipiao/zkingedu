@@ -34,11 +34,11 @@ public class PageController {
     /**
      * 主页
      * @return
-     */
-    @RequestMapping(value = "/index")
+     *//*
+    @RequestMapping(value = "/")
     public String index(){
         return "user/index";
-    }
+    }*/
 
     /**
      * 开发者
@@ -47,6 +47,24 @@ public class PageController {
     @RequestMapping(value = "/developer")
     public String developer(){
         return "user/developer/index";
+    }
+
+    /**
+     * qq登入成功页面
+     * @return
+     */
+    @RequestMapping(value = "/binding")
+    public String binding(){
+        return "user/binding";
+    }
+
+    /**
+     * qq绑定已注册的账号
+     * @return
+     */
+    @RequestMapping(value = "/ybbinding")
+    public String bindings(){
+        return "user/ybbinding";
     }
 
 
