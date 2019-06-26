@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
 	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
+    <link rel="stylesheet" type="text/css" href="/user/styles/simditor.css" />
+    <link rel="stylesheet" href="/user/layui/css/layui.css">
 
 	<style>
 		@font-face {
@@ -160,58 +162,17 @@
         <div id="xxpost"></div>
         
         <div class="question-answers">
-            <p class="ptilte">全部回复</p>
+
+            <p class="ptilte" id="gbk">全部评论</p>
+
+               <textarea id="editor" placeholder="想对作者说些什么" autofocus style="height: 233px;"></textarea>
+
+            <button type="button" class="layui-btn layui-btn-danger" id="fb">评论</button>
+            <button type="button" class="layui-btn layui-btn-danger" id="quxhuifu" style="display: none">取消回复</button>
+
             <hr/>
+            <div id="pp"></div>
 
-            
-            <div class="answer-item">
-
-                <!--                      开始评论-->
-                <div id="pp"></div>
-                    <div class="answer-head">
-                            <div class="user-avatar ">
-                                        <a class="avatar" href="/user/212008" target="_blank">
-                                            <img src="https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200">
-                                        </a>
-
-                                        <a class="member-icon" href="/vip" target="_blank">
-
-                                <img src="
-                                            https://static.shiyanlou.com/img/vip-icon.png
-                                          ">
-
-                                        </a>
-
-                            </div>
-                     </div>
-              <div class="answer-detail">
-                    <span class="comment-reply">
-                            <div class="user-username ">
-                                <a class="username" href="/user/212008" target="_blank">
-
-                                        米斯特_周
-
-
-                                </a>
-                                <span class="user-level">L234</span>
-                            </div>
-                    </span>
-
-                    <div class="answer-content markdown-body">
-                            <textarea style="display:none;">开始实验后，如图所示：![图片描述](https://dn-simplecloud.shiyanlou.com/uid/212008/1483688692465.png-wm)
-
-                             </textarea>
-                    </div>
-
-
-
-                    <div>
-                        <span class="create-time">21小时前</span>
-
-                        <hr/>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
   </div>
@@ -237,22 +198,20 @@
 
 
         <div class="col-md-3 layout-side">
-            
-    <a class="btn side-btn" data-toggle="modal" data-target="#askquestion">我要发帖</a>
-    <div class="side-image">
-    <a href="/vip" target="_blank">
-        <img src="https://static.shiyanlou.com/img/banner-vip.png">
-    </a>
-</div>
-    <div class="sidebox side-list related-question">
-        <div class="sidebox-header">
-            <h4 class="sidebox-title">相关帖子</h4>
+                     <a class="btn side-btn" data-toggle="modal" data-target="#askquestion">我要发帖</a>
+                <div class="side-image">
+                    <a href="/vip" target="_blank">
+                        <img src="https://static.shiyanlou.com/img/banner-vip.png">
+                    </a>
+                </div>
+                <div class="sidebox side-list related-question">
+                    <div class="sidebox-header">
+                        <h4 class="sidebox-title">相关帖子</h4>
+                    </div>
+                    <div class="sidebox-body side-list-body"></div>
+                </div>
         </div>
-        <div class="sidebox-body side-list-body">
-        </div>
-    </div>
 
-        </div>
     </div>
 
 
@@ -675,6 +634,42 @@
     <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
     <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+<script type="text/javascript" src="/user/scripts/module.js"></script>
+<script type="text/javascript" src="/user/scripts/hotkeys.js"></script>
+<script type="text/javascript" src="/user/scripts/uploader.js"></script>
+<script type="text/javascript" src="/user/scripts/simditor.js"></script>
+<script type="text/javascript" src="/user/layui/layui.css"></script>
+
+<script>
+
+
+
+    $(function(){
+        Simditor.locale = 'zh-CN';//设置中文
+        var editor = new Simditor({
+            textarea: $("#editor"),  //textarea的id
+            placeholder: '',
+            toolbar:  ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'], //工具条都包含哪些内容
+            pasteImage: true,//允许粘贴图片
+            defaultImage: '/simditor/images/image.png',//编辑器插入的默认图片，此处可以删除
+            upload : {
+                url : '/smiditor/uploadSimditorImg', //文件上传的接口地址
+                params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey:'file', //服务器端获取文件数据的参数名
+                connectionCount: 3,
+                leaveConfirm: '正在上传文件'
+            }
+        });
+    });
+
+    function test() {
+        alert($("#editor").val());
+        $("#456").html($("#editor").val());
+    }
+</script>
+
+
 
     <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
 <script src="/user/post/xxpost.js"></script>

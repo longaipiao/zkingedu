@@ -69,4 +69,21 @@ public class PostServiceImpl implements PostService {
         return postDao.getTcomAll(id);
     }
 
+    @Override
+    public List<Map<String, Object>> getAllTandUser(Integer id) {
+        return postDao.getAllTandUser(id
+        );
+    }
+
+    @Override
+    public int getMaxlouZnum() {
+        return postDao.getMaxlouZnum();
+    }
+
+    @Override
+    public int addTcomment(Tcomment tcomment) {
+        return postDao.addTcomment(tcomment);
+    }
+
+
 }

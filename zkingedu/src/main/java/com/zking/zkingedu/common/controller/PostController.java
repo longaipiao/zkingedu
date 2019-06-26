@@ -118,9 +118,112 @@ public class PostController {
     @RequestMapping(value = "/getAllTs")
     @ResponseBody
     public List<Tcomment> getTs(Integer id){
-        List<Tcomment> tcomAll = postService.getTcomAll(id);
-        return tcomAll;
+        //根据id获取所欲的评论
+        List<Map<String,Object>> allTandUser = postService.getAllTandUser(id);
+       //将评论分级，装进集合
+        List<Tcomment> tcomments=new ArrayList<>();
+
+        for (Map<String, Object> map : allTandUser) {
+            if((Integer) map.get("tcomment_fid")==0){
+                System.out.println("进来");
+                Tcomment tcomment=new Tcomment();
+                tcomment.setTcommentID((Integer) map.get("tcomment_id"));
+                tcomment.setTcommentCid((Integer) map.get("tcomment_cid"));
+                tcomment.setTcommentContent(map.get("tcomment_content").toString());
+                tcomment.setTcommentTime(map.get("tcomment_time").toString());
+                tcomment.setTcommentFid((Integer)map.get("tcomment_fid"));
+                tcomment.setTcommentLounum((Integer)map.get("tcomment_lounum"));
+                tcomment.setTcommentUid2((Integer)map.get("uid2"));
+                User user1=new User();
+                user1.setUserID((Integer) map.get("user_id"));
+                System.out.println("输出:"+map.get("user_img"));
+                user1.setUserImg(map.get("user_img").toString());
+                user1.setUserName(map.get("user_name").toString());
+                //回复对应的用户名 。。我回复他（用户名）
+                User user3=new User();
+                user3.setUserName(map.get("uname2").toString());
+                tcomment.setUser(user1);
+                tcomment.setUser2(user3);
+                List<Tcomment> tcomments2=new ArrayList<>();
+
+                for (Map<String, Object> map2 : allTandUser) {
+                    if((Integer) map.get("tcomment_id")==(Integer) map2.get("tcomment_fid")){
+                        Tcomment tcomment2=new Tcomment();
+                        tcomment2.setTcommentID((Integer) map2.get("tcomment_id"));
+                        tcomment2.setTcommentCid((Integer) map2.get("tcomment_cid"));
+                        tcomment2.setTcommentContent(map2.get("tcomment_content").toString());
+                        tcomment2.setTcommentTime(map2.get("tcomment_time").toString());
+                        tcomment2.setTcommentFid((Integer)map2.get("tcomment_fid"));
+                        tcomment2.setTcommentLounum((Integer)map2.get("tcomment_lounum"));
+                        tcomment2.setTcommentUid2((Integer)map2.get("uid2"));
+
+                        User user2=new User();
+                        user2.setUserID((Integer) map2.get("user_id"));
+                        user2.setUserImg(map2.get("user_img").toString());
+                        user2.setUserName(map2.get("user_name").toString());
+                        User user4=new User();
+                        user4.setUserName(map2.get("uname2").toString());
+                        tcomment2.setUser(user2);
+                        tcomment2.setUser2(user4);
+                        tcomments2.add(tcomment2);
+                    }
+                }
+                tcomment.setChirden(tcomments2);
+                tcomments.add(tcomment);
+            }
+        }
+        return tcomments;
     }
+
+
+    /**
+     * 发表评论
+     * @param tcomment
+     * @return
+     */
+    @RequestMapping(value = "/addTcomment")
+    @ResponseBody
+    public int addTct(Tcomment tcomment){
+
+        //获取用户ID
+        Integer uid=3;
+        //回复者的id，设置
+        tcomment.setTcommentUid(uid);
+        //设置评论时间
+        tcomment.setTcommentTime(new Date().toLocaleString());
+        System.out.println(tcomment);
+        //如果评论父id为0时说明时对贴主的评论
+       if (tcomment.getTcommentFid()==0){
+                 //设置为0,是第一级评论
+                  tcomment.setTcommentFid(0);
+            //获取最大的楼主id
+           System.out.println("是不是有毛病");
+            int maxlouZnum = postService.getMaxlouZnum();
+           System.out.println("输出最大值:"+maxlouZnum);
+            //开始给楼数赋值
+            tcomment.setTcommentLounum(maxlouZnum+1);
+            //获取方法，开始增加
+            int i = postService.addTcomment(tcomment);
+            //如果i>0的话，则返回i,否者是0,发表失败
+            return i>0?i:0;
+        }
+        //否者的话则是回复评论
+        if(tcomment.getTcommentFid()!=0) {
+            //设置楼主为null
+            tcomment.setTcommentLounum(null);
+            //调用方法
+            int i = postService.addTcomment(tcomment);
+            return i > 0 ? i : 0;
+        }
+
+       return 0;
+    }
+
+
+
+
+
+
 
 
 

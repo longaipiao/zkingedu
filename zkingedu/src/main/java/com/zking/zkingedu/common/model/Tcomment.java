@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 帖子评论表
@@ -26,4 +28,17 @@ public class Tcomment implements Serializable {
     private String tcommentTime;
     //评论回复父id
     private Integer tcommentFid;
+
+    //评论对应的uid,及用户
+    private User user2;
+
+    //某条评论下面的所有评论
+    List<Tcomment> chirden=new ArrayList<>();
+    //配关系
+    private User user;
+    //楼主顺序
+    private  Integer tcommentLounum;
+    //要回复谁的id
+    private  Integer tcommentUid2;
+
 }

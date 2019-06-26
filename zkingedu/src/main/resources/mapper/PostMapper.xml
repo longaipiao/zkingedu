@@ -26,7 +26,7 @@
 
 
 
-<!--    查到所有的帖子-->
+<!--     根据帖子id查到具体详情-->
     <select id="getPostandUse" parameterType="integer" resultType="java.util.HashMap">
                  select a.*,b.user_id,b.user_name,b.user_img,count(c.give_id) jishu FROM
                                                                  t_post a,t_user b,t_give c
@@ -40,6 +40,43 @@
                          from t_tcomment
               where tcomment_cid=#{id}
     </select>
+
+
+    <!--<resultMap id="bass" type="com.zking.zkingedu.common.model.Tcomment">
+                <id property="tcommentID" column="tcomment_id"></id>
+                <result property="tcommentCid" column="tcomment_cid"></result>
+                <result property="tcommentUid" column="tcomment_uid"></result>
+                <result property="tcommentContent" column="tcomment_content"></result>
+                <result property="tcommentTime" column="tcomment_time"></result>
+                <result property="tcommentFid" column="tcomment_fid"></result>
+                <association property="user" javaType="com.zking.zkingedu.common.model.User">
+                               <id property="userID" column="user_id"></id>
+                               <result property="userImg" column="user_img"></result>
+                               <result property="userName" column="user_name"></result>
+                </association>
+    </resultMap>-->
+
+
+<!--    根据id找到所有的评论-->
+    <select id="getAllTandUser" parameterType="integer" resultType="java.util.HashMap">
+               select a.*,b.user_id,b.user_img,b.user_name,c.user_name uname2,c.user_id uid2
+                        from t_tcomment a,t_user b,t_user c
+              where a.tcomment_cid=#{id} and a.tcomment_uid=b.user_id AND a.tcomment_dyuid=c.user_id ORDER BY a.tcomment_lounum DESC
+    </select>
+
+
+<!--    找到最大的楼主号-->
+<select id="getMaxlouZnum" resultType="integer" >
+           select MAX(tcomment_lounum) from t_tcomment
+</select>
+
+<!--发表评论 -->
+    <insert id="addTcomment" parameterType="com.zking.zkingedu.common.model.Tcomment">
+              insert  into
+             t_tcomment(tcomment_cid,tcomment_uid,tcomment_content,tcomment_time,tcomment_fid,tcomment_dyuid,tcomment_lounum)
+             value (#{tcommentCid},#{tcommentUid},#{tcommentContent},#{tcommentTime},#{tcommentFid},#{tcommentUid2},#{tcommentLounum})
+
+    </insert>
 
 
 </mapper>
