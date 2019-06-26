@@ -61,5 +61,25 @@ public interface PostService {
      */
     List<Tcomment> getTcomAll(Integer id);
 
+    /**
+     * 找到所有的评论和用户信息根据id
+     * @param id
+     * @return
+     */
+    List<Map<String,Object>> getAllTandUser(Integer id);
+
+
+    /**
+     * 获取最大的楼主数
+     * @return
+     */
+    int getMaxlouZnum();
+
+
+    /**
+     * 帖子评论
+     */
+    int addTcomment(Tcomment tcomment);
+
 
 }
