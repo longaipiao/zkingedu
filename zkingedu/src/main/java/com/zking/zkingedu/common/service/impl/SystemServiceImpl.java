@@ -8,8 +8,8 @@ import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -122,5 +122,111 @@ public class SystemServiceImpl implements SystemService {
         result.setCount(String.valueOf(objects.getTotal()));
         result.setCode(0);
         return result;
+    }
+
+
+    /**
+     * admin
+     * 体系添加
+     * yan
+     * @param system
+     * @return
+     */
+    @Override
+    public int adminAddSystem(System system) {
+        return systemDao.adminAddSystem(system);
+    }
+
+
+    /**
+     * 修改课程状态
+     * @param stateId
+     * @param systemId
+     * @return
+     * yan
+     */
+    @Transactional
+    @Override
+    public int updateSystemState(Integer stateId, Integer systemId) {
+        return systemDao.updateSystemState(stateId,systemId);
+    }
+
+
+    /**
+     * admin
+     * 体系信息修改
+     * @param system
+     * @return
+     * yan
+     */
+    public int updateSystem(System system) {
+        try {
+            return systemDao.updateSystem(system);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    /**
+     * 根据fid查询子体系
+     * @param pageBean  分页
+     * @return
+     * yan
+     */
+    @Override
+    public ResultUtil getsystemsonByFId(PageBean<Integer> pageBean) {
+        ResultUtil result;
+        try {
+            Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
+            List<System> systems = systemDao.getSystemsAndStagesByFid(pageBean.getT());
+            result = new ResultUtil();
+            result.setCode(0);
+            result.setCount(String.valueOf(objects.getTotal()));
+            result.setData(systems);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error("系统繁忙");
+        }
+        return result;
+    }
+
+
+    /**
+     * admin添加体系阶段
+     * yan
+     * @param sid  体系id
+     * @param stageName  阶段名称
+     * @return
+     */
+    @Override
+    public int addSystemStage(Integer sid, String stageName) {
+        return systemDao.addSystemStage(sid,stageName);
+    }
+
+
+    /**
+     * yan
+     * 根据fid  查询对应的体系阶段
+     * @param fid
+     * @return
+     */
+    @Override
+    public List<System> getSystemsAndStagesByFid(Integer fid) {
+        return systemDao.getSystemsAndStagesByFid(fid);
+    }
+
+
+    /**
+     * admin
+     * 修改 阶段名称
+     * @param sid  体系id
+     * @return
+     * yan
+     */
+    @Override
+    public int updateSystemAndStageBySid(Integer sid, String stageName) {
+        return systemDao.updateSystemAndStageBySid(sid,stageName);
     }
 }

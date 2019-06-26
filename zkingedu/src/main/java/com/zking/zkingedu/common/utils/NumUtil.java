@@ -37,4 +37,6 @@ public class NumUtil {
 		// fir + sec + num就是年月日+n个0+num的值，最后转成16进制，生成唯一的订单号
 		return Long.toHexString(new Long(fir + sec + num)).toUpperCase();
 	}
+
+
 }

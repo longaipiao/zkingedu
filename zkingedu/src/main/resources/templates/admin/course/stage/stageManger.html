@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>课程阶段管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+</head>
+<body>
+
+<!--影藏id-->
+<input type="hidden" id="id" th:value="${id}">
+
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addstage">添加体系阶段</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+
+
+<script>
+    layui.use(['table','jquery'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        table.render({
+            elem: '#test'
+            ,url:'/user/getSystemStages?sid='+$("#id").val()
+            ,toolbar: '#toolbarDemo'
+            ,title: '阶段数据表'
+            ,id:"tableReload1"
+            ,limit:5
+            ,cols: [
+                [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'systemID', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'systemName', title:'阶段名称', width:250}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]
+            ]
+            ,page: true
+        });
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'addstage':
+                    layer.prompt({title: '请输入体系阶段名称', formType: 0}, function(pass, index){
+                        if(pass==""||pass==null){
+                            layer.msg("请填写阶段名称");
+                            return;
+                        }
+                        // layer.msg("嘻嘻:__"+pass);
+                        $.ajax({
+                            type: "post",
+                            url: "/user/addSystemStage",
+                            async:false,
+                            data:{
+                                fid:$("#id").val(),
+                                stageName : pass
+                            },
+                            dataType:"json",
+                            success:function(d){
+                                if(d.code==0){
+                                    layer.close(index);
+                                    layer.msg(d.msg);
+                                    //执行重载
+                                    table.reload('tableReload1', {
+                                    });
+                                }
+                                else{
+                                    layer.msg(d.msg);
+                                }
+                            }
+                        });
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                //例子2
+                layer.prompt({
+                    formType: 0,
+                    value: data.systemName,
+                    title: '阶段名称编辑',
+                }, function(value, index, elem){
+                    if(value==""||value==null){
+                        layer.msg("请填写阶段名称");
+                        return;
+                    }
+                    // layer.msg("id:"+data.systemID+"__value:"+value); //得到value
+                    $.ajax({
+                        type: "post",
+                        url: "/user/updateStageName",
+                        async:false,
+                        data:{
+                            sid:data.systemID,
+                            stageName : value
+                        },
+                        dataType:"json",
+                        success:function(d){
+                            if(d.code==0){
+                                layer.close(index);
+                                layer.msg(d.msg);
+                                //执行重载
+                                table.reload('tableReload1', {
+                                });
+                            }
+                            else{
+                                layer.msg(d.msg);
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -80,4 +80,13 @@ public class PageController {
     }
 
 
+    /**
+     * 跳转值学习路径页面
+     * yan
+     * @return
+     */
+    @RequestMapping(value = "/paths/index")
+    public String pagesIndex(){return "user/paths/index";}
+
+
 }

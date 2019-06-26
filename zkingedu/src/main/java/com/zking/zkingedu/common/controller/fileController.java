@@ -38,7 +38,7 @@ public class fileController {
             try {
                 // uploadFile.transferTo(new
                 // File(req.getServletContext().getRealPath("WEB-INF/upload"),img));
-                File f=new File("F:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
+                File f=new File("E:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
                 if(!f.exists()){
                     f.mkdirs();
                 }
@@ -51,7 +51,7 @@ public class fileController {
                 e.printStackTrace();
             }
             Map<String, String> map = new HashMap<>();
-            map.put("src", "http://localhost:8080/imgs/"+img);
+            map.put("src", "/imgs/"+img);
             return ResultUtil.ok(map);
         } else {
             return ResultUtil.error("文件格式不支持,请重新选择！");

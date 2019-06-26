@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.service;
 import com.zking.zkingedu.common.model.System;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,5 +56,75 @@ public interface SystemService {
      * yan
      */
     ResultUtil getAllSystems(PageBean<System> pageBean);
+
+
+    /**
+     * admin
+     * 体系添加
+     * yan
+     * @param system
+     * @return
+     */
+    int adminAddSystem( System system);
+
+
+    /**
+     * 修改课程状态
+     * @param stateId
+     * @param systemId
+     * @return
+     * yan
+     */
+    int updateSystemState(Integer stateId, Integer systemId);
+
+
+    /**
+     * admin
+     * 体系信息修改
+     * @param system
+     * @return
+     * yan
+     */
+    int updateSystem(System system);
+
+
+
+    /**
+     * 根据fid查询子体系
+     * @param pageBean  分页
+     * @return
+     * yan
+     */
+    ResultUtil getsystemsonByFId(PageBean<Integer> pageBean);
+
+
+    /**
+     * admin添加体系阶段
+     * yan
+     * @param fid  体系id
+     * @param stageName  阶段名称
+     * @return
+     */
+    int addSystemStage(Integer sid,String stageName);
+
+
+    /**
+     * yan
+     * 根据fid  查询对应的体系阶段
+     * @param fid
+     * @return
+     */
+    List<System> getSystemsAndStagesByFid(Integer fid);
+
+
+    /**
+     * admin
+     * 修改 阶段名称
+     * @param sid  体系id
+     * @return
+     * yan
+     */
+    int updateSystemAndStageBySid(Integer sid,String stageName);
+
 
 }
