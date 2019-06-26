@@ -11,6 +11,7 @@ import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.impl.UserServiceImpl;
 import com.zking.zkingedu.common.utils.IpAddress;
+import com.zking.zkingedu.common.utils.transferImgForRoundImgage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -22,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -88,6 +90,40 @@ public class UserController {
         return "2";
     }
 
+
+
+    /**
+     * 测试
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cs")
+    public String cs(){
+        User user = userService.getUser(42);
+
+        System.out.println(user.getUserIP()+"ip地址");
+        return null;
+    }
+
+    /**
+     * 手机号修改密码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updatePhonepassword")
+    public String updatePhonepassword(String phone,HttpServletRequest request,String password2){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Integer n = userService.updatePhonePassword(phone, password2);
+
+        if(n>0){
+            session.setAttribute("user",null);
+            return "1";
+        }
+        return null;
+
+    }
+
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
@@ -110,6 +146,40 @@ public class UserController {
 
     }
 
+    /**
+     * 修改头像
+     * @param request
+     * @param response
+     * @param upload
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateupload")
+    @ResponseBody
+    public String upload(HttpServletRequest request, HttpServletResponse response,String upload) throws Exception {
+        System.out.println(upload);
+        HttpSession session = request.getSession();
+        User user =(User) session.getAttribute("user");
+        Integer n = userService.updateupload(user.getUserID(), upload);
+        if(n>0){
+            //在根据手机号查一遍
+            User userlogin = userService.userlogin(user);
+            session.setAttribute("user",null);
+            session.setAttribute("user",userlogin);
+            return "1";
+        }
+        return "2";
+
+    }
+
+
+    /**
+     * qq接口
+     * @param request
+     * @param response
+     * @return
+     * @throws QQConnectException
+     */
     @ResponseBody
     @RequestMapping(value = "/LoginCallback2")
     public String  LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
@@ -139,6 +209,71 @@ public class UserController {
         return "user/index";
     }
 
+    /**
+     * qq登入绑定新用户
+     */
+    @RequestMapping(value = "/qqlogin")
+    @ResponseBody
+    public String qqlogin(String phone,String upwd,HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        //qqid
+        String userOpenID=(String) session.getAttribute("openid");
+        //qq头像
+        String Avatar=(String) session.getAttribute("Avatar");
+        //qq名字
+        String nickName=(String) session.getAttribute("nickName");
+        //qqid
+        user.setUserOpenID(userOpenID);
+        //注册时间
+        user.setUserRegTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        //状态
+        user.setUserState(0);
+        //积分
+        user.setUserIntegrsl(0);
+        //昵称
+        user.setUserName(nickName);
+        //图片
+        // System.out.println(new transferImgForRoundImgage().transferImgForRoundImgage(userInfoBean.getAvatar().getAvatarURL100()));
+
+        user.setUserImg(Avatar);
+        //错误次数
+        user.setUserCwcs(0);
+        //ip
+        user.setUserIP(IpAddress.getIpAddr(request));
+        //增加这个openid
+        Integer add = userService.add(user);
+        if(add>0){
+            Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
+            if(integer!=null){
+                System.out.println(integer);
+                User qquser = userService.getopenid(userOpenID);
+                session.setAttribute("user",qquser);
+                return "1";
+            }
+        }
+
+        return "2";
+    }
+    /**
+     * qq登入绑定老用户
+     */
+    @RequestMapping(value = "/yjqqlogin")
+    @ResponseBody
+    public String yjqqlogin(String phone,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String openid=(String) session.getAttribute("openid");
+        Integer integer = userService.updateOpenids(phone,openid,IpAddress.getIpAddr(request));//根据用户手机号增加openid
+        if(integer!=null){
+            System.out.println(integer);
+            User qquser = userService.getopenid(openid);
+            session.setAttribute("user",qquser);
+            return "1";
+        }
+        return "2";
+    }
+
+    //用户登入
     @ResponseBody
     @RequestMapping(value = "/login")
     public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
@@ -170,6 +305,22 @@ public class UserController {
              }
          }
         return "";
+    }
+    /**
+     * 注销
+     */
+    @RequestMapping(value = "/zhuxiao")
+    public String zhuxiao(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        //清空用户的session
+        session.setAttribute("user",null);
+        session.setAttribute("b",null);
+        session.setAttribute("a",null);
+        session.setAttribute("nickName",null);
+        session.setAttribute("Avatar",null);
+        session.setAttribute("openid",null);
+
+        return "user/index";
     }
 
     /**
@@ -206,12 +357,5 @@ public class UserController {
         }
         return ret;
     }
-
-
-
-
-
-
-
 
 }

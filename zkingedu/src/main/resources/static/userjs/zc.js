@@ -54,7 +54,7 @@ function zc() {
                                 if(data==1){
                                     $("#sd").html("");
                                     alert("注册成功")
-                                    location.href="/user/index";
+                                    location.href="/user/";
                                 }
                             },
                             error:function () {
@@ -70,9 +70,95 @@ function zc() {
     });
 }
 
+//qq绑定账号
+function qqlogin() {
+    //获得手机号文本框的值
+    var phone=$("#phone").val();
+    //判断重复
+   var captcha_v5=$("#captcha_v").val();
+    $.ajax({
+        url: "/user/cf",
+        type: "post", //请求方式
+        data: {
+            phone: phone,
+        },
+        success:function (data) {
+            if (data == 2) {
+                alert("该手机号已经绑定了可以直接登入")
+            }
+            else{
+                if(s!=captcha_v5){
+                    alert("验证码错误")
+                }else {
+                    $.ajax({
+                        url: "/user/qqlogin",
+                        type: "post",
+                        data: {
+                            phone: $("#phone").val(),
+                            upwd: $("#password").val()
+                        },
+                        success: function (sh) {
+                            alert(sh)
+                            if (sh==1) {
+                                alert("绑定成功");
+                                location.href = "/user/";
+                            } else if(sh==2) {
+                                alert("登入失败")
+                            }
+                        }
+                    })
+                }
+            }
+        },
+    })
+
+}
+//qq绑定已有的账号
+function qqlogins() {
+    //获得手机号文本框的值
+    var phone=$("#phone").val();
+    //判断重复
+    var captcha_v5=$("#captcha_v").val();
+    $.ajax({
+        url: "/user/cf",
+        type: "post", //请求方式
+        data: {
+            phone: phone,
+        },
+        success:function (data) {
+            if (data == 1) {
+                alert("该手机号没有注册该平台")
+            }
+            else{
+                if(s!=captcha_v5){
+                    alert("验证码错误")
+                }else {
+                    $.ajax({
+                        url: "/user/yjqqlogin",
+                        type: "post",
+                        data: {
+                            phone: $("#phone").val(),
+                        },
+                        success: function (sh) {
+                            if (sh==1) {
+                                alert("绑定成功");
+                                location.href = "/user/";
+                            } else if(sh==2) {
+                                alert("登入失败")
+                            }
+                        }
+                    })
+                }
+            }
+        },
+    })
+
+}
+
+
+
 var time=60;
     $('#sendPhone').click(function(){
-        var verifyCode=$("#captcha_v").val();
         //获得手机号文本框的值
         var phones=$("#phone").val();
         //手机号验证
@@ -90,13 +176,13 @@ var time=60;
                 data: {
                     phone: phones,
                 },
-                success: function (n) {
+                success:function(n) {
+                    alert(n);
                     s=n;
                     timeStart();
                 },
                 error: function () {
                     alert('注册失败');
-
                 }
             });
         }

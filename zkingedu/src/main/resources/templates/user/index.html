@@ -74,7 +74,7 @@
         }
     </style>
 
-<style type="text/css">
+<style style="text/css">
 .navbar-banner {
     margin-top: 50px;
     background: url("/user/img/homepage-bg.png");
@@ -136,7 +136,7 @@
 
                 </li>
                 <li class=" new-nav logo-1111">
-                    <a href="vip/index.html">会员</a>
+                    <a href="/user/userinfo/index" >会员</a>
 
                 </li>
 
@@ -144,11 +144,44 @@
 
 
             <div class="navbar-right btns">
-                <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
-                <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+
+            <!--    <span th:if="${session.b} eq null  ">
+                    <span th:if="${session.a} eq null">
+                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                    </span>
+                </span>
+                <span th:if="${session.b} eq null  ">
+                    <span th:if="${session.a} ne null">
+                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                    </span>
+                </span>
+
+                <span th:if="${session.b} ne null ">
+                    <span th:if="${session.a} eq null">
+                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="/user/userinfo/index" data-toggle="modal">用户：<span th:text="${session.user.userName}"></a>
+                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
+                    </span>
+                </span>
+-->
+                <span th:if="${session.user} eq null">
+                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                </span>
+                <span th:if="${session.user} ne null">
+                    <a href="/user/userinfo/index"><img th:src="${session.user.userImg}"class="img-circle img-responsive" style="width:30px;height: 30px; display: inline" >
+				<span style="color: white;" th:text="${session.user.userName}"></span></a>
+                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
+                    </span>
+
             </div>
+            <div class="navbar-right btns">
 
 
+
+
+            </div>
             <form class="navbar-form navbar-right" action="search" method="get" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
@@ -157,6 +190,7 @@
         </div>
     </div>
 </nav>
+
 
 
 
@@ -191,6 +225,46 @@
 </div>
 
 
+
+
+<!--<div class="navbar-banner layout-no-margin-top">
+    <div class="banner-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <a class="container-title">
+                        <img src="/user/img/container-title-2.png" />
+                    </a>
+                    <div style="margin-top:24px;">
+                        <a id="course-btn" class="course-btn btn btn-lg" href="courses/index.html">进入课程</a>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+
+                    <form action="/quickregister" method="post">
+                        <div class="form-group">
+                            <input class="form-control" name="name" id="name" type="text" placeholder="昵称">
+                            <div class="help-block text-left"></div>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="email" id="email" type="email" placeholder="邮箱">
+                            <div class="help-block text-left"></div>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="password" id="password" type="password" placeholder="密码">
+                            <div class="help-block text-left"></div>
+                        </div>
+                        <button class="btn register" type="submit">加入实验楼</button>
+                        <p class="tip">点击"加入实验楼"，表示您已经同意我们的<a href="privacy/index.html" target="_blank"> 隐私条款</a></P>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>-->
 
 <div class="introduce-container" id="fourFeatures">
     <div class="container">

@@ -1,3 +1,4 @@
+var s=0;
 function loginChak() {
     $.ajax({
         url:"/user/login",
@@ -7,7 +8,13 @@ function loginChak() {
             upwd:$("#upwd").val()
         },
         success:function (data) {
-
+            if(data==1){
+                alert("登入成功")
+                location.href="/user/";
+            }
+            else{
+                alert("登入失败")
+            }
         }
     })
 }

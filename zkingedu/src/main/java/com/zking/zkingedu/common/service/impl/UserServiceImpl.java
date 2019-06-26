@@ -40,6 +40,46 @@ public class UserServiceImpl implements UserService {
         return userDao.getUser(uid);
     }
 
+    @Override
+    public Integer getCwcs(String phone) {
+        return userDao.getCwcs(phone);
+    }
+
+    @Override
+    public Integer updateCwcs(String phone) {
+        return userDao.updateCwcs(phone);
+    }
+
+    @Override
+    public Integer updatePhonePassword(String phone, String password) {
+        return userDao.updatePhonePassword(phone,password);
+    }
+
+    @Override
+    public Integer updateEmmitPassword(String emit, String password) {
+        return userDao.updateEmmitPassword(emit,password);
+    }
+
+    @Override
+    public User getopenid(String openid) {
+        return userDao.getopenid(openid);
+    }
+
+    @Override
+    public Integer updateOpenid(String openid, String phone, String password) {
+        return userDao.updateOpenid(openid,phone,password);
+    }
+
+    @Override
+    public Integer updateOpenids(String phone,String openid,String ip) {
+        return userDao.updateOpenids(phone,openid,ip);
+    }
+
+    @Override
+    public Integer updateupload(Integer uid, String upload) {
+        return userDao.updateupload(uid,upload);
+    }
+
     /**
      * 查询用户积分的方法
      */
