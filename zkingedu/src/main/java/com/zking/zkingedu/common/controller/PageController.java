@@ -21,11 +21,6 @@ import java.util.List;
 @Slf4j
 public class PageController {
 
-    @RequestMapping(value = "/admin")
-    public String alogin(){
-        return "admin/login";
-    }
-
     @Resource
     private EmpDao empDao;
 

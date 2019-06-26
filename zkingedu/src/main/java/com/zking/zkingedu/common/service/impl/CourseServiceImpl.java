@@ -95,4 +95,15 @@ public class CourseServiceImpl implements CourseService {
             return new ResultUtil(500,"数据接口异常",e.getMessage());
         }
     }
+
+
+    /**
+     * 获取最热课程 四个播放量排序
+     * @return
+     * yan
+     */
+    @Override
+    public List<Course> getCoursefour() {
+        return courseDao.getCoursefour();
+    }
 }

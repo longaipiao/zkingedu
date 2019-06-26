@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -35,5 +36,17 @@ public class RoleController {
         map.put("data",roles);
         return map;
     }
+
+    @RequestMapping(value = "/role/del")
+    @ResponseBody
+    public Object delrole(@RequestParam("roleID") String roleID){
+        int i = roleService.delRoleByID(Integer.parseInt(roleID));
+        roleService.delMenuRoleByID(Integer.parseInt(roleID));
+        if(i>0)
+            return true;
+        else
+            return false;
+    }
+
 
 }

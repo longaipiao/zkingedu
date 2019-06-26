@@ -46,4 +46,11 @@
         select course_inte from t_course where course_id = #{courseid}
     </select>
 
+
+
+    <!-- 获取最热课程 四个播放量排序-->
+    <select id="getCoursefour" resultType="com.zking.zkingedu.common.model.Course">
+        select <include refid="CourseSql"/> from t_course where course_state=0 order by course_num desc
+    </select>
+
 </mapper>

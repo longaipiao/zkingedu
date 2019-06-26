@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-  
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
   <head>
     <meta charset="UTF-8">
     <title>欢迎页面-L-admin1.0</title>
@@ -19,57 +19,35 @@
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  
+
   <body>
     <div class="x-body">
         <form class="layui-form">
+
           <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>手机号
+              <label for="L_name" class="layui-form-label">
+                  <span class="x-red">*</span>&nbsp;用户名:
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_email" name="email" required lay-verify="email"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>将会成为您唯一的登入名
+                  <input type="text" id="L_name" name="name" required lay-verify="name"
+                  autocomplete="off" class="layui-input" th:value="${rolename}">
               </div>
           </div>
+
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn layui-btn-sm" lay-demo="getChecked">获取选中节点数据</button>
+                <button type="button" class="layui-btn layui-btn-sm" lay-demo="setChecked">勾选指定节点</button>
+                <button type="button" class="layui-btn layui-btn-sm" lay-demo="reload">重载实例</button>
+            </div>
+
+            <div id="tree" class="demo-tree-more"></div>
+
+
           <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*</span>昵称
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_username" name="username" required lay-verify="nikename"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_pass" name="pass" required lay-verify="pass"
-                  autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  6到16个字符
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>确认密码
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required lay-verify="repass"
-                  autocomplete="off" class="layui-input">
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_repass" class="layui-form-label">
+              <label for="L_name" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  增加
+                  修改
               </button>
           </div>
       </form>
@@ -79,21 +57,21 @@
           $ = layui.jquery;
         var form = layui.form
         ,layer = layui.layer;
-      
-        //自定义验证规则
-        form.verify({
-          nikename: function(value){
-            if(value.length < 5){
-              return '昵称至少得5个字符啊';
-            }
-          }
-          ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-          ,repass: function(value){
-              if($('#L_pass').val()!=$('#L_repass').val()){
-                  return '两次密码不一致';
-              }
-          }
-        });
+
+          // //自定义验证规则
+          // form.verify({
+          //     nikename: function(value){
+          //         if(value.length < 5){
+          //             return '昵称至少得5个字符啊';
+          //         }
+          //     }
+          //     ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+          //     ,repass: function(value){
+          //         if($('#L_pass').val()!=$('#L_repass').val()){
+          //             return '两次密码不一致';
+          //         }
+          //     }
+          // });
 
         //监听提交
         form.on('submit(add)', function(data){
@@ -107,8 +85,99 @@
           });
           return false;
         });
-        
-        
+
+
+      });
+  </script>
+  <script>
+      layui.use(['tree', 'util'], function(){
+          var tree = layui.tree
+              ,layer = layui.layer
+              ,util = layui.util
+
+
+
+          //权限树
+          tree.render({
+              elem: '#tree'
+              ,data: [{
+                  title: '一级1'
+                  ,id: 1
+                  ,children: [{
+                      title: '二级1-1 可允许跳转'
+                      ,id: 3
+                      ,href: 'https://www.layui.com/'
+                      ,children: [{
+                          title: '三级1-1-3'
+                          ,id: 23
+                      },{
+                          title: '三级1-1-1'
+                          ,id: 7
+                          ,children: [{
+                              title: '四级1-1-1-1 可允许跳转'
+                              ,id: 15
+                              ,href: 'https://www.layui.com/doc/'
+                          }]
+                      },{
+                          title: '三级1-1-2'
+                          ,id: 8
+                          ,children: [{
+                              title: '四级1-1-2-1'
+                              ,id: 32
+                          }]
+                      }]
+                  },{
+                      title: '二级1-2'
+                      ,id: 4
+                      ,children: [{
+                          title: '三级1-2-1'
+                          ,id: 9
+                      },{
+                          title: '三级1-2-2'
+                          ,id: 10
+                      }]
+                  },{
+                      title: '二级1-3'
+                      ,id: 20
+                      ,children: [{
+                          title: '三级1-3-1'
+                          ,id: 21
+                      },{
+                          title: '三级1-3-2'
+                          ,id: 22
+                      }]
+                  }]
+              }]
+              ,showCheckbox: true  //是否显示复选框
+              ,accordion: true   //手风琴
+              ,id: 'demoId1'
+              ,isJump: true //是否允许点击节点时弹出新窗口跳转
+              ,click: function(obj){
+                  var data = obj.data;  //获取当前点击的节点数据
+                  layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+              }
+          });
+
+          //按钮事件
+          util.event('lay-demo', {
+              getChecked: function(othis){
+                  var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
+
+                  layer.alert(JSON.stringify(checkedData), {shade:0});
+                  console.log(checkedData);
+              }
+              ,setChecked: function(){
+                  tree.setChecked('demoId1', [12, 16]); //勾选指定节点
+              }
+              ,reload: function(){
+                  //重载实例
+                  tree.reload('demoId1', {
+
+                  });
+
+              }
+          });
+
       });
   </script>
   </body>

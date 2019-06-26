@@ -1,8 +1,12 @@
 package com.zking.zkingedu.common.controller;
 
+import com.zking.zkingedu.common.model.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -34,10 +38,42 @@ public class HtmlController {
     public String leis(){
         return "admin/html/member-edit";
     }
+    @RequestMapping(value = "/admin-cate")
+    public String les(HttpServletRequest request){
+        String roleName = request.getParameter("roleName");
+        request.setAttribute("rolename",roleName);
+        return "admin/html/admin-cate";
+    }
+    @RequestMapping(value = "/admin-cate1")
+    public String lsds(){
+        return "admin/html/admin-cate1";
+    }
     @RequestMapping(value = "/member-password")
     public String levs(){
         return "admin/html/member-password";
     }
+
+
+    /**
+     * 后台
+     * 跳转至课程体系管理
+     * yan
+     * @return
+     */
+    @RequestMapping("/adminCourse")
+    public String adminCourseManager(){
+        return "/admin/course/courseSystem";
+    }
+
+
+    /**
+     * admin
+     * 跳转至add体系添加
+     * @return
+     * yan
+     */
+    @RequestMapping("/pageSystemAdd")
+    public String adminPageAddCourse(){return "/admin/course/systemAdd";}
 
 
 }

@@ -1,6 +1,7 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.System;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -41,5 +42,14 @@ public interface SystemDao {
      * @return System
      */
     System getSystemCourseNum(Integer fid);
+
+
+    /**
+     * admin
+     * 获取所有的体系信息  1级
+     * @return
+     * yan
+     */
+    List<System> getAllSystems(@Param("system") System system);
 
 }

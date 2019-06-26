@@ -1,6 +1,8 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.Course;
+import com.zking.zkingedu.common.utils.PageBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -35,6 +37,14 @@ public interface CourseDao {
      * yan
      */
     List<Course> getCourseSearch(@Param("course") Course course);
+
+
+    /**
+     * 获取最热课程 四个播放量排序
+     * @return
+     * yan
+     */
+    List<Course> getCoursefour();
 
     /**
      * 根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频
