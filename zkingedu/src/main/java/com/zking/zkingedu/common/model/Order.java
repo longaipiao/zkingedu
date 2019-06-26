@@ -19,10 +19,14 @@ public class Order implements Serializable {
     private String orderID;
     //用户id
     private Integer orderUid;
+    //章节id
+    private Integer orderSid;
     //课程id
     private Integer orderCid;
     //消费积分
     private Integer orderIntegral;
     //'账单时间
     private String chargeTime;
+    //状态
+    private Integer orderState;
 }

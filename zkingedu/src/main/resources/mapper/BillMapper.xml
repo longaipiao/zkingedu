@@ -5,12 +5,20 @@
 
     <!--账单接口Mapper-->
 
+    <sql id="billAll">
+        bill_id,bill_uid,bill_type,bill_integral,bill_time,bill_content,bill_state
+    </sql>
 
    <!--添加账单表的方法-->
     <insert id="addBill" parameterType="com.zking.zkingedu.common.model.Bill">
-        insert into t_bill(bill_uid,bill_type,bill_integral,bill_time,bill_content)
-        values(#{billUid},#{billType},#{billIntegral},#{billTime},#{billContent})
+        insert into t_bill(bill_uid,bill_type,bill_integral,bill_time,bill_content,bill_state)
+        values(#{billUid},#{billType},#{billIntegral},#{billTime},#{billContent},#{billState})
     </insert>
+
+    <!--根据用户id查询所以的账单信息数据-->
+    <select id="findAll" parameterType="integer" resultType="com.zking.zkingedu.common.model.Bill">
+      select <include refid="billAll"/> from t_bill where bill_uid = #{userId}
+    </select>
 
 
 </mapper>

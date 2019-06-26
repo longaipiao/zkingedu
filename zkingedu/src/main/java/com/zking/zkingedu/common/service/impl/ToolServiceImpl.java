@@ -21,9 +21,41 @@ public class ToolServiceImpl implements ToolService {
     private ToolDao toolDao;
 
     @Override
-    public PageInfo<Tool> findAll(Integer page, Integer pageSize) {
+    public PageInfo<Tool> findAll(Tool tool,Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<Tool> tools = toolDao.findAll();
+        List<Tool> tools = toolDao.findAll(tool);
         return new PageInfo<>(tools);
     }
+
+    /**
+     * 增加工具的方法
+     */
+    @Override
+    public int addTool(Tool tool) {
+        return toolDao.addTool(tool);
+    }
+
+    /**
+     * 根据工具id查询图片
+     * @param toolID 工具id
+     * @return
+     */
+    @Override
+    public Tool findImg(Integer toolID) {
+        return toolDao.findImg(toolID);
+    }
+
+    /**
+     *  根据工具id修改的方法
+     * @param tool 接受的对象
+     * @return
+     */
+    @Override
+    public int updateTool(Tool tool) {
+        return toolDao.updateTool(tool);
+    }
 }
+
+
+
+

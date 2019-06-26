@@ -46,6 +46,10 @@
         select course_inte from t_course where course_id = #{courseid}
     </select>
 
+    <!--根据课程id查询课程名称-->
+    <select id="findCourseName" parameterType="integer" resultType="string">
+        select course_name from t_course where course_id = #{courseid}
+    </select>
 
 
     <!-- 获取最热课程 四个播放量排序-->

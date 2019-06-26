@@ -14,5 +14,21 @@ public interface ToolService {
      * @param
      * @return
      */
-    public PageInfo<Tool> findAll(Integer page, Integer pageSize);
+    public PageInfo<Tool> findAll(Tool tool,Integer page, Integer pageSize);
+
+
+    /**
+     * 增加工具的方法
+     */
+    public int addTool(Tool tool);
+
+    /**
+     * 根据工具id查询图片
+     */
+    public Tool findImg(Integer toolID);
+
+    /**
+     * 根据工具id修改的方法
+     */
+    public int updateTool(Tool tool);
 }

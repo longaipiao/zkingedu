@@ -58,6 +58,13 @@ public interface CourseService {
 
 
     /**
+     * 根据课程id查询课程名称
+     * 阿飘
+     */
+    public String findCourseName(Integer courseid);
+
+
+    /**
      * 获取最热课程 四个播放量排序
      * @return
      * yan

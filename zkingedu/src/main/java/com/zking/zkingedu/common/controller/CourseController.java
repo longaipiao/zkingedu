@@ -51,7 +51,7 @@ public class CourseController {
         System.err.println("整套课程的积分是："+courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl",integrsl);
-        request.getSession().setAttribute("userintegrsl",integrsl);
+        request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
 
         //单个用户的积分
         mv.addObject("userintegrsl",integrsl);

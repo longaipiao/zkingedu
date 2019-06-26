@@ -1,17 +1,20 @@
 package com.zking.zkingedu.common.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.config.AlipayConfig;
 import com.zking.zkingedu.common.model.Bill;
 import com.zking.zkingedu.common.model.Charge;
 import com.zking.zkingedu.common.service.BillService;
 import com.zking.zkingedu.common.service.ChargeService;
 import com.zking.zkingedu.common.utils.PayUtils;
+import com.zking.zkingedu.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +73,7 @@ public class ChargeController {
         charge.setChargeIntegral(Integer.parseInt(Integral));//充值积分
         //充值时间
         charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        charge.setChargeState(1);//状态
         chargeService.addCharge(charge);//开始执行充值的方法
         log.info("结束增加充值记录表的数据");
 
@@ -103,5 +107,38 @@ public class ChargeController {
     public String returnUrl(HttpServletResponse response, HttpServletRequest request) throws Exception {
         return "paySuccess";
     }*/
+
+
+    /**
+     * 根据用户id查询出所有的充值记录信息
+     */
+    @RequestMapping(value = "/findCharge")
+    @ResponseBody
+    public Map<String,Object> findcharge(Integer page,Integer limit){
+        log.info("***********开始查询充值记录表的数据**************");
+        PageInfo<Charge> charge = chargeService.findCharge(1,page,limit);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",charge.getTotal());
+        maps.put("data",charge.getList());
+        log.info("***********结束查询充值记录表的数据**************");
+        return maps;
+    }
+
+
+    /**
+     * 修改充值记录表的状态 为2 ，页面上的按钮是删除
+     */
+    @RequestMapping(value = "/updateState")
+    public void updatestate(HttpServletResponse response,Integer chargeID) throws Exception {
+        log.info("**************开始删除充值记录的方法***********");
+        int state = chargeService.updateState(chargeID);
+        ResponseUtil.write(response,state);
+        log.info("**************结束删除充值记录的方法***********");
+    }
+
+
+
 
 }

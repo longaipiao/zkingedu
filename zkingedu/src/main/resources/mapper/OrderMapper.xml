@@ -5,5 +5,10 @@
 
     <!--订单接口Mapper-->
 
+    <!--购买整套视频的方法-->
+    <insert id="gmshiporder" parameterType="com.zking.zkingedu.common.model.Order">
+        insert into t_order(order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state)
+        values(#{orderID},#{orderUid},#{orderSid},#{orderCid},#{orderIntegral},#{chargeTime},#{orderState})
+    </insert>
 
 </mapper>

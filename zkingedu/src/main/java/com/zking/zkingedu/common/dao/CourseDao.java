@@ -1,8 +1,8 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.Course;
+import io.lettuce.core.dynamic.annotation.Param;
 import com.zking.zkingedu.common.utils.PageBean;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -52,6 +52,13 @@ public interface CourseDao {
      * @return
      */
     public int findCourseIntegrsl(Integer courseid);
+
+
+    /**
+     * 根据课程id查询课程名称
+     * 阿飘
+     */
+    public String findCourseName(Integer courseid);
 
 
 }

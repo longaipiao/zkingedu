@@ -1,5 +1,7 @@
 package com.zking.zkingedu.common.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import java.text.SimpleDateFormat;
  * @author lenovo
  *
  */
+@Component
 public class IdGeneratorUtils {
 
 	private long workerId;   //用ip地址最后几个字节标示
@@ -30,7 +33,7 @@ public class IdGeneratorUtils {
 	 * 调用该方法，获取序列ID
 	 * @return
 	 */
-	public synchronized String nextId() {
+	public synchronized   String nextId() {
 	    long timestamp = currentTime(); //获取当前毫秒数
 	    //如果服务器时间有问题(时钟后退) 报错。
 	    if (timestamp < lastTimestamp) {
@@ -96,8 +99,9 @@ public class IdGeneratorUtils {
 	    return lastip;
 	}
 	
-	public static void main(String[] args) {
-		byte ip = getLastIP();
-		System.out.println(ip);
+	public synchronized static void main(String[] args) {
+
+		System.out.println(new IdGeneratorUtils().nextId());
+		System.out.println(new IdGeneratorUtils().nextId());
 	}
 }
