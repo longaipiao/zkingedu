@@ -1,5 +1,7 @@
 package com.zking.zkingedu.common.utils;
 
+import lombok.ToString;
+
 /**
  * 分页工具类
  *
@@ -7,6 +9,7 @@ package com.zking.zkingedu.common.utils;
  * @date 2019年1月8日
  * 可以实现分页查询
  */
+@ToString
 public class PageBean <T>{
 
 	private Integer pageIndex;

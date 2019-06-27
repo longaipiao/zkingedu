@@ -1,6 +1,7 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.model.Course;
+import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.OrderService;
@@ -8,11 +9,14 @@ import com.zking.zkingedu.common.service.SectionService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import com.zking.zkingedu.common.service.UserService;
+import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -114,11 +118,12 @@ public class CourseController {
     @ResponseBody
     @RequestMapping("/searchCourse")
     public ResultUtil userCourseSearch(Course course,Integer page,Integer limit){
-        log.info("===========================page:"+page+"____limit:"+limit);
-        PageBean<Course> pageBean = new PageBean<>();
+//        log.info("===========================page:"+page+"____limit:"+limit);
+        PageBean<Course> pageBean = new PageBean<Course>();
         pageBean.setT(course);
         pageBean.setPageIndex(page);//当前页
         pageBean.setPageSize(limit);//没页多少条
+        System.err.println("数据接收：=============================="+pageBean);
        return courseService.SearchCourse(pageBean);
     }
 
@@ -140,6 +145,173 @@ public class CourseController {
         }
         return new ResultUtil(200,coursefour);
     }
+
+
+    /**
+     * admin 进入课程管理页面
+     * yan
+     * @return
+     */
+    @RequestMapping("/stageManager")
+    public String StageManager(){
+        return "admin/course/courseManager";
+    }
+
+
+    /**
+     * admin 查询所有的课程信息  分页 查询
+     * yan
+     * @param page
+     * @param limit
+     * @param course
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getCourses")
+    public ResultUtil getCourses(Integer page,Integer limit,Course course){
+        PageBean<Course> pageBean = new PageBean<>();
+        pageBean.setPageSize(limit);
+        pageBean.setPageIndex(page);
+        pageBean.setT(course);
+        return courseService.getAllCourses(pageBean);
+    }
+
+
+    /**
+     * 跳转至  添加课程页面
+     * yan
+     * @return
+     */
+    @RequestMapping(value = "/addCoursePage")
+    public String enterAddCoursePage(){
+        return "admin/course/courseAdd";
+    }
+
+
+    /**
+     * yan
+     * 管理员添加课程 信息
+     * @param course
+     * @return
+     */
+    @ResponseBody
+    @Transactional
+    @RequestMapping("/addCourse")
+    public ResultUtil adminAddCourse(Course course){
+        try {
+            //获取当前员工信息
+            Emp emp = SessionUtil.getEmp();
+            //设置员工id
+            course.setCourseEid(emp.getEmpID());
+            //默认状态 上架 0
+            course.setCourseState(0);
+            //设置免费章节数默认0
+            course.setCourseFree(0);
+            //设置默认播放量默认0
+            course.setCourseNum(0);
+            //开始添加
+            int i = courseService.addCourse(course);
+            if(i>0){
+                return ResultUtil.ok("添加课程成功");
+            }
+            else {
+                return ResultUtil.error("您的操作过于频繁");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 根据课程id  返回对应的课程信息
+     * @param sid
+     * @return
+     * yan
+     */
+    @ResponseBody
+    @RequestMapping("/getCourseBySid")
+    public ResultUtil getCourseById(@RequestParam(value = "sid") Integer sid){
+        return ResultUtil.ok(courseService.getCourseBySid(sid));
+    }
+
+
+    /**
+     * 修改课程之前跳转页面 加载数据
+     * yan
+     * @param sid
+     * @return
+     */
+    @RequestMapping("/PreUpCourseloaddata")
+    public ModelAndView editPerUpCourse(@RequestParam(value = "sid") Integer sid){
+        ModelAndView mv = new ModelAndView();
+        //加载数据
+        mv.addObject("course",courseService.getCourseBySid(sid));
+
+        mv.setViewName("admin/course/courseEdit");
+        return mv;
+    }
+
+
+    /**
+     * 修改课程信息
+     * @param course
+     * @return
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/editCourse")
+    public ResultUtil editCourse(Course course){
+//        System.err.println("====================后台接收的到数据:"+course);
+        try {
+            int i = courseService.updateCourse(course);
+            if(i>0){
+                return ResultUtil.ok("success");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+        return ResultUtil.error("您的操作过于频繁");
+    }
+
+
+    /**
+     * 修改课程状态 修改课程状态  0显示  1影藏
+     * @param id
+     * @param state
+     * @return
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/editCourseState")
+    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state){
+        try {
+            Integer sid;
+            if(state){
+                sid=0;
+            }
+            else{
+                sid=1;
+            }
+            int i = courseService.editCourseState(id, sid);
+            if(i>0){
+                return ResultUtil.ok("修改课程状态成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResultUtil.error(e.getMessage());
+        }
+        return ResultUtil.error("您的操作过于频繁，请稍后再试....");
+    }
+
+
+
+
+
+
+
 
 
 

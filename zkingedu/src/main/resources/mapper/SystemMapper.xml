@@ -47,6 +47,12 @@
         select *,(select COUNT(*) from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}) from t_system a,t_course b where b.course_sid=a.system_id and a.system_fid=#{fid} and system_state=0
     </select>
 
+
+    <!--查询体系阶段数据-->
+    <select id="getSystemStages" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_fid=#{fid}
+    </select>
+
     <!--根据体系id查询体系对应信息-->
     <select id="getSystemBySid" resultType="com.zking.zkingedu.common.model.System">
         select <include refid="systemSqlcol"/> from t_system where system_state=0 and system_fid=0 and system_id=#{id}
@@ -102,5 +108,11 @@
     <update id="updateSystemAndStageBySid" >
         update t_system set system_name  = #{stageName} where system_id=#{sid}
     </update>
+
+
+    <!--获取所有的体系-->
+    <select id="getAll" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_fid=0
+    </select>
     
 </mapper>

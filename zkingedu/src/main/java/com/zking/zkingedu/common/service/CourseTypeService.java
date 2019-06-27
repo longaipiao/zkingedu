@@ -10,5 +10,10 @@ import java.util.List;
  */
 public interface CourseTypeService {
 
+    /**
+     * 获取所有的课程
+     * yan
+     * @return
+     */
     List<CourseType> getCourseTypes();
 }

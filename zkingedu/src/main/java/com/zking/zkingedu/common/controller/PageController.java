@@ -34,8 +34,8 @@ public class PageController {
     /**
      * 主页
      * @return
-     *//*
-    @RequestMapping(value = "/")
+     */
+    /*@RequestMapping(value = "/")
     public String index(){
         return "user/index";
     }*/

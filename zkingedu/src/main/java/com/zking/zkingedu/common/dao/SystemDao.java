@@ -28,6 +28,12 @@ public interface SystemDao {
     List<System> getsystemsonByFId(Integer fid);
 
 
+    /**
+     * 查询体系阶段数据
+     * fid
+     */
+    List<System> getSystemStages(Integer fid);
+
 
 
     /**
@@ -112,5 +118,14 @@ public interface SystemDao {
      * yan
      */
     int updateSystemAndStageBySid(@Param("sid")Integer sid,@Param("stageName")String stageName);
+
+
+    /**
+     * admin
+     * 获取所有的体系
+     * yan
+     * @return
+     */
+    List<System> getAll();
 
 }
