@@ -4,6 +4,7 @@ import com.zking.zkingedu.common.model.Pcata;
 import com.zking.zkingedu.common.model.Post;
 import com.zking.zkingedu.common.model.Tcomment;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,19 @@ public interface PostDao {
     int addTcomment(Tcomment tcomment);
 
 
+    /**
+     * 根据评论id
+     * @param id
+     * @return
+     */
+    int deletePl(Integer id);
+
+    /**
+     * 删除父评论
+     * @param id
+     * @return
+     */
+    int deleteFpl(Integer id);
 
 
 

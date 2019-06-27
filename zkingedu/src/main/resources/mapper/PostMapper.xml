@@ -78,5 +78,18 @@
 
     </insert>
 
+<!-- 删除评论表-->
+<delete id="deletePl" parameterType="integer">
+           delete  from
+                      t_tcomment
+           where tcomment_id=#{id}
+</delete>
+
+   <!--删除父评论的同时删除子评论-->
+    <delete id="deleteFpl" parameterType="integer">
+                delete  from
+                      t_tcomment
+           where tcomment_fid=#{id}
+    </delete>
 
 </mapper>

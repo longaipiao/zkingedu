@@ -81,5 +81,21 @@ public interface PostService {
      */
     int addTcomment(Tcomment tcomment);
 
+    PageInfo<Tcomment> getAllTcomments(Integer page, Integer pageSize,List<Tcomment> tcomments);
+
+
+    /**
+     * 根据评论id
+     * @param id
+     * @return
+     */
+    int deletePl(Integer id);
+
+    /**
+     * 删除父评论
+     * @param id
+     * @return
+     */
+    int deleteFpl(Integer id);
 
 }

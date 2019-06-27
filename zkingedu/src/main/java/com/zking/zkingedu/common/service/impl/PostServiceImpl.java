@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.PipedOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,23 @@ public class PostServiceImpl implements PostService {
         List<Post> allPosts = postDao.getAllPosts(uid);
         return new PageInfo<>(allPosts);
     }
+
+    @Override
+    public PageInfo<Tcomment> getAllTcomments(Integer page, Integer pageSize,List<Tcomment> tcomments) {
+            PageHelper.startPage(page,pageSize);
+        return new PageInfo<>(tcomments);
+    }
+
+    @Override
+    public int deletePl(Integer id) {
+        return postDao.deletePl(id);
+    }
+
+    @Override
+    public int deleteFpl(Integer id) {
+        return postDao.deleteFpl(id);
+    }
+
 
     @Override
     public Map<String, Object> getPostandUse(Integer id) {
