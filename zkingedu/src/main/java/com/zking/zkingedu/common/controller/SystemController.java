@@ -263,5 +263,13 @@ public class SystemController {
 
 
 
+    @ResponseBody
+    @RequestMapping("/getSystemAndStageMenu")
+    public ResultUtil getSysMenu(){
+        return ResultUtil.ok(systemService.getSystemAndStageMenu());
+    }
+
+
+
 
 }

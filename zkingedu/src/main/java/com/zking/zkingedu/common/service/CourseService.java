@@ -3,9 +3,9 @@ package com.zking.zkingedu.common.service;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程接口
@@ -70,5 +70,60 @@ public interface CourseService {
      * yan
      */
     List<Course> getCoursefour();
+
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @param pageBean  查询参数
+     * @return
+     */
+    ResultUtil getAllCoursesAndSearchByPage(PageBean<Course> pageBean);
+
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @return  resultUtil
+     */
+    ResultUtil getAllCourses(PageBean<Course> pageBean);
+
+    /**
+     * 课程添加
+     * yan
+     * @param course
+     * @return
+     */
+    int addCourse(Course course);
+
+
+    /**
+     * yan
+     * 根据课程id  查询
+     * @param sid
+     * @return
+     */
+    Map<String,Object> getCourseBySid( Integer sid);
+
+
+
+    /**
+     * 课程信息修改
+     * yan
+     * @param course
+     * @return
+     */
+    int updateCourse(Course course);
+
+
+    /**
+     * 修改课程状态  0显示  1影藏
+     * yan
+     * @param id
+     * @param stateid
+     * @return
+     */
+    int editCourseState(Integer id,Integer stateid);
+
 
 }

@@ -6,6 +6,7 @@ import com.zking.zkingedu.common.utils.ResultUtil;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程体系接口
@@ -38,6 +39,13 @@ public interface SystemService {
      * yan
      */
     List<System> getsystemsonByFId(Integer fid);
+
+
+    /**
+     * 查询体系阶段数据
+     * fid
+     */
+    List<System> getSystemStages(Integer fid);
 
 
     /**
@@ -126,5 +134,22 @@ public interface SystemService {
      */
     int updateSystemAndStageBySid(Integer sid,String stageName);
 
+
+
+    /**
+     * admin
+     * 获取所有的体系
+     * yan
+     * @return
+     */
+    List<System> getAll();
+
+
+    /**
+     * yan
+     * 获取 所有的体系 以及对应的体系阶段
+     * @return
+     */
+    List<Map<String,Object>> getSystemAndStageMenu();
 
 }
