@@ -71,4 +71,10 @@ public interface CourseService {
      */
     List<Course> getCoursefour();
 
+    /**
+     * 根据课程id查询出此视频是否免费
+     * 阿飘
+     */
+    public Integer findCourseInte(Integer courseID);
+
 }

@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.service.CourseService;
+import com.zking.zkingedu.common.service.OrderService;
 import com.zking.zkingedu.common.service.SectionService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -10,6 +11,7 @@ import com.zking.zkingedu.common.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,23 +28,27 @@ import java.util.List;
 @Slf4j
 public class CourseController {
 
-
+    //章节的service
     @Autowired
     private SectionService sectionService;
 
+    //课程的service
     @Autowired
     private CourseService courseService;
 
-
+    //用户的service
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
      * @return sid 是课程ID
      */
     @RequestMapping("/showCourse")
-    public ModelAndView SystemRequestCourse(Integer sid,HttpServletRequest request){
+    public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model){
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
         int integrsl = userService.findIntegrsl(2);
@@ -52,6 +58,24 @@ public class CourseController {
 
         request.getSession().setAttribute("userintegrsl",integrsl);
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
+
+        //查询订单表中是否存在用户id
+        Integer userID = orderService.findUserID(2);
+        System.err.println("订单中查询出的用户id是："+userID);
+        //查询订单表中是否存在课程id
+        Integer courseID1 = orderService.findCourseID(sid);
+        System.err.println("订单中查询出的课程id是："+courseID1);
+
+        //存入model里面，前台获取
+        model.addAttribute("courseid",courseID1);//课程id
+        model.addAttribute("userid",userID);//用户id
+
+
+        //课程id
+        model.addAttribute("courseId",sid);
+        System.err.println("课程id是："+sid);
+        model.addAttribute("userId",2);
+        System.err.println("用户id是"+2);
 
         //单个用户的积分
         mv.addObject("userintegrsl",integrsl);

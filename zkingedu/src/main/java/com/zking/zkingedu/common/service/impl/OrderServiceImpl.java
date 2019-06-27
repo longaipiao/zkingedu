@@ -27,6 +27,21 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.gmshiporder(order);
     }
 
+    /**
+     * 查询课程id和用户id是否存在
+     */
+    @Override
+    public Integer findCourseID(Integer courseID) {
+        return orderDao.findCourseID(courseID);
+    }
+
+    /**
+     * 查询用户id是否存在
+     */
+    @Override
+    public Integer findUserID(Integer userID) {
+        return orderDao.findUserID(userID);
+    }
 
 
 }

@@ -128,4 +128,15 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCoursefour() {
         return courseDao.getCoursefour();
     }
+
+
+    /**
+     * 根据课程id查询出此视频是否免费
+     * @param courseID 课程id
+     * @return
+     */
+    @Override
+    public Integer findCourseInte(Integer courseID) {
+        return courseDao.findCourseInte(courseID);
+    }
 }

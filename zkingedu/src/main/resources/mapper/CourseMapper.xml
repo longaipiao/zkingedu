@@ -57,4 +57,9 @@
         select <include refid="CourseSql"/> from t_course where course_state=0 order by course_num desc
     </select>
 
+    <!--根据课程id查询出此视频是否免费-->
+    <select id="findCourseInte" resultType="java.lang.Integer" parameterType="integer">
+        select course_inte from t_course where course_id = #{courseID}
+    </select>
+
 </mapper>

@@ -293,6 +293,196 @@
     </div>
 </div>
 
+		<div class="container layout">
+			<div class="row">
+				<div class="col-md-2 layout-side" >
+					<ul class="list-group">
+						<div class="text-center">
+							<a href="#get1" class="list-group-item" id="zhongxin" >个人中心</a>
+							<a href="#get2" class="list-group-item" id="kecheng">我的课程</a>
+							<a href="#get3" class="list-group-item" id="huida">我的回答</a>
+							<a href="#get4" class="list-group-item" id="shoucang">我的收藏</a>
+							<a href="#get5" class="list-group-item" id="xiaoxi">消息中心</a>
+						</div>
+					</ul>
+					<ul class="list-group">
+						<div class="text-center">
+							<a href="#get6" class="list-group-item" id="xinxi">个人信息</a>
+							<a href="#get7" class="list-group-item" id="haoyou">邀请好友</a>
+							<a href="#get8" class="list-group-item" id="chongzhi">会员充值</a>
+						</div>
+					</ul>
+				</div>
+				<div class="col-md-10 layout-body " id="get1">
+							<div class="content" role="tabpanel" >
+								<ul class="nav nav-tabs" rolw="tablist" id="nav">
+									<li role="presentation" class="active">
+										<a href="#yi" class="active">基本信息</a>
+									</li>
+									<li role="presentation">
+										<a href="#er" >修改密码</a>
+									</li>
+									<li role="presentation">
+										<a href="#san">我的课程</a>
+									</li>
+									<li role="presentation">
+										<a href="#si">我的订单</a>
+									</li>
+									<li role="presentation">
+										<a href="#wu" id="chji">我的充值记录</a>
+								    </li>
+									<li role="presentation">
+										<a href="#liu" id="zhangdan">我的账单</a>
+								    </li>
+								</ul>
+								
+								<div class="tab-content">
+									<div id="yi" class="tab-pane fade in active" style="height: 300px;">
+										<form class="form-horizontal">
+												  <div class="form-group">
+													<label for="inputEmail3" class="col-xs-4 control-label">昵称</label>
+													<div class="col-sm-3">
+													  <input type="text" class="form-control" id="inputEmail3" value="艰难人生">
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label for="inputName" class="col-xs-4 control-label">姓名</label>
+													<div class="col-xs-3">
+													  <input type="text" class="form-control" id="inputName" value="颜值帅">
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label for="inputAge" class="col-xs-4 control-label">年龄</label>
+													<div class="col-xs-3">
+													  <input type="text" class="form-control" id="inputAge" value="21">
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label for="inputShou" class="col-xs-4 control-label">手机号</label>
+													<div class="col-xs-3">
+													  <input type="text" class="form-control" id="inputShou" value="123456789101">
+													</div>
+												  </div>
+												  <div class="form-group">
+													<label for="inputEmail" class="col-xs-4 control-label">邮箱</label>
+													<div class="col-xs-3">
+													  <input type="email" class="form-control" id="inputEmail" value="123456@qq.com">
+													</div>
+												  </div>
+												  <div class="form-group">
+													<div class="col-xs-offset-4 col-xs-9">
+														<label>
+														  注:完善信息方便找回密码，账号更安全。
+														</label>
+													</div>
+												  </div>
+												  <div class="form-group">
+													<div class="col-xs-offset-5 col-xs-9">
+													  <button type="submit" class="btn btn-default">编辑资料</button>
+													</div>
+												  </div>
+										</form>
+									</div>
+									<div id="er" class="tab-pane fade" style="height: 300px;">
+										<form class="form-horizontal">
+											  <div class="form-group">
+												<label for="inputEmail3" class="col-xs-4 control-label">原密码</label>
+												<div class="col-sm-3">
+												  <input type="email" class="form-control" id="inputEmail3" placeholder="原密码">
+												</div>
+											  </div>
+											  <div class="form-group">
+												<label for="inputPassword3" class="col-xs-4 control-label">新密码</label>
+												<div class="col-xs-3">
+												  <input type="password" class="form-control" id="inputPassword3" placeholder="新密码">
+												</div>
+											  </div>
+											  <div class="form-group">
+												<label for="inputPassword3" class="col-xs-4 control-label">确认密码</label>
+												<div class="col-xs-3">
+												  <input type="password" class="form-control" id="inputPassword3" placeholder="确认密码">
+												</div>
+											  </div>
+											  <div class="form-group">
+												<div class="col-xs-offset-5 col-xs-9">
+												  <button type="submit" class="btn btn-default">修改</button>
+												</div>
+											  </div>
+										</form>
+									</div>
+									<div id="san" class="tab-pane fade" style="height: 300px;">3</div>
+
+									<!--我的订单模块-->
+									<div id="si" class="tab-pane fade" style="height: 300px;">
+										<table class="table table-hover">
+											<caption>我的订单</caption>
+											<thead>
+											<tr>
+												<th>充值积分</th>
+												<th>充值金额</th>
+												<th>充值时间</th>
+												<th>状态</th>
+											</tr>
+											</thead>
+											<!--数据位置-->
+											<tbody id="wddd">
+
+											</tbody>
+										</table>
+										<!--分页位置-->
+										<div id="page3" align="center"></div>
+									</div>
+
+
+
+									<!--我的充值记录模块-->
+									<div id="wu" class="tab-pane fade" style="height: 300px;">
+										<table class="table table-hover">
+											<caption>我的充值记录</caption>
+											<thead>
+											<tr>
+												<th>充值积分</th>
+												<th>充值金额</th>
+												<th>充值时间</th>
+												<th>状态</th>
+											</tr>
+											</thead>
+											<!--数据位置-->
+											<tbody id="cjjl">
+
+											</tbody>
+										</table>
+										<!--分页位置-->
+										<div id="page2" align="center"></div>
+									</div>
+
+									<!--我的账单模块-->
+									<div id="liu" class="tab-pane fade" style="height: 300px;">
+										<table class="table table-hover" style="height: 150px;">
+											<caption>我的账单详情</caption>
+											<thead>
+											<tr>
+												<th>积分</th>
+												<th>账单内容</th>
+												<th>账单生成时间</th>
+												<th>状态</th>
+											</tr>
+											</thead>
+											<!--数据位置-->
+											<tbody id="shuj">
+
+											</tbody>
+										</table>
+										<!--分页位置-->
+										<div id="page1" align="center"></div>
+									</div>
+
+								</div>
+							</div>
+				     </div>
+
+				<!--操作数据的script 方法-->
+				<script>
 <div class="container layout">
     <div class="row">
         <div class="col-md-1 layout-side" >

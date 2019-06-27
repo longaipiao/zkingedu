@@ -227,6 +227,8 @@
                         <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(1194)</a>
                     </li>
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
+                    <!--从后台获取的课程id-->
+                    <input type="hidden" id="courseID" th:value="${courseId}"/>
                 </ul>
 
 
@@ -243,10 +245,17 @@
                                 <img src="/user/img/lab-not-ok.png">
                             </div>
                             <div class="lab-item-index" th:text="${'第'+status.count+'节'}">第1节</div>
-                            <div class="lab-item-title" data-toggle="tooltip" data-placement="bottom" th:title="${se.sectionName}" th:text="${se.sectionName}" title="Linux 系统简介">Linux 系统简介</div>
+                            <div class="lab-item-title" data-toggle="tooltip" data-placement="bottom" th:title="${se.sectionName}" th:text="${se.sectionName}" title="Linux 系统简介">Linux 系统简介
+                            </div>
+                            <span th:if="${se.sectionInte==0}">
+                                    <em style="color: revert">免费</em>
+                            </span>
+                            <span th:if="${se.sectionInte>0}">
+                                    <em style="color: red">vip</em>
+                            </span>
+
                             <div class="pull-right lab-item-ctrl">
                                 <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
-                                <input type="hidden" id="courseID" th:value="${course.courseID}"/>
                             </div>
                         </div>
 
@@ -923,8 +932,13 @@
 
 <script src="/user/layui/layui.js"></script>
 
+<!--courseController的值-->
+<input type="hidden" id="course" th:value="${courseId}"/>
+<input type="hidden" id="user" th:value="${userId}"/>
 
-
+<!--orderController的值-->
+<input type="hidden" id="course1" th:value="${courseid}"/>
+<input type="hidden" id="user1" th:value="${userid}"/>
 
 <!--用户的所有积分-->
 <input type="hidden" id="userintegrsl" th:value="${session.userintegrsl}" />
@@ -937,9 +951,22 @@
         var s1 = $("#userintegrsl").val();
         var s2 = $("#courseIntegrsl").val();
 
+
+        //从CourseController中传值过来的
+        var user = $("#user").val();
+        var course = $("#course").val()
+        //从订单表中获取的值
+        var user1 =  $("#user1").val();
+        var course1 = $("#course1").val();
+
+        //订单表存在的话，就把购买整套视频隐藏
+        if(user==user1 && course==course1){
+            $("#qtsp").hide();
+        }
+
         layui.use('layer', function(){
             var layer = layui.layer;
-                layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+            //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
         });
 
 
@@ -947,7 +974,7 @@
          * 购买全套视频的点击事件
          */
         $("#qtsp").click(function () {
-            alert("开始购买视频。。。。。");
+            //alert("开始购买视频。。。。。");
             //courseID sectionID
             var courseid = $("#courseID").val();
             alert(courseid);
@@ -963,9 +990,15 @@
                     },
                     success : function (data) {
                         if(data==1){
-                            layer.msg("成功购买本套视频。",{icon: 1} );
+                            //积分不够的话，需要充值，才能购买视频
+                            //layer.msg("你需要去充值积分，去购买视频吧！",{icon: 1} );
+                            setTimeout(function() {
+                                layer.msg("您的积分余额不足，请前去个人中心充值积分，再进行购买此课程吧！",{icon: 5} )
+                            }, 2000);
                         }else{
-                            layer.msg("购买本套视频失败。",{icon: 5});
+                            //积分足够的话，就可以购买视频了
+                            // 停顿一秒后,进行刷新详情页面.
+                            layer.msg("恭喜你，此课程购买成功！",{icon: 1} );
                         }
                     }
                 });
@@ -974,10 +1007,71 @@
 
         });
 
-
     });
 
 </script>
+
+<!--layer.open({
+type: 1,
+title: "充值页面",
+shade: 0.8,  //遮罩透明度
+skin: 'layui-layer-demo', //样式类名
+area: ['400px', '320px'],
+content: $("#jfcz"),//引用的弹出层的页面层的方式加载修改界面表单
+maxmin : true
+});-->
+
+
+<!--<div class="col-md-10 layout-body" id="jfcz" style="display: none">
+    <div class="content" style="height: 330px;" align="center">
+        <div align="center" style="font-size: 20px;">积分充值</div>
+        <br/>
+        <form style="margin-left: 100px;" id="form" method="post">
+            <div class="form-group">
+                <label for="money" style="font-size: 16px;">充值金额</label>
+                <input type="text" style="width: 200px;" onblur="myf()" class="form-control" name="chargeMoney" id="money" placeholder="金额">
+            </div>
+            <div class="form-group">
+                <label for="integral" style="font-size: 16px;">充值积分</label>
+                <input type="text" style="width: 200px;" class="form-control" name="chargeIntegral" id="integral" placeholder="积分">
+            </div>
+            &lt;!&ndash;<input type="button" value="充值" onclick="submitForm('/pay')">&ndash;&gt;
+            <button id="czjf" class="btn btn-primary btn-sm" onclick="submitForm('/pay')">充值</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn btn-sm" id="resetBtn" value="重置"/>
+        </form>
+    </div>
+</div>-->
+
+
+<!--<script type="text/javascript">
+    function submitForm(action) {
+        document.getElementById("form").action = action;
+        document.getElementById("form").submit();
+    }
+
+    //重置按钮事件
+    $("#resetBtn").click(function () {
+        $("#money").val("");
+        $("#integral").val("");
+    });
+</script>
+
+
+
+<script type="text/javascript">
+
+    function myf() {
+        var money = $("#money").val();
+        if(isNaN(money)||money<=0||!(/^\d+$/.test(money))){
+            layer.msg("请输入正确的数值,只允许输入整数!");
+            $("#integral").val("");
+            return false;
+        }
+        var sum = money * 10;
+        $("#integral").val(sum);
+    }
+</script>-->
 
 
 

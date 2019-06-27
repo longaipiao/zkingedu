@@ -4,11 +4,25 @@
 <mapper namespace="com.zking.zkingedu.common.dao.OrderDao">
 
     <!--订单接口Mapper-->
+    <sql id="orderAll">
+        order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state
+    </sql>
 
     <!--购买整套视频的方法-->
     <insert id="gmshiporder" parameterType="com.zking.zkingedu.common.model.Order">
         insert into t_order(order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state)
         values(#{orderID},#{orderUid},#{orderSid},#{orderCid},#{orderIntegral},#{chargeTime},#{orderState})
     </insert>
+
+
+    <!--查询课程id是否存在-->
+    <select id="findCourseID" resultType="java.lang.Integer" parameterType="integer">
+        select order_sid from t_order where order_sid = #{courseID}
+    </select>
+
+    <!--查询用户id是否存在-->
+    <select id="findUserID" resultType="java.lang.Integer" parameterType="integer">
+        select order_uid from t_order where order_uid = #{userID}
+    </select>
 
 </mapper>
