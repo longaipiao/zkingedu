@@ -1,5 +1,6 @@
 package com.zking.zkingedu.common.service;
 
+import com.zking.zkingedu.common.model.MenuRole;
 import com.zking.zkingedu.common.model.Role;
 
 import java.util.List;
@@ -21,5 +22,21 @@ public interface RoleService {
      */
     int delRoleByID(Integer roleID);
     int delMenuRoleByID(Integer roleID);
+
+    /**
+     * 修改单个角色名
+     * @return
+     */
+    int updateRoleByID(Integer roleID,String roleName);
+    /**
+     * 修改单个角色权限
+     * @return
+     */
+    int addMenuRoleByID(List<MenuRole> list);
+    /**
+     * 增加单个角色名
+     * @return
+     */
+    int addRole(Role role);
 
 }

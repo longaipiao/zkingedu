@@ -40,14 +40,14 @@
         </ul>
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+            <a href="javascript:;" th:text="${session.emp.empName}"></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
               <dd><a onClick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
-              <dd><a onClick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+<!--              <dd><a onClick="x_admin_show('切换帐号','/admin')">切换帐号</a></dd>-->
               <dd><a href="/admin/logOut">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="#">前台首页</a></li>
+          <li class="layui-nav-item to-index"><a href="/user/">前台首页</a></li>
         </ul>
         
     </div>
@@ -75,7 +75,7 @@
                 <ul class="sub-menu">
                     <shiro:hasPermission name="广告管理"><li><a _href="/html/level-list"><i class="iconfont">&#xe6a7;</i><cite>广告管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="开发者工具"><li><a _href="/amdin/tool"><i class="iconfont">&#xe6a7;</i><cite>开发者工具</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="员工管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>员工管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="员工管理"><li><a _href="/html/emp-list"><i class="iconfont">&#xe6a7;</i><cite>员工管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="菜单管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>菜单管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="角色管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>角色管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="管理员列表"><li><a _href="/html/admin-cate"><i class="iconfont">&#xe6a7;</i><cite>管理员列表</cite></a></li ></shiro:hasPermission>
