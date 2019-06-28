@@ -3,10 +3,7 @@ package com.zking.zkingedu.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.dao.PostDao;
-import com.zking.zkingedu.common.model.Pcata;
-import com.zking.zkingedu.common.model.Post;
-import com.zking.zkingedu.common.model.Tcomment;
-import com.zking.zkingedu.common.model.Tool;
+import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +71,43 @@ public class PostServiceImpl implements PostService {
     @Override
     public int deleteFpl(Integer id) {
         return postDao.deleteFpl(id);
+    }
+
+    @Override
+    public int addpostNum(Integer id) {
+        return postDao.addpostNum(id
+        );
+    }
+
+    @Override
+    public int queryGive(Give give) {
+        return postDao.queryGive(give
+        );
+    }
+
+    @Override
+    public int addGive(Give give) {
+        return postDao.addGive(give);
+    }
+
+    @Override
+    public int delGive(Give give) {
+        return postDao.delGive(give);
+    }
+
+    @Override
+    public int addCollection(Hoarding hoarding) {
+        return postDao.addCollection(hoarding);
+    }
+
+    @Override
+    public int deleteCollention(Hoarding hoarding) {
+        return postDao.deleteCollention(hoarding);
+    }
+
+    @Override
+    public int queryCollection(Hoarding hoarding) {
+        return postDao.queryCollection(hoarding);
     }
 
 

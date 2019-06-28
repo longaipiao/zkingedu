@@ -39,6 +39,9 @@ public class PostController {
 
     public final static int PER_PAGE_COUNT = 4;//没触底一次，追加4个信息对象
 
+    //定义全局变量，获取点赞
+    Integer dzs=0;
+
     @Autowired
     private PostService postService;
 
@@ -180,17 +183,6 @@ public class PostController {
         }
 
 
-        //开始
-        int toIndex=Constant.DEFAULT_FIRST_COUNT;
-       if(tcomments.size()<Constant.DEFAULT_FIRST_COUNT){
-           //如果集合的大小小于自定义默认的8个的话，则使用集合的大小
-                 toIndex=tcomments.size();
-           List<Tcomment> tcomments1 = tcomments.subList(0, toIndex);//推送出去的对象
-           return  tcomments1;
-       }
-        List<Tcomment> tcomments2=tcomments.subList(0,toIndex);//默认推送出去的个数
-
-
         return tcomments;
     }
 
@@ -204,7 +196,7 @@ public class PostController {
      * @param current
      * @return
      */
-   @RequestMapping(value = "/appendAllTs")
+   /*@RequestMapping(value = "/appendAllTs")
    @ResponseBody
    public List<Tcomment>  apendTcomment(Integer id,Integer current){
        System.out.println("进来了");
@@ -276,7 +268,7 @@ public class PostController {
        System.out.println("输出tcomments1的大小:"+tcomments1.size());
 
        return tcomments1;
-   }
+   }*/
 
 
 
@@ -338,15 +330,159 @@ public class PostController {
 
     /**
      * 删除评论
-     * @param id
+     * @param uid
      * @param fid
      * @return
      */
-    public int delpls(Integer id,Integer fid){
-        return 0;
+    @RequestMapping(value = "/delPl")
+    @ResponseBody
+    public int delpls(Integer uid,Integer fid){
+        //判断是否是父级评论
+        if(fid==0){
+            //删除父级评论的同时把子类的评论也删除
+            int i = postService.deletePl(uid);
+
+            int i1 = postService.deleteFpl(uid);
+
+
+        }
+        //如果是子级评论
+        if(fid!=0){
+            //删除子类
+            int u=postService.deletePl(uid);
+            return u;
+        }
+        return 1;
     }
 
 
+    /**
+     * 增加浏览量
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/addpstNum")
+    @ResponseBody
+    public  int addpostNums(Integer id){
+        //调用增加浏览量的方法
+        int i = postService.addpostNum(id);
+     return i;
+    }
+
+
+    /**
+     * 根据uid和帖子id查找是否有这个点赞记录
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/querygive")
+    @ResponseBody
+    public int queryGive(Integer id){
+        //假设用户的id为3
+        Integer uid=3;
+        Give give=new Give();
+        //设置uid
+        give.setGiveUid(uid);
+        //设置帖子id
+        give.setGivePid(id);
+        int i = postService.queryGive(give);
+
+        return i;
+    }
+
+
+    /**
+     * 点赞和取消点赞
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/addorDelGive")
+    @ResponseBody
+    public int addordeleteGive(Integer id){
+        //获取用户的id
+        Integer uid=3;
+        Give give2=new Give();
+        give2.setGiveUid(uid);
+        give2.setGivePid(id);
+        int z = postService.queryGive(give2);
+
+        if(z>0){ //如果查到此贴有点赞的话就是删除
+            Give give=new Give();
+            give.setGivePid(id);
+            give.setGiveUid(uid);
+            give.setGiveTime(new Date().toLocaleString());
+            int i = postService.delGive(give);
+            return 3;
+        }
+        if(z==0) {//增加点赞
+            Give give=new Give();
+            give.setGivePid(id);
+            give.setGiveUid(uid);
+            int i = postService.addGive(give);
+            return 4;
+
+        }
+        return 1;
+    }
+
+
+    /**
+     * 收藏
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/addordelCollection")
+    @ResponseBody
+    public int addCollection(Integer id){
+        //假设一个用户id
+        //查询是否已经收藏了
+        Integer uid=3;
+        Hoarding hoarding=new Hoarding();
+        hoarding.setCollectionUid(uid);
+        hoarding.setCollectionState(1);
+        hoarding.setCollectionZpid(id);
+        int i = postService.queryCollection(hoarding);
+        //》0说明已经存在了
+        if(i>0){//开始调用取消收藏
+            int i1 = postService.deleteCollention(hoarding);
+            return 3;//说明取消成功
+        }
+        if(i==0){//开始调用增加收藏的方法
+            Hoarding hoarding1=new Hoarding();
+            hoarding1.setCollectionUid(uid);
+            hoarding1.setCollectionZpid(id);
+            hoarding1.setCollectionState(1);
+            hoarding1.setCollectionTime(new Date().toLocaleString());
+            int u = postService.addCollection(hoarding);
+            return 4;//说明增加收藏成功
+
+        }
+
+
+        //给收藏表对象赋值
+
+        return 5 ;
+    }
+
+
+    /**
+     * 查询是否已经收藏了
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/queryCollection")
+    @ResponseBody
+    public int queryColle(Integer id){
+        //假设一个用户id
+        Integer uid=3;
+             Hoarding hoarding=new Hoarding();
+             hoarding.setCollectionUid(uid);
+             hoarding.setCollectionState(1);
+             hoarding.setCollectionTime(new Date().toLocaleString());
+             hoarding.setCollectionZpid(id);
+        int i = postService.queryCollection(hoarding);
+        return i;
+    }
 
 
 

@@ -1,8 +1,6 @@
 package com.zking.zkingedu.common.dao;
 
-import com.zking.zkingedu.common.model.Pcata;
-import com.zking.zkingedu.common.model.Post;
-import com.zking.zkingedu.common.model.Tcomment;
+import com.zking.zkingedu.common.model.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -85,6 +83,56 @@ public interface PostDao {
      */
     int deleteFpl(Integer id);
 
+
+    /**
+     * 增加浏览量
+     * @param id
+     * @return
+     */
+    int addpostNum(Integer id);
+
+    /**
+     * 根据uid查找点赞表
+     * @param give
+     * @return
+     */
+    int queryGive(Give give);
+
+    /**
+     * 增加点赞表
+     * @param give
+     * @return
+     */
+    int addGive(Give give);
+
+
+    /**
+     * 根据uid,和帖子id删除点赞
+     * @param give
+     * @return
+     */
+    int delGive(Give give);
+
+    /**
+     * 增加收藏
+     * @param hoarding
+     * @return
+     */
+    int addCollection(Hoarding hoarding);
+
+    /**
+     * 取消收藏
+     * @param hoarding
+     * @return
+     */
+    int deleteCollention(Hoarding hoarding);
+
+    /**
+     * 查看帖子是否收藏
+     * @param hoarding
+     * @return
+     */
+    int queryCollection(Hoarding hoarding);
 
 
 }

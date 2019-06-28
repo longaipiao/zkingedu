@@ -2,10 +2,7 @@ package com.zking.zkingedu.common.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zking.zkingedu.common.model.Pcata;
-import com.zking.zkingedu.common.model.Post;
-import com.zking.zkingedu.common.model.Tcomment;
-import com.zking.zkingedu.common.model.Tool;
+import com.zking.zkingedu.common.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -97,5 +94,60 @@ public interface PostService {
      * @return
      */
     int deleteFpl(Integer id);
+
+
+    /**
+     * 增加浏览量
+     * @param id
+     * @return
+     */
+    int addpostNum(Integer id);
+
+
+    /**
+     * 根据uid查找点赞表
+     * @param give
+     * @return
+     */
+    int queryGive(Give give);
+
+
+    /**
+     * 增加点赞表
+     * @param give
+     * @return
+     */
+    int addGive(Give give);
+
+
+    /**
+     * 根据uid,和帖子id删除点赞
+     * @param give
+     * @return
+     */
+    int delGive(Give give);
+
+
+    /**
+     * 增加收藏
+     * @param hoarding
+     * @return
+     */
+    int addCollection(Hoarding hoarding);
+
+
+    /**
+     * 取消收藏
+     * @param hoarding
+     * @return
+     */
+    int deleteCollention(Hoarding hoarding);
+
+    /**
+     * 查看帖子是否收藏
+     * @param hoarding
+     * @return
+     */
+    int queryCollection(Hoarding hoarding);
 
 }

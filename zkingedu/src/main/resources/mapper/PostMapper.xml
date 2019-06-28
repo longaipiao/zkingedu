@@ -42,19 +42,6 @@
     </select>
 
 
-    <!--<resultMap id="bass" type="com.zking.zkingedu.common.model.Tcomment">
-                <id property="tcommentID" column="tcomment_id"></id>
-                <result property="tcommentCid" column="tcomment_cid"></result>
-                <result property="tcommentUid" column="tcomment_uid"></result>
-                <result property="tcommentContent" column="tcomment_content"></result>
-                <result property="tcommentTime" column="tcomment_time"></result>
-                <result property="tcommentFid" column="tcomment_fid"></result>
-                <association property="user" javaType="com.zking.zkingedu.common.model.User">
-                               <id property="userID" column="user_id"></id>
-                               <result property="userImg" column="user_img"></result>
-                               <result property="userName" column="user_name"></result>
-                </association>
-    </resultMap>-->
 
 
 <!--    根据id找到所有的评论-->
@@ -80,16 +67,60 @@
 
 <!-- 删除评论表-->
 <delete id="deletePl" parameterType="integer">
-           delete  from
-                      t_tcomment
-           where tcomment_id=#{id}
+
+      DELETE from t_tcomment where tcomment_id=#{id};
 </delete>
 
    <!--删除父评论的同时删除子评论-->
     <delete id="deleteFpl" parameterType="integer">
-                delete  from
-                      t_tcomment
-           where tcomment_fid=#{id}
+               DELETE from t_tcomment where tcomment_fid=#{id};
     </delete>
+
+    <!--增加浏览量的方法-->
+    <insert id="addpostNum" parameterType="integer">
+             update t_post set
+                             post_num=post_num+1
+             where post_id=#{id}
+    </insert>
+
+
+<!--    根据uid查到点赞表-->
+    <select id="queryGive" parameterType="com.zking.zkingedu.common.model.Give" resultType="integer">
+         select count(*) from t_give where give_pid=#{givePid} AND give_uid=#{giveUid}
+    </select>
+
+<!--    根据uid和帖子id删除点赞表-->
+    <delete id="delGive" parameterType="com.zking.zkingedu.common.model.Give" >
+              delete  from
+                          t_give
+              where give_uid=#{giveUid} and  give_pid=#{givePid}
+    </delete>
+
+<!--    增加帖子表-->
+    <insert id="addGive" parameterType="com.zking.zkingedu.common.model.Give">
+             insert  into
+                        t_give(give_id,give_pid,give_uid,give_time)
+             values (#{giveID},#{givePid},#{giveUid},#{giveTime})
+    </insert>
+
+
+<!--  添加收藏-->
+<insert id="addCollection" parameterType="com.zking.zkingedu.common.model.Hoarding">
+           insert into
+                       t_collection(collection_zpid,collection_state,collection_time)
+           values (#{collectionZpid},#{collectionState},#{collectionTime})
+</insert>
+
+<!--    取消收藏-->
+    <delete id="deleteCollention" parameterType="com.zking.zkingedu.common.model.Hoarding" >
+              delete  from
+                          t_collection
+              where collection_zpid=#{collectionZpid} and collection_state=#{collectionState} and collection_uid=collectionUid
+    </delete>
+
+<!--查询收藏时否有-->
+    <select id="queryCollection" parameterType="com.zking.zkingedu.common.model.Hoarding" resultType="integer">
+             select count(*) from t_collection where collection_uid=#{collectionUid} and collection_zpid=#{collectionZpid} AND collection_state=#{collectionState}
+    </select>
 
 </mapper>
