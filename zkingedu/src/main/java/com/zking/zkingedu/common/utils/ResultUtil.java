@@ -84,7 +84,7 @@ public class ResultUtil {
     }
 
     public static ResultUtil error(){
-        return new ResultUtil(500,"没有此权限，请联系超管！");
+        return new ResultUtil(500,"您的操作过于频繁，请稍后再试 ");
     }
     public static ResultUtil error(String str){
         return new ResultUtil(500,str);

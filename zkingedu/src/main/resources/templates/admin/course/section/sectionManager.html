@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>章节管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+</head>
+<body>
+
+
+<!--隐藏id（课程编号）-->
+<input type="hidden" id="cid" th:value="${id}"/>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加章节视频</button>
+    </div>
+</script>
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看视频</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="state">视频状态</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table','jquery','layer'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        table.render({
+            elem: '#test'
+            ,url:'/user/getSectionsList?id='+$("#cid").val()
+            ,toolbar: '#toolbarDemo'
+            ,title: '章节数据表'
+            ,limit:5
+            ,id:"idtable"
+            ,cols: [
+                [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'sectionID', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'sectionName', title:'章节名称', width:120}
+                ,{field:'sectionTime', title:'添加时间', width:160}
+                ,{field:'sectionSeq', title:'排序编号', width:120,sort: true}
+                ,{field:'videoId', title:'视频编号', width:210}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+            ]
+            ]
+            ,page: true
+        });
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    if(data.length==0){
+                        layer.msg("请选择需要删除的章节");
+                        break;
+                    }
+                    else{
+                        var arr=new Array();
+                        for (var i=0;i<data.length;i++){
+                            arr[i]=data[i].sectionID;
+                        }
+                        console.log(arr);
+                        $.ajax({
+                            type: "get",
+                            url:"/user/delSections",
+                            data:{
+                                ids : arr
+                            },
+                            dataType:"json",
+                            success:function (data) {
+                                if(data.code==0){
+                                    table.reload("idtable");
+                                    layer.msg(data.msg);
+                                }
+                                else{
+                                    layer.msg("您的操作过于频繁...");
+                                }
+                            }
+                        })
+                    }
+                    break;
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        title:"章节添加",
+                        area: ['550px', '600px'],
+                        content:"/user/sectionAddPage?cid="+$("#cid").val() //这里content是一个普通的String
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.open({
+                    type: 2,
+                    title:"章节修改",
+                    area: ['550px', '600px'],
+                    content:"/user/perUpSection?sid="+data.sectionID //这里content是一个普通的String
+                });
+            }else if (obj.event ==='detail') {
+                //iframe层-多媒体
+                layer.open({
+                    type: 2,
+                    title: false,
+                    area: ['630px', '360px'],
+                    shade: 0.8,
+                    closeBtn: 0,
+                    shadeClose: true,
+                    content: '//player.youku.com/embed/'+data.videoId
+                });
+            }else if (obj.event ==='state'){
+                layer.msg("查询中....");
+                //调用优酷视频接口查询视频当前状态
+                $.ajax({
+                    type: "get",
+                    url:"https://api.youku.com/videos/by_me.json",
+                    data:{
+                        client_id:"59c9a21060e1d847",
+                        access_token:"2a5a40a1c30244b120f3e66427376f08"
+                    },
+                    dataType:"json",
+                    success:function (req) {
+                        // console.log(req);
+                        var sa = req.videos;
+                        // console.log(sa+"___"+data.videoId);
+                        if(data.videoId==null||data.videoId==""){
+                            layer.msg("该视频无法查询状态");
+                            return ;
+                        }
+                        for (var i=0;i<sa.length;i++){
+                            if(sa[i].id==data.videoId){
+                                if(sa[i].state=="published"){//已发布
+                                    layer.alert('视频状态:已发布', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else if(sa[i].state=="uploading"){//上传中
+                                    layer.alert('视频状态:上传中', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else if(sa[i].state=="encoding"){//转码中
+                                    layer.alert('视频状态:转码中', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else if(sa[i].state=="fail"){//转码失败
+                                    layer.alert('视频状态:转码失败', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else if(sa[i].state=="checking"){//审核中
+                                    layer.alert('视频状态:  审核中', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else if(sa[i].state=="blocked"){//已屏蔽
+                                    layer.alert('视频状态:  已屏蔽', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                                else{
+                                    layer.alert('视频状态:   无法查询', {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        });
+
+
+    });
+</script>
+
+
+</body>
+</html>
