@@ -67,6 +67,12 @@ public class CourseController {
         //获取课程信息
         Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
 
+
+        //课程点击量增加 yan
+        courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum()+1);
+        courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
+
+
         mv.addObject("sections",sectionsBycid);
         mv.addObject("course",courseBYcourseID);
         mv.setViewName("/user/courses/show1");
@@ -204,6 +210,7 @@ public class CourseController {
      * 根据课程id  返回对应的课程信息
      * @param sid
      * @return
+     * yan
      * yan
      */
     @ResponseBody

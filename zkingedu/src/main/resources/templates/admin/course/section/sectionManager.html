@@ -51,11 +51,12 @@
                 [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'sectionID', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                ,{field:'sectionName', title:'章节名称', width:120}
+                ,{field:'sectionName', title:'章节名称', width:160}
                 ,{field:'sectionTime', title:'添加时间', width:160}
                 ,{field:'sectionSeq', title:'排序编号', width:120,sort: true}
+                ,{field:'sectionInte', title:'视频积分', width:120,sort: true}
                 ,{field:'videoId', title:'视频编号', width:210}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:280}
             ]
             ]
             ,page: true
@@ -76,7 +77,7 @@
                         for (var i=0;i<data.length;i++){
                             arr[i]=data[i].sectionID;
                         }
-                        console.log(arr);
+                        // console.log(arr);
                         $.ajax({
                             type: "get",
                             url:"/user/delSections",

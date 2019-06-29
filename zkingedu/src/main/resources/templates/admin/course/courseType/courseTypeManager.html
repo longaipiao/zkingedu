@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程类别管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="dels">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">增加类别</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+
+<script>
+    layui.use(['table','jquery'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+
+        table.render({
+            elem: '#test'
+            ,url:'/user/getAllCourseTypesAndPage'
+            ,toolbar: '#toolbarDemo'
+            ,id:"tb1"
+            ,title: '类别数据表'
+            ,limit:10
+            ,cols: [
+                [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'tid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'tname', title:'课程类别名称', width:150}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]
+            ]
+            ,page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'dels':
+                    var data = checkStatus.data;
+                    if(data.length<1){
+                        layer.msg("请选择要删除的类别");
+                        break;
+                    }
+
+                    layer.confirm('确认删除这'+data.length+'个类别吗？', function(index){
+                        layer.close(index);
+                        var arr=new Array();
+                        for (var i=0;i<data.length;i++){
+                            arr[i]=data[i].tid;
+                        }
+                        // console.log(arr);
+                        $.ajax({
+                            type: "post",
+                            url:"/user/courseType/dels",
+                            data:{
+                                ids : arr
+                            },
+                            dataType:"json",
+                            success:function (data) {
+                                if(data.code==0){
+                                    table.reload("tb1");
+                                    layer.msg(data.msg);
+                                }
+                                else{
+                                    layer.msg("您的操作过于频繁...");
+                                }
+                            }
+                        })
+                    });
+                    break;
+                case 'add':
+                    layer.prompt({title: '添加类别', formType: 0}, function(text, index){
+                        layer.close(index);
+                        $.ajax({
+                            url:"/user/courseType/add",
+                            type:"post",
+                            data:{
+                                tName:text
+                            },
+                            dataType:"json",
+                            success:function (req) {
+                                if(req.code==0){
+                                    layer.msg(req.msg);
+                                    table.reload("tb1");
+                                }
+                                else{
+                                    layer.msg(req.msg);
+                                }
+                            }
+                        })
+                        // layer.msg('您最后写下了：'+text);
+                    });
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('确认要删除吗？', function(index){
+                    layer.close(index);
+                    var arr=new Array();
+                    arr[0]=data.tid;
+                    $.ajax({
+                        type: "post",
+                        url:"/user/courseType/dels",
+                        data:{
+                            ids : arr
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                            if(data.code==0){
+                                obj.del();
+                                table.reload("tb1");
+                                layer.msg(data.msg);
+                            }
+                            else{
+                                layer.msg("您的操作过于频繁...");
+                            }
+                        }
+                    })
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({title: '修改类别', formType: 0,value:data.tname}, function(text, index){
+                    layer.close(index);
+                    $.ajax({
+                        url:"/user/courseType/edit",
+                        type:"post",
+                        data:{
+                            tId:data.tid,
+                            tName:text
+                        },
+                        dataType:"json",
+                        success:function (req) {
+                            if(req.code==0){
+                                layer.msg(req.msg);
+                                table.reload("tb1");
+                            }
+                            else{
+                                layer.msg(req.msg);
+                            }
+                        }
+                    })
+                })
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

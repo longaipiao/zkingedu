@@ -116,4 +116,22 @@ public interface CourseDao {
     int editCourseState(@Param("id") Integer id,@Param("stateid")Integer stateid);
 
 
+    /**
+     * yan
+     * 修改课程点击量
+     * 课程点击量加一
+     * @param id
+     * @return
+     */
+    int updatecliNum(@Param("id")Integer id,@Param("num")Integer num);
+
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * yan
+     * @param id 课程id
+     * @return
+     */
+    int editFreeAndInte(@Param("id")Integer id);
+
 }

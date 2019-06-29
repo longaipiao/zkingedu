@@ -14,4 +14,38 @@
         select <include refid="courseTypeSql"/> from course_type
     </select>
 
+
+    <select id="getCourseTypeByPageAndSearch" resultType="com.zking.zkingedu.common.model.CourseType">
+        select <include refid="courseTypeSql"/> from course_type
+        <where>
+            <if test="tName != null and tName != ''">
+                 t_name like '%${tName}%'
+            </if>
+        </where>
+    </select>
+
+
+
+    <!--添加课程类别-->
+    <insert id="addCourseType" useGeneratedKeys="true" keyProperty="tId">
+        insert into course_type (t_name) values (#{tName})
+    </insert>
+
+
+    <!--修改课程类型-->
+    <update id="updateCourseType">
+        update course_type set t_name = #{tName} where t_id=#{tId}
+    </update>
+
+
+
+    <!--删除多个课程类型-->
+    <delete id="delsCourseType" parameterType="list">
+        delete from course_type where t_id in(
+            <foreach collection="list" separator="," item="id">
+                #{id}
+            </foreach>
+        )
+    </delete>
+
 </mapper>

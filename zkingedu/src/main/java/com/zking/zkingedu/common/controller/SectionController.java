@@ -57,13 +57,14 @@ public class SectionController {
         List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
 
         //根据章节id获取视频信息
-        Video videoById = videoService.getVideoById(id);
+//        Video videoById = videoService.getVideoById(id);
+        Section section = sectionService.getSectionById(id);
 
         //获取课程信息
         Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
 
         mv.addObject("course",courseBYcourseID);
-        mv.addObject("video",videoById);
+        mv.addObject("section",section);//章节数据
         mv.addObject("sections",sectionsBycid);
         mv.setViewName("/user/courses/show");
         return mv;
@@ -137,6 +138,7 @@ public class SectionController {
         try {
             int i = sectionService.addSection(section);
             if(i>0){
+                courseService.editFreeAndInte(section.getSectionCid());
                 return ResultUtil.ok("添加成功");
             }
             else{
@@ -173,8 +175,10 @@ public class SectionController {
     @RequestMapping("/updateSection")
     public ResultUtil editSection(Section section){
         try {
+            Section section1 = sectionService.getSectionById(section.getSectionID());//查询章节信息，获取课程id'
             int i = sectionService.updateSection(section);
             if(i>0){
+                courseService.editFreeAndInte(section1.getSectionCid());
                 return ResultUtil.ok("修改成功");
             }
             else{
@@ -200,6 +204,8 @@ public class SectionController {
         try {
             int i = sectionService.delSections(ids);
             if(i>0){
+                //更新  课程免费章节数  以及课程购买总积分
+                editCourseInteAndFree(ids);
                 return ResultUtil.ok("操作成功");
             }
             return ResultUtil.error("您的操作过于频繁");
@@ -207,6 +213,24 @@ public class SectionController {
             e.printStackTrace();
             return ResultUtil.error(e.getMessage());
         }
+    }
+
+
+
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    public int editCourseInteAndFree(List<Integer> ids)throws Exception{
+        Integer secId = ids.get(ids.size()-1);
+        System.err.println("=========================章节id:"+secId);
+        Section section = sectionService.getSectionById(secId);
+        //开始更新课程数据
+        int i = courseService.editFreeAndInte(section.getSectionCid());
+        return i;
     }
 
 }
