@@ -88,5 +88,13 @@ public class UserServiceImpl implements UserService {
         return userDao.findIntegrsl(userID);
     }
 
+    /**
+     *  根据用户id修改用户积分的方法
+     */
+    @Override
+    public void updateUserIntegral(Integer CourseIntegral, Integer userID) {
+        userDao.updateUserIntegral(CourseIntegral,userID);
+    }
+
 
 }

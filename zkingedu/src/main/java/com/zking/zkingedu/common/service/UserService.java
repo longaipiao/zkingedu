@@ -41,4 +41,10 @@ public interface UserService {
      */
     public int findIntegrsl(Integer user_id);
 
+
+    /**
+     *  根据用户id修改用户积分的方法
+     */
+    public void updateUserIntegral(Integer CourseIntegral,Integer userID);
+
 }

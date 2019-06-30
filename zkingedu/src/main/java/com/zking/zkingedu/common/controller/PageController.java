@@ -35,10 +35,10 @@ public class PageController {
      * 主页
      * @return
      */
-    /*@RequestMapping(value = "/")
+    @RequestMapping(value = "/index")
     public String index(){
         return "user/index";
-    }*/
+    }
 
     /**
      * 开发者

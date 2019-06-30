@@ -1,5 +1,6 @@
 package com.zking.zkingedu.common.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.model.Bill;
 import com.zking.zkingedu.common.model.Charge;
 import com.zking.zkingedu.common.model.Course;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 阿飘制作
@@ -93,7 +97,12 @@ public class OrderController {
             int gmshiporder = orderService.gmshiporder(order);
             System.out.println("成功的：" + gmshiporder);
 
-            //ResponseUtil.write(response,gmshiporder);
+
+
+            log.info("****************开始变动这个用户的积分*************"+courseInte);
+            userService.updateUserIntegral(integral,2);
+            log.info("****************结束变动这个用户的积分*************");
+
 
             log.info("*****************结束购买整套视频的方法************");
 
@@ -114,6 +123,127 @@ public class OrderController {
             return "2";//可以直接购买的
         }
     }
+
+
+    /**
+     * 根据用户id查询自己的订单
+     * 阿飘
+     */
+    @RequestMapping(value = "/orderUid")
+    @ResponseBody
+    public Map<String,Object> findorderUid(Integer page,Integer limit){
+        log.info("**************开始查询自己的订单的方法****************");
+        Map<String,Object> maps = new HashMap<>();
+        PageInfo<Map<String, Object>> orderUid = orderService.findOrderUid(2, page, limit);
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",orderUid.getTotal());
+        maps.put("data",orderUid.getList());
+        return maps;
+    }
+
+
+    /**
+     * 购买单个章节的方法
+     * 阿飘
+     * @param sid 课程id
+     * @param id  章节id
+     * @param courseInte 单章视频的积分
+     */
+    @RequestMapping(value = "/gmdangeship")
+    public void gmdgzhangjie(Model model,HttpServletRequest request, HttpServletResponse response, Integer sid, Integer id, Integer courseInte) throws Exception {
+
+        //用户的积分
+        int userintegrsl = userService.findIntegrsl(2);
+        System.err.println("用户积分是："+userintegrsl);
+        //查询订单表中是否存在
+        Integer s = orderService.finduidsidcid(2, sid, id);
+        System.err.println("是否存在："+s);
+        //购买过的视频
+        if(s==1){
+            ResponseUtil.write(response,1);//已经购买过的视频，直接放行观看。
+        }
+        else{
+            //判断用户积分是否足够买视频
+            if(userintegrsl<courseInte){
+                ResponseUtil.write(response,2);//提示用户积分不足，快去充值吧。
+            }else{
+                ResponseUtil.write(response,3);//购买成功
+            }
+        }
+    }
+
+    //购买视频的方法
+    @RequestMapping(value = "/gmsp")
+    public void gmship(HttpServletRequest request, HttpServletResponse response, Integer sid, Integer id, Integer courseInte) throws Exception {
+        log.info("**********开始购买章节视频的方法***********");
+        order.setOrderID(idGeneratorUtils.nextId());//生成一个唯一的订单的id
+        order.setOrderUid(2);//获取session中用户的id
+        order.setOrderSid(sid);//前台传过来的课程id
+        order.setOrderCid(id);//购买视频的章节id
+        order.setOrderIntegral(courseInte);//单章节视频的积分
+        //订单生成的日期
+        order.setChargeTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+        order.setOrderState(1);//状态
+        int gmdgsection = orderService.gmdgsection(order);
+        System.out.println("成功的：" + gmdgsection);
+
+        log.info("****************开始变动这个用户的积分*************"+courseInte);
+        userService.updateUserIntegral(courseInte,2);
+        log.info("****************结束变动这个用户的积分*************");
+
+
+        log.info("********************开始生成账单表*********************");
+        bill.setBillUid(2);//获取session中用户的id
+        bill.setBillType(1);//类型为1的是：支付状态
+        bill.setBillIntegral(courseInte);//支付的积分
+        //账单生成的时间
+        bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+
+        //调用根据课程id查询的课程名称方法
+        String courseName = courseService.findCourseName(sid);
+        //账单内容
+        bill.setBillContent("您购买《" + courseName + "》,消费积分：" + courseInte);
+        bill.setBillState(1);//状态
+        billService.addBill(bill);
+        ResponseUtil.write(response,4);//购买成功
+        log.info("********************结束生成账单标表*****************");
+    }
+
+
+    /**
+     * 后台的订单查询记录
+     * @param userName 用户名称
+     * @param orderId 订单id
+     * @param page 页面
+     * @param limit 每页多少条
+     * @return
+     */
+    @RequestMapping(value = "/findOrder")
+    @ResponseBody
+    public Map<String,Object> findorder(String userName, String orderId, Integer page, Integer limit){
+        PageInfo<Map<String, Object>> orders = orderService.findOrder(userName, orderId, page, limit);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",orders.getTotal());
+        maps.put("data",orders.getList());
+        return maps;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

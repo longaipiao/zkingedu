@@ -27,8 +27,8 @@
             and section_name like '%${section.sectionName}%'
         </if>
     </select>
-    
-    
+
+
     <!--添加课程-->
     <insert id="addSection" useGeneratedKeys="true" keyProperty="sectionID">
         insert into t_section (section_cid,section_name,section_time,section_seq,section_inte,video_id)
@@ -40,8 +40,8 @@
     <select id="getSectionById" resultType="com.zking.zkingedu.common.model.Section">
         select <include refid="sectionMap"/> from t_section where section_id=#{id}
     </select>
-    
-    
+
+
     <!--修改章节-->
     <update id="updateSection">
         update t_section set section_name = #{sectionName},section_seq=#{sectionSeq},section_inte=#{sectionInte}
@@ -57,5 +57,7 @@
             </foreach>
         )
     </delete>
+
+
 
 </mapper>

@@ -41,4 +41,10 @@ public interface UserDao {
      * 查询用户积分的方法
      */
     public int findIntegrsl(Integer userID);
+
+
+    /**
+     *  根据用户id修改用户积分的方法
+     */
+    public void updateUserIntegral(@Param("CourseIntegral") Integer CourseIntegral,@Param("userID") Integer userID);
 }

@@ -77,4 +77,9 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <update id="updateupload">
         update  t_user set user_img=#{upload} where user_id=#{uid}
     </update>
+
+    <!--根据用户id修改用户积分的方法-->
+    <update id="updateUserIntegral" parameterType="integer">
+        update t_user set user_integrsl=user_integrsl - #{CourseIntegral} where user_id = #{userID}
+    </update>
 </mapper>

@@ -64,15 +64,15 @@ public class CourseController {
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
 
         //查询订单表中是否存在用户id
-        Integer userID = orderService.findUserID(2);
-        System.err.println("订单中查询出的用户id是："+userID);
+        //Integer userID = orderService.findUserID(2);
+        //System.err.println("订单中查询出的用户id是："+userID);
         //查询订单表中是否存在课程id
-        Integer courseID1 = orderService.findCourseID(sid);
-        System.err.println("订单中查询出的课程id是："+courseID1);
+        //Integer courseID1 = orderService.findCourseID(sid);
+        //System.err.println("订单中查询出的课程id是："+courseID1);
 
         //存入model里面，前台获取
-        model.addAttribute("courseid",courseID1);//课程id
-        model.addAttribute("userid",userID);//用户id
+        //model.addAttribute("courseid",courseID1);//课程id
+        //model.addAttribute("userid",userID);//用户id
 
 
         //课程id
