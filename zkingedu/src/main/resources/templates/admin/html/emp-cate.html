@@ -23,76 +23,83 @@
 
 <body>
 <div class="x-body">
+  <div align="center">
+    &nbsp;员&nbsp;工&nbsp;名&nbsp;:
+    <div class="layui-input-inline" style="width: 194px;">
+      <input type="text" id="empName" name="name" required lay-verify="name"
+             autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <br>
   <form class="layui-form">
 
-    <div class="layui-form-item">
-      <label for="rolename" class="layui-form-label">
-        &nbsp;角色名:
-      </label>
-      <div class="layui-input-inline">
-        <input type="text" id="rolename" name="name" required lay-verify="name"
+    <div align="center">
+      员工密码:
+      <div class="layui-input-inline" style="width: 194px;">
+        <input type="text" id="empPassword" name="name" required lay-verify="name"
                autocomplete="off" class="layui-input">
       </div>
-      <button  class="layui-btn" lay-filter="update" lay-submit="">
-        增加
-      </button>
+    </div>
+    <br>
+    <div align="center">
+      角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色&nbsp;:
+      <div class="layui-input-inline">
+        <select autocomplete="off" name="sysBunk" lay-filter="sysBunk" id="sysBunk" lay-search="" lay-verify="select">
+        </select>
+      </div>
+    </div>
+    <br>
+    <div align="center">
+      <div class="layui-input-inline">&nbsp;&nbsp;
+        <button class="layui-btn" lay-filter="add" lay-submit="">
+          增加
+        </button>
+      </div>
     </div>
 
-    <!--            <div class="layui-btn-container">-->
-    <!--                <button type="button" class="layui-btn layui-btn-sm" lay-demo="getChecked">获取选中节点数据</button>-->
-    <!--                <button type="button" class="layui-btn layui-btn-sm" lay-demo="reload">清空所有权限</button>-->
-    <!--            </div>-->
 
-    <div id="tree" class="demo-tree-more"></div>
 
 
 
   </form>
 </div>
+
 <script>
-  layui.use(['form','layer','tree', 'util'], function(){
+  layui.use(['form','layer'], function(){
     $ = layui.jquery;
     var form = layui.form
-            ,tree = layui.tree
-            ,layer = layui.layer
-            ,util = layui.util;
+            ,layer = layui.layer;
 
-    //加载进来默认显示已有权限
-    $(function(){
-      var roleid=$("#roleid").val();
 
-      $.ajax({
-        url:"/admin/getMenus",
-        async:false,
-        success:function (data) {
-          //权限树
-          tree.render({
-            elem: '#tree'
-            ,data: data
-            ,showCheckbox: true  //是否显示复选框
-            //,accordion: true   //手风琴
-            ,id: 'demoId1'
-            // ,click: function(obj){
-            //     var data = obj.data;  //获取当前点击的节点数据
-            //     layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
-            // }
-          });
-        }
-      });
+    $(function (){
+      //获取员工现有角色
+        //获取所有角色并渲染至页面
+        $.ajax({
+          url:"/admin/getRolesByEmp",
+          type:"get",
+          // async: false,
+          success:function(data) {
+            if (data != undefined && data != null && data != "") {
+              var html="";
+              $.each(data, function (i, n) {
+                  html += "<option value=" + data[i].roleID + ">" + data[i].roleName + "</option>";
+              });
+              $("#sysBunk").append(html);
+            }
+            //重新渲染select
+            form.render('select');
+          }
+        });
 
     });
 
 
-
-
     //监听提交
-    form.on('submit(update)', function(data){
-      var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
-      //把数据提交
+    form.on('submit(add)', function(data){
+      //发异步，把数据提交给php
       $.ajax({
-        url:"/admin/addRole",
-        async: false,
-        data:{menus:JSON.stringify(checkedData),roleName:$("#rolename").val()},
+        url:"/admin",
+        data:{empID:$('#empid').val(),empPassword:$('#empPassword').val(),roleID:$('#sysBunk').val()},
         success:function (data) {
           if(data==true){
             layer.alert("增加成功", {icon: 6},function () {
@@ -114,7 +121,6 @@
 
       return false;
     });
-
 
 
   });

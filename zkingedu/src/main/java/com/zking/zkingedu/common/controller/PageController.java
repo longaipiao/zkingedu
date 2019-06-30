@@ -107,4 +107,12 @@ public class PageController {
     public String pagesIndex(){return "user/paths/index";}
 
 
+
+
+    @RequestMapping(value = "/videos")
+    public String pageVideo(){
+        return "admin/course/video/videoUpload";
+    }
+
+
 }

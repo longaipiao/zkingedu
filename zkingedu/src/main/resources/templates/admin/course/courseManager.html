@@ -33,8 +33,8 @@
 </script>
 
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="manager">章节管理</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 
@@ -59,27 +59,27 @@
             ,cols: [
                 [
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'course_id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'course_id', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
                 ,{field:'course_name', title:'课程名称', width:150}
                 ,{field:'t_name', title:'课程类别', width:100}
-                ,{field:'course_desc', title:'课程介绍', width:270}
-                ,{field:'emp_name', title:'讲师名称', width:110}
-                ,{field:'course_img', title:'体系图片',width:150,templet:function (res) {
+                ,{field:'course_desc', title:'课程介绍', width:210}
+                ,{field:'emp_name', title:'讲师名称', width:100}
+                ,{field:'course_img', title:'体系图片',width:130,templet:function (res) {
                         return '<img src="'+res.course_img+'"/>'
                     }}
                 ,{field:'course_time', title:'课程添加时间', width:120}
                 ,{field:'system_name', title:'课程阶段',width:150}
-                ,{field:'course_state', title:'课程状态', templet: '#checkboxTpl',unresize: true}
-                ,{field:'course_free', title:'免费章数', width:100,  sort: true}
-                ,{field:'course_num', title:'课程播放量', width:120, sort: true}
-                ,{field:'course_inte', title:'课程购买积分', width:120}
+                ,{field:'course_state', title:'课程状态',width:130, templet: '#checkboxTpl',unresize: true}
+                ,{field:'course_free', title:'免费章数', width:95,  sort: true}
+                ,{field:'course_num', title:'课程播放量', width:110, sort: true}
+                ,{field:'course_inte', title:'购买积分(套)', width:110}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
                 ]
             ]
             ,page: true
         });
 
-        //搜索
+        //搜索吧
         $("#search").on('click', function(){
             //执行重载
             table.reload('tableReload', {
@@ -146,6 +146,13 @@
                     title:"编辑课程",
                     area: ['500px', '600px'],
                     content:"/user/PreUpCourseloaddata?sid="+data.course_id //这里content是一个普通的String
+                })
+            } else if(obj.event === "manager"){
+                layer.open({
+                    type: 2,
+                    title:"章节管理",
+                    area: ['1500px', '700px'],
+                    content:"/user/sectionManager?id="+data.course_id //这里content是一个普通的String
                 })
             }
         });

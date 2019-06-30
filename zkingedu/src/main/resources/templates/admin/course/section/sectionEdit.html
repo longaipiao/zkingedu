@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>章节修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+</head>
+<body>
+
+    <form class="layui-form" action="">
+
+        <div class="layui-form-item  layui-hide">
+            <div class="layui-inline">
+                <label class="layui-form-label">章节id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sectionID" th:value="${section.sectionID}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 100px;">章节标题:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sectionName" th:value="${section.sectionName}" lay-verify="required" autocomplete="off" lay-reqtext="章节标题是必填项，岂能为空？" placeholder="请输入章节标题" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 100px;">章节积分:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sectionInte" th:value="${section.sectionInte}" lay-verify="required"  lay-reqtext="章节积分购买积分是必填项，岂能为空？" placeholder="请输入章节购买积分" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 100px;">顺序号:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sectionSeq" th:value="${section.sectionSeq}" lay-verify="required" lay-reqtext="顺序号是必填项，岂能为空？" placeholder="请输入章节排序编号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo3">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate','jquery'], function() {
+        var form = layui.form
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+        var layer = parent.layer === undefined ? layui.layer : parent.layer;
+        var $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(demo3)', function(data){
+            //弹出loading
+            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:5000,shade:0.6});
+            var msg;
+            $.ajax({
+                type: "post",
+                url: "/user/updateSection",
+                data:data.field,
+                dataType:"json",
+                success:function(d){
+                    if(d.code==0){
+                        msg="修改成功";
+                    }else{
+                        msg=d.msg;
+                    }
+                }
+            });
+            setTimeout(function(){
+                top.layer.close(index);
+                top.layer.msg(msg);
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
+            },2000);
+            return false;
+        });
+    });
+</script>
+</html>
