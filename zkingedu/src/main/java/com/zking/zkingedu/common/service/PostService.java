@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -149,5 +150,49 @@ public interface PostService {
      * @return
      */
     int queryCollection(Hoarding hoarding);
+
+    /**
+     * 根据uid修改展示和隐藏
+     * @param uid
+     * @param yx
+     * @return
+     */
+    int update(@Param("uid") Integer uid, @Param("yx") Integer yx,@Param("pid") Integer pid);
+
+
+    /**
+     * 根据用户id和uid找到时隐藏还是显示
+     * @param uid
+     * @param pid
+     * @return
+     */
+    int queryCate(@Param("uid")Integer uid,@Param("pid") Integer pid);
+
+    /**
+     * 根据uid修改帖子状态
+     * @param uid
+     * @param zt
+     * @return
+     */
+    int updatePostzt(@Param("uid") Integer uid,@Param("zt") Integer zt,@Param("id") Integer id);
+
+    /**
+     * 根据类别id和标题查找帖子
+     * @param cid
+     * @param nr
+     * @return
+     */
+    List<Map<String,Object>> getPandU(@Param("cid") Integer cid,@Param("nr") String nr);
+
+
+    /**
+     * 调用方法分页
+     * @param page
+     * @param pageSize
+     * @param cid
+     * @param nr
+     * @return
+     */
+    PageInfo<Map<String,Object>> getAllLt(Integer page, Integer pageSize,Integer cid,String nr);
 
 }

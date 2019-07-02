@@ -110,6 +110,34 @@ public class PostServiceImpl implements PostService {
         return postDao.queryCollection(hoarding);
     }
 
+    @Override
+    public int update(Integer uid, Integer yx,Integer pid) {
+        return postDao.update(uid,yx,pid);
+    }
+
+    @Override
+    public int queryCate(Integer uid, Integer pid) {
+        return postDao.queryCate(uid,pid);
+    }
+
+    @Override
+    public int updatePostzt(Integer uid, Integer zt,Integer id) {
+        return postDao.updatePostzt(uid,zt,id);
+    }
+
+    @Override
+    public List<Map<String, Object>> getPandU(Integer cid, String nr) {
+        return postDao.getPandU(cid,nr);
+    }
+
+    @Override
+    public PageInfo<Map<String, Object>> getAllLt(Integer page, Integer pageSize, Integer cid, String nr) {
+        //开始调用方法
+        PageHelper.startPage(page,pageSize);
+        List<Map<String, Object>> pandU = postDao.getPandU(cid, nr);
+        return new PageInfo<>(pandU);
+    }
+
 
     @Override
     public Map<String, Object> getPostandUse(Integer id) {

@@ -111,11 +111,9 @@ function ghg() {
         success:function(data){
             if(data==3){
                 $("#sc").text("收藏");
-                alert("取消收藏成功");
             }
             if (data==4){
                 $("#sc").text("取消收藏");
-                alert("收藏成功");
             }
         },
         error:function(jqXHR){
@@ -242,28 +240,8 @@ $(function () {
 
 
 
-//查询是否已经收藏了
-    $.ajax({
-        type:"post",
-        url:"/pst/queryCollection",
-        dataType:"json",
-        data:{
-            id:id
-        },
-        success:function(data){
-            if(data>0){
-                $("#sc").text("取消收藏");
-            }
-            if (data==0){
-                $("#sc").text("收藏");
-            }
-        },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
-        }
-
-    });
-
+  //查看是否已经收藏
+    sc();
 
 
 
@@ -410,7 +388,7 @@ function querydz() {
                     $("#tb").css({color: "red"});
                 }
                 //如果数据库有的话，则改变样式
-                else  {
+                if(data==0)  {
                     $("#tb").css({color: ""});
                 }
             },
@@ -504,7 +482,31 @@ function jztzxx() {
 
 
 
+//查询是否已经收藏了
+function sc() {
+    if(userid!=null) {//如果id不为空的话就查找
+        $.ajax({
+            type: "post",
+            url: "/pst/queryCollection",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data > 0) {
+                    $("#sc").text("取消收藏");
+                }
+                if (data == 0) {
+                    $("#sc").text("收藏");
+                }
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
+            }
 
+        });
+    }
+}
 
 
 

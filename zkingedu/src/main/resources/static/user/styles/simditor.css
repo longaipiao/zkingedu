@@ -160,6 +160,8 @@
   background: transparent;
   resize: none;
 }
+
+
 .simditor .simditor-wrapper .simditor-placeholder {
   display: none;
   position: absolute;

@@ -6,8 +6,8 @@
     <!--帖子接口Mapper-->
      <insert id="addPost" parameterType="com.zking.zkingedu.common.model.Post">
               insert  into
-                          t_post(post_id,post_uid,post_name,post_content,post_time,post_state,post_category)
-              values (#{postID},#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory})
+                          t_post(post_uid,post_name,post_content,post_time,post_state,post_category,post_num)
+              values (#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory},#{postNum})
      </insert>
 
 <!--    获取所有分类的帖子-->
@@ -19,9 +19,9 @@
 
 <!--    根据自己的uid找到所有的帖子-->
     <select id="getAllPosts" parameterType="integer" resultType="com.zking.zkingedu.common.model.Post">
-               select post_id,post_name,post_time,post_state
+               select post_id,post_name,post_time,post_state,post_num
                                from t_post
-               where post_uid=#{postUid}
+               where post_uid=#{postUid} and post_state!=3
     </select>
 
 
@@ -107,20 +107,61 @@
 <!--  添加收藏-->
 <insert id="addCollection" parameterType="com.zking.zkingedu.common.model.Hoarding">
            insert into
-                       t_collection(collection_zpid,collection_state,collection_time)
-           values (#{collectionZpid},#{collectionState},#{collectionTime})
+                       t_collection(collection_zpid,collection_state,collection_uid,collection_time)
+           values (#{collectionZpid},#{collectionState},#{collectionUid},#{collectionTime})
 </insert>
 
 <!--    取消收藏-->
     <delete id="deleteCollention" parameterType="com.zking.zkingedu.common.model.Hoarding" >
               delete  from
                           t_collection
-              where collection_zpid=#{collectionZpid} and collection_state=#{collectionState} and collection_uid=collectionUid
+              where collection_zpid=#{collectionZpid} and collection_state=#{collectionState} and collection_uid=#{collectionUid}
     </delete>
 
 <!--查询收藏时否有-->
     <select id="queryCollection" parameterType="com.zking.zkingedu.common.model.Hoarding" resultType="integer">
              select count(*) from t_collection where collection_uid=#{collectionUid} and collection_zpid=#{collectionZpid} AND collection_state=#{collectionState}
     </select>
+
+<!--    根据uid修改状态-->
+    <update id="update">
+              update t_post
+                           set post_state=#{yx}
+              where post_uid=#{uid} and post_id=#{pid}
+    </update>
+
+<!--根据用户id和pid找到状态-->
+    <select id="queryCate" resultType="integer">
+              select post_state
+                              from
+              t_post where post_uid=#{uid} and post_id=#{pid}
+    </select>
+
+    <!--根据用户id修改帖子状态-->
+    <update id="updatePostzt" >
+               update t_post
+                            set post_state=#{zt}
+               where post_uid=#{uid} and post_id=#{id}
+    </update>
+
+
+  <!--根据类别id和模糊查查找帖子-->
+    <select id="getPandU" resultType="java.util.HashMap">
+              select a.*,b.user_id,b.user_img,b.user_name,(select COUNT(tcomment_id) FROM t_tcomment where tcomment_cid=a.post_id) jishu
+                            from t_post a,t_user b
+                 where a.post_uid=b.user_id and post_state!=3
+        <if test="cid!=null ">
+            and a.post_category=#{cid}
+        </if>
+        <if test="nr!=null ">
+            and a.post_name like '%${nr}%'
+        </if>
+        ORDER BY a.post_num DESC
+
+    </select>
+
+
+
+
 
 </mapper>

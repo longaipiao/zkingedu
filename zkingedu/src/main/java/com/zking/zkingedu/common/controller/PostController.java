@@ -53,9 +53,12 @@ public class PostController {
     @RequestMapping(value = "/addpost")
     @ResponseBody
     public  int addPost(Post pt, String zt,HttpServletRequest request, HttpServletResponse response){
+        //假设获取用户id
+        Integer uid=8;
+        pt.setPostUid(uid);
         pt.setPostState(Integer.parseInt(zt));
-        System.out.println(pt);
         pt.setPostTime(new Date().toLocaleString());//获取当前时间
+        pt.setPostNum(0);//设置浏览量
         int i = postService.addPost(pt);//调用增加方法*/
         return i;
     }
@@ -64,7 +67,7 @@ public class PostController {
      * 获取帖子下面的所有分类
      * @return
      */
-    @RequestMapping(value = "getpcs")
+    @RequestMapping(value = "/getpcs")
     @ResponseBody
     public List<Pcata> getpcs(){
         //获取所有的分类
@@ -97,11 +100,11 @@ public class PostController {
     //跳转到论坛详细界面
     @RequestMapping(value = "/tzxx")
     @ResponseBody
-    public Map<String,Object> xxlt(String id){
+    public Map<String,Object> xxlt(Integer id){
         Integer uid=3;
 
         //开始调用找到帖子的方法
-        Map<String, Object> postandUse = postService.getPostandUse(Integer.parseInt(id));
+        Map<String, Object> postandUse = postService.getPostandUse(id);
         Map<String,Object> maps = new HashMap<>();
         maps.put("a",postandUse.get("post_content"));
         maps.put("b",postandUse.get("post_id"));
@@ -485,6 +488,76 @@ public class PostController {
     }
 
 
+    /**
+     * 修改文章状态
+     * @param pzt
+     * @return
+     */
+    @RequestMapping(value = "/updatePcat")
+    @ResponseBody
+    public int updatePostCate(Integer pzt,Integer pid){
+        //假设一个用户ID
+        Integer uid=8;
+        if(pzt==0){//如果pzt=0的话，修改成隐藏
+            postService.update(uid, 1,pid);
+            //调用查询的方法，把状态查询出来
+            int i = postService.queryCate(uid, pid);
+            return i;
+        }
+        if(pzt==1){//如果pzt==1的话，修改成显示
+            int i=postService.update(uid, 0,pid);
+            //调用查询的方法，把状态查询出来
+            int k = postService.queryCate(uid, pid);
+            return k;
+        }
+        return 5;
+    }
+
+
+    /**
+     * 根据用户id和post_id修改post状态
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/updatePState")
+    @ResponseBody
+    public int updaPoSta(Integer id){
+        //假设一个uid=8
+        Integer uid=8;
+        //修改状态为3
+        Integer zt=3;
+        int i = postService.updatePostzt(uid, zt, id);
+        return i;
+    }
+
+
+    /**
+     * 获取所有的讨论
+     * @param page
+     * @param pageSize
+     * @param cid
+     * @param nr
+     * @return
+     */
+    @RequestMapping(value = "/getTcomments")
+    @ResponseBody
+    public Map<String,Object> getTcomments(Integer page, Integer pageSize,Integer cid,String nr){
+        System.out.println("输出cid:"+cid);
+        //假装有一个用户id
+        //获得所有的文章
+        PageInfo<Map<String, Object>> allLt = postService.getAllLt(page, pageSize, cid, nr);
+
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","");
+        maps.put("code",0);
+        maps.put("count",allLt.getPages());
+        maps.put("ff",allLt.getTotal());
+
+        maps.put("data",allLt.getList());
+        return maps;
+    }
+
+
 
     /**
      * 跳转界面
@@ -521,6 +594,12 @@ public class PostController {
     public String ta(){
         return "user/userinfo/userinfo";
     }
+
+
+
+
+
+
 
 
 
