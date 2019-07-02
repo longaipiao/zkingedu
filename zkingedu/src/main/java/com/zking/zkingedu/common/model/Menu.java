@@ -34,4 +34,7 @@ public class Menu implements Serializable {
     private Integer menuSort;
     //角色
     private Set<Role> roles=new HashSet<>();
+    //子菜单
+    private Set<Menu> menus=new HashSet<>();
+
 }

@@ -54,7 +54,7 @@ public class SystemController {
         ModelAndView mv = new ModelAndView();
         System systemBySid = systemService.getSystemBySid(courseId);
         mv.addObject("system",systemBySid);
-        log.info("============================体系信息:"+systemBySid);
+//        log.info("============================体系信息:"+systemBySid);
         List<System> systems = systemService.getsystemsonByFId(courseId);
         mv.addObject("systems",systems);
         mv.setViewName("/user/paths/show");
@@ -105,6 +105,17 @@ public class SystemController {
             e.printStackTrace();
             return ResultUtil.error("您的操作过于频繁");
         }
+    }
+
+
+    /**
+     * 进入体系添加页面
+     * yan
+     * @return
+     */
+    @RequestMapping("/addSystemPage")
+    public String pageAddSystem(){
+        return "/admin/course/systemAdd";
     }
 
 

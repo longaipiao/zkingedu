@@ -77,4 +77,23 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <update id="updateupload">
         update  t_user set user_img=#{upload} where user_id=#{uid}
     </update>
+
+
+
+
+    <!--Sql Colum-->
+    <sql id="userSql">
+        user_id,user_name,user_password,user_integrsl,user_state,user_ip,user_lastTime,user_regTime,user_openid,user_phone,user_img,user_email,user_cwcs
+    </sql>
+
+
+    <!--根据用户id  查询用户信息-->
+    <select id="getUserById" resultType="user">
+        select <include refid="userSql"/> from t_user where user_id=#{id}
+    </select>
+
+    <!--根据用户id修改用户积分的方法-->
+    <update id="updateUserIntegral" parameterType="integer">
+        update t_user set user_integrsl=user_integrsl - #{CourseIntegral} where user_id = #{userID}
+    </update>
 </mapper>

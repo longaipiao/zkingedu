@@ -5,4 +5,10 @@
 
     <!--菜单接口Mapper-->
 
+    <select id="getMenuByRoleID" resultType="menu">
+        select m.* from t_menu_role mr,t_menu m,t_role r where mr.menu_id=m.menu_id and mr.role_id=r.role_id and r.role_id=#{roleID}
+    </select>
+    <select id="getMenus" resultType="menu">
+        select * from t_menu
+    </select>
 </mapper>

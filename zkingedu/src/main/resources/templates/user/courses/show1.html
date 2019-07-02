@@ -216,7 +216,7 @@
                 </div>
 
             </div>
-            <div class="content">
+            <div class="content" style="margin-bottom: 100px;">
                 <ul class="nav nav-tabs" role="tablist">
 
                     <li role="presentation" class="active">
@@ -227,6 +227,8 @@
                         <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(1194)</a>
                     </li>
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
+                    <!--从后台获取的课程id-->
+                    <input type="hidden" id="courseID" th:value="${courseId}"/>
                 </ul>
 
 
@@ -243,10 +245,21 @@
                                 <img src="/user/img/lab-not-ok.png">
                             </div>
                             <div class="lab-item-index" th:text="${'第'+status.count+'节'}">第1节</div>
-                            <div class="lab-item-title" data-toggle="tooltip" data-placement="bottom" th:title="${se.sectionName}" th:text="${se.sectionName}" title="Linux 系统简介">Linux 系统简介</div>
+                            <div class="lab-item-title" data-toggle="tooltip" data-placement="bottom" th:title="${se.sectionName}" th:text="${se.sectionName}" title="Linux 系统简介">Linux 系统简介
+                            </div>
+                            <span th:if="${se.sectionInte==0}">
+                                    <em style="color: revert">免费</em>
+                            </span>
+                            <span th:if="${se.sectionInte>0}">
+                                    <em style="color: red">积分</em>
+                            </span>
+
                             <div class="pull-right lab-item-ctrl">
-                                <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
-                                <input type="hidden" id="courseID" th:value="${course.courseID}"/>
+                               <!-- <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>-->
+                                <!--课程id  隐藏-->
+
+                                <a class="btn btn-primary" th:onclick="|javascript:ksxx('${course.courseID}','${se.sectionID}','${se.sectionInte}')|"  data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
+                                <!--th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}"-->
                             </div>
                         </div>
 
@@ -255,15 +268,49 @@
                         <div class="comment-box">
                             <div class="comment-form">
 
-                                <div class="comment-form-unlogin">
+                                <div class="comment-form-unlogin" th:if="${user==null}">
                                     请
                                     <a href="#sign-modal" data-toggle="modal" data-sign="signin" data-next="/courses/1"> 登录 </a>
                                     后发表评论
                                 </div>
+                                <div th:if="${user!=null}">
+                                    <!--如果用户以登陆  隐藏用户id-->
+                                    <input type="hidden" th:value="${user.userID}" id="userId"/>
+
+                                    <button type="button" id="fabb" class="layui-btn layui-btn-normal" >发布评论</button>
+                                </div>
 
                             </div>
-                            <div class="comment-title">最新评论</div>
+                            <div class="comment-title">最新评论    </div>
                             <div class="comment-list">
+
+                                <ul class="flow-default" style="height: 300px;" id="LAY_demo2"></ul>
+                                <!--<div class="answer-item">
+                                    <div class="answer-head">
+                                        <div class="user-avatar ">
+                                            <a class="avatar" href="/user/162034" target="_blank">
+                                                <img src="https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MTc0NzA5.png?v=1464936302985&amp;imageView2/1/w/200/h/200">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="answer-detail">
+                                        <span class="comment-reply">
+                                            <div class="user-username ">
+                                                <a class="username" href="/user/162034" style="margin-left: 20px;" target="_blank">
+                                                        齐川同学促销装
+                                                </a>
+                                                <span class="u ser-level">L28</span>
+                                            </div>
+                                         </span>
+                                        <div class="answer-content markdown-body">
+                                            <a  href="javascript:void(0);" style="color: #000000">同学你好！你可以先通过QQ等工具截图后保存为文件，然后在提问的对话框中点击`图片`按钮上传即可。</a>
+                                        </div>
+                                        <div>
+                                            <span class="create-time">时间：<span>2009-09-09</span></span>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </div>-->
                             </div>
                             <div class="pagination-container"></div>
                         </div>
@@ -352,7 +399,7 @@
             </div>
             <div class="modal-body">
 
-                <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
+                <p><h4><a href="#sign-modal"  data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
 
                 <div id="msg-modal"></div>
             </div>
@@ -923,31 +970,199 @@
 
 <script src="/user/layui/layui.js"></script>
 
+<!--courseController的值-->
+<!--<input type="hidden" id="course" th:value="${courseId}"/>
+<input type="hidden" id="user" th:value="${userId}"/>-->
 
-
+<!--orderController的值-->
+<!--<input type="hidden" id="course1" th:value="${courseid}"/>
+<input type="hidden" id="user1" th:value="${userid}"/>-->
 
 <!--用户的所有积分-->
 <input type="hidden" id="userintegrsl" th:value="${session.userintegrsl}" />
 <!--课程是需要的积分-->
 <input type="hidden" id="courseIntegrsl" th:value="${session.courseIntegrsl}" />
+
+<input type="hidden" id="bug" th:value="${bug}"/>
+
+
 <script type="text/javascript">
+
+    var layer;
+    var flow;
+
+    //删除课程评论
+    function delScomment(id){
+        layer.confirm('确认删除评论吗？', function(index){
+            $.ajax({
+                type : "post",
+                url : "/scomment/delScommentById",
+                data : {
+                    id : id
+                },
+                success:function (req) {
+                    if(req.code==0){
+                        layer.msg(req.msg);
+                        window.location.href=window.location.href;
+                        window.location.reload;
+                    }
+                    else{
+                        layer.msg(req.msg);
+                    }
+                }
+            });
+            layer.close(index);
+        });
+    }
+
+
     $(function () {
         //alert("用户:"+$("#userintegrsl").val());
         //alert("课程:"+$("#courseIntegrsl").val());
         var s1 = $("#userintegrsl").val();
         var s2 = $("#courseIntegrsl").val();
 
-        layui.use('layer', function(){
-            var layer = layui.layer;
-                layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+
+        //从CourseController中传值过来的
+        var user = $("#user").val();
+        var course = $("#course").val()
+        //从订单表中获取的值
+        var user1 =  $("#user1").val();
+        var course1 = $("#course1").val();
+
+        //订单表存在的话，就把购买整套视频隐藏
+        /*if(user==user1 && course==course1){
+            $("#qtsp").hide();
+        }*/
+
+            //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+        layui.use(['flow','layer'], function(){
+            flow = layui.flow;
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            layer = layui.layer;
+                // layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+
+            flow.load({
+                elem: '#LAY_demo2' //流加载容器
+                // ,scrollElem: '#LAY_demo2' //滚动条所在元素，一般不用填，此处只是演示需要。
+                ,isAuto: true
+                ,isLazyimg: false
+                ,done: function(page, next){ //加载下一页
+                    //模拟插入
+                    var lis = [];
+                    $.post("/scomment/getScomment",{'page': page,"limit":1,"cid":1}, function(data) {
+                        var json = data.data;
+                        //模拟插入
+                        setTimeout(function(){
+                            var lis = [];
+                            var uid=$("#userId").val();//用户id
+                            for (var i=0; i<json.length; i++) {
+                                if(json[i].user.userID==uid){//如果是自己的评论可以删除
+                                    str="<div class=\"answer-item\">\n" +
+                "                                    <div class=\"answer-head\">\n" +
+                "                                        <div class=\"user-avatar \">\n" +
+                "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"answer-detail\">\n" +
+                "                                        <span class=\"comment-reply\">\n" +
+                "                                            <div class=\"user-username \">\n" +
+                "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                "                                                        "+json[i].user.userName+"\n" +
+                "                                                </a>\n" +
+                "                                                <span class=\"user-level\">V</span>\n" +
+                "                                            </div>\n" +
+                "                                         </span>\n" +
+                "                                        <div class=\"answer-content markdown-body\">\n" +
+                "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                "                                        </div>\n" +
+                "                                        <div>\n" +
+                "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
+                "                                            <hr/>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </div>";
+                                }
+                                else {
+                                    str="<div class=\"answer-item\">\n" +
+                "                                    <div class=\"answer-head\">\n" +
+                "                                        <div class=\"user-avatar \">\n" +
+                "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"answer-detail\">\n" +
+                "                                        <span class=\"comment-reply\">\n" +
+                "                                            <div class=\"user-username \">\n" +
+                "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                "                                                        "+json[i].user.userName+"\n" +
+                "                                                </a>\n" +
+                "                                                <span class=\"user-level\">V</span>\n" +
+                "                                            </div>\n" +
+                "                                         </span>\n" +
+                "                                        <div class=\"answer-content markdown-body\">\n" +
+                "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                "                                        </div>\n" +
+                "                                        <div>\n" +
+                "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
+                "                                            <hr/>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </div>";
+                                }
+                                lis.push(str);
+                            }
+                            next(lis.join(''), page < data.pages); //假设总页数为 6
+                        }, 200);
+                    })
+                }
+            });
+
+
+
+            //发布评论
+            $("#fabb").on("click",function () {
+                layer.prompt({
+                    formType: 2
+                }, function(value, index1){
+                    layer.msg("value:"+value+"userId:"+$("#userId").val()+"__courseId:"+$("#courseID").val());
+                    $.ajax({
+                        type : "post",
+                        url : "/scomment/addScomment",
+                        data : {
+                            scommentCid : $("#courseID").val(),
+                            scommentUid : $("#userId").val(),
+                            scommentContent:value
+                        },
+                        success:function (req) {
+                            if(req.code==0){
+                                layer.msg(req.msg);
+                                window.location.href=window.location.href;
+                                window.location.reload;
+                            }
+                            else{
+                                layer.msg(req.msg);
+                            }
+                        }
+                    });
+                    layer.close(index1);
+                });
+            })
+
         });
 
+
+        /*var bg = $("#bug").val();
+        alert(bg);*/
 
         /**
          * 购买全套视频的点击事件
          */
         $("#qtsp").click(function () {
-            alert("开始购买视频。。。。。");
+            //alert("开始购买视频。。。。。");
             //courseID sectionID
             var courseid = $("#courseID").val();
             alert(courseid);
@@ -963,9 +1178,15 @@
                     },
                     success : function (data) {
                         if(data==1){
-                            layer.msg("成功购买本套视频。",{icon: 1} );
+                            //积分不够的话，需要充值，才能购买视频
+                            //layer.msg("你需要去充值积分，去购买视频吧！",{icon: 1} );
+                            setTimeout(function() {
+                                layer.msg("您的积分余额不足，请前去个人中心充值积分，再进行购买此课程吧！",{icon: 5} )
+                            }, 2000);
                         }else{
-                            layer.msg("购买本套视频失败。",{icon: 5});
+                            //积分足够的话，就可以购买视频了
+                            // 停顿一秒后,进行刷新详情页面.
+                            layer.msg("恭喜你，此课程购买成功！",{icon: 1} );
                         }
                     }
                 });
@@ -973,11 +1194,61 @@
             });
 
         });
-
-
     });
 
+    /**
+     * 开始学习的方法
+     */
+    function ksxx(a,b,c) {
+        var course = a;//课程id
+        var section = b;//章节id
+        var jf = c;//单个章节积分
+        var s1 = $("#userintegrsl").val();//用户积分
+
+        $.ajax({
+            type : "post",
+            url : "/gmdangeship",
+            data : {
+                sid : course,//课程id
+                id : section,//章节id
+                courseInte : jf//单章视频积分
+            },
+            success : function (data) {
+                if(parseInt(jf)>0){
+                    if(data==1){
+                        window.location.href = "/user/video?sid="+course+"&id="+section;
+                    }else if(data==2){
+                        layer.msg("提示用户积分不足，快去充值吧。");
+                    }else if(data=3){
+                        layer.confirm('亲，您确定要购买本章视频吗？', function(){
+                            $.ajax({
+                                type : "post",
+                                url : "/gmsp",
+                                data : {
+                                    sid : course,//课程id
+                                    id : section,//章节id
+                                    courseInte : jf//单章视频积分
+                                },
+                                success : function (data) {
+                                    if(data==4){
+                                        layer.msg("购买成功！");
+                                        window.location.href = "/user/video?sid="+course+"&id="+section;
+                                    }
+                                }
+                            });
+                            layer.close();
+                        });
+                    }
+                }else{
+                    window.location.href = "/user/video?sid="+course+"&id="+section;
+                }
+            }
+        });
+
+    }
+//window.location.href = "/user/video?sid="+course+"&id="+section;
 </script>
+
 
 
 

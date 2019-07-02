@@ -92,7 +92,7 @@ public class CourseServiceImpl implements CourseService {
             pageBean.setPageSize(9);
         }
         try {
-            Course course=pageBean.getT();
+//            Course course=pageBean.getT();
             //加一个分页
             Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
             List<Course> courseSearch = courseDao.getCourseSearch(pageBean.getT());
@@ -129,6 +129,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursefour() {
         return courseDao.getCoursefour();
+    }
+
+
+    /**
+     * 根据课程id查询出此视频是否免费
+     * @param courseID 课程id
+     * @return
+     */
+    @Override
+    public Integer findCourseInte(Integer courseID) {
+        return courseDao.findCourseInte(courseID);
     }
 
     /**
@@ -235,5 +246,30 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int editCourseState(Integer id, Integer stateid) {
         return courseDao.editCourseState(id,stateid);
+    }
+
+
+    /**
+     * yan
+     * 修改课程点击量
+     * 课程点击量加一
+     * @param id
+     * @return
+     */
+    @Override
+    public int updatecliNum(Integer id, Integer num) {
+        return courseDao.updatecliNum(id,num);
+    }
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * yan
+     * @param id 课程id
+     * @return
+     */
+    @Transactional
+    @Override
+    public int editFreeAndInte(Integer id) {
+        return courseDao.editFreeAndInte(id);
     }
 }

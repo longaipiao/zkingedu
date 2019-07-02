@@ -3,15 +3,16 @@
   
   <head>
     <meta charset="UTF-8">
-    <title>充值记录</title>
+    <title>角色管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/admin/css/font.css">
     <link rel="stylesheet" href="/admin/css/xadmin.css">
+    <link rel="stylesheet" href="/layui/css/layui.css">
     <script src="/admin/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
@@ -38,9 +39,9 @@
 
     </div>
     <script type="text/html" id="toolbarDemo">
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-      </xblock>
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addRole"><i class="layui-icon">&#xe654;</i>添加角色</button>
+      </div>
     </script>
 
     <script type="text/html" id="barDemo">
@@ -52,26 +53,6 @@
       </a>
     </script>
     <script>
-
-
-
-
-
-
-
-      function delAll (argument) {
-
-        // var data = tableCheck.getData()-1;
-
-        // layer.confirm('确认要删除吗？'+data,function(index){
-        layer.confirm('确认要删除吗？',function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-    </script>
-    <script>
       layui.use('table', function(){
         var table = layui.table;
 
@@ -79,12 +60,12 @@
           elem: '#test'
           ,url:'/admin/getRoles'
           ,toolbar: '#toolbarDemo'
-          ,title: '用户数据表'
+          ,title: '角色数据表'
+          ,async: false
           ,cols: [
             [
-              {type: 'checkbox', fixed: 'left',width:120}
-              ,{field:'roleID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
-              ,{field:'roleName', title:'角色名', width:350, edit: 'text'}
+              {field:'roleID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
+              ,{field:'roleName', title:'角色名', width:350}
               ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
             ]
           ]
@@ -95,31 +76,37 @@
         table.on('toolbar(test)', function(obj){
           var checkStatus = table.checkStatus(obj.config.id);
           switch(obj.event){
+            case 'addRole':
+              var data = checkStatus.data;
+              layer.open({
+                type: 2,
+                title: '添加角色',
+                shadeClose: true,
+                shade: 0.8,
+                maxmin: true,
+                area: ['40%', '80%'],
+                content: '/html/admin-cate',//设置你要弹出的html页面
+                end:function () {
+                  location.reload();
+                }
+              });
+              break;
 
-            case 'getCheckData':
-              var data = checkStatus.data;
-              layer.alert(JSON.stringify(data));
-              break;
-            case 'getCheckLength':
-              var data = checkStatus.data;
-              layer.msg('选中了：'+ data.length + ' 个');
-              break;
-            case 'isAll':
-              layer.msg(checkStatus.isAll ? '全选': '未全选');
-              break;
           };
         });
 
           //监听行工具事件
           table.on('tool(test)', function(obj){
               var data = obj.data;
-              console.log(data)
+              // console.log(data.roleID)
+              var roleID = data.roleID;
               if(obj.event === 'del'){
-                  layer.confirm('真的删除行么', function(index){
+                  layer.confirm('确定删除（'+data.roleName+'）吗？', function(index){
                       $.ajax({
                           url:"/admin/role/del",
                           type:"post",
-                          data:{roleID:data.roleID},
+                          data:{roleID:roleID},
+                          async: false,
                           success:function (data) {
                               if(true==data)
                               {
@@ -133,7 +120,19 @@
                       });
                   });
               }else if(obj.event === 'edit'){
-                  x_admin_show('编辑','/html/admin-cate?roleName='+data.roleName,1100,600)
+                 // x_admin_show('编辑','/html/member-edit?roleID='+roleID+'&roleName='+data.roleName,500,600)
+                layer.open({
+                  type: 2,
+                  title: '编辑角色',
+                  shadeClose: true,
+                  shade: 0.8,
+                  maxmin: true,
+                  area: ['40%', '80%'],
+                  content: '/html/member-edit?roleID='+roleID+'&roleName='+data.roleName,//设置你要弹出的html页面
+                  end:function () {
+                    location.reload();
+                  }
+                });
               }
           });
 

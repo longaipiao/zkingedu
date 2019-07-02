@@ -6,7 +6,7 @@
     <!--章节接口Mapper-->
 
     <sql id="sectionMap">
-        section_id,section_cid,section_name,section_time,section_seq,section_inte
+        section_id,section_cid,section_name,section_time,section_seq,section_inte,video_id
     </sql>
 
     <!--根据课程id获取所有的章节-->
@@ -18,5 +18,46 @@
     <select id="findSectInteg" resultType="java.lang.Integer">
         select section_inte from t_section where section_id = #{sectionID}
     </select>
+
+
+    <!--根据课程id获取所有的章节视频  模糊查询 分页-->
+    <select id="getSectionByCidAndPageSearch" resultType="com.zking.zkingedu.common.model.Section">
+        select <include refid="sectionMap"/> from t_section where section_cid=#{cid}
+        <if test="section.sectionName != null">
+            and section_name like '%${section.sectionName}%'
+        </if>
+    </select>
+
+
+    <!--添加课程-->
+    <insert id="addSection" useGeneratedKeys="true" keyProperty="sectionID">
+        insert into t_section (section_cid,section_name,section_time,section_seq,section_inte,video_id)
+        values (#{sectionCid},#{sectionName},now(),#{sectionSeq},#{sectionInte},#{videoId});
+    </insert>
+
+
+    <!--根据id  查询章节信息-->
+    <select id="getSectionById" resultType="com.zking.zkingedu.common.model.Section">
+        select <include refid="sectionMap"/> from t_section where section_id=#{id}
+    </select>
+
+
+    <!--修改章节-->
+    <update id="updateSection">
+        update t_section set section_name = #{sectionName},section_seq=#{sectionSeq},section_inte=#{sectionInte}
+        where section_id=#{sectionID}
+    </update>
+
+
+    <!--批量删除章节-->
+    <delete id="delSections" parameterType="list">
+        delete from t_section where section_id in (
+            <foreach collection="list" item="se" separator=",">
+                #{se}
+            </foreach>
+        )
+    </delete>
+
+
 
 </mapper>
