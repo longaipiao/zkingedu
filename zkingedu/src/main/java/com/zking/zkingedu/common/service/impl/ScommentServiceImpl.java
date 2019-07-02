@@ -69,6 +69,7 @@ public class ScommentServiceImpl implements ScommentService {
         result.setData(mapList);
         result.setCount(String.valueOf(page.getTotal()));
         result.setMsg("success");
+        result.setPages(page.getPages());
         return result;
     }
 

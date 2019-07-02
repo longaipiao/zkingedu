@@ -30,7 +30,7 @@
     <select id="getCourseSearch" resultType="com.zking.zkingedu.common.model.Course">
         select * from t_course where course_state=0
             <if test="courseName != null">
-                course_name like '%${courseName}%' or course_desc like '%${courseName}%'
+                and course_name like '%${courseName}%' or course_desc like '%${courseName}%'
             </if>
             <if test="courseType != null">
                 <if test="courseType.tId != null and courseType.tId != 0">

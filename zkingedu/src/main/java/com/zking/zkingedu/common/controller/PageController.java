@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -112,6 +113,26 @@ public class PageController {
     @RequestMapping(value = "/videos")
     public String pageVideo(){
         return "admin/course/video/videoUpload";
+    }
+
+
+    /**
+     * 前台搜索  可搜索课程，论坛帖子
+     * @param type  搜索类型  course课程，post论坛
+     * @param SearchName  搜索的内容
+     * @return
+     */
+    @RequestMapping("/PageSearch")
+    public ModelAndView Search(String type, String SearchName, ModelAndView mv){
+
+        if("course".equals(type)){//搜索课程
+            mv.addObject("content",SearchName);
+            mv.setViewName("/user/courses/index");
+            return mv;//跳转至课程搜索页面
+        }
+        else{
+            return mv;//搜索论坛帖子
+        }
     }
 
 

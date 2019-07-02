@@ -7,6 +7,17 @@ public class ResultUtil {
     private String count;//总行数
     private Object data;//响应数据
 
+
+    private Object pages;//总页数
+
+    public Object getPages() {
+        return pages;
+    }
+
+    public void setPages(Object pages) {
+        this.pages = pages;
+    }
+
     public ResultUtil(){}
 
     public Integer getCode() {

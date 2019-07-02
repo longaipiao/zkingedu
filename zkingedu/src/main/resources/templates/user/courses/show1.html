@@ -255,7 +255,7 @@
                             </span>
 
                             <div class="pull-right lab-item-ctrl">
-                                <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
+                               <!-- <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>-->
                                 <!--课程id  隐藏-->
 
                                 <a class="btn btn-primary" th:onclick="|javascript:ksxx('${course.courseID}','${se.sectionID}','${se.sectionInte}')|"  data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
@@ -299,7 +299,7 @@
                                                 <a class="username" href="/user/162034" style="margin-left: 20px;" target="_blank">
                                                         齐川同学促销装
                                                 </a>
-                                                <span class="user-level">L28</span>
+                                                <span class="u ser-level">L28</span>
                                             </div>
                                          </span>
                                         <div class="answer-content markdown-body">
@@ -1015,88 +1015,6 @@
         });
     }
 
-    //重新加载flow数据
-    function myflowData(){
-        flow.load({
-            elem: '#LAY_demo2' //流加载容器
-            // ,scrollElem: '#LAY_demo2' //滚动条所在元素，一般不用填，此处只是演示需要。
-            ,isAuto: true
-            ,isLazyimg: false
-            ,done: function(page, next){ //加载下一页
-                //模拟插入
-                var lis = [];
-                $.post("/scomment/getScomment",{'page': page,"limit":1,"cid":1}, function(data) {
-                    var json = data.data;
-                    //模拟插入
-                    setTimeout(function(){
-                        var lis = [];
-                        var uid=$("#userId").val();//用户id
-                        for (var i=0; i<json.length; i++) {
-                            if(json[i].user.userID==uid){//如果是自己的评论可以删除
-                                str="<div class=\"answer-item\">\n" +
-                                    "                                    <div class=\"answer-head\">\n" +
-                                    "                                        <div class=\"user-avatar \">\n" +
-                                    "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
-                                    "                                                <img src=\""+json[i].user.userImg+"\">\n" +
-                                    "                                            </a>\n" +
-                                    "                                        </div>\n" +
-                                    "                                    </div>\n" +
-                                    "                                    <div class=\"answer-detail\">\n" +
-                                    "                                        <span class=\"comment-reply\">\n" +
-                                    "                                            <div class=\"user-username \">\n" +
-                                    "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
-                                    "                                                        "+json[i].user.userName+"\n" +
-                                    "                                                </a>\n" +
-                                    "                                                <span class=\"user-level\">V</span>\n" +
-                                    "                                            </div>\n" +
-                                    "                                         </span>\n" +
-                                    "                                        <div class=\"answer-content markdown-body\">\n" +
-                                    "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
-                                    "                                        </div>\n" +
-                                    "                                        <div>\n" +
-                                    "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
-                                    "                                            <hr/>\n" +
-                                    "                                        </div>\n" +
-                                    "                                    </div>\n" +
-                                    "                                </div>";
-                            }
-                            else {
-                                str="<div class=\"answer-item\">\n" +
-                                    "                                    <div class=\"answer-head\">\n" +
-                                    "                                        <div class=\"user-avatar \">\n" +
-                                    "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
-                                    "                                                <img src=\""+json[i].user.userImg+"\">\n" +
-                                    "                                            </a>\n" +
-                                    "                                        </div>\n" +
-                                    "                                    </div>\n" +
-                                    "                                    <div class=\"answer-detail\">\n" +
-                                    "                                        <span class=\"comment-reply\">\n" +
-                                    "                                            <div class=\"user-username \">\n" +
-                                    "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
-                                    "                                                        "+json[i].user.userName+"\n" +
-                                    "                                                </a>\n" +
-                                    "                                                <span class=\"user-level\">V</span>\n" +
-                                    "                                            </div>\n" +
-                                    "                                         </span>\n" +
-                                    "                                        <div class=\"answer-content markdown-body\">\n" +
-                                    "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
-                                    "                                        </div>\n" +
-                                    "                                        <div>\n" +
-                                    "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
-                                    "                                            <hr/>\n" +
-                                    "                                        </div>\n" +
-                                    "                                    </div>\n" +
-                                    "                                </div>";
-                            }
-                            lis.push(str);
-                        }
-                        next(lis.join(''), page < data.count); //假设总页数为 6
-                    }, 200);
-                })
-            }
-        });
-    }
-
 
     $(function () {
         //alert("用户:"+$("#userintegrsl").val());
@@ -1117,8 +1035,6 @@
             $("#qtsp").hide();
         }*/
 
-        layui.use('layer', function(){
-            var layer = layui.layer;
             //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
         layui.use(['flow','layer'], function(){
             flow = layui.flow;
@@ -1143,63 +1059,63 @@
                             for (var i=0; i<json.length; i++) {
                                 if(json[i].user.userID==uid){//如果是自己的评论可以删除
                                     str="<div class=\"answer-item\">\n" +
-                                        "                                    <div class=\"answer-head\">\n" +
-                                        "                                        <div class=\"user-avatar \">\n" +
-                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
-                                        "                                                <img src=\""+json[i].user.userImg+"\">\n" +
-                                        "                                            </a>\n" +
-                                        "                                        </div>\n" +
-                                        "                                    </div>\n" +
-                                        "                                    <div class=\"answer-detail\">\n" +
-                                        "                                        <span class=\"comment-reply\">\n" +
-                                        "                                            <div class=\"user-username \">\n" +
-                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
-                                        "                                                        "+json[i].user.userName+"\n" +
-                                        "                                                </a>\n" +
-                                        "                                                <span class=\"user-level\">V</span>\n" +
-                                        "                                            </div>\n" +
-                                        "                                         </span>\n" +
-                                        "                                        <div class=\"answer-content markdown-body\">\n" +
-                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
-                                        "                                        </div>\n" +
-                                        "                                        <div>\n" +
-                                        "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
-                                        "                                            <hr/>\n" +
-                                        "                                        </div>\n" +
-                                        "                                    </div>\n" +
-                                        "                                </div>";
+                "                                    <div class=\"answer-head\">\n" +
+                "                                        <div class=\"user-avatar \">\n" +
+                "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"answer-detail\">\n" +
+                "                                        <span class=\"comment-reply\">\n" +
+                "                                            <div class=\"user-username \">\n" +
+                "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                "                                                        "+json[i].user.userName+"\n" +
+                "                                                </a>\n" +
+                "                                                <span class=\"user-level\">V</span>\n" +
+                "                                            </div>\n" +
+                "                                         </span>\n" +
+                "                                        <div class=\"answer-content markdown-body\">\n" +
+                "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                "                                        </div>\n" +
+                "                                        <div>\n" +
+                "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
+                "                                            <hr/>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </div>";
                                 }
                                 else {
                                     str="<div class=\"answer-item\">\n" +
-                                        "                                    <div class=\"answer-head\">\n" +
-                                        "                                        <div class=\"user-avatar \">\n" +
-                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
-                                        "                                                <img src=\""+json[i].user.userImg+"\">\n" +
-                                        "                                            </a>\n" +
-                                        "                                        </div>\n" +
-                                        "                                    </div>\n" +
-                                        "                                    <div class=\"answer-detail\">\n" +
-                                        "                                        <span class=\"comment-reply\">\n" +
-                                        "                                            <div class=\"user-username \">\n" +
-                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
-                                        "                                                        "+json[i].user.userName+"\n" +
-                                        "                                                </a>\n" +
-                                        "                                                <span class=\"user-level\">V</span>\n" +
-                                        "                                            </div>\n" +
-                                        "                                         </span>\n" +
-                                        "                                        <div class=\"answer-content markdown-body\">\n" +
-                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
-                                        "                                        </div>\n" +
-                                        "                                        <div>\n" +
-                                        "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
-                                        "                                            <hr/>\n" +
-                                        "                                        </div>\n" +
-                                        "                                    </div>\n" +
-                                        "                                </div>";
+                "                                    <div class=\"answer-head\">\n" +
+                "                                        <div class=\"user-avatar \">\n" +
+                "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                "                                            </a>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"answer-detail\">\n" +
+                "                                        <span class=\"comment-reply\">\n" +
+                "                                            <div class=\"user-username \">\n" +
+                "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                "                                                        "+json[i].user.userName+"\n" +
+                "                                                </a>\n" +
+                "                                                <span class=\"user-level\">V</span>\n" +
+                "                                            </div>\n" +
+                "                                         </span>\n" +
+                "                                        <div class=\"answer-content markdown-body\">\n" +
+                "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                "                                        </div>\n" +
+                "                                        <div>\n" +
+                "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
+                "                                            <hr/>\n" +
+                "                                        </div>\n" +
+                "                                    </div>\n" +
+                "                                </div>";
                                 }
                                 lis.push(str);
                             }
-                            next(lis.join(''), page < data.count); //假设总页数为 6
+                            next(lis.join(''), page < data.pages); //假设总页数为 6
                         }, 200);
                     })
                 }
@@ -1278,8 +1194,6 @@
             });
 
         });
-
-
     });
 
     /**
