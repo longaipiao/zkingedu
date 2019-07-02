@@ -1,7 +1,7 @@
 #配置项目名和端口号server:
 server:
    servlet:
-     context-path:  /
+     context-path: /
    port: 8899
 #配置数据库
 spring:

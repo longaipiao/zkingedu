@@ -109,6 +109,17 @@ public class SystemController {
 
 
     /**
+     * 进入体系添加页面
+     * yan
+     * @return
+     */
+    @RequestMapping("/addSystemPage")
+    public String pageAddSystem(){
+        return "/admin/course/systemAdd";
+    }
+
+
+    /**
      * 修改体系状态接口
      * yan
      * @param state

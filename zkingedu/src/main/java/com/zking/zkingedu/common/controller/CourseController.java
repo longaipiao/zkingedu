@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Section;
+import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.OrderService;
 import com.zking.zkingedu.common.service.SectionService;
@@ -97,6 +98,9 @@ public class CourseController {
         courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
 
 
+        User user = new User();
+        user.setUserID(2);
+        mv.addObject("user",user);//模拟登陆
         mv.addObject("sections",sectionsBycid);
         mv.addObject("course",courseBYcourseID);
         mv.setViewName("/user/courses/show1");

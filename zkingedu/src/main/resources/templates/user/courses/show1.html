@@ -216,7 +216,7 @@
                 </div>
 
             </div>
-            <div class="content">
+            <div class="content" style="margin-bottom: 100px;">
                 <ul class="nav nav-tabs" role="tablist">
 
                     <li role="presentation" class="active">
@@ -255,6 +255,9 @@
                             </span>
 
                             <div class="pull-right lab-item-ctrl">
+                                <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
+                                <!--课程id  隐藏-->
+
                                 <a class="btn btn-primary" th:onclick="|javascript:ksxx('${course.courseID}','${se.sectionID}','${se.sectionInte}')|"  data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>
                                 <!--th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}"-->
                             </div>
@@ -265,15 +268,49 @@
                         <div class="comment-box">
                             <div class="comment-form">
 
-                                <div class="comment-form-unlogin">
+                                <div class="comment-form-unlogin" th:if="${user==null}">
                                     请
                                     <a href="#sign-modal" data-toggle="modal" data-sign="signin" data-next="/courses/1"> 登录 </a>
                                     后发表评论
                                 </div>
+                                <div th:if="${user!=null}">
+                                    <!--如果用户以登陆  隐藏用户id-->
+                                    <input type="hidden" th:value="${user.userID}" id="userId"/>
+
+                                    <button type="button" id="fabb" class="layui-btn layui-btn-normal" >发布评论</button>
+                                </div>
 
                             </div>
-                            <div class="comment-title">最新评论</div>
+                            <div class="comment-title">最新评论    </div>
                             <div class="comment-list">
+
+                                <ul class="flow-default" style="height: 300px;" id="LAY_demo2"></ul>
+                                <!--<div class="answer-item">
+                                    <div class="answer-head">
+                                        <div class="user-avatar ">
+                                            <a class="avatar" href="/user/162034" target="_blank">
+                                                <img src="https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MTc0NzA5.png?v=1464936302985&amp;imageView2/1/w/200/h/200">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="answer-detail">
+                                        <span class="comment-reply">
+                                            <div class="user-username ">
+                                                <a class="username" href="/user/162034" style="margin-left: 20px;" target="_blank">
+                                                        齐川同学促销装
+                                                </a>
+                                                <span class="user-level">L28</span>
+                                            </div>
+                                         </span>
+                                        <div class="answer-content markdown-body">
+                                            <a  href="javascript:void(0);" style="color: #000000">同学你好！你可以先通过QQ等工具截图后保存为文件，然后在提问的对话框中点击`图片`按钮上传即可。</a>
+                                        </div>
+                                        <div>
+                                            <span class="create-time">时间：<span>2009-09-09</span></span>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </div>-->
                             </div>
                             <div class="pagination-container"></div>
                         </div>
@@ -950,6 +987,117 @@
 
 
 <script type="text/javascript">
+
+    var layer;
+    var flow;
+
+    //删除课程评论
+    function delScomment(id){
+        layer.confirm('确认删除评论吗？', function(index){
+            $.ajax({
+                type : "post",
+                url : "/scomment/delScommentById",
+                data : {
+                    id : id
+                },
+                success:function (req) {
+                    if(req.code==0){
+                        layer.msg(req.msg);
+                        window.location.href=window.location.href;
+                        window.location.reload;
+                    }
+                    else{
+                        layer.msg(req.msg);
+                    }
+                }
+            });
+            layer.close(index);
+        });
+    }
+
+    //重新加载flow数据
+    function myflowData(){
+        flow.load({
+            elem: '#LAY_demo2' //流加载容器
+            // ,scrollElem: '#LAY_demo2' //滚动条所在元素，一般不用填，此处只是演示需要。
+            ,isAuto: true
+            ,isLazyimg: false
+            ,done: function(page, next){ //加载下一页
+                //模拟插入
+                var lis = [];
+                $.post("/scomment/getScomment",{'page': page,"limit":1,"cid":1}, function(data) {
+                    var json = data.data;
+                    //模拟插入
+                    setTimeout(function(){
+                        var lis = [];
+                        var uid=$("#userId").val();//用户id
+                        for (var i=0; i<json.length; i++) {
+                            if(json[i].user.userID==uid){//如果是自己的评论可以删除
+                                str="<div class=\"answer-item\">\n" +
+                                    "                                    <div class=\"answer-head\">\n" +
+                                    "                                        <div class=\"user-avatar \">\n" +
+                                    "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                    "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                                    "                                            </a>\n" +
+                                    "                                        </div>\n" +
+                                    "                                    </div>\n" +
+                                    "                                    <div class=\"answer-detail\">\n" +
+                                    "                                        <span class=\"comment-reply\">\n" +
+                                    "                                            <div class=\"user-username \">\n" +
+                                    "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                    "                                                        "+json[i].user.userName+"\n" +
+                                    "                                                </a>\n" +
+                                    "                                                <span class=\"user-level\">V</span>\n" +
+                                    "                                            </div>\n" +
+                                    "                                         </span>\n" +
+                                    "                                        <div class=\"answer-content markdown-body\">\n" +
+                                    "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                                    "                                        </div>\n" +
+                                    "                                        <div>\n" +
+                                    "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
+                                    "                                            <hr/>\n" +
+                                    "                                        </div>\n" +
+                                    "                                    </div>\n" +
+                                    "                                </div>";
+                            }
+                            else {
+                                str="<div class=\"answer-item\">\n" +
+                                    "                                    <div class=\"answer-head\">\n" +
+                                    "                                        <div class=\"user-avatar \">\n" +
+                                    "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                    "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                                    "                                            </a>\n" +
+                                    "                                        </div>\n" +
+                                    "                                    </div>\n" +
+                                    "                                    <div class=\"answer-detail\">\n" +
+                                    "                                        <span class=\"comment-reply\">\n" +
+                                    "                                            <div class=\"user-username \">\n" +
+                                    "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                    "                                                        "+json[i].user.userName+"\n" +
+                                    "                                                </a>\n" +
+                                    "                                                <span class=\"user-level\">V</span>\n" +
+                                    "                                            </div>\n" +
+                                    "                                         </span>\n" +
+                                    "                                        <div class=\"answer-content markdown-body\">\n" +
+                                    "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                                    "                                        </div>\n" +
+                                    "                                        <div>\n" +
+                                    "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
+                                    "                                            <hr/>\n" +
+                                    "                                        </div>\n" +
+                                    "                                    </div>\n" +
+                                    "                                </div>";
+                            }
+                            lis.push(str);
+                        }
+                        next(lis.join(''), page < data.count); //假设总页数为 6
+                    }, 200);
+                })
+            }
+        });
+    }
+
+
     $(function () {
         //alert("用户:"+$("#userintegrsl").val());
         //alert("课程:"+$("#courseIntegrsl").val());
@@ -972,6 +1120,122 @@
         layui.use('layer', function(){
             var layer = layui.layer;
             //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+        layui.use(['flow','layer'], function(){
+            flow = layui.flow;
+            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            layer = layui.layer;
+                // layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+
+            flow.load({
+                elem: '#LAY_demo2' //流加载容器
+                // ,scrollElem: '#LAY_demo2' //滚动条所在元素，一般不用填，此处只是演示需要。
+                ,isAuto: true
+                ,isLazyimg: false
+                ,done: function(page, next){ //加载下一页
+                    //模拟插入
+                    var lis = [];
+                    $.post("/scomment/getScomment",{'page': page,"limit":1,"cid":1}, function(data) {
+                        var json = data.data;
+                        //模拟插入
+                        setTimeout(function(){
+                            var lis = [];
+                            var uid=$("#userId").val();//用户id
+                            for (var i=0; i<json.length; i++) {
+                                if(json[i].user.userID==uid){//如果是自己的评论可以删除
+                                    str="<div class=\"answer-item\">\n" +
+                                        "                                    <div class=\"answer-head\">\n" +
+                                        "                                        <div class=\"user-avatar \">\n" +
+                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                        "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                                        "                                            </a>\n" +
+                                        "                                        </div>\n" +
+                                        "                                    </div>\n" +
+                                        "                                    <div class=\"answer-detail\">\n" +
+                                        "                                        <span class=\"comment-reply\">\n" +
+                                        "                                            <div class=\"user-username \">\n" +
+                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                        "                                                        "+json[i].user.userName+"\n" +
+                                        "                                                </a>\n" +
+                                        "                                                <span class=\"user-level\">V</span>\n" +
+                                        "                                            </div>\n" +
+                                        "                                         </span>\n" +
+                                        "                                        <div class=\"answer-content markdown-body\">\n" +
+                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                                        "                                        </div>\n" +
+                                        "                                        <div>\n" +
+                                        "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment("+json[i].scommentID+")'>删除评论</a>" +
+                                        "                                            <hr/>\n" +
+                                        "                                        </div>\n" +
+                                        "                                    </div>\n" +
+                                        "                                </div>";
+                                }
+                                else {
+                                    str="<div class=\"answer-item\">\n" +
+                                        "                                    <div class=\"answer-head\">\n" +
+                                        "                                        <div class=\"user-avatar \">\n" +
+                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                        "                                                <img src=\""+json[i].user.userImg+"\">\n" +
+                                        "                                            </a>\n" +
+                                        "                                        </div>\n" +
+                                        "                                    </div>\n" +
+                                        "                                    <div class=\"answer-detail\">\n" +
+                                        "                                        <span class=\"comment-reply\">\n" +
+                                        "                                            <div class=\"user-username \">\n" +
+                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                        "                                                        "+json[i].user.userName+"\n" +
+                                        "                                                </a>\n" +
+                                        "                                                <span class=\"user-level\">V</span>\n" +
+                                        "                                            </div>\n" +
+                                        "                                         </span>\n" +
+                                        "                                        <div class=\"answer-content markdown-body\">\n" +
+                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">"+json[i].scommentContent+"</a>\n" +
+                                        "                                        </div>\n" +
+                                        "                                        <div>\n" +
+                                        "                                            <span class=\"create-time\">时间：<span>"+json[i].scommentTime+"</span></span>\n" +
+                                        "                                            <hr/>\n" +
+                                        "                                        </div>\n" +
+                                        "                                    </div>\n" +
+                                        "                                </div>";
+                                }
+                                lis.push(str);
+                            }
+                            next(lis.join(''), page < data.count); //假设总页数为 6
+                        }, 200);
+                    })
+                }
+            });
+
+
+
+            //发布评论
+            $("#fabb").on("click",function () {
+                layer.prompt({
+                    formType: 2
+                }, function(value, index1){
+                    layer.msg("value:"+value+"userId:"+$("#userId").val()+"__courseId:"+$("#courseID").val());
+                    $.ajax({
+                        type : "post",
+                        url : "/scomment/addScomment",
+                        data : {
+                            scommentCid : $("#courseID").val(),
+                            scommentUid : $("#userId").val(),
+                            scommentContent:value
+                        },
+                        success:function (req) {
+                            if(req.code==0){
+                                layer.msg(req.msg);
+                                window.location.href=window.location.href;
+                                window.location.reload;
+                            }
+                            else{
+                                layer.msg(req.msg);
+                            }
+                        }
+                    });
+                    layer.close(index1);
+                });
+            })
+
         });
 
 

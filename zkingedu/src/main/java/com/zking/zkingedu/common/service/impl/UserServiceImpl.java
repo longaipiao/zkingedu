@@ -89,6 +89,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据用户id  查询用户信息
+     * yan
+     * @param id
+     * @return
+     */
+    @Override
+    public User getUserById(Integer id) {
+        return userDao.getUserById(id);
+    }
+    /**
      *  根据用户id修改用户积分的方法
      */
     @Override

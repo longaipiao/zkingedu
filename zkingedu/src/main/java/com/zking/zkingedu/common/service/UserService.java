@@ -42,6 +42,16 @@ public interface UserService {
     public int findIntegrsl(Integer user_id);
 
 
+
+    /**
+     * 根据用户id  查询用户信息
+     * yan
+     * @param id
+     * @return
+     */
+    User getUserById(Integer id);
+
+
     /**
      *  根据用户id修改用户积分的方法
      */
