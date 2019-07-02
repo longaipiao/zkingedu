@@ -45,6 +45,24 @@ public class BillController {
     }
 
 
+    @RequestMapping(value = "/findBillUname")
+    @ResponseBody
+    public Map<String,Object> findbillUname(String userName,Integer page,Integer limit){
+        log.info("**********开始查询账单信息*********");
+        PageInfo<Map<String, Object>> billUname = billService.findBillUname(userName, page, limit);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",billUname.getTotal());
+        maps.put("data",billUname.getList());
+        log.info("**********结束查询账单信息*********");
+        return maps;
+    }
+
+
+
+
+
 
 
 

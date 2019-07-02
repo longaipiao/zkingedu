@@ -50,4 +50,19 @@ public class UrlController {
     }
 
 
+    /**
+     * 后台的账单列表的跳转路径
+     */
+    @RequestMapping(value = "/orderzhangdan")
+    public String orderzhangdan(){
+        return "/admin/html/member-list";
+    }
+
+    /**
+     * 后台的账单列表的跳转路径
+     */
+    @RequestMapping(value = "/ordershouru")
+    public String ordersshouru(){
+        return "/admin/html/member-lists";
+    }
 }

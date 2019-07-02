@@ -223,7 +223,7 @@
 					<ul class="list-group">
 						<div class="text-center">
 							<a href="#get6" class="list-group-item" id="xinxi">个人信息</a>
-							<a href="#get7" class="list-group-item" id="haoyou">邀请好友</a>
+							<a href="#get7" class="list-group-item" id="haoyou">我的资源</a>
 							<a href="#get8" class="list-group-item" id="chongzhi">会员充值</a>
 						</div>
 					</ul>
@@ -401,9 +401,11 @@
 				<script>
 
                     $(function () {
-                        layui.use(['layer','laypage'], function(){
+                        layui.use(['layer','laypage','flow'], function(){
                             var layer = layui.layer;
                             var laypage = layui.laypage;
+                            var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+                            var flow = layui.flow;
 
                             /*订单的展示*/
 
@@ -576,9 +578,122 @@
                             }
                         });
 
-                        });
+							/*
+							 * 我的资源模块
+							 */
+							$("#haoyou").click(function () {
+								var config = {page:1,limit:4};
+								var url = "/findziyuanuid";
+								$.getJSON(url,config,function(res){
+									//alert(res);
+									laypage.render({
+										elem: 'page4',//必须放id
+										count: 100,
+										first: '首页',
+										last: '尾页',
+										count: res.count, //总条数
+										limit:config.limit, //每页条数
+										theme: '#FFB800', //自定义颜色
+										jump: function(obj, first){
+											//alert(obj.curr)
+											if(!first){ //首次则不进入
+												config.page = obj.curr;
+												getUserListByPage(url,config);
+											}
+										}
+									});
+									parseUserList(res,config.page);
+								});
 
+
+								//点击页数从后台获取数据
+								function getUserListByPage(url,config){
+									$.getJSON(url,config,function(res){
+										parseUserList(res,config.page);
+									});
+								}
+								//解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
+								function parseUserList(res,currPage){
+									//alert(res.data);
+									var content = "";
+									$.each(res.data, function (i, o) {
+										if(o.order_cid==0){
+											content += '<div class="col-md-3  course" ><a class="course-box" href="/user/resourseShow?courseId='+o.order_sid+'">';
+										}else{
+											content += '<div class="col-md-3  course" ><a class="course-box" href="/user/video?sid='+o.order_sid+'&id='+o.order_cid+'">';
+										}
+										content += '<div class="sign-box">';
+										content += '<i class="fa fa-star-o course-follow pull-right" data-follow-url="/courses/20/follow" data-unfollow-url="/courses/20/unfollow" style="display:none"></i>';
+										content += '</div>';
+										content += '<div class="course-img">';
+										content += '<img alt="'+o.course_name+'" src="'+o.course_img+'">';
+										content += '</div>';
+										content += '<div class="course-body">';
+										content += '<span class="course-title" data-toggle="tooltip" data-placement="bottom" title="'+o.course_name+'">'+o.course_name+'</span>';
+										content += '</div>';
+										content += '</a></div>';
+									});
+									$('#ziyuan').html(content);
+									if(res.count==0){
+										$("#ziyuan").html("<span style='font-size: 20px;color: red; align-content: center'>暂无数据！</span>");
+									}
+								}
+							});
+
+
+                            /**
+							 * 消息中心的模块
+                             */
+                            $("#xiaoxi").click(function () {
+								flow.load({
+									elem: '#message' //流加载容器
+									, done: function (page, next) { //执行下一页的回调
+										//模拟数据插入
+										$.post("/findMessage", {page: page, limit: 2}, function (res) {
+											//alert(res);
+											var lis = [];
+											layui.each(res.data, function (i, o) {
+                                                var content = '<div class="answer-item" >';
+												content += '<div class="answer-head">';
+												content += '<div class="user-avatar ">';
+												content += '<a class="avatar" href="/user/userinfo/index" target="_blank">';
+												content += '<img src="'+o.user_img+'">';
+												content += '</a>';
+												content += '</div>';
+												content += '</div>';
+												content += '<div class="answer-detail">';
+												content += '<span class="comment-reply">';
+												content += '<div class="user-username ">';
+												content += '<a class="username" href="javascript:void(0);" style="margin-left: 20px;" target="_blank">'+o.message_name+'</a>';
+												content += '</div>';
+												content += '</span>';
+												content += '<div class="answer-content markdown-body">';
+												content += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' onclick='ydzt(\""+o.message_id+"\")' style='color: #000000'>"+o.message_content+"</a>";
+												content += '</div>';
+												content += '<div>';
+												content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="create-time">时间：<span>'+o.message_time+'</span></span>';
+												if(o.message_state==1){
+                                                    content += '<span style="margin-left: 600px; color: red">未读消息</span>';
+												}else{
+                                                    content += '<span style="margin-left: 600px; color: #9E792E">已读消息</span>';
+												}
+
+												content += '<hr/>';
+												content += '</div>';
+                                                content += '</div>';
+												lis.push(content);
+											});
+											//执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+											//pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+											next(lis.join(''), page < res.count); //假设总页数为 10
+										});
+									}
+								});
+
+							});
+						});
                     });
+
 
                     /*删除的操作*/
                     function schu(chargeID) {
@@ -595,13 +710,31 @@
                                         }, 1000);
                                     }else{
                                         layer.msg("删除失败！",{icon : 5});
-									}
+                                    }
                                 });
                                 layer.close(index);
 
                             });
                         });
                     }
+
+
+                    /**
+					 * 修改未读状态为已读状态
+					 * 阿飘
+                     */
+                    function ydzt(message_id) {
+                        var messageID = message_id;
+                        alert(messageID);
+                        $.post('/updateMessageState',{messageid:messageID},function (data) {
+							alert(data);
+							window.location.href = 'https://www.baidu.com';
+                        });
+
+
+                    }
+
+
 
 				</script>
 
@@ -638,18 +771,31 @@
 					</div>
 					<div class="col-md-10 layout-body" id="get5" >
 						<div class="content" style="height: 300px;">
-							<h3>消息中心</h3>						
+							<h3>消息中心</h3>
+							<!--数据位置-->
+							<div id="message"></div>
+
+
+							</div>
+							<!--分页位置-->
+							<div id="page5" align="center"></div>
 						</div>
 					</div>
 					<div class="col-md-10 layout-body" id="get6" >
 						<div class="content" style="height: 300px;">
-							<h3>个人信息</h3>						
+							<h3>个人信息</h3>
 						</div>
 					</div>
 					<div class="col-md-10 layout-body" id="get7" >
 						<div class="content" style="height: 300px;">
-							<h3>邀请好友</h3>						
+							<h3>我的资源</h3>
+								<!--数据位置-->
+							<div class="row" id="ziyuan">
+
+							</div>
 						</div>
+						<!--分页位置-->
+						<div id="page4" align="center"></div>
 					</div>
 				<!--积分充值-->
 				<div class="col-md-10 layout-body" id="get8" >
@@ -677,8 +823,6 @@
                         document.getElementById("form").submit();
                     }
 				</script>
-
-
 
 				<script type="text/javascript">
 

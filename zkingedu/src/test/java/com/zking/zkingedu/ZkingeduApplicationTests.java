@@ -41,4 +41,17 @@ public class ZkingeduApplicationTests {
 
     }
 
+
+
+    @Test
+    public void dsad() {
+        System.out.println("爱情是什么");
+        PageInfo<Map<String, Object>> mapPageInfo = orderService.findziyuanUid(2, 1, 2);
+        List<Map<String, Object>> list = mapPageInfo.getList();
+        for (Map<String, Object> stringObjectMap : list) {
+            System.out.println(stringObjectMap);
+        }
+
+    }
+
 }

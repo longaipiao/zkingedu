@@ -21,21 +21,19 @@
   <body>
   <br/>
   <div class="demoTable">
-    <label>搜索名称 ：</label>
+    <label>搜索用户名称 ：</label>
     <div class="layui-inline">
-      <input class="layui-input" type="text" name="username" id="uname" lay-verify="username" autocomplete="off">
+      <input class="layui-input" type="text" name="username" id="userName" lay-verify="username" autocomplete="off">
+    </div>&nbsp;&nbsp;&nbsp;
+    <label>搜索订单号 ：</label>
+    <div class="layui-inline">
+      <input class="layui-input" type="text" name="orderId" id="orderId" lay-verify="orderId" autocomplete="off">
     </div>&nbsp;&nbsp;&nbsp;
     <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
-    <button class="layui-btn" data-type="getCheckData">批量删除</button>
   </div>
 
   <!--usertable数据展示-->
   <table id="order" lay-filter="test"></table>
-
-  <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  </script>
-
 
 
   <script type="text/javascript">
@@ -49,12 +47,10 @@
                 , element = layui.element //元素操作
                 , form = layui.form;
 
-
-
             //第一个实例
             table.render({
                 elem: '#order'
-                ,height: 480
+                ,height: 450
                 ,url: '/findOrder' //数据接口
                 ,page: true //开启分页
                 //,skin: 'line' //表格风格
@@ -62,12 +58,12 @@
                 ,cols: [
                        [ //表头
                     {checkbox: true, fixed: true}
-                    ,{field: 'order_id', title: '订单ID', width:150, sort: true, fixed: 'left'}
-                    ,{field: 'course_name', title: '课程名称', width:150}
-                    ,{field: 'user_name', title: '用户名称', width:100}
-                    ,{field: 'order_integral', title: '消费积分', width:150, sort: true}
+                    ,{field: 'order_id', title: '订单ID', width:250, sort: true, fixed: 'left'}
+                    ,{field: 'course_name', title: '课程名称', width:180}
+                    ,{field: 'user_name', title: '用户名称', width:150}
+                    ,{field: 'order_integral', title: '消费积分', width:180, sort: true}
                     ,{field: 'charge_time', title: '订单生成时间', width: 180}
-                    ,{field: 'order_cid',title: '章节名称', width: 150,
+                    ,{field: 'order_cid',title: '操作', width: 150,
                            templet:function(d){
                                if(0==d.order_cid){
                                    return "<span style='color: blue;'>全套</span>";
@@ -75,12 +71,6 @@
                                    return '<span style="color: #c00;" onclick="myf('+d.order_cid+')">查询详情</span>';
                                }
                            }}
-                    , {//获取桌面的工具栏
-                        fixed : 'right',
-                        width : 100,
-                        align : 'center',
-                        toolbar : '#barDemo'
-                    }
                 ]
                 ]
                 ,id : 'id'//表格id
@@ -88,6 +78,34 @@
 
 
 
+            var $ = layui.$, layer = layui.layer, active = {
+                getCheckData: function(){ //获取选中数据
+                    var checkStatus = table.checkStatus('id')
+                        ,data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                },
+                // 模糊查询的页面重载
+                reload : function() { //拿到页面每一个值
+                    var userName = $('#userName').val();
+                    var orderId = $('#orderId').val();
+                    //alert(userName);
+                    // 执行重载
+                    table.reload('id', {
+                        page : {
+                            curr : 1// 重新从第 1 页开始
+                        },
+                        where : {//传的参数到后台
+                            'userName' : userName,
+                            'orderId' : orderId
+                        }
+                    });
+                }
+            };
+            // 查询按钮实现
+            $('.demoTable .layui-btn').on('click', function() {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
 
         });
     });
@@ -99,13 +117,60 @@
     function myf(order_cid) {
         var ordercid = order_cid;
 
+        $.post("/user/findzhangjieId",{sectionid:ordercid},function (data) {
+            //alert(data.sectionID);
+
+            $("#sectionID").val(data.sectionID);
+            $("#sectionName").val(data.sectionName);
+            $("#sectiontime").val(data.sectionTime);
+            $("#sectionInte").val(data.sectionInte);
+
+            layer.open({
+                //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                type: 1,
+                title: "章节详情",
+                area: ['420px', '330px'],
+                content: $("#findzhangjieId"),//引用的弹出层的页面层的方式加载修改界面表单
+                maxmin : true
+            });
+        });
 
 
     }
 
-
-
   </script>
+
+  <!--详情的界面-->
+  <form class="layui-form" action="" id="findzhangjieId" style="display:none;">
+    <h2 align="center">章节详情</h2>
+    <div class="layui-form-item">
+      <label class="layui-form-label">章节id：</label>
+      <div class="layui-input-inline">
+        <input type="text" id="sectionID" disabled="disabled" required lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" style="font-size: 12px;">章节名称：</label>
+      <div class="layui-input-inline">
+        <input type="text" id="sectionName" disabled="disabled"  required lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" style="font-size: 12px;">章节发布时间：</label>
+      <div class="layui-input-inline">
+        <input type="text" id="sectiontime" disabled="disabled"  required lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" style="font-size: 12px;">章节视频积分：</label>
+      <div class="layui-input-inline">
+        <input type="text" id="sectionInte" disabled="disabled"  required lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </form>
+
+
+
 
 
   </body>

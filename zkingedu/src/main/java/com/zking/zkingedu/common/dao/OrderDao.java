@@ -58,6 +58,11 @@ public interface OrderDao {
     public List<Map<String,Object>> findOrder(@Param("userName") String userName,@Param("orderID") String orderID);
 
 
+    /**
+     * 根据用户id查询出自己的资源
+     * 阿飘
+     */
+    public List<Map<String,Object>> findziyuanUid(@Param("userID") Integer userID);
 
 
 }

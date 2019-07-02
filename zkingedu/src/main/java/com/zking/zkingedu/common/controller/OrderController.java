@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -232,8 +233,22 @@ public class OrderController {
     }
 
 
-
-
+    /**
+     * 根据用户id查询自己的资源
+     * 阿飘
+     */
+    @RequestMapping(value = "/findziyuanuid")
+    @ResponseBody
+    public Map<String,Object> findziyuanUid(Integer page,Integer limit){
+        log.info("**********开始查询自己的资源**************");
+        PageInfo<Map<String, Object>> ziyuanuids = orderService.findziyuanUid(2, page, limit);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","success");
+        maps.put("code",0);
+        maps.put("count",ziyuanuids.getTotal());
+        maps.put("data",ziyuanuids.getList());
+        return maps;
+    }
 
 
 
