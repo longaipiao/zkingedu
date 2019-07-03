@@ -4,12 +4,9 @@ import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.model.User;
-import com.zking.zkingedu.common.service.CourseService;
-import com.zking.zkingedu.common.service.OrderService;
-import com.zking.zkingedu.common.service.SectionService;
+import com.zking.zkingedu.common.service.*;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
-import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +44,10 @@ public class CourseController {
 
     @Autowired
     private OrderService orderService;
+
+
+    @Autowired
+    private HoardingService hoardingService;
 
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
@@ -97,12 +98,13 @@ public class CourseController {
         courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum()+1);
         courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
 
-
         User user = new User();
         user.setUserID(2);
         mv.addObject("user",user);//模拟登陆
         mv.addObject("sections",sectionsBycid);
         mv.addObject("course",courseBYcourseID);
+        mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
+        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));
         mv.setViewName("/user/courses/show1");
         return mv;
     }

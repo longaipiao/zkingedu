@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
     <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
     <link rel="stylesheet" href="/user/layui/css/layui.css">
+
     <style>
         @font-face {
             font-family: "lantingxihei";
@@ -199,9 +200,22 @@
                     <div class="pull-right course-infobox-follow"
                          data-follow-url="/courses/1/follow"
                          data-unfollow-url="/courses/1/unfollow">
-                        <span class="course-infobox-followers">4401</span>
+
+                        <!--===============================-->
+                        <!--===============================-->
+                        <!--===============================-->
+                        <!--===============================-->
+                        <!--收藏  爱心标签-->
+                        <span class="course-infobox-followers" th:text="${courseNum}">0</span>
+
+
                         <span>人关注</span>
-                        <i class="fa fa-star-o" data-next="/login?next=%2Fcourses%2F1"></i>
+                        <span th:if="${isCheck!=null}">
+                            <i class="fa fa-star-o" id="sac" style="color: red" data-next="/login?next=%2Fcourses%2F1"></i>
+                        </span>
+                        <span th:if="${isCheck==null}">
+                            <i class="fa fa-star-o" id="sac" data-next="/login?next=%2Fcourses%2F1"></i>
+                        </span>
                     </div>
                 </div>
                 <div class="clearfix course-infobox-body">
@@ -1035,6 +1049,15 @@
             $("#qtsp").hide();
         }*/
 
+
+
+        //点击收藏课程
+        $("#sac").click(function () {
+            layer.msg("嘻嘻");
+        })
+
+
+
             //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
         layui.use(['flow','layer'], function(){
             flow = layui.flow;
@@ -1249,7 +1272,18 @@
 //window.location.href = "/user/video?sid="+course+"&id="+section;
 </script>
 
+<style>
 
+    /*选中*/
+    .courseCheck{
+        color: red;
+    }
+
+    /*未选中*/
+    .courseNoCheck{
+
+    }
+</style>
 
 
 </body>
