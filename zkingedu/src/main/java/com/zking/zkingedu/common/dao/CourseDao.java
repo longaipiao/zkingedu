@@ -1,10 +1,11 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.Course;
-import io.lettuce.core.dynamic.annotation.Param;
-import com.zking.zkingedu.common.utils.PageBean;
+import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程接口
@@ -36,7 +37,7 @@ public interface CourseDao {
      * @return
      * yan
      */
-    List<Course> getCourseSearch(@Param("course") Course course);
+    List<Course> getCourseSearch(Course course);
 
 
     /**
@@ -60,5 +61,86 @@ public interface CourseDao {
      */
     public String findCourseName(Integer courseid);
 
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @param course  查询参数
+     * @return
+     */
+    List<Course> getAllCoursesAndSearchByPage(Course course);
+
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @return  map
+     */
+    List<Map<String,Object>> getAllCourses(Course course);
+
+
+    /**
+     * 课程添加
+     * yan
+     * @param course
+     * @return
+     */
+    int addCourse(Course course);
+
+
+    /**
+     * yan
+     * 根据课程id  查询
+     * @param sid
+     * @return
+     */
+    Map<String,Object> getCourseBySid(@Param("sid") Integer sid);
+
+
+    /**
+     * 课程信息修改
+     * yan
+     * @param course
+     * @return
+     */
+    int updateCourse(Course course);
+
+
+    /**
+     * 修改课程状态  0显示  1影藏
+     * yan
+     * @param id
+     * @param stateid
+     * @return
+     */
+    int editCourseState(@Param("id") Integer id,@Param("stateid")Integer stateid);
+
+
+    /**
+     * 根据课程id查询出此视频是否免费
+     * 阿飘
+     */
+    public Integer findCourseInte(Integer courseID);
+
+
+
+
+    /**
+     * yan
+     * 修改课程点击量
+     * 课程点击量加一
+     * @param id
+     * @return
+     */
+    int updatecliNum(@Param("id")Integer id,@Param("num")Integer num);
+
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * yan
+     * @param id 课程id
+     * @return
+     */
+    int editFreeAndInte(@Param("id")Integer id);
 
 }

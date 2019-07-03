@@ -41,4 +41,18 @@ public interface UserDao {
      * 查询用户积分的方法
      */
     public int findIntegrsl(Integer userID);
+
+    /**
+     * 根据用户id  查询用户信息
+     * yan
+     * @param id
+     * @return
+     */
+    User getUserById(@Param("id")Integer id);
+
+
+    /**
+     *  根据用户id修改用户积分的方法
+     */
+    public void updateUserIntegral(@Param("CourseIntegral") Integer CourseIntegral,@Param("userID") Integer userID);
 }

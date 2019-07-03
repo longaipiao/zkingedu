@@ -14,11 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebAppConfig2 extends WebMvcConfigurerAdapter {
 
-    @Autowired
+  /*  @Autowired
     private WebAppConfig webAppConfig;
-    /**
+    *//**
      * 阻止用户进行个人信息有关操作
-     */
+     *//*
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -26,5 +26,5 @@ public class WebAppConfig2 extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/user/userinfo/index","/user/courses/index");
     }
 
-
+*/
 }

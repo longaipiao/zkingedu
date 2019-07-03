@@ -28,17 +28,15 @@
 
     <!--添加查询课程  课程搜索页面-->
     <select id="getCourseSearch" resultType="com.zking.zkingedu.common.model.Course">
-        select * from t_course
-        <where>
-            <if test="course.courseName != null">
-                course_name like '%${course.courseName}%'
+        select * from t_course where course_state=0
+            <if test="courseName != null">
+                and course_name like '%${courseName}%' or course_desc like '%${courseName}%'
             </if>
-            <if test="course.courseType != null">
-                <if test="course.courseType.tId != null and course.courseType.tId != 0">
-                    and course_type=#{course.courseType.tId}
+            <if test="courseType != null">
+                <if test="courseType.tId != null and courseType.tId != 0">
+                    and course_type=#{courseType.tId}
                 </if>
             </if>
-        </where>
     </select>
 
     <!--根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频-->
@@ -54,7 +52,79 @@
 
     <!-- 获取最热课程 四个播放量排序-->
     <select id="getCoursefour" resultType="com.zking.zkingedu.common.model.Course">
-        select <include refid="CourseSql"/> from t_course where course_state=0 order by course_num desc
+        select <include refid="CourseSql"/> from t_course where course_state=0 order by course_num desc limit 4
     </select>
+
+
+    <!--admin 查询所有的课程信息-->
+    <select id="getAllCoursesAndSearchByPage" resultType="com.zking.zkingedu.common.model.Course">
+        select * from t_course
+        <where>
+            <if test="courseName != null">
+                course_name like '%${courseName}%' or course_desc like '%${courseName}%'
+            </if>
+        </where>
+    </select>
+
+
+
+    <!--查询所有的课程信息-->
+    <select id="getAllCourses" resultType="hashmap">
+        select
+            a.course_id,c.system_name,b.emp_name,a.course_name,a.course_desc,a.course_img,a.course_state,a.course_free,a.course_inte,a.course_num,a.course_time,d.t_name
+        from t_course a,t_emp b,t_system c,course_type d where a.course_sid=c.system_id and a.course_eid=b.emp_id and a.course_type=d.t_id
+        <if test="courseName != null">
+            and a.course_name like '%${courseName}%'
+        </if>
+        order by a.course_time desc
+    </select>
+
+    <!--课程添加-->
+    <insert id="addCourse" useGeneratedKeys="true" keyProperty="courseID">
+        insert into t_course (course_sid,course_eid,course_name,course_desc,course_img,course_state,course_free,course_inte,course_num,course_time,course_type)
+        values (#{courseSid},#{courseEid},#{courseName},#{courseDesc},#{courseImg},#{courseState},#{courseFree},#{courseInte},#{courseNum},now(),#{courseType.tId});
+    </insert>
+
+
+    <!--/**
+     * yan
+     * 根据课程id  查询
+     * @param sid
+     * @return
+     */-->
+    <select id="getCourseBySid" resultType="hashmap">
+        select
+	        a.course_id,a.course_sid,a.course_eid,a.course_name,a.course_desc,a.course_img,a.course_state,a.course_free,a.course_inte,a.course_num,a.course_time,a.course_type
+        from t_course a,t_system b,course_type c where b.system_id=a.course_sid AND c.t_id=a.course_type AND a.course_id=#{sid}
+    </select>
+
+
+    <!--课程信息修改-->
+    <update id="updateCourse">
+        update t_course set course_sid=#{courseSid},course_name=#{courseName},course_img=#{courseImg},course_desc=#{courseDesc},course_inte=#{courseInte},course_type=#{courseType.tId} where course_id=#{courseID}
+    </update>
+
+
+    <!--修改课程状态  0显示  1影藏-->
+    <update id="editCourseState">
+        update t_course set course_state=#{stateid} where course_id=#{id}
+    </update>
+    <!--根据课程id查询出此视频是否免费-->
+    <select id="findCourseInte" resultType="java.lang.Integer" parameterType="integer">
+        select course_inte from t_course where course_id = #{courseID}
+    </select>
+
+
+    <!--课程点击量加一-->
+    <update id="updatecliNum">
+        update t_course set course_num = #{num} where course_id=#{id}
+    </update>
+
+    <!--更新  课程免费章节数  以及课程购买总积分-->
+    <update id="editFreeAndInte">
+        UPDATE t_course set course_free=(select count(section_id) from t_section where section_cid=#{id} AND section_inte=0),
+         course_inte=(select SUM(section_inte) from t_section where section_cid=#{id}) where course_id=#{id}
+    </update>
+
 
 </mapper>

@@ -7,6 +7,17 @@ public class ResultUtil {
     private String count;//总行数
     private Object data;//响应数据
 
+
+    private Object pages;//总页数
+
+    public Object getPages() {
+        return pages;
+    }
+
+    public void setPages(Object pages) {
+        this.pages = pages;
+    }
+
     public ResultUtil(){}
 
     public Integer getCode() {
@@ -84,7 +95,7 @@ public class ResultUtil {
     }
 
     public static ResultUtil error(){
-        return new ResultUtil(500,"没有此权限，请联系超管！");
+        return new ResultUtil(500,"您的操作过于频繁，请稍后再试 ");
     }
     public static ResultUtil error(String str){
         return new ResultUtil(500,str);

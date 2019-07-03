@@ -72,7 +72,7 @@
 				,{field:'systemImg', title:'体系图片',width:150,templet:function (res) {
 					return '<img src="'+res.systemImg+'"/>'
 				}}
-				,{field:'systemState', title:'课程状态', templet: '#checkboxTpl',unresize: true}
+				,{field:'systemState', title:'体系状态', templet: '#checkboxTpl',unresize: true}
 				,{field:'sourcesNum', title:'体系课程数量'}
 				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
 			]
@@ -113,7 +113,7 @@
 						type: 2,
 						title:"添加体系",
 						area: ['500px', '600px'],
-						content:"/html/pageSystemAdd", //这里content是一个普通的String
+						content:"/user/addSystemPage", //这里content是一个普通的String
 					})
 			};
 		});

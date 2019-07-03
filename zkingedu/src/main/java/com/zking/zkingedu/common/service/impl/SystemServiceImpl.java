@@ -10,10 +10,13 @@ import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.expression.Maps;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程体系接口   服务实现层
@@ -76,6 +79,10 @@ public class SystemServiceImpl implements SystemService {
     }
 
 
+    @Override
+    public List<System> getSystemStages(Integer fid) {
+        return systemDao.getSystemStages(fid);
+    }
 
     /**
      * 根据体系id查询体系对应信息
@@ -228,5 +235,37 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public int updateSystemAndStageBySid(Integer sid, String stageName) {
         return systemDao.updateSystemAndStageBySid(sid,stageName);
+    }
+
+
+    /**
+     * admin
+     * 获取所有的体系
+     * yan
+     * @return
+     */
+    @Override
+    public List<System> getAll() {
+        return systemDao.getAll();
+    }
+
+
+    /**
+     * yan
+     * 获取 所有的体系 以及对应的体系阶段
+     * @return
+     */
+    @Override
+    public List<Map<String,Object>> getSystemAndStageMenu() {
+        ArrayList<Map<String, Object>> maps = new ArrayList<>();
+        List<System> all = systemDao.getAll();
+        for (System system : all) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("id",system.getSystemID());
+            map.put("sysName",system.getSystemName());
+            map.put("stages",systemDao.getSystemStages(system.getSystemID()));
+            maps.add(map);
+        }
+        return maps;
     }
 }

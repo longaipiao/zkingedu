@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课程接口
@@ -91,6 +92,7 @@ public class CourseServiceImpl implements CourseService {
             pageBean.setPageSize(9);
         }
         try {
+//            Course course=pageBean.getT();
             //加一个分页
             Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
             List<Course> courseSearch = courseDao.getCourseSearch(pageBean.getT());
@@ -127,5 +129,147 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursefour() {
         return courseDao.getCoursefour();
+    }
+
+
+    /**
+     * 根据课程id查询出此视频是否免费
+     * @param courseID 课程id
+     * @return
+     */
+    @Override
+    public Integer findCourseInte(Integer courseID) {
+        return courseDao.findCourseInte(courseID);
+    }
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @param pageBean  查询参数
+     * @return
+     */
+    @Override
+    public ResultUtil getAllCoursesAndSearchByPage(PageBean<Course> pageBean) {
+        if(pageBean.getPageIndex()==null){
+            pageBean.setPageIndex(1);
+        }
+        if(pageBean.getPageSize()==null){
+            pageBean.setPageSize(10);
+        }
+        try {
+            Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
+            List<Course> courses = courseDao.getAllCoursesAndSearchByPage(pageBean.getT());
+            ResultUtil result = new ResultUtil();
+            result.setData(courses);
+            result.setCount(String.valueOf(objects.getTotal()));
+            result.setMsg("success");
+            result.setCode(0);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 查询所有的课程信息
+     * yan
+     * @return  map
+     */
+    @Override
+    public ResultUtil getAllCourses(PageBean<Course> pageBean) {
+        if(pageBean.getPageIndex()==null){
+            pageBean.setPageIndex(1);
+        }
+        if(pageBean.getPageSize()==null){
+            pageBean.setPageSize(10);
+        }
+        try {
+            Page<Object> objects = PageHelper.startPage(pageBean.getPageIndex(), pageBean.getPageSize());
+            //查询数据
+            List<Map<String, Object>> allCourses = courseDao.getAllCourses(pageBean.getT());
+            ResultUtil result = new ResultUtil();
+            result.setData(allCourses);
+            result.setCount(String.valueOf(objects.getTotal()));
+            result.setMsg("success");
+            result.setCode(0);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 课程添加
+     * yan
+     * @param course
+     * @return
+     */
+    @Transactional
+    @Override
+    public int addCourse(Course course) {
+        return courseDao.addCourse(course);
+    }
+
+    /**
+     * yan
+     * 根据课程id  查询
+     * @param sid
+     * @return
+     */
+    @Override
+    public Map<String, Object> getCourseBySid(Integer sid) {
+        return courseDao.getCourseBySid(sid);
+    }
+
+    /**
+     * 课程信息修改
+     * yan
+     * @param course
+     * @return
+     */
+    @Override
+    public int updateCourse(Course course) {
+        return courseDao.updateCourse(course);
+    }
+
+    /**
+     * 修改课程状态  0显示  1影藏
+     * yan
+     * @param id
+     * @param stateid
+     * @return
+     */
+    @Override
+    public int editCourseState(Integer id, Integer stateid) {
+        return courseDao.editCourseState(id,stateid);
+    }
+
+
+    /**
+     * yan
+     * 修改课程点击量
+     * 课程点击量加一
+     * @param id
+     * @return
+     */
+    @Override
+    public int updatecliNum(Integer id, Integer num) {
+        return courseDao.updatecliNum(id,num);
+    }
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * yan
+     * @param id 课程id
+     * @return
+     */
+    @Transactional
+    @Override
+    public int editFreeAndInte(Integer id) {
+        return courseDao.editFreeAndInte(id);
     }
 }

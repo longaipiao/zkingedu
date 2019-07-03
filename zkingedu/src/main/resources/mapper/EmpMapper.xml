@@ -6,12 +6,15 @@
     <!--员工接口Mapper-->
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+<!--    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <resultMap type="emp" id="empMap">
         <id column="emp_id" property="empID"/>
         <result column="emp_name" property="empName"/>
         <result column="emp_password" property="empPassword"/>
+        <result column="emp_time" property="empTime"/>
+        <result column="emp_error" property="empError"/>
+        <result column="emp_state" property="empState"/>
         <collection property="roles" ofType="role">
             <id column="role_id" property="roleID"/>
             <result column="role_name" property="roleName"/>
@@ -25,7 +28,7 @@
 
 
     <select id="getemps" resultType="emp">
-        select * from t_emp
+        select * from t_emp where emp_name like #{empName}
     </select>
 
     <select id="login" resultType="emp">
@@ -39,5 +42,29 @@
          inner join t_menu m on mr.menu_id=m.menu_id
          WHERE emp_name=#{empname}
     </select>
+    <update id="updateStateByEmpID" parameterType="int">
+        update t_emp set emp_state=#{param2} where emp_id=#{param1}
+    </update>
+    <delete id="delByEmpID" parameterType="int">
+        delete from t_emp where emp_id=#{id}
+    </delete>
+    <delete id="delEmpRoleByEmpID" parameterType="int">
+        delete from t_emp_role where emp_id=#{id}
+    </delete>
+    <update id="updateEmpByEmpID">
+        update t_emp set emp_password = #{param2} where emp_id = #{param1}
+    </update>
+    <update id="updateEmpRoleByEmpID" parameterType="int">
+        update t_emp_role set role_id = #{param2} where emp_id = #{param1}
+    </update>
+    <select id="getRoleIDByEmpID" resultType="int" parameterType="int">
+        select role_id from t_emp_role where emp_id = #{empid}
+    </select>
+    <insert id="addEmp" useGeneratedKeys="true" keyProperty="empID" parameterType="emp">
+        insert into t_emp (emp_name,emp_password,emp_time,emp_state) values(#{empName},#{empPassword},#{empTime},#{empState})
+    </insert>
+    <insert id="addEmpRole">
+        insert into t_emp_role (emp_id,role_id) values(#{param1},#{param2})
+    </insert>
 
 </mapper>

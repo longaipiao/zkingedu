@@ -26,9 +26,7 @@ public class AuthRealm extends AuthorizingRealm {
         //System.err.println("进入认证");
         UsernamePasswordToken utoken=(UsernamePasswordToken) token;//获取用户输入的token
         String empname = utoken.getUsername();
-        System.err.println("-----------------------------"+empname);
         Emp emp = empService.findByEmpName(empname);
-        System.err.println(emp);
         return new SimpleAuthenticationInfo(emp, emp.getEmpPassword(),this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
     }
     //授权
@@ -48,6 +46,7 @@ public class AuthRealm extends AuthorizingRealm {
                 }
             }
         }
+        permissions.add("login");
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermissions(permissions);//将权限放入shiro中.
         return info;

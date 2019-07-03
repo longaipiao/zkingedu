@@ -4,11 +4,71 @@
 <mapper namespace="com.zking.zkingedu.common.dao.OrderDao">
 
     <!--订单接口Mapper-->
+    <sql id="orderAll">
+        order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state
+    </sql>
 
     <!--购买整套视频的方法-->
     <insert id="gmshiporder" parameterType="com.zking.zkingedu.common.model.Order">
         insert into t_order(order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state)
         values(#{orderID},#{orderUid},#{orderSid},#{orderCid},#{orderIntegral},#{chargeTime},#{orderState})
     </insert>
+
+
+    <!--查询课程id是否存在-->
+    <select id="findCourseID" resultType="java.lang.Integer" parameterType="integer">
+        select order_sid from t_order where order_sid = #{courseID}
+    </select>
+
+    <!--查询用户id是否存在-->
+    <select id="findUserID" resultType="java.lang.Integer" parameterType="integer">
+        select order_uid from t_order where order_uid = #{userID}
+    </select>
+
+    <!--根据用户id查询该用户的订单-->
+    <select id="findOrderUid" resultType="java.util.Map" parameterType="integer">
+        select o.order_id as order_id,o.order_integral as order_integral,
+        c.course_name as course_name,o.charge_time as charge_time,o.order_state
+         as order_state from t_order o,t_course c where o.order_sid = c.course_id and o.order_uid = #{userID} and o.order_state = 1
+    </select>
+
+    <!--购买单个章节视频的方法-->
+    <insert id="gmdgsection" parameterType="com.zking.zkingedu.common.model.Order">
+        insert into t_order(order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state)
+        values(#{orderID},#{orderUid},#{orderSid},#{orderCid},#{orderIntegral},#{chargeTime},#{orderState})
+    </insert>
+
+    <!--查询章节视频id是否存在-->
+    <select id="findorderCid" resultType="java.lang.Integer" parameterType="integer">
+        select order_sid from t_order where order_cid = #{ordercid}
+    </select>
+
+    <!--根据用户id查询订单表中是否存在重负的视频-->
+    <select id="finduidsidcid" parameterType="integer" resultType="integer">
+        select count(*) from t_order where order_sid = #{courseId} and order_cid = #{sectionId} and order_uid = #{userId}
+    </select>
+
+    <!--后台的订单查询记录-->
+    <select id="findOrder" resultType="java.util.Map" parameterType="com.zking.zkingedu.common.model.Order">
+        select DISTINCT o.order_id as order_id,u.user_name as user_name,c.course_name as course_name,
+        o.order_integral as order_integral,o.charge_time charge_time,o.order_cid as order_cid
+        from t_user u,t_order o,t_course c,t_section s
+        where 1 = 1 and u.user_id = o.order_uid and o.order_sid = c.course_id
+        <if test="userName!=null">
+            and u.user_name like '%${userName}%'
+        </if>
+        <if test="orderID!=null">
+            and o.order_id like '%${orderID}%'
+        </if>
+    </select>
+
+
+    <!--根据用户id查询出自己的资源-->
+    <select id="findziyuanUid" resultType="java.util.Map" parameterType="integer">
+        select c.course_name,c.course_img,o.order_sid,o.order_cid from t_order o,t_course c
+        where o.order_sid = c.course_id and o.order_uid = #{userID}
+    </select>
+
+
 
 </mapper>

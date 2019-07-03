@@ -1,12 +1,12 @@
 package com.zking.zkingedu.common.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qq.connect.QQConnectException;
-import com.qq.connect.api.OpenID;
-import com.qq.connect.javabeans.AccessToken;
-import com.qq.connect.javabeans.qzone.UserInfoBean;
-import com.qq.connect.oauth.Oauth;
-import com.zhenzi.sms.ZhenziSmsClient;
+//import com.qq.connect.QQConnectException;
+//import com.qq.connect.api.OpenID;
+//import com.qq.connect.javabeans.AccessToken;
+//import com.qq.connect.javabeans.qzone.UserInfoBean;
+//import com.qq.connect.oauth.Oauth;
+//import com.zhenzi.sms.ZhenziSmsClient;
 import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.impl.UserServiceImpl;
@@ -180,7 +180,7 @@ public class UserController {
      * @return
      * @throws QQConnectException
      */
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/LoginCallback2")
     public String  LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
         System.out.println("进来了");
@@ -207,7 +207,7 @@ public class UserController {
             e.printStackTrace();
         }
         return "user/index";
-    }
+    }*/
 
     /**
      * qq登入绑定新用户
@@ -328,12 +328,12 @@ public class UserController {
      * @return
      */
     @RequestMapping("/qqLogin")
-    public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
+    /*public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
         //自动组装qq登陆连接，重定向到qq登陆页面
         String authorizeURL = new Oauth().getAuthorizeURL(request);
         System.out.println("联合登陆请求地址:"+authorizeURL);
         return "redirect:"+authorizeURL;
-    }
+    }*/
 
 
     //随机昵称

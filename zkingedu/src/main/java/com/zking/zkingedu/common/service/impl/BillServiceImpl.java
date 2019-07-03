@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 账单表  实现
@@ -41,6 +42,16 @@ public class BillServiceImpl implements BillService {
         PageHelper.startPage(page,limit);
         List<Bill> bills = billDao.findAll(userId);
         return new PageInfo<>(bills);
+    }
+
+    /**
+     * 根据用户名称查询出账单信息
+     */
+    @Override
+    public PageInfo<Map<String, Object>> findBillUname(String userName, Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<Map<String, Object>> billUname = billDao.findBillUname(userName);
+        return new PageInfo<>(billUname);
     }
 
 }

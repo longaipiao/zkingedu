@@ -44,7 +44,13 @@
 
     <!--根据fid查询子体系-->
     <select id="getsystemsonByFId" resultMap="resultSystems">
-        select *,(select COUNT(*) from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}) from t_system a,t_course b where b.course_sid=a.system_id and a.system_fid=#{fid} and system_state=0
+        select *,(select COUNT(*) from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}) from t_system a,t_course b where b.course_sid=a.system_id and a.system_fid=#{fid} and system_state=0 AND b.course_state=0
+    </select>
+
+
+    <!--查询体系阶段数据-->
+    <select id="getSystemStages" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_fid=#{fid}
     </select>
 
     <!--根据体系id查询体系对应信息-->
@@ -102,5 +108,12 @@
     <update id="updateSystemAndStageBySid" >
         update t_system set system_name  = #{stageName} where system_id=#{sid}
     </update>
-    
+
+
+    <!--获取所有的父体系  fid=0-->
+    <select id="getAll" resultType="com.zking.zkingedu.common.model.System">
+        select <include refid="systemSqlcol"/> from t_system where system_fid=0
+    </select>
+
+
 </mapper>

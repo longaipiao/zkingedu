@@ -41,4 +41,28 @@ public class UrlController {
     }
 
 
+    /**
+     * 后台的订单列表跳转路径
+     */
+    @RequestMapping(value = "/amdin/orderList")
+    public String orderlist(){
+        return "/admin/html/cate";
+    }
+
+
+    /**
+     * 后台的账单列表的跳转路径
+     */
+    @RequestMapping(value = "/orderzhangdan")
+    public String orderzhangdan(){
+        return "/admin/html/member-list";
+    }
+
+    /**
+     * 后台的账单列表的跳转路径
+     */
+    @RequestMapping(value = "/ordershouru")
+    public String ordersshouru(){
+        return "/admin/html/member-lists";
+    }
 }

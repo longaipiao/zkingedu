@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/html")
 public class HtmlController {
 
-
+    /**
+     * 首页
+     * @return
+     */
     @RequestMapping(value = "/welcome")
     public String welcome(){
         return "admin/html/welcome";
@@ -30,19 +33,58 @@ public class HtmlController {
     public String levlis(){
         return "admin/html/integral-list";
     }
+    /**
+     *角色管理
+     */
     @RequestMapping(value = "/recharge-list")
     public String levis(){
         return "admin/html/recharge-list";
     }
+
+    /**
+     *修改角色权限
+     */
     @RequestMapping(value = "/member-edit")
-    public String leis(){
-        return "admin/html/member-edit";
-    }
-    @RequestMapping(value = "/admin-cate")
-    public String les(HttpServletRequest request){
+    public String leis(HttpServletRequest request){
+        String roleID = request.getParameter("roleID");
         String roleName = request.getParameter("roleName");
         request.setAttribute("rolename",roleName);
+        request.setAttribute("roleid",roleID);
+        return "admin/html/member-edit";
+    }
+    /**
+     *增加角色和权限
+     */
+    @RequestMapping(value = "/admin-cate")
+    public String les(){
         return "admin/html/admin-cate";
+    }
+    /**
+     *增加角色和权限
+     */
+    @RequestMapping(value = "/emp-cate")
+    public String empcate(){
+        return "admin/html/emp-cate";
+    }
+    /**
+     *员工管理
+     */
+    @RequestMapping(value = "/emp-list")
+    public String less(){
+        return "admin/html/emp-list";
+    }
+    /**
+     *员工修改
+     */
+    @RequestMapping(value = "/emp-edit")
+    public String empedit(HttpServletRequest request){
+        String empID = request.getParameter("empID");
+        String empPassword = request.getParameter("empPassword");
+        String EmpName = request.getParameter("EmpName");
+        request.setAttribute("empname",EmpName);
+        request.setAttribute("password",empPassword);
+        request.setAttribute("empid",empID);
+        return "admin/html/emp-edit";
     }
     @RequestMapping(value = "/admin-cate1")
     public String lsds(){
@@ -62,7 +104,7 @@ public class HtmlController {
      */
     @RequestMapping("/adminCourse")
     public String adminCourseManager(){
-        return "/admin/course/courseSystem";
+        return "admin/course/courseSystem";
     }
 
 
@@ -73,7 +115,18 @@ public class HtmlController {
      * yan
      */
     @RequestMapping("/pageSystemAdd")
-    public String adminPageAddCourse(){return "/admin/course/systemAdd";}
+    public String adminPageAddCourse(){return "admin/course/systemAdd";}
+
+    /**
+     * 员工个人中心
+     */
+    @RequestMapping("/mymessage")
+    public String mymessage(){return "admin/html/mymessage";}
+    /**
+     * 员工修改个人密码
+     */
+    @RequestMapping("/updpwd")
+    public String updpwd(){return "admin/html/updpwd";}
 
 
 }

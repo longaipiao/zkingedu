@@ -12,9 +12,10 @@
     <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/admin/css/font.css">
 	<link rel="stylesheet" href="/admin/css/xadmin.css">
-	
+	<link rel="stylesheet" href="/layui/css/layui.css">
+
     <script src="/admin/js/jquery.min.js"></script>
-    <script src="/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="/layui/layui.js" charset="utf-8"></script>
 
 <!--    <script type="text/javascript" src="/admin/js/zgqindex.js"></script>-->
 
@@ -22,6 +23,22 @@
 
 </head>
 <body>
+<shiro:lacksPermission name="login">
+    <script>
+        // $(function () {
+            layui.use('layer', function() {
+                $ = layui.jquery;
+                var layer = layui.layer;
+
+                layer.alert("请前往登录",{icon: 4}, function () {
+                    $(location).attr('href', '/admin');
+                });
+            });
+
+        // });
+    </script>
+</shiro:lacksPermission>
+<shiro:hasPermission name="login">
     <!-- 顶部开始 -->
     <div class="container">
         <div class="logo"><a href="/admin/index">码奴堡后台管理中心</a></div>
@@ -40,14 +57,14 @@
         </ul>
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
-            <a href="javascript:;">admin</a>
+            <a href="javascript:;" th:text="${session.emp.empName}"></a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-              <dd><a onClick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
-              <dd><a onClick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+              <dd><a onClick="x_admin_show('个人信息','/html/mymessage','470','500')">个人信息</a></dd>
+              <dd><a onClick="x_admin_show('修改密码','/html/updpwd','470','500')">修改密码</a></dd>
               <dd><a href="/admin/logOut">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="#">前台首页</a></li>
+          <li class="layui-nav-item to-index"><a href="/user/">前台首页</a></li>
         </ul>
         
     </div>
@@ -75,10 +92,8 @@
                 <ul class="sub-menu">
                     <shiro:hasPermission name="广告管理"><li><a _href="/html/level-list"><i class="iconfont">&#xe6a7;</i><cite>广告管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="开发者工具"><li><a _href="/amdin/tool"><i class="iconfont">&#xe6a7;</i><cite>开发者工具</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="员工管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>员工管理</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="菜单管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>菜单管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="员工管理"><li><a _href="/html/emp-list"><i class="iconfont">&#xe6a7;</i><cite>员工管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="角色管理"><li><a _href="/html/recharge-list"><i class="iconfont">&#xe6a7;</i><cite>角色管理</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="管理员列表"><li><a _href="/html/admin-cate"><i class="iconfont">&#xe6a7;</i><cite>管理员列表</cite></a></li ></shiro:hasPermission>
                 </ul>
             </li></shiro:hasPermission>
 
@@ -103,9 +118,9 @@
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <shiro:hasPermission name="订单列表"><li><a _href="/html/cate"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="账单列表"><li><a _href="/html/member-list"><i class="iconfont">&#xe6a7;</i><cite>账单列表</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="平台收入"><li><a _href="/html/member-list"><i class="iconfont">&#xe6a7;</i><cite>平台收入</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="订单列表"><li><a _href="/amdin/orderList"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="账单列表"><li><a _href="/orderzhangdan"><i class="iconfont">&#xe6a7;</i><cite>账单列表</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="平台收入"><li><a _href="/ordershouru"><i class="iconfont">&#xe6a7;</i><cite>平台收入</cite></a></li ></shiro:hasPermission>
                 </ul>
             </li></shiro:hasPermission>
             <!--  平台资金预览  end -->
@@ -120,8 +135,9 @@
                 </a>
                 <ul class="sub-menu">
                     <shiro:hasPermission name="体系管理"><li><a _href="/html/adminCourse"><i class="iconfont">&#xe6a7;</i><cite>体系管理</cite></a></li ></shiro:hasPermission>
-                    <shiro:hasPermission name="课程管理"><li><a _href="/html/article-list"><i class="iconfont">&#xe6a7;</i><cite>课程管理</cite></a></li ></shiro:hasPermission>
+                    <shiro:hasPermission name="课程管理"><li><a _href="/user/stageManager"><i class="iconfont">&#xe6a7;</i><cite>课程管理</cite></a></li ></shiro:hasPermission>
                     <shiro:hasPermission name="视频/章节管理"><li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>视频/章节管理</cite></a></li ></shiro:hasPermission>
+                    <li><a _href="/user/courseTypePage"><i class="iconfont">&#xe6a7;</i><cite>类别管理</cite></a></li >
                     <shiro:hasPermission name="文档管理"><li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>文档管理</cite></a></li ></shiro:hasPermission>
                 </ul>
             </li></shiro:hasPermission>
@@ -197,5 +213,7 @@
         <div class="copyright">Copyright ©2019 L-admin v2.3 All Rights Reserved</div>  
     </div>-->
     <!-- 底部结束 -->
+</shiro:hasPermission>
+
 </body>
 </html>
