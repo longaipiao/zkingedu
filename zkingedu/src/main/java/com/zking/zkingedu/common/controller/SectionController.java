@@ -249,10 +249,17 @@ public class SectionController {
     }
 
 
-
-
-
-
+    /**
+     * 根据章节id查询出
+     */
+    @RequestMapping(value = "/findzhangjieId")
+    @ResponseBody
+    public Section finzhangjieid(Integer sectionid){
+        log.info("**********开始查询章节id*********");
+        Section sectionById = sectionService.getSectionById(sectionid);
+        System.out.println("返回的对象是："+sectionById);
+        return sectionById;
+    }
 
 
 

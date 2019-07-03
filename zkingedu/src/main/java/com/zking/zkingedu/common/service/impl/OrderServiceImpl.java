@@ -105,8 +105,16 @@ public class OrderServiceImpl implements OrderService {
         return new PageInfo<>(orders);
     }
 
-
-
+    /**
+     * 根据用户id查询出自己的资源
+     * 阿飘
+     */
+    @Override
+    public PageInfo<Map<String, Object>> findziyuanUid(Integer userID,Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<Map<String, Object>> ziyuans = orderDao.findziyuanUid(userID);
+        return new PageInfo<>(ziyuans);
+    }
 
 
 }
