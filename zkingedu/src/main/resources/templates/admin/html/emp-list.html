@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
   
   <head>
     <meta charset="UTF-8">
@@ -40,7 +41,7 @@
     </div>
     <script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addRole"><i class="layui-icon">&#xe654;</i>添加员工</button>
+          <button class="layui-btn layui-btn-sm" lay-event="addRole"><i class="layui-icon">&#xe654;</i>添加员工</button>
       </div>
     </script>
 
@@ -132,9 +133,9 @@
                               {
                                   obj.del();
                                   layer.close(index);
-                                  layer.msg('已删除!',{icon:1,time:1000});
+                                  layer.msg('删除成功!',{icon:1,time:1000});
                               }else{
-                                  layer.msg('删除失败!',{icon:1,time:1000});
+                                  layer.msg('删除失败!',{icon:2,time:1000});
                               }
                           }
                       });
@@ -165,7 +166,6 @@
           $.ajax({
             type: 'post',
             url: '/admin/updateEmpState',
-            async:false,
             data: {"id" :id,"state":status},
           beforeSend:function(){
             index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
@@ -173,6 +173,8 @@
           error: function(data){
             console.log(data);
             layer.msg('数据异常，操作失败！');
+            //执行重载
+            table.reload('empTable', {});
           },
           success: function(data){
             if(data==true){
@@ -181,6 +183,8 @@
                 layer.msg('操作成功！');},2000);
             }else{
               layer.msg('数据异常，操作失败！');
+              //执行重载
+              table.reload('empTable', {});
             }}
         });
 

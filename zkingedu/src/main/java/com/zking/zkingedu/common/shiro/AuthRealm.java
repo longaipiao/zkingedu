@@ -36,6 +36,7 @@ public class AuthRealm extends AuthorizingRealm {
         Emp emp=(Emp) principal.fromRealm(this.getClass().getName()).iterator().next();//获取session中的用户
         List<String> permissions=new ArrayList<>();
         Set<Role> roles = emp.getRoles();
+        int roleID=0;
         if(roles.size()>0) {
             for(Role role : roles) {
                 Set<Menu> menuss = role.getMenus();
@@ -44,8 +45,10 @@ public class AuthRealm extends AuthorizingRealm {
                         permissions.add(menu.getMenuName());
                     }
                 }
+                roleID = role.getRoleID();
             }
         }
+        permissions.add("roleID="+roleID);
         permissions.add("login");
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermissions(permissions);//将权限放入shiro中.

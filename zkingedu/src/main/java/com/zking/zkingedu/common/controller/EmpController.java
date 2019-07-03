@@ -3,10 +3,13 @@ package com.zking.zkingedu.common.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zking.zkingedu.common.model.Emp;
+import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.service.EmpService;
+import com.zking.zkingedu.common.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,14 @@ public class EmpController {
 
     @Autowired
     private EmpService empService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     /**
      * 登录成功把emp放进session
@@ -94,10 +105,26 @@ public class EmpController {
     /**
      *更新员工状态
      */
+    @Transactional
     @ResponseBody
     @RequestMapping("/updateEmpState")
-    public Object updateEmpState(@RequestParam("id") Integer id,@RequestParam("state") Integer state) {
+    public Object updateEmpState(@RequestParam("id") Integer id,@RequestParam("state") Integer state,HttpServletRequest request) {
+        //获取当前登录用户，用户不能对自己进行删除和封禁操作
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        if(emp.getEmpID()==id)
+            return false;
         int i = empService.updateStateByEmpID(id, state);
+        //放入日志
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"把ID为"+id+"的员工的状态修改为:");
+        if (state==0)
+            stringBuilder.append("启用");
+        else
+            stringBuilder.append("封禁");
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if(i>0)
             return true;
         else
@@ -109,9 +136,20 @@ public class EmpController {
     @Transactional
     @ResponseBody
     @RequestMapping("/delEmp")
-    public Object delEmp(@RequestParam("empID") Integer id) {
+    public Object delEmp(@RequestParam("empID") Integer id,HttpServletRequest request) {
+        //获取当前登录用户，用户不能对自己进行删除和封禁操作
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        if(emp.getEmpID()==id)
+            return false;
         int i = empService.delByEmpID(id);
         i+= empService.delEmpRoleByEmpID(id);
+        //放入日志
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"把ID为"+id+"的员工删除了");
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if(i>1)
             return true;
         else
@@ -123,9 +161,17 @@ public class EmpController {
     @Transactional
     @ResponseBody
     @RequestMapping("/updateEmp")
-    public Object updateEmp(@RequestParam("empID") Integer empid,@RequestParam("empPassword") String password,@RequestParam("roleID")Integer roleid) {
+    public Object updateEmp(@RequestParam("empID") Integer empid,@RequestParam("empPassword") String password,@RequestParam("roleID")Integer roleid,HttpServletRequest request) {
         int i = empService.updateEmpByEmpID(empid, password);
         i += empService.updateEmpRoleByEmpID(empid,roleid);
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"给ID为"+empid+"的员工修改了密码和角色,角色ID为:"+roleid);
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if(i>1)
             return true;
         else
@@ -148,16 +194,22 @@ public class EmpController {
     @Transactional
     @ResponseBody
     @RequestMapping("/addEmp")
-    public Object addEmp(@RequestParam("empName") String empname,@RequestParam("empPassword") String password,@RequestParam("roleID")Integer roleid) {
+    public Object addEmp(@RequestParam("empName") String empname,@RequestParam("empPassword") String password,@RequestParam("roleID")Integer roleid,HttpServletRequest request) {
         Emp emp = new Emp();
         emp.setEmpName(empname);
         emp.setEmpPassword(password);
         emp.setEmpState(0);
-        Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        emp.setEmpTime(dateFormat.format(date));
+        emp.setEmpTime(time);
         int i = empService.addEmp(emp);
         i += empService.addEmpRole(emp.getEmpID(),roleid);
+        //放入日志
+        Emp emp1 =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp1);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp1.getEmpName()+"添加了一个员工，ID为"+emp.getEmpID());
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if(i>1)
             return true;
         else
@@ -173,6 +225,13 @@ public class EmpController {
         Emp emp =(Emp) request.getSession().getAttribute("emp");
         int i = empService.updateEmpByEmpID(emp.getEmpID(), emppwd);
         logOut(request);
+        //放入日志
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了自己的密码");
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if(i>0)
             return true;
         else

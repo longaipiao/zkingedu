@@ -41,4 +41,11 @@ public class Emp implements Serializable {
         return role;
     }
 
+    public Emp() {
+    }
+
+    public Emp(Integer empID, String empName) {
+        this.empID = empID;
+        this.empName = empName;
+    }
 }

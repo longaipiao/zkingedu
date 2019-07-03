@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.MenuRole;
 import com.zking.zkingedu.common.model.Role;
 import com.zking.zkingedu.common.service.RoleService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -26,6 +28,12 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     /**
      * 获取所有角色，并赋予layui-table格式
@@ -68,9 +76,11 @@ public class RoleController {
     @Transactional
     @RequestMapping(value = "/role/del")
     @ResponseBody
-    public Object delrole(@RequestParam("roleID") String roleID) {
-        int i = roleService.delRoleByID(Integer.parseInt(roleID));
-        roleService.delMenuRoleByID(Integer.parseInt(roleID));
+    public Object delrole(@RequestParam("roleID")Integer roleID) {
+        if(roleID==1)
+            return false;
+        int i = roleService.delRoleByID(roleID);
+        roleService.delMenuRoleByID(roleID);
         if (i > 0)
             return true;
         else

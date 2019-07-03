@@ -4,5 +4,18 @@
 <mapper namespace="com.zking.zkingedu.common.dao.LogDao">
 
     <!--日志接口Mapper-->
+    <resultMap type="log" id="logMap">
+        <id column="log_id" property="logID"/>
+        <result column="log_details" property="logDetails"/>
+        <result column="log_time" property="logTime"/>
+        <association  property="emp" javaType="emp">
+            <id column="emp_id" property="empID"/>
+            <result column="emp_name" property="empName"/>
+        </association >
+    </resultMap>
+
+    <insert id="addLog" parameterType="log">
+        insert into t_log (log_eid,log_details,log_time) values (#{emp.empID},#{logDetails},#{logTime})
+    </insert>
 
 </mapper>
