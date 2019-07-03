@@ -25,10 +25,10 @@
     <div class="x-body">
       <div class="layui-row">
         <span class="layui-breadcrumb">
-          <form class="layui-form layui-col-md10 x-so">
-            <input type="text" name="username"  placeholder="请输入员工名" autocomplete="off" class="layui-input">
-            <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-          </form>
+          <div class="layui-form layui-col-md10 x-so">
+            <input type="text" id="empname" name="empname"  placeholder="请输入员工名" autocomplete="off" class="layui-input">
+            <button id="reload" class="layui-btn" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          </div>
         </span>
         <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
           <i class="layui-icon" style="line-height:38px">ဂ</i>
@@ -69,7 +69,6 @@
           ,url:'/admin/getEmps'
           ,toolbar: '#toolbarDemo'
           ,title: '员工数据表'
-          ,async: false
           ,cols: [
             [
               {field:'empID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
@@ -81,6 +80,7 @@
             ]
           ]
           ,page: true
+          ,id: 'empTable'
         });
 
         //头工具栏事件
@@ -104,6 +104,19 @@
               break;
 
           };
+        });
+
+        //搜索
+        $('#reload').on('click', function(){
+          //执行重载
+          table.reload('empTable', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            ,where: {
+              empName: $('#empname').val()
+            }
+          });
         });
 
           //监听行工具事件
@@ -136,15 +149,14 @@
                   area: ['40%', '80%'],
                   content: '/html/emp-edit?empID='+data.empID+'&empPassword='+data.empPassword+'&EmpName='+data.empName,//设置你要弹出的html页面
                   end:function () {
-                    location.reload();
+                    //执行重载
+                    table.reload('empTable', {});
                   }
                 });
               }
           });
 
         form.on('switch(status)', function(data){
-
-
           // 得到开关的value值，实际是需要修改的ID值。
           var id = data.value;
           var status = this.checked ? '0' : '1';
@@ -173,6 +185,7 @@
         });
 
         });
+
 
       });
     </script>

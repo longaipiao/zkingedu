@@ -12,6 +12,8 @@
         <id column="emp_id" property="empID"/>
         <result column="emp_name" property="empName"/>
         <result column="emp_password" property="empPassword"/>
+        <result column="emp_time" property="empTime"/>
+        <result column="emp_error" property="empError"/>
         <result column="emp_state" property="empState"/>
         <collection property="roles" ofType="role">
             <id column="role_id" property="roleID"/>
@@ -26,7 +28,7 @@
 
 
     <select id="getemps" resultType="emp">
-        select * from t_emp
+        select * from t_emp where emp_name like #{empName}
     </select>
 
     <select id="login" resultType="emp">
@@ -58,5 +60,11 @@
     <select id="getRoleIDByEmpID" resultType="int" parameterType="int">
         select role_id from t_emp_role where emp_id = #{empid}
     </select>
+    <insert id="addEmp" useGeneratedKeys="true" keyProperty="empID" parameterType="emp">
+        insert into t_emp (emp_name,emp_password,emp_time,emp_state) values(#{empName},#{empPassword},#{empTime},#{empState})
+    </insert>
+    <insert id="addEmpRole">
+        insert into t_emp_role (emp_id,role_id) values(#{param1},#{param2})
+    </insert>
 
 </mapper>

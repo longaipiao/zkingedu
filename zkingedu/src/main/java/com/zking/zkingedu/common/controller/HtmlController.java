@@ -104,7 +104,7 @@ public class HtmlController {
      */
     @RequestMapping("/adminCourse")
     public String adminCourseManager(){
-        return "/admin/course/courseSystem";
+        return "admin/course/courseSystem";
     }
 
 
@@ -115,7 +115,18 @@ public class HtmlController {
      * yan
      */
     @RequestMapping("/pageSystemAdd")
-    public String adminPageAddCourse(){return "/admin/course/systemAdd";}
+    public String adminPageAddCourse(){return "admin/course/systemAdd";}
+
+    /**
+     * 员工个人中心
+     */
+    @RequestMapping("/mymessage")
+    public String mymessage(){return "admin/html/mymessage";}
+    /**
+     * 员工修改个人密码
+     */
+    @RequestMapping("/updpwd")
+    public String updpwd(){return "admin/html/updpwd";}
 
 
 }

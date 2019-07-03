@@ -18,8 +18,8 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleDao roleDao;
     @Override
-    public List<Role> getRoles() {
-        return roleDao.getRoles();
+    public List<Role> getRoles(String roleName) {
+        return roleDao.getRoles(roleName);
     }
 
     @Override

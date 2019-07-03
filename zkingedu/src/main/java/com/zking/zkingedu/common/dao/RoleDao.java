@@ -14,7 +14,7 @@ public interface RoleDao {
      * 获取所有角色
      * @return
      */
-    List<Role> getRoles();
+    List<Role> getRoles(String roleName);
     /**
      * 删除单个角色
      * 并且删除对应权限关联表数据

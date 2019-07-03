@@ -25,10 +25,10 @@
     <div class="x-body">
       <div class="layui-row">
         <span class="layui-breadcrumb">
-          <form class="layui-form layui-col-md10 x-so">
-            <input type="text" name="username"  placeholder="请输入角色名" autocomplete="off" class="layui-input">
-            <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-          </form>
+          <div class="layui-form layui-col-md10 x-so">
+            <input type="text" id="rolename" name="rolename"  placeholder="请输入角色名" autocomplete="off" class="layui-input">
+            <button id="reload" class="layui-btn" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          </div>
         </span>
         <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
           <i class="layui-icon" style="line-height:38px">ဂ</i>
@@ -61,10 +61,10 @@
           ,url:'/admin/getRoles'
           ,toolbar: '#toolbarDemo'
           ,title: '角色数据表'
-          ,async: false
+          ,id: "roleTable"
           ,cols: [
             [
-              {field:'roleID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
+              {field:'roleID', title:'ID', width:200, fixed: 'left', unresize: true, sort: true}
               ,{field:'roleName', title:'角色名', width:350}
               ,{fixed: 'right',title:'操作', toolbar: '#barDemo'}
             ]
@@ -94,6 +94,21 @@
 
           };
         });
+
+
+        //搜索
+        $('#reload').on('click', function(){
+          //执行重载
+          table.reload('roleTable', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            ,where: {
+              roleName: $('#rolename').val()
+            }
+          });
+        });
+
 
           //监听行工具事件
           table.on('tool(test)', function(obj){
@@ -130,7 +145,8 @@
                   area: ['40%', '80%'],
                   content: '/html/member-edit?roleID='+roleID+'&roleName='+data.roleName,//设置你要弹出的html页面
                   end:function () {
-                    location.reload();
+                    //执行重载
+                    table.reload('empTable', {});
                   }
                 });
               }

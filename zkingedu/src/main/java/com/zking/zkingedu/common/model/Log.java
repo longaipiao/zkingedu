@@ -14,12 +14,12 @@ import java.io.Serializable;
 @Component
 public class Log implements Serializable {
     private static final long serialVersionUID = 3143819941258172884L;
-    //
+    //ID
     private Integer logID;
-    //
-    private Integer logEid;
-    //
+    //员工
+    private Emp emp;
+    //操作详情
     private String logDetails;
-    //
+    //操作时间
     private String logTime;
 }

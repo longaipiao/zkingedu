@@ -29,7 +29,7 @@ public class PageController {
     @RequestMapping("/redis")
     public List<Emp> getEmps(){
         //log.info("请求成功。。。");
-        return empDao.getemps();
+        return empDao.getemps("%%");
     }
 
     /**

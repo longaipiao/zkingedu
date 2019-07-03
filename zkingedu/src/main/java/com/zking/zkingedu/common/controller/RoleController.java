@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
@@ -34,9 +35,12 @@ public class RoleController {
      */
     @RequestMapping(value = "/getRoles")
     @ResponseBody
-    public Object getMenus(int page, int limit) {
+    public Object getMenus(int page, int limit, HttpServletRequest request) {
         Page<Object> objects = PageHelper.startPage(page, limit);
-        List<Role> roles = roleService.getRoles();
+        String roleName = request.getParameter("roleName");
+        if(roleName==null)
+            roleName="";
+        List<Role> roles = roleService.getRoles("%"+roleName+"%");
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
         map.put("msg", "");
@@ -52,7 +56,7 @@ public class RoleController {
     @RequestMapping(value = "/getRolesByEmp")
     @ResponseBody
     public Object addEmpgetRoles() {
-        List<Role> roles = roleService.getRoles();
+        List<Role> roles = roleService.getRoles("%%");
         return roles;
     }
 

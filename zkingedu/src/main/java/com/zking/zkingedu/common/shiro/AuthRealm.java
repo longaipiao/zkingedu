@@ -46,6 +46,7 @@ public class AuthRealm extends AuthorizingRealm {
                 }
             }
         }
+        permissions.add("login");
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermissions(permissions);//将权限放入shiro中.
         return info;

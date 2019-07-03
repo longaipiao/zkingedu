@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -66,13 +65,25 @@ public class EmpController {
         return "admin/login";
     }
     /**
+     *获取登录员工的旧密码
+     */
+    @ResponseBody
+    @RequestMapping("/getSessionEmpPwd")
+    public String getSessionEmpPwd(HttpServletRequest request) {
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        return emp.getEmpPassword();
+    }
+    /**
      *得到所有员工
      */
     @ResponseBody
     @RequestMapping("/getEmps")
-    public Object getEmps(int page, int limit) {
+    public Object getEmps(int page, int limit,HttpServletRequest request) {
         Page<Object> objects = PageHelper.startPage(page, limit);
-        List<Emp> emps = empService.getemps();
+        String empName = request.getParameter("empName");
+        if(empName==null)
+            empName="";
+        List<Emp> emps = empService.getemps("%"+empName+"%");
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
         map.put("msg", "");
@@ -129,6 +140,43 @@ public class EmpController {
     @RequestMapping("/getEmpRole")
     public int getEmpRole(@RequestParam("empID")Integer empid) {
         return empService.getRoleIDByEmpID(empid);
+    }
+
+    /**
+     *添加员工
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/addEmp")
+    public Object addEmp(@RequestParam("empName") String empname,@RequestParam("empPassword") String password,@RequestParam("roleID")Integer roleid) {
+        Emp emp = new Emp();
+        emp.setEmpName(empname);
+        emp.setEmpPassword(password);
+        emp.setEmpState(0);
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        emp.setEmpTime(dateFormat.format(date));
+        int i = empService.addEmp(emp);
+        i += empService.addEmpRole(emp.getEmpID(),roleid);
+        if(i>1)
+            return true;
+        else
+            return false;
+    }
+    /**
+     *员工修改自己密码
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/updateEmppwd")
+    public Object updateEmppwd(@RequestParam("emppwd") String emppwd,HttpServletRequest request) {
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        int i = empService.updateEmpByEmpID(emp.getEmpID(), emppwd);
+        logOut(request);
+        if(i>0)
+            return true;
+        else
+            return false;
     }
 
 
