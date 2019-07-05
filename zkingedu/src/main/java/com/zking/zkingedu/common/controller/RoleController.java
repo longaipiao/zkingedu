@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.MenuRole;
 import com.zking.zkingedu.common.model.Role;
+import com.zking.zkingedu.common.service.LogService;
 import com.zking.zkingedu.common.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private LogService logService;
     @Autowired
     private Log mylog;
 
@@ -76,11 +80,19 @@ public class RoleController {
     @Transactional
     @RequestMapping(value = "/role/del")
     @ResponseBody
-    public Object delrole(@RequestParam("roleID")Integer roleID) {
+    public Object delrole(@RequestParam("roleID")Integer roleID, HttpServletRequest request) {
         if(roleID==1)
             return false;
         int i = roleService.delRoleByID(roleID);
         roleService.delMenuRoleByID(roleID);
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"删除了一个角色，角色id为"+roleID);
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         if (i > 0)
             return true;
         else
@@ -98,7 +110,7 @@ public class RoleController {
     @Transactional
     @RequestMapping(value = "/updateRole")
     @ResponseBody
-    public Object updateRole(@RequestParam("roleID") String roleID, @RequestParam("roleName") String roleName, @RequestParam("menus") String menus, @RequestParam("menuJson") String menuJson) {
+    public Object updateRole(@RequestParam("roleID") String roleID, @RequestParam("roleName") String roleName, @RequestParam("menus") String menus, @RequestParam("menuJson") String menuJson,HttpServletRequest request) {
         int n = roleService.updateRoleByID(Integer.parseInt(roleID), roleName);//修改用户名
         ArrayList<Map> list = JSON.parseObject(menus, new TypeReference<ArrayList<Map>>() {
         });//把json转为list
@@ -123,6 +135,14 @@ public class RoleController {
             }
             roleService.addMenuRoleByID(list3);//重新附权限
         }
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了用户:"+roleID+"的权限");
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
             if (n > 0)
                 return true;
             else
