@@ -3,7 +3,7 @@
   
   <head>
     <meta charset="UTF-8">
-    <title>账单页面</title>
+    <title>订单列表</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -16,26 +16,32 @@
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <script src="/layui/layui.js"></script>
     <script src="/layui/lay/modules/laypage.js"></script>
+      <!--/admin/html/log-list.html-->
   </head>
-  <!--admin/html/member-list.html-->
-  
   <body>
-  <br/>
   <div class="demoTable">
-    <label>搜索名称 ：</label>
-    <div class="layui-inline">
-      <input class="layui-input" type="text" name="username" id="uname" lay-verify="username" autocomplete="off">
-    </div>&nbsp;&nbsp;&nbsp;
-    <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
+      <br/>
+      <div class="layui-inline">
+          <label style="color: red; font-size: 16px;">搜索:日志日期</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="layui-input-inline">
+              <input type="text" class="layui-input" id="data" placeholder="请输入日期">
+          </div>
+      </div>
+      <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
   </div>
 
   <!--usertable数据展示-->
-  <table id="zhangdan" lay-filter="test"></table>
+  <table id="loglist" lay-filter="test">
+
+  </table>
 
 
   <script type="text/javascript">
 
+      //入口
       $(function () {
+
           layui.use(['layer','form', 'table','laydate', 'element'], function(){
               var table = layui.table;
               var layer = layui.layer //弹层
@@ -44,35 +50,31 @@
                   , element = layui.element //元素操作
                   , form = layui.form;
 
+              //加载日期
+              laydate.render({
+                  elem: '#data'
+              });
+
+
               //第一个实例
               table.render({
-                  elem: '#zhangdan'
-                  ,height: 420
-                  ,url: '/findBillUname' //数据接口
+                  elem: '#loglist'
+                  ,height: 480
+                  ,url: '/findlog' //数据接口
                   ,page: true //开启分页
                   //,skin: 'line' //表格风格
                   , totalRow: true //开启合计行
                   ,cols: [
                       [ //表头
-                          {checkbox: true, fixed: true}
-                          ,{field: 'bill_id', title: '账单ID', width:80, sort: true, fixed: 'left'}
-                          ,{field: 'user_name', title: '用户名称', width:100}
-                          ,{field: 'bill_integral', title: '积分', width:100, sort: true}
-                          ,{field: 'bill_time', title: '账单时间', width:180, sort: true}
-                          ,{field: 'bill_content', title: '账单内容', width: 380}
-                            //类型0收入1支出
-                          ,{field: 'bill_type',title: '操作', width: 150,
-                           templet:function(d){
-                              if(0==d.bill_type){
-                                  return "<span style='color: blue;'>支出</span>";
-                              }else{
-                                  return '<span style="color: #c00;">收入</span>';
-                              }
-                          }}
-                      ]
-                  ],id : 'id'//表格id
+                      {checkbox: true, fixed: true}
+                      ,{field: 'log_id', title: 'ID', width:100, sort: true, fixed: 'left'}
+                      ,{field: 'emp_name', title: '操作人员', width:100, sort: true}
+                      ,{field: 'log_details', title: '操作详情', width:380}
+                      ,{field: 'log_time', title: '操作时间', width:180}
+                  ]
+                  ]
+                  ,id : 'id'//表格id
               });
-
 
               var $ = layui.$, layer = layui.layer, active = {
                   getCheckData: function(){ //获取选中数据
@@ -82,15 +84,15 @@
                   },
                   // 模糊查询的页面重载
                   reload : function() { //拿到页面每一个值
-                      var userName = $('#uname').val();
-                      //alert(userName);
+                      var data = $('#data').val();
+                      //alert(data);
                       // 执行重载
                       table.reload('id', {
                           page : {
                               curr : 1// 重新从第 1 页开始
                           },
                           where : {//传的参数到后台
-                              'userName' : userName,
+                              'logTime' : data,
                           }
                       });
                   }
@@ -101,10 +103,16 @@
                   active[type] ? active[type].call(this) : '';
               });
 
+
+
+
           });
+
       });
 
-   </script>
+
+  </script>
+
 
 
   </body>

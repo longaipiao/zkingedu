@@ -35,5 +35,11 @@ public interface MessageDao {
      */
     public int updateState(@Param("messageid")Integer messageid);
 
+    /**
+     * 查询有多少条消息记录
+     * 阿飘
+     */
+    public int findCountjl(@Param("userID") Integer userID);
+
 
 }

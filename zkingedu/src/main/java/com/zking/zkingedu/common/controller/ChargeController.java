@@ -79,7 +79,7 @@ public class ChargeController {
 
         log.info("开始增加账单表的数据");
         bill.setBillUid(1);//用户id
-        bill.setBillType(0);//充值状态
+        bill.setBillType(1);//充值状态
         bill.setBillIntegral(Integer.parseInt(Integral));//充值积分
         //账单时间
         bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

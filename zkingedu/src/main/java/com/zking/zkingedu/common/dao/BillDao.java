@@ -29,4 +29,14 @@ public interface BillDao {
     public List<Map<String,Object>> findBillUname(@Param("userName") String userName);
 
 
+    /**
+     * 查询用户充值的积分总数
+     */
+    public Integer billIntegraltype1();
+
+    /**
+     * 查询用户消费的积分总数
+     */
+    public Integer billIntegraltype0();
+
 }

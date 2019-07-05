@@ -109,7 +109,7 @@ public class OrderController {
 
             log.info("********************开始生成账单表*********************");
             bill.setBillUid(2);//获取session中用户的id
-            bill.setBillType(1);//类型为1的是：支付状态
+            bill.setBillType(0);//类型为1的是：支付状态
             bill.setBillIntegral(integral);//支付的积分
             //账单生成的时间
             bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
@@ -196,7 +196,7 @@ public class OrderController {
 
         log.info("********************开始生成账单表*********************");
         bill.setBillUid(2);//获取session中用户的id
-        bill.setBillType(1);//类型为1的是：支付状态
+        bill.setBillType(0);//类型为1的是：支付状态
         bill.setBillIntegral(courseInte);//支付的积分
         //账单生成的时间
         bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
@@ -251,10 +251,29 @@ public class OrderController {
     }
 
 
+    /**
+     * 平台收入的图形报表功能
+     */
+    @RequestMapping(value = "/findbbiao")
+    @ResponseBody
+    public Map<String,Object> findbbiao(){
 
+        //订单收入的总金额
+        Integer orderSum = orderService.orderSum();
+        System.err.println("orderSum:"+orderSum);
+        //用户充值的积分总数
+        Integer billIntegraltype1 = billService.billIntegraltype1();
+        System.err.println("billIntegraltype1:"+billIntegraltype1);
+        //用户消费的积分总数
+        Integer billIntegraltype0 = billService.billIntegraltype0();
+        System.err.println("billIntegraltype0:"+billIntegraltype0);
 
-
-
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("orderSum",orderSum);
+        maps.put("billIntegraltype1",billIntegraltype1);
+        maps.put("billIntegraltype0",billIntegraltype0);
+        return maps;
+    }
 
 
 

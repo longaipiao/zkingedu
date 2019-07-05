@@ -117,4 +117,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    /**
+     * 查询订单收入的总金额数
+     * @return
+     */
+    @Override
+    public Integer orderSum() {
+        return orderDao.orderSum();
+    }
+
+
 }

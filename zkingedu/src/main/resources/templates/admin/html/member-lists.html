@@ -15,67 +15,71 @@
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <script src="/layui/layui.js"></script>
     <script src="/layui/lay/modules/laypage.js"></script>
-    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
-    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
-    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    <script src="/admin/js/echarts.min.js"></script>
   </head>
   <!--admin/html/member-lists.html-->
   <body>
-        <br/>
-        <div id="container" style="min-width:400px;height:400px"></div>
-        <script>
-            // JS 代码
-            // 创建渐变色
-            Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-                return {
-                    radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-                    stops: [
-                        [0, color],
-                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-                    ]
-                };
-            });
-            // 构建图表
-            var chart = Highcharts.chart('container',{
-                title: {
-                    text: '订单收入总记录数'
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            },
-                            connectorColor: 'silver'
-                        }
-                    }
-                },
-                series: [{
-                    type: 'pie',
-                    name: '浏览器占比',
-                    data: [
-                        ['Firefox',   45.0],
-                        ['IE',       26.8],
-                        {
-                            name: 'Chrome',
-                            y: 12.8,
-                            sliced: true,
-                            selected: true
-                        },
-                        ['Safari',    8.5],
-                        ['Opera',     6.2],
-                        ['其他',   0.7]
-                    ]
-                }]
-            });
-        </script>
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+  <div id="main" style="width: 800px;height:500px;"></div>
+  <script type="text/javascript">
+      $(function () {
+
+          $.post("/findbbiao",function (data) {
+              var ordersum = data.orderSum;//订单收入金额
+              var billIntegraltype1 = data.billIntegraltype1;//账单支出积分记录
+              var billIntegraltype0 = data.billIntegraltype0;//账单收入积分记录
+              //alert(ordersum);
+              //alert(billIntegraltype1);
+              //alert(billIntegraltype0);
+
+
+              var str = [{value:ordersum, name:'订单收入金额'},
+                  {value:billIntegraltype1, name:'账单支出积分记录'},
+                  {value:billIntegraltype0, name:'账单收入积分记录'}];
+
+
+      // 指定图表的配置项和数据
+      echarts.init(document.getElementById('main')).setOption({
+          title : {
+              text: '后台金额总收入记录',
+              subtext: '爱情',
+              x:'center'
+          },
+          tooltip : {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          legend: {
+              orient: 'vertical',
+              left: 'left',
+              data: ['订单收入金额','账单支出积分记录','账单收入积分记录',]
+          },
+          series : [
+              {
+                  name: '访问来源',
+                  type: 'pie',
+                  radius : '55%',
+                  center: ['50%', '60%'],
+                  data:str,
+                  itemStyle: {
+                      emphasis: {
+                          shadowBlur: 10,
+                          shadowOffsetX: 0,
+                          shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      }
+                  }
+              }
+          ]
+      });
+
+
+          });
+
+      });
+
+
+
+  </script>
   </body>
 
 </html>

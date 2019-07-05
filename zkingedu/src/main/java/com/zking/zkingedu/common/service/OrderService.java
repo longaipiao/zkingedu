@@ -63,6 +63,9 @@ public interface OrderService {
      */
     public PageInfo<Map<String,Object>> findziyuanUid(Integer userID,Integer page,Integer limit);
 
-
+    /**
+     * 查询订单收入的总金额数
+     */
+    public Integer orderSum();
 
 }
