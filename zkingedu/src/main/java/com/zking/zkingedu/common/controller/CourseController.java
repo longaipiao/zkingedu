@@ -99,12 +99,14 @@ public class CourseController {
         courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
 
         User user = new User();
-        user.setUserID(2);
+        user.setUserID(SessionUtil.getUserById());
         mv.addObject("user",user);//模拟登陆
         mv.addObject("sections",sectionsBycid);
         mv.addObject("course",courseBYcourseID);
         mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
-        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));
+        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
+        mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
+
         mv.setViewName("/user/courses/show1");
         return mv;
     }

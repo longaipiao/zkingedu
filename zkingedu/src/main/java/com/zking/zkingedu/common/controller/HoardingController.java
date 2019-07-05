@@ -1,7 +1,5 @@
 package com.zking.zkingedu.common.controller;
 
-import com.zking.zkingedu.common.dao.HoardingDao;
-import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.HoardingService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -45,27 +43,21 @@ public class HoardingController {
 
 
     /**
-     * 用户收藏课程
-     * 颜
+     * 用户收藏业务
+     * 如果用户收藏了课程  则取消收藏
+     * 如果用户没收藏课程   则收藏
+     * yan
+     * @param  用户id
      * @param cid
-     * @return
+     * @return  code=1 收藏  code=2取消收藏  500未登录||异常
      */
     @ResponseBody
     @RequestMapping(value = "/addHoardingAndCourse")
     public ResultUtil userAndHoardingCourse(Integer cid){
-        try {
-            Integer userById = SessionUtil.getUserById();//用户id
-            int i = hoardingService.addHoardingAndCourse(userById,cid);
-            if(i>0){
-                return ResultUtil.ok("收藏课程成功");
-            }
-            else{
-                return ResultUtil.error("请登录后操作");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.error(e.getMessage());
+        Integer userById = SessionUtil.getUserById();//用户id
+        if(userById!=null){
+            return hoardingService.UserAddHoardingAnddelByUidAndCid(userById, cid);
         }
-
+        return ResultUtil.error("请登陆后收藏");
     }
 }

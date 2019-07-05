@@ -14,7 +14,6 @@
 
 
 
-
     <meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
     <meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
 
@@ -197,24 +196,22 @@
                     <h4 class="pull-left course-infobox-title">
                         <span th:text="${course.courseName}">Linux 基础入门（新版）</span>
                     </h4>
-                    <div class="pull-right course-infobox-follow"
-                         data-follow-url="/courses/1/follow"
-                         data-unfollow-url="/courses/1/unfollow">
+                    <div class="pull-right course-infobox-follow">
 
                         <!--===============================-->
                         <!--===============================-->
                         <!--===============================-->
                         <!--===============================-->
                         <!--收藏  爱心标签-->
-                        <span class="course-infobox-followers" th:text="${courseNum}">0</span>
+                        <span class="course-infobox-followers" id="courseNum" th:text="${courseNum}">0</span>
 
 
                         <span>人关注</span>
                         <span th:if="${isCheck!=null}">
-                            <i class="fa fa-star-o" id="sac" style="color: red" data-next="/login?next=%2Fcourses%2F1"></i>
+                            <i class="fa fa-star-o courseCheck" id="sac" th:onclick="|javascript:myHoarding(this,'${courseId}')|" ></i>
                         </span>
                         <span th:if="${isCheck==null}">
-                            <i class="fa fa-star-o" id="sac" data-next="/login?next=%2Fcourses%2F1"></i>
+                            <i class="fa fa-star-o" id="sac" th:onclick="|javascript:myHoarding(this,'${courseId}')|"></i>
                         </span>
                     </div>
                 </div>
@@ -226,7 +223,7 @@
                     </div>
                 </div>
                 <div class="clearfix course-infobox-footer">
-                    <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">85243</span> 人学过</div>
+                    <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">0</span> 人学过</div>
                 </div>
 
             </div>
@@ -337,14 +334,11 @@
         <div class="col-md-3 layout-side">
 
             <div class="side-image side-image-pc">
-                <img src="/user/img/ncn1.jpg?imageView2/0/h/300">
+                <img th:src="${course.courseImg}"  src="/user/img/ncn1.jpg?imageView2/0/h/300"/>
             </div>
 
 
-
-
-
-            <div class="sidebox mooc-teacher">
+            <!--<div class="sidebox mooc-teacher">
                 <div class="sidebox-header mooc-header">
                     <h4 class="sidebox-title">课程教师</h4>
                 </div>
@@ -366,7 +360,7 @@
                 <div class="sidebox-footer mooc-footer">
                     <a href="/teacher/20406" target="_blank">查看老师的所有课程 ></a>
                 </div>
-            </div>
+            </div>-->
 
 
 
@@ -383,16 +377,11 @@
 
             <div class="sidebox adv-course">
                 <div class="sidebox-header">
-                    <h4 class="sidebox-title">进阶课程</h4>
+                    <h4 class="sidebox-title">最热课程</h4>
                 </div>
-                <div class="sideobx-body course-content">
+                <div class="sideobx-body course-content" th:each="cou:${coursefours}">
 
-                    <a href="/courses/204">实用Linux Shell编程</a>
-
-                    <a href="/courses/2">Vim编辑器</a>
-
-                    <a href="/courses/68">Linux命令实例练习</a>
-
+                    <a href="/courses/204"  th:href="@{/user/showCourse?sid={id}(id=${cou.courseID})}" th:text="${cou.courseName}"></a>
                 </div>
             </div>
 
@@ -644,49 +633,6 @@
 </div>
 
 
-<div class="modal fade" id="charge-course-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">课程报名</h4>
-            </div>
-            <div class="modal-body">
-                <form class="row form-horizontal">
-                    <input name="_csrf_token" type=hidden value="1483794941##be4fb68b276c5f7cb970936cb25985cd53b943d1">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">邮箱</label>
-                        <div class="col-md-10">
-                            <input type="email" class="form-control" name="email" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">手机号码</label>
-                        <div class="col-md-10">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="phone_no">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default charge-course-phone-code" type="button" style="padding:7px 12px;">获取验证码</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label">验证码</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" name="verify_code">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary charge-course-confirm">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 <div class="modal fade" id="paid-modal" tabindex="-1" role="dialog">
@@ -711,7 +657,7 @@
 
 
 
-<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
+<!--<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -820,7 +766,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <div id="base-data"
@@ -1051,10 +997,6 @@
 
 
 
-        //点击收藏课程
-        $("#sac").click(function () {
-            layer.msg("嘻嘻");
-        })
 
 
 
@@ -1267,9 +1209,61 @@
                 }
             }
         });
-
     }
-//window.location.href = "/user/video?sid="+course+"&id="+section;
+
+
+    //用户点击收藏
+    function myHoarding(obj,cid) {
+        $.ajax({
+            type : "post",
+            url : "/hoarding/addHoardingAndCourse",
+            data : {
+                cid : cid,//课程id
+            },
+            success : function (data) {//收藏成功
+                if(data.code==1){
+                    layer.msg(data.msg);
+                    myCourseNum(1);//刷新收藏数量
+                    $(obj).addClass("courseCheck");//添加选中样式
+                }
+                else if(data.code==2){//取消收藏成功
+                    layer.msg(data.msg);
+                    myCourseNum(2);//刷新收藏数量
+                    $(obj).removeClass("courseCheck");
+                }
+                else{//收藏异常
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 控制课程数量f关注的人数
+     * yan
+     * type=1 +1
+     * type=2 -1
+     */
+    function myCourseNum(type) {
+        var html = parseInt($("#courseNum").html());
+        if(type==1){
+            html+=1;
+            $("#courseNum").html(html);
+        }
+        if(type==2){
+            html-=1;
+            $("#courseNum").html(html);
+        }
+    }
+
+
+    /*//点击收藏课程
+    $("#sac").click(function () {
+        layer.msg("嘻嘻");
+    })*/
+
+    //window.location.href = "/user/video?sid="+course+"&id="+section;
 </script>
 
 <style>
