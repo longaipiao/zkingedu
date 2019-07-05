@@ -139,7 +139,7 @@ public class RoleController {
         Emp emp =(Emp) request.getSession().getAttribute("emp");
         mylog.setEmp(emp);
         mylog.setLogTime(time);
-        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了用户:"+roleID+"的权限");
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了用户:"+roleID+"用户名和权限");
         mylog.setLogDetails(stringBuilder.toString());
         logService.addLog(mylog);
         //放入日志结束
