@@ -135,16 +135,17 @@ public class RoleController {
             }
             roleService.addMenuRoleByID(list3);//重新附权限
         }
-        //放入日志
         Emp emp =(Emp) request.getSession().getAttribute("emp");
-        mylog.setEmp(emp);
-        mylog.setLogTime(time);
-        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了用户:"+roleID+"用户名和权限");
-        mylog.setLogDetails(stringBuilder.toString());
-        logService.addLog(mylog);
-        //放入日志结束
-            if (n > 0)
+            if (n > 0) {
+                //放入日志
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了用户:" + roleID + "用户名和权限");
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return true;
+            }
             else
                 return false;
     }
@@ -158,11 +159,10 @@ public class RoleController {
     @Transactional
     @RequestMapping(value = "/addRole")
     @ResponseBody
-    public Object addRole(@RequestParam("roleName") String roleName, @RequestParam("menus") String menus) {
+    public Object addRole(@RequestParam("roleName") String roleName, @RequestParam("menus") String menus,HttpServletRequest request) {
         Role role = new Role(roleName);
         int n = roleService.addRole(role);//增加用户
         int roleID = role.getRoleID();
-        System.err.println(roleID);
         ArrayList<Map> list = JSON.parseObject(menus, new TypeReference<ArrayList<Map>>() {});//把json转为list
         List<String> list2 = new ArrayList<>();
         for (Map map : list) {
@@ -170,7 +170,7 @@ public class RoleController {
             String children = map.get("children").toString();//获取所有子选项
             ArrayList<Map> list1 = JSON.parseObject(children, new TypeReference<ArrayList<Map>>() {
             });//子选项的值
-            for (Map map1 : list1) {
+                for (Map map1 : list1) {
                 list2.add(map1.get("id").toString());//只要ID
             }
         }
@@ -179,8 +179,17 @@ public class RoleController {
                 list3.add(new MenuRole(roleID,Integer.parseInt(s)));
             }
             roleService.addMenuRoleByID(list3);//重新附权限
-            if (n > 0)
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
+            if (n > 0) {
+                //放入日志
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "增加了一个用户:" + roleID);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return true;
+            }
             else
                 return false;
     }
