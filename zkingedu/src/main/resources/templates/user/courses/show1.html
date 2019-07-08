@@ -191,7 +191,10 @@
             <div class="side-image side-image-mobile">
                 <img src="https://dn-simplecloud.shiyanlou.com/ncn1.jpg?imageView2/0/h/300">
             </div>
-            <div class="content course-infobox">
+
+
+            <!--如果视频id  等于空展示课程信息-->
+            <div class="content course-infobox" th:if="${section==null}">
                 <div class="clearfix course-infobox-header">
                     <h4 class="pull-left course-infobox-title">
                         <span th:text="${course.courseName}">Linux 基础入门（新版）</span>
@@ -225,8 +228,34 @@
                 <div class="clearfix course-infobox-footer">
                     <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">0</span> 人学过</div>
                 </div>
-
             </div>
+
+            <!--如果视频id  不等于空展示课程信息-->
+            <div class="content course-infobox" th:if="${section!=null}">
+                <div class="clearfix course-infobox-body">
+                    <!--影藏标签 存放视频的id-->
+                    <form>
+                        <input type="hidden" id="videoId" th:value="${section.videoId}" value=""/>
+                    </form>
+                    <!--视频播放器-->
+                    <div id="youkuplayer"style="width:820px;height:403px"></div>
+                    <script type="text/javascript" src="//player.youku.com/jsapi"></script>
+                    <script type="text/javascript">
+                        var player = new YKU.Player('youkuplayer',{
+                            styleid: '0',
+                            client_id: '59c9a21060e1d847',
+                            vid: document.getElementById("videoId").value,
+                            newPlayer: true,
+                            autoplay: true
+                        });
+                    </script>
+                </div>
+                <div class="clearfix course-infobox-footer">
+                    <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">85243</span> 人学过</div>
+                </div>
+            </div>
+
+
             <div class="content" style="margin-bottom: 100px;">
                 <ul class="nav nav-tabs" role="tablist">
 
@@ -235,7 +264,7 @@
                     </li>
 
                     <li role="presentation">
-                        <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(1194)</a>
+                        <a href="#comments" class="stat-event" aria-controls="comments" role="tab" data-stat="course_comment" data-toggle="tab">课程评论(<span th:text="${scommentNum}">0</span>)</a>
                     </li>
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
                     <!--从后台获取的课程id-->
@@ -1181,7 +1210,7 @@
             success : function (data) {
                 if(parseInt(jf)>0){
                     if(data==1){
-                        window.location.href = "/user/video?sid="+course+"&id="+section;
+                        window.location.href = "/user/showVideo?sid="+course+"&id="+section;
                     }else if(data==2){
                         layer.msg("提示用户积分不足，快去充值吧。");
                     }else if(data=3){
@@ -1197,7 +1226,7 @@
                                 success : function (data) {
                                     if(data==4){
                                         layer.msg("购买成功！");
-                                        window.location.href = "/user/video?sid="+course+"&id="+section;
+                                        window.location.href = "/user/showVideo?sid="+course+"&id="+section;
                                     }
                                 }
                             });
@@ -1205,7 +1234,7 @@
                         });
                     }
                 }else{
-                    window.location.href = "/user/video?sid="+course+"&id="+section;
+                    window.location.href = "/user/showVideo?sid="+course+"&id="+section;
                 }
             }
         });

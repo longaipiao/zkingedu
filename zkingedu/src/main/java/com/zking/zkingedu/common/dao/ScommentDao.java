@@ -36,4 +36,13 @@ public interface ScommentDao {
      */
     int delScommentById(@Param("id")Integer id);
 
+
+    /**
+     * 根据课程id  查询有多少课程评论
+     * yan
+     * @param cid
+     * @return
+     */
+    Integer getScommentAndCousecNumber(@Param("cid") Integer cid);
+
 }

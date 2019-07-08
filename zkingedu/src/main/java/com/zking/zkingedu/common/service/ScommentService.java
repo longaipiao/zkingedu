@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.service;
 import com.zking.zkingedu.common.model.Scomment;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -46,4 +47,14 @@ public interface ScommentService {
      * @return
      */
     int delScommentById(Integer id);
+
+
+    /**
+     * 根据课程id  查询有多少课程评论
+     * yan
+     * @param cid
+     * @return
+     */
+    Integer getScommentAndCousecNumber(@Param("cid") Integer cid);
+
 }
