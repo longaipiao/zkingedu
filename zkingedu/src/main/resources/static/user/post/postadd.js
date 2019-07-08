@@ -7,8 +7,6 @@ layui.use(['table','layer','jquery','layedit', 'laydate'], function(){
     var $=layui.jquery;
 
 
-
-
     //创建一个编辑器
     var editIndex = layedit.build('LAY_demo_editor');
 

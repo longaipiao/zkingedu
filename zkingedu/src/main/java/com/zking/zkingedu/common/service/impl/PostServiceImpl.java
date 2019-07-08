@@ -1,5 +1,6 @@
 package com.zking.zkingedu.common.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.dao.PostDao;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.PipedOutputStream;
+import java.lang.System;
 import java.util.List;
 import java.util.Map;
 
@@ -138,6 +140,84 @@ public class PostServiceImpl implements PostService {
         return new PageInfo<>(pandU);
     }
 
+    @Override
+    public List<Map<String, Object>> getApstByUId(Integer uid) {
+        return getApstByUId(uid);
+    }
+
+    @Override
+    public PageInfo<Map<String, Object>> getAllpstByUId(Integer page, Integer pageSize, Integer uid) {
+        //开始调用方法
+        PageHelper.startPage(page,pageSize);
+        List<Map<String, Object>> apstByUId = postDao.getApstByUId(uid);//获取所有的值
+        return new PageInfo<>(apstByUId);
+    }
+
+    @Override
+    public PageInfo<Pcata> getps(Integer page, Integer pageSize) {
+        PageHelper.startPage(page,pageSize);
+        List<Pcata> getpctae = postDao.getpctae();
+        return new PageInfo<>(getpctae);
+    }
+
+    @Override
+    public int deletePcts(List<Integer> id) {
+        return postDao.deletePcts(id
+        );
+    }
+
+    @Override
+    public int addPcts(String pname) {
+        return postDao.addPcts(pname);
+    }
+
+    @Override
+    public int updatePcts(Integer id, String pname) {
+        return postDao.updatePcts(id,pname);
+    }
+
+    @Override
+    public int deletePc(Integer id) {
+        return postDao.deletePc(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> gethtpost(String puname, String pname, String pcname) {
+        return postDao.gethtpost(puname,pname,pcname);
+    }
+
+    @Override
+    public PageInfo<Map<String, Object>> hqhtpost(Integer page, Integer pageSize, String puname, String pname, String pcname) {
+        PageHelper.startPage(page,pageSize);
+        List<Map<String, Object>> gethtpost = postDao.gethtpost(puname, pname, pcname);
+        return new PageInfo<>(gethtpost);
+    }
+
+    @Override
+    public int updatepSta3(Integer id) {
+        return postDao.updatepSta3(id);
+    }
+
+    @Override
+    public int updatepSta0(Integer id) {
+        return postDao.updatepSta0(id);
+    }
+
+    @Override
+    public int deletepost(Integer id) {
+        return postDao.deletepost(id);
+    }
+
+    @Override
+    public int deleteTcomments(Integer id) {
+        return postDao.deleteTcomments(id);
+    }
+
+    @Override
+    public String queryUserByid(Integer id) {
+        return postDao.queryUserByid(id);
+    }
+
 
     @Override
     public Map<String, Object> getPostandUse(Integer id) {
@@ -156,14 +236,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int getMaxlouZnum() {
-        return postDao.getMaxlouZnum();
+    public int getMaxlouZnum(Integer id) {
+        return postDao.getMaxlouZnum(id);
     }
 
     @Override
     public int addTcomment(Tcomment tcomment) {
         return postDao.addTcomment(tcomment);
     }
+
+
 
 
 }

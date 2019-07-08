@@ -1,15 +1,44 @@
 
+//类别id
 var cid="";
+//内容
 var nr="";
+//分类长度
+var cd;
 
 
 //调用分类的方法
+
 function hh(aa){
+
+
+    $("#"+aa+"").attr("class","active");
+
+
+
     //给之前的赋值“”
     $("#Linddd").html("");
      cid=aa;
-     jz();//开始调用分类
+     jz();//开始调用加载
 }
+
+//调用搜索的方法
+$("#tzss").click(function () {
+
+    //给原来的赋值为空，才能刷新
+    $("#Linddd").html("");
+    //开始获取值
+    nr=$("#sstz").val();
+    //开始调用方法
+    jz();
+    nr="";
+    $("#sstz").val("");
+    //设置样式
+
+  /*  $("#"+cid+"").attr("class","active");*/
+
+});
+
 
 
 $(function () {
@@ -36,6 +65,7 @@ function jz() {
                 var content = "";
                 var lis = [];
                 layui.each(res.data, function (index, item) {
+
                     var content = "<li class=\"question-item\" >\n" +
                         "        <div class=\"col-md-10\">\n" +
                         "        <div class=\"col-sm-2 question-item-author\">\n" +
@@ -124,10 +154,11 @@ function jz() {
 
 function hq() {
      $.post("/pst/getpcs",function (res) {
+         cd=res.length;
          var content="";
          $.each(res,function (i,obj) {
-            content+="<li role=\"presentation\" >\n" +
-                "  <a href=\"javascript:;\" aria-controls=\"all\" role=\"tab\" toggle=\"tab\" onclick='hh("+obj.pcid+")'>"+obj.pcname+"</a>\n" +
+            content+="<li role=\"presentation\" id='"+obj.pcid+"'>\n" +
+                "  <a href=\"javascript:;\"  aria-controls=\"all\" role=\"tab\" toggle=\"tab\" onclick='hh("+obj.pcid+",)'>"+obj.pcname+"</a>\n" +
                 "  </li>"
          });
          $("#zl").append(content);

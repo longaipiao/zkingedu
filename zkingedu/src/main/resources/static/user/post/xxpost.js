@@ -31,7 +31,7 @@ function plkk(cs,cs2,cs3){
 }
 
 
-var  id="";//获取从界面转过来的值
+var  id="";//获取从界面转过来的值帖子id
 
 
 
@@ -153,7 +153,7 @@ $(function () {
 //取消按钮的隐藏
     $("#quxhuifu").click(function () {
         $("#quxhuifu").hide();//隐藏取消回复
-        tcommentUid2=id;   //恢复  作者的uid
+        tcommentUid2=tieid;   //恢复  作者的uid
         tcommentFid=0;     //回复  评论的父id
     });
 
@@ -165,13 +165,14 @@ $(function () {
 
 //发表评论
     $("#fb").click(function () {
+
         if($("#editor").val()==""){
             alert("请填写评论内容");
         }
         else {
             //如果回复id为空，也就是一级评论。即对贴子的评论
             if (huifuid == "") {
-                tcommentUid2 = id;
+                tcommentUid2 = tieid;
                 tcommentFid = 0;
             }
             //否者的话则是回复
@@ -179,6 +180,7 @@ $(function () {
                 tcommentUid2 = huifuid;
                 tcommentFid = plfuid;
             }
+
 
             $.ajax({
                 type: "post",
@@ -193,7 +195,7 @@ $(function () {
                 success: function (data) {
                     if (data > 0) {
                         $("#quxhuifu").hide();//隐藏取消回复
-                        tcommentUid2 = id;   //恢复  作者的uid
+                        tcommentUid2 = tieid;   //恢复  作者的uid
                         tcommentFid = 0;     //回复  评论的父id
                         huifuid = "";//给回复id复原
                         $("#editor").attr("text", "");
@@ -201,7 +203,7 @@ $(function () {
                     } else {
 
                         $("#quxhuifu").hide();//隐藏取消回复
-                        tcommentUid2 = id;   //恢复  作者的uid
+                        tcommentUid2 = tieid;   //恢复  作者的uid
                         tcommentFid = 0;     //回复  评论的父id
                         huifuid = "";//给回复id复原
                         alert("评论失败");
@@ -263,101 +265,114 @@ function initdata() {
             id: id
         },
         success: function (data) {
+
             var content = ""
             $.each(data, function (i, obj) {
-
-                content += "<div class=\"answer-item\">\n" +
-                    "                    <div class=\"answer-head\">\n" +
-                    "                            <div class=\"user-avatar \">\n" +
-                    "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
-                    "                                            <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200\">\n" +
-                    "                                        </a>\n" +
-                    "\n" +
-                    "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
-                    "\n" +
-                    "                                <img src=\"\n" +
-                    "                                            https://static.shiyanlou.com/img/vip-icon.png\n" +
-                    "                                          \">\n" +
-                    "\n" +
-                    "                                        </a>\n" +
-                    "\n" +
-                    "                            </div>\n" +
-                    "                     </div>\n" +
-                    "              <div class=\"answer-detail\">\n" +
-                    "\n" +
-                    "                    <span class=\"comment-reply\">\n" +
-                    "                            <div class=\"user-username \">\n" +
-                    "                                <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
-                    "                                        " + obj.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp;:\n" +
-
-                    "                                    <span>(" + obj.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;#" + obj.tcommentLounum + "楼)</span>\n" +
-                    "                                    &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                    "                                    <a href=\"javascript:void(0);\"   onclick=\"aha('" + obj.tcommentID + "')\">查看回复</a>（"+obj.chirden.length+"）\n" +
-                    "                                    <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj.user.userID + "','" + obj.user.userName + "','" + obj.tcommentID + "')\">&nbsp;&nbsp;&nbsp;&nbsp;回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href='javascript:void(0);'  onclick=\"delpl('" + obj.tcommentID + "','" + obj.tcommentFid + "' )\"  >删除</a>\n" +
-                    "                                </div>\n" +
-                    "                            </div>\n" +
-                    "                    </span>\n" +
-                    "\n" +
-                    "                    <div class=\"answer-content markdown-body\">\n" +
-                    "                         "+obj.tcommentContent+"\n"+
-                    "                    </div>\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "                    \n" +
-                    "\n" +
-                    "\n" +
-                    "                        <div id=\""+obj.tcommentID+"\" style=\"display:none\">\n"
-
-                $.each(obj.chirden, function (j, obj2) {
-                    content += "<div class=\"answer-head\">\n" +
-                        "                                    <div class=\"user-avatar \">\n" +
+                var g=0;
+                if (obj.tcommentFid==0) {
+                    content += "<div class=\"answer-item\">\n" +
+                        "                    <div class=\"answer-head\">\n" +
+                        "                            <div class=\"user-avatar \">\n" +
                         "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
                         "                                            <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200\">\n" +
                         "                                        </a>\n" +
                         "\n" +
                         "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
                         "\n" +
-                        "                                            <img src=\"\n" +
-                        "                                                    https://static.shiyanlou.com/img/vip-icon.png\n" +
-                        "                                                  \">\n" +
+                        "                                <img src=\"\n" +
+                        "                                            https://static.shiyanlou.com/img/vip-icon.png\n" +
+                        "                                          \">\n" +
                         "\n" +
                         "                                        </a>\n" +
                         "\n" +
-                        "                                    </div>\n" +
-                        "                                </div>\n" +
+                        "                            </div>\n" +
+                        "                     </div>\n" +
+                        "              <div class=\"answer-detail\">\n" +
                         "\n" +
-                        "                                <span class=\"comment-reply\">\n" +
-                        "                                    <div class=\"user-username \">\n" +
-                        "                                        <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
+                        "                    <span class=\"comment-reply\">\n" +
+                        "                            <div class=\"user-username \">\n" +
+                        "                                <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
+                        "                                        " + obj.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp;:\n" +
+
+                        "                                    <span>(" + obj.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;#" + obj.tcommentLounum + "楼)</span>\n" +
+                        "                                    &nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                        "                                    <a href=\"javascript:void(0);\"   onclick=\"aha('" + obj.tcommentID + "')\">查看回复</a>（"+g+"）\n"
+                       if (userid==obj.user.userID) {
+                       content+= "                                    <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj.user.userID + "','" + obj.user.userName + "','" + obj.tcommentID + "')\">&nbsp;&nbsp;&nbsp;&nbsp;回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href='javascript:void(0);'  onclick=\"delpl('" + obj.tcommentID + "','" + obj.tcommentFid + "' )\"  >删除</a>\n"
+                       }
+                    if (userid!=obj.user.userID) {
+                        content+= "                                    <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj.user.userID + "','" + obj.user.userName + "','" + obj.tcommentID + "')\">&nbsp;&nbsp;&nbsp;&nbsp;回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href='javascript:void(0);'  onclick=\"delpl('" + obj.tcommentID + "','" + obj.tcommentFid + "' )\"  ></a>\n"
+                    }
+                       content+= "                                </div>\n" +
+                        "                            </div>\n" +
+                        "                    </span>\n" +
                         "\n" +
-                        "                                                " + obj2.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp; 回复&nbsp;&nbsp;&nbsp;&nbsp; " + obj2.user2.userName + ":\n" +
-                        "                                            <span>(" + obj2.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;)</span>\n" +
-                        "                                            <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj2.user.userID + "','" + obj2.user.userName + "','" + obj2.tcommentFid + "')\">回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href=\"javascript:void(0);\"  onclick=\"delpl('" + obj2.tcommentID + "','" + obj2.tcommentFid + "' )\" >删除</a>\n" +
+                        "                    <div class=\"answer-content markdown-body\">\n" +
+                        "                         " + obj.tcommentContent + "\n" +
+                        "                    </div>\n" +
                         "\n" +
                         "\n" +
-                        "                                        </div>\n" +
-                        "                                    </div>\n" +
-                        "                            </span>\n" +
                         "\n" +
-                        "                                    <div class=\"answer-content markdown-body\">\n" +
-                        "                                       "+obj2.tcommentContent+"\n"+
+                        "                    \n" +
                         "\n" +
-                        "                                    </div>\n"
+                        "\n" +
+                        "                        <div id=\"" + obj.tcommentID + "\" style=\"display:none\">\n"
+
+                    $.each(data, function (j, obj2) {
+                        if (obj.tcommentID==obj2.tcommentFid) {
+                            g++;
+                            content += "<div class=\"answer-head\">\n" +
+                                "                                    <div class=\"user-avatar \">\n" +
+                                "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
+                                "                                            <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200\">\n" +
+                                "                                        </a>\n" +
+                                "\n" +
+                                "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
+                                "\n" +
+                                "                                            <img src=\"\n" +
+                                "                                                    https://static.shiyanlou.com/img/vip-icon.png\n" +
+                                "                                                  \">\n" +
+                                "\n" +
+                                "                                        </a>\n" +
+                                "\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "\n" +
+                                "                                <span class=\"comment-reply\">\n" +
+                                "                                    <div class=\"user-username \">\n" +
+                                "                                        <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
+                                "\n" +
+                                "                                                " + obj2.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp; 回复&nbsp;&nbsp;&nbsp;&nbsp; " + obj2.user2.userName + ":\n" +
+                                "                                            <span>(" + obj2.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;)</span>\n"
+                               if (userid==obj2.user.userID) {
+                                   content += "                                            <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj2.user.userID + "','" + obj2.user.userName + "','" + obj2.tcommentFid + "')\">回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href=\"javascript:void(0);\"  onclick=\"delpl('" + obj2.tcommentID + "','" + obj2.tcommentFid + "' )\" >删除</a>\n"
+                               }
+                            if (userid!=obj2.user.userID) {
+                                content += "                                            <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj2.user.userID + "','" + obj2.user.userName + "','" + obj2.tcommentFid + "')\">回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href=\"javascript:void(0);\"  onclick=\"delpl('" + obj2.tcommentID + "','" + obj2.tcommentFid + "' )\" ></a>\n"
+                            }
+                               content+= "\n" +
+                                "\n" +
+                                "                                        </div>\n" +
+                                "                                    </div>\n" +
+                                "                            </span>\n" +
+                                "\n" +
+                                "                                    <div class=\"answer-content markdown-body\">\n" +
+                                "                                       " + obj2.tcommentContent + "\n" +
+                                "\n" +
+                                "                                    </div>\n"
+
+                        }
+                    });
+                    content += "                        </div>\n"
+                    content += "                               \n" +
+                        "                        <hr/>\n" +
+                        "                        \n" +
+                        "                    \n" +
+                        "                </div>\n" +
+                        "                </div>\n"
 
 
-                });
-                content += "                        </div>\n"
-                content += "                               \n" +
-                    "                        <hr/>\n" +
-                    "                        \n" +
-                    "                    \n" +
-                    "                </div>\n" +
-                    "                </div>\n"
-
-
-
-
+                }
 
             });
 
@@ -411,7 +426,7 @@ function jztzxx() {
             id: id
         },
         success: function (data) {
-            userid = data.l;//给id赋值
+            userid = data.l;//用户id
 
             tieid = data.c;//给全局变量帖子uid赋值
             var content = "";
