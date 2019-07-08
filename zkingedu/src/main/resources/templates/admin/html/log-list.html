@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>订单列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="/admin/css/font.css">
+    <link rel="stylesheet" href="/admin/css/xadmin.css">
+
+    <script src="/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/admin/js/xadmin.js"></script>
+    <script src="/layui/layui.js"></script>
+    <script src="/layui/lay/modules/laypage.js"></script>
+      <!--/admin/html/log-list.html-->
+  </head>
+  <body>
+  <div class="demoTable">
+      <br/>
+      <div class="layui-inline">
+          <label style="color: red; font-size: 16px;">搜索:日志日期</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="layui-input-inline">
+              <input type="text" class="layui-input" id="data" placeholder="请输入日期">
+          </div>
+      </div>
+      <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
+  </div>
+
+  <!--usertable数据展示-->
+  <table id="loglist" lay-filter="test">
+
+  </table>
+
+
+  <script type="text/javascript">
+
+      //入口
+      $(function () {
+
+          layui.use(['layer','form', 'table','laydate', 'element'], function(){
+              var table = layui.table;
+              var layer = layui.layer //弹层
+                  , table = layui.table //表格
+                  ,laydate = layui.laydate
+                  , element = layui.element //元素操作
+                  , form = layui.form;
+
+              //加载日期
+              laydate.render({
+                  elem: '#data'
+              });
+
+
+              //第一个实例
+              table.render({
+                  elem: '#loglist'
+                  ,height: 480
+                  ,url: '/findlog' //数据接口
+                  ,page: true //开启分页
+                  //,skin: 'line' //表格风格
+                  , totalRow: true //开启合计行
+                  ,cols: [
+                      [ //表头
+                      {checkbox: true, fixed: true}
+                      ,{field: 'log_id', title: 'ID', width:100, sort: true, fixed: 'left'}
+                      ,{field: 'emp_name', title: '操作人员', width:100, sort: true}
+                      ,{field: 'log_details', title: '操作详情', width:380}
+                      ,{field: 'log_time', title: '操作时间', width:180}
+                  ]
+                  ]
+                  ,id : 'id'//表格id
+              });
+
+              var $ = layui.$, layer = layui.layer, active = {
+                  getCheckData: function(){ //获取选中数据
+                      var checkStatus = table.checkStatus('id')
+                          ,data = checkStatus.data;
+                      layer.alert(JSON.stringify(data));
+                  },
+                  // 模糊查询的页面重载
+                  reload : function() { //拿到页面每一个值
+                      var data = $('#data').val();
+                      //alert(data);
+                      // 执行重载
+                      table.reload('id', {
+                          page : {
+                              curr : 1// 重新从第 1 页开始
+                          },
+                          where : {//传的参数到后台
+                              'logTime' : data,
+                          }
+                      });
+                  }
+              };
+              // 查询按钮实现
+              $('.demoTable .layui-btn').on('click', function() {
+                  var type = $(this).data('type');
+                  active[type] ? active[type].call(this) : '';
+              });
+
+
+
+
+          });
+
+      });
+
+
+  </script>
+
+
+
+  </body>
+
+</html>

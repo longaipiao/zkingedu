@@ -32,5 +32,10 @@ public interface MessageService {
      */
     public int updateState(Integer messageid);
 
+    /**
+     * 查询有多少条消息记录
+     * 阿飘
+     */
+    public int findCountjl(Integer userID);
 
 }

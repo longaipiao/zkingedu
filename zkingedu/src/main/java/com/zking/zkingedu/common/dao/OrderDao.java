@@ -65,4 +65,10 @@ public interface OrderDao {
     public List<Map<String,Object>> findziyuanUid(@Param("userID") Integer userID);
 
 
+    /**
+     * 查询订单收入的总金额数
+     */
+    public Integer orderSum();
+
+
 }

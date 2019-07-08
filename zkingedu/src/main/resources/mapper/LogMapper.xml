@@ -4,5 +4,25 @@
 <mapper namespace="com.zking.zkingedu.common.dao.LogDao">
 
     <!--日志接口Mapper-->
+    <sql id="logAll">
+        log_id,log_eid,log_details,log_time
+    </sql>
+    <resultMap type="log" id="logMap">
+        <id column="log_id" property="logID"/>
+        <result column="log_details" property="logDetails"/>
+        <result column="log_time" property="logTime"/>
+        <association  property="emp" javaType="emp">
+            <id column="emp_id" property="empID"/>
+            <result column="emp_name" property="empName"/>
+        </association >
+    </resultMap>
 
+    <insert id="addLog" parameterType="log">
+        insert into t_log (log_eid,log_details,log_time) values (#{emp.empID},#{logDetails},#{logTime})
+    </insert>
+
+    <!--查询所以的日志消息-->
+    <select id="findLog" resultType="java.util.Map" parameterType="com.zking.zkingedu.common.model.Log">
+        select e.emp_name,l.* from t_log l,t_emp e where l.log_eid = e.emp_id and l.log_time like '%${logTime}%'
+    </select>
 </mapper>

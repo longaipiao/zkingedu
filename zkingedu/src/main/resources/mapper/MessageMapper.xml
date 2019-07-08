@@ -5,19 +5,20 @@
 
     <!--消息接口Mapper-->
     <sql id="MessageAll">
-        message_id,message_uid,message_name,message_content,message_time,message_state
+        message_id,message_uid1,message_uid2,message_pid,message_name,message_content,message_time,message_state
     </sql>
 
     <!--增加消息的方法-->
     <insert id="addMessage" parameterType="com.zking.zkingedu.common.model.Message">
-        insert into t_message(message_uid,message_name,message_content,message_time,message_state)
-        values(#{messageUid},#{messageName},#{messageContent},#{messageTime},1)
+        insert into t_message(message_uid1,message_uid2,message_pid,message_name,message_content,message_time,message_state)
+        values(#{messageUid1},#{messageUid2},#{messagePid},#{messageName},#{messageContent},#{messageTime},1)
     </insert>
 
 
     <!--根据用户id查询所以的消息通知-->
     <select id="findMessage" resultType="java.util.Map">
-        select u.user_img, m.* from t_message m,t_user u where m.message_uid = u.user_id and u.user_id = #{userID}
+        select u.user_img, m.* from t_message m,t_user u where m.message_uid1 = u.user_id and u.user_id = #{userID}
+         ORDER BY message_state asc
     </select>
 
     <!--修改未读状态为已读状态-->
@@ -25,5 +26,9 @@
         update t_message set message_state = 2 where message_id = #{messageid}
     </update>
 
+    <!--查询有多少条消息记录-->
+    <select id="findCountjl" parameterType="integer" resultType="integer">
+        select COUNT(message_id) from t_message where message_uid1 = #{userID}
+    </select>
 
 </mapper>

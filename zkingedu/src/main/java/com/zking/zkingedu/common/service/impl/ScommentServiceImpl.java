@@ -96,4 +96,16 @@ public class ScommentServiceImpl implements ScommentService {
     public int delScommentById(Integer id) {
         return scommentDao.delScommentById(id);
     }
+
+
+    /**
+     * 根据课程id  查询有多少课程评论
+     * yan
+     * @param cid
+     * @return
+     */
+    @Override
+    public Integer getScommentAndCousecNumber(Integer cid) {
+        return scommentDao.getScommentAndCousecNumber(cid);
+    }
 }

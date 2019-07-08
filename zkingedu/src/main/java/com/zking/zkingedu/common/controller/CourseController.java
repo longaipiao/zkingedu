@@ -1,9 +1,6 @@
 package com.zking.zkingedu.common.controller;
 
-import com.zking.zkingedu.common.model.Course;
-import com.zking.zkingedu.common.model.Emp;
-import com.zking.zkingedu.common.model.Section;
-import com.zking.zkingedu.common.model.User;
+import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.service.*;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -11,15 +8,17 @@ import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.System;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,17 +44,30 @@ public class CourseController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private ScommentService scommentService;
+
 
     @Autowired
     private HoardingService hoardingService;
+
+
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
+
 
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
      * @return sid 是课程ID
      */
     @RequestMapping("/showCourse")
-    public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model){
-        ModelAndView mv = new ModelAndView();
+    public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
         //获取登录过来的用户积分    需要后期改变用户ID
         int integrsl = userService.findIntegrsl(2);
         System.err.println("用户的积分是："+integrsl);
@@ -64,17 +76,6 @@ public class CourseController {
 
         request.getSession().setAttribute("userintegrsl",integrsl);
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
-
-        //查询订单表中是否存在用户id
-        //Integer userID = orderService.findUserID(2);
-        //System.err.println("订单中查询出的用户id是："+userID);
-        //查询订单表中是否存在课程id
-        //Integer courseID1 = orderService.findCourseID(sid);
-        //System.err.println("订单中查询出的课程id是："+courseID1);
-
-        //存入model里面，前台获取
-        //model.addAttribute("courseid",courseID1);//课程id
-        //model.addAttribute("userid",userID);//用户id
 
 
         //课程id
@@ -94,17 +95,80 @@ public class CourseController {
         Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
 
 
+
         //课程点击量增加 yan
         courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum()+1);
         courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
 
         User user = new User();
-        user.setUserID(2);
+        user.setUserID(SessionUtil.getUserById());
         mv.addObject("user",user);//模拟登陆
         mv.addObject("sections",sectionsBycid);
+        mv.addObject("section",null);//视频id默认为空
+        mv.addObject("course",courseBYcourseID);
+
+        System.err.println("评论数量=================================="+scommentService.getScommentAndCousecNumber(sid));
+        mv.addObject("scommentNum",scommentService.getScommentAndCousecNumber(sid));//课程评论数量
+        mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
+        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
+        mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
+
+        mv.setViewName("/user/courses/show1");
+        return mv;
+    }
+
+
+    /**
+     * 重载  点击章节观看视频
+     * yan
+     * @param sid
+     * @param id
+     * @return
+     */
+    @RequestMapping("/showVideo")
+    public ModelAndView SystemRequestCourse(@RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id, HttpServletRequest request, Model model){
+        ModelAndView mv = new ModelAndView();
+        //获取登录过来的用户积分    需要后期改变用户ID
+        int integrsl = userService.findIntegrsl(2);
+        System.err.println("用户的积分是："+integrsl);
+        int courseIntegrsl = courseService.findCourseIntegrsl(sid);
+        System.err.println("整套课程的积分是："+courseIntegrsl);
+
+        request.getSession().setAttribute("userintegrsl",integrsl);
+        request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
+
+
+        //课程id
+        model.addAttribute("courseId",sid);
+//        System.err.println("课程id是："+sid);
+        model.addAttribute("userId",2);
+//        System.err.println("用户id是"+2);
+
+        //单个用户的积分
+        mv.addObject("userintegrsl",integrsl);
+        //整套课程的积分
+        mv.addObject("courseIntegrsl",courseIntegrsl);
+
+        //获取所有的章节视频
+        List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
+        //获取课程信息
+        Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
+
+        //根据章节id获取视频信息
+        //Video videoById = videoService.getVideoById(id);
+        Section section = sectionService.getSectionById(id);
+        System.err.println("section 章节信息= " + section);
+
+        User user = new User();
+        user.setUserID(SessionUtil.getUserById());
+        mv.addObject("user",user);//模拟登陆
+        mv.addObject("sections",sectionsBycid);
+        mv.addObject("section",section);//视频id默认为空
         mv.addObject("course",courseBYcourseID);
         mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
-        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));
+        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
+        mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
+
         mv.setViewName("/user/courses/show1");
         return mv;
     }
@@ -275,11 +339,19 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourse")
-    public ResultUtil editCourse(Course course){
+    public ResultUtil editCourse(Course course, HttpServletRequest request){
 //        System.err.println("====================后台接收的到数据:"+course);
         try {
             int i = courseService.updateCourse(course);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程信息，课程ID为："+course.getCourseID());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("success");
             }
         } catch (Exception e) {
@@ -299,7 +371,7 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourseState")
-    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state){
+    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state,HttpServletRequest request){
         try {
             Integer sid;
             if(state){
@@ -310,6 +382,14 @@ public class CourseController {
             }
             int i = courseService.editCourseState(id, sid);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为："+id);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("修改课程状态成功");
             }
         } catch (Exception e) {

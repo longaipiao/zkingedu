@@ -50,4 +50,13 @@ public class MessageServiceImpl implements MessageService {
     public int updateState(Integer messageid) {
         return messageDao.updateState(messageid);
     }
+
+    /**
+     * 查询有多少条消息记录
+     * 阿飘
+     */
+    @Override
+    public int findCountjl(Integer userID) {
+        return messageDao.findCountjl(userID);
+    }
 }
