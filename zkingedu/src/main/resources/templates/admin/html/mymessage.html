@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>个人信息</title>
+</head>
+<link rel="stylesheet" href="/layui/css/layui.css"/>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<body>
+
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>个人信息</legend>
+</fieldset>
+
+<form class="layui-form" action="" lay-filter="example">
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">ID</label>
+    <div class="layui-input-block">
+      <input th:value="${session.emp.empID}" type="text" id="empid" name="empid" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" disabled="disabled" >
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">账号</label>
+    <div class="layui-input-block">
+      <input th:value="${session.emp.empName}" type="text" name="empname" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px"  disabled="disabled" >
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">角色</label>
+    <div class="layui-input-block">
+      <input id="role" th:value="${session.emp.role.roleName}" type="text" name="role" lay-verify="title" autocomplete="off"  class="layui-input" style="width: 300px" disabled="disabled" >
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">入职日期</label>
+    <div class="layui-input-block">
+      <input th:value="${session.emp.empTime}" type="text" name="emptime" lay-verify="title" autocomplete="off" class="layui-input" style="width: 300px" disabled="disabled">
+    </div>
+  </div>
+
+</form>
+
+</body>
+</html>

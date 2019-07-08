@@ -14,7 +14,6 @@
         values(#{orderID},#{orderUid},#{orderSid},#{orderCid},#{orderIntegral},#{chargeTime},#{orderState})
     </insert>
 
-
     <!--查询课程id是否存在-->
     <select id="findCourseID" resultType="java.lang.Integer" parameterType="integer">
         select order_sid from t_order where order_sid = #{courseID}
@@ -69,6 +68,9 @@
         where o.order_sid = c.course_id and o.order_uid = #{userID}
     </select>
 
-
+    <!-- 查询订单收入的总金额数-->
+    <select id="orderSum" parameterType="integer" resultType="java.lang.Integer">
+        select SUM(order_integral) from t_order
+    </select>
 
 </mapper>

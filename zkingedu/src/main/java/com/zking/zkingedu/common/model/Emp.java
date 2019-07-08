@@ -32,4 +32,20 @@ public class Emp implements Serializable {
     //员工角色
     private Set<Role> roles=new HashSet<>();
 
+    private Role role;
+
+    public Role getRole(){
+        for (Role role1 : roles) {
+            this.role = role1;
+        }
+        return role;
+    }
+
+    public Emp() {
+    }
+
+    public Emp(Integer empID, String empName) {
+        this.empID = empID;
+        this.empName = empName;
+    }
 }

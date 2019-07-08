@@ -65,4 +65,13 @@ public class UrlController {
     public String ordersshouru(){
         return "/admin/html/member-lists";
     }
+
+
+    /**
+     * 后台的日志列表的跳转路径
+     */
+    @RequestMapping(value = "/loglist")
+    public String Loglist(){
+        return "/admin/html/log-list";
+    }
 }

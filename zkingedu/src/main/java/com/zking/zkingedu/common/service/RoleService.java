@@ -13,7 +13,7 @@ public interface RoleService {
      * 获取所有角色
      * @return
      */
-    List<Role> getRoles();
+    List<Role> getRoles(String roleName);
 
     /**
      * 删除单个角色

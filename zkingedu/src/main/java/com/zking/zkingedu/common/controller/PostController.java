@@ -298,7 +298,6 @@ public class PostController {
     @RequestMapping(value = "/addTcomment")
     @ResponseBody
     public int addTct(Tcomment tcomment){
-
         //获取用户ID
         Integer uid=9;
         //回复者的id，设置

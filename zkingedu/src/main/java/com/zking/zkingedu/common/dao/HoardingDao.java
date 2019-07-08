@@ -49,4 +49,14 @@ public interface HoardingDao {
      */
     int addHoardingAndCourse(@Param("uid") Integer uid,@Param("cid") Integer cid);
 
+
+    /**
+     * 用户取消收藏课程
+     * @param uid  用户id
+     * @param cid  课程id
+     * @return
+     * yan
+     */
+    int delHoardingByuidAndCid(@Param("uid") Integer uid,@Param("cid") Integer cid);
+
 }

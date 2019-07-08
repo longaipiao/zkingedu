@@ -18,8 +18,8 @@ public class EmpServiceImpl implements EmpService {
     private EmpDao empDao;
 
     @Override
-    public List<Emp> getemps() {
-        return empDao.getemps();
+    public List<Emp> getemps(String empName) {
+        return empDao.getemps(empName);
     }
 
     @Override
@@ -60,5 +60,15 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public int getRoleIDByEmpID(Integer empid) {
         return empDao.getRoleIDByEmpID(empid);
+    }
+
+    @Override
+    public int addEmp(Emp emp) {
+        return empDao.addEmp(emp);
+    }
+
+    @Override
+    public int addEmpRole(Integer empID, Integer roleID) {
+        return empDao.addEmpRole(empID,roleID);
     }
 }

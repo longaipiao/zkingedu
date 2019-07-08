@@ -9,6 +9,7 @@ import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -97,5 +98,60 @@ public class HoardingServiceImpl implements HoardingService {
     @Override
     public int addHoardingAndCourse(Integer uid, Integer cid) {
         return hoardingDao.addHoardingAndCourse(uid,cid);
+    }
+
+
+    /**
+     * 用户取消收藏课程
+     * @param uid  用户id
+     * @param cid  课程id
+     * @return
+     * yan
+     */
+    @Override
+    public int delHoardingByuidAndCid(Integer uid, Integer cid) {
+        return hoardingDao.delHoardingByuidAndCid(uid,cid);
+    }
+
+
+
+    /**
+     * 用户收藏业务
+     * 如果用户收藏了课程  则取消收藏
+     * 如果用户没收藏课程   则收藏
+     * yan
+     * @param uid
+     * @param cid
+     * @return  code=1 收藏  code=2取消收藏
+     */
+    @Transactional
+    @Override
+    public ResultUtil UserAddHoardingAnddelByUidAndCid(Integer uid, Integer cid) {
+        ResultUtil result = new ResultUtil();
+        try {
+            //1.查询用户是否收藏了该课程
+            Hoarding hoarding = hoardingDao.getHoardingByUidAndCid(uid, cid);
+            System.err.println("用户信息：===================="+hoarding);
+            if(hoarding!=null){//收藏了
+                //执行取消收藏
+                int i = hoardingDao.delHoardingByuidAndCid(uid, cid);
+                if(i>0){//取消收藏成功
+                    result.setCode(2);
+                    result.setMsg("取消收藏成功");
+                }
+            }
+            else{//没有收藏  则收藏该课程
+                int i = hoardingDao.addHoardingAndCourse(uid, cid);
+                if(i>0){//收藏成功
+                    result.setCode(1);
+                    result.setMsg("收藏成功");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMsg(e.getMessage());
+            result.setCode(500);
+        }
+        return result;
     }
 }

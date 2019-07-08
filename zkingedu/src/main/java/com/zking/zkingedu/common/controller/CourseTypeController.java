@@ -1,7 +1,10 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.model.CourseType;
+import com.zking.zkingedu.common.model.Emp;
+import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.service.CourseTypeService;
+import com.zking.zkingedu.common.service.LogService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +31,14 @@ public class CourseTypeController {
 
     @Autowired
     private CourseTypeService courseTypeService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     /**
      * 获取所有课程
@@ -85,7 +99,7 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping("/courseType/add")
-    public ResultUtil addCourseType(CourseType courseType){
+    public ResultUtil addCourseType(CourseType courseType, HttpServletRequest request){
         ResultUtil result;
         try {
             int i = courseTypeService.addCourseType(courseType);
@@ -99,6 +113,14 @@ public class CourseTypeController {
             e.printStackTrace();
             return ResultUtil.error(e.getMessage());
         }
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了一个课程类型，课程ID为："+courseType.getTId());
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         return result;
     }
 
@@ -112,7 +134,7 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping("/courseType/edit")
-    public ResultUtil updateCourseType(CourseType courseType){
+    public ResultUtil updateCourseType(CourseType courseType,HttpServletRequest request){
         ResultUtil result;
         try {
             int i = courseTypeService.updateCourseType(courseType);
@@ -126,6 +148,14 @@ public class CourseTypeController {
             e.printStackTrace();
             return ResultUtil.error(e.getMessage());
         }
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了一个课程类型，课程ID为："+courseType.getTId());
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         return result;
     }
 
@@ -139,10 +169,26 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping(value = "/courseType/dels")
-    public ResultUtil delsCourserType(@RequestParam(value = "ids[]")List<Integer> ids){
+    public ResultUtil delsCourserType(@RequestParam(value = "ids[]")List<Integer> ids,HttpServletRequest request){
         try {
             int i = courseTypeService.delsCourseType(ids);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                StringBuilder stringBuilder1=new StringBuilder();
+                for (int j = 0; j < ids.size(); j++){
+                    if(j==0)
+                        stringBuilder1.append(ids.get(j));
+                    else
+                        stringBuilder1.append(ids.get(j));
+                }
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"删除了一些课程类型，课程ID为："+stringBuilder1);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
+
                 return ResultUtil.ok("删除成功");
             }
         } catch (Exception e) {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,5 +54,18 @@ public class ZkingeduApplicationTests {
         }
 
     }
+
+    @Test
+    public void sdasd(){
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("3213","订单收入金额");
+        maps.put("321321","账单支出积分记录");
+        String [] str = new String[]{maps.toString()};
+        for (String s : str) {
+            System.out.println(s);
+        }
+    }
+
+
 
 }

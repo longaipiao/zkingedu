@@ -13,7 +13,7 @@ public interface EmpService {
      * 得到所有员工
      * @return
      */
-    List<Emp> getemps();
+    List<Emp> getemps(String empName);
 
     /**
      * 登录
@@ -53,6 +53,13 @@ public interface EmpService {
      * @return
      */
     int getRoleIDByEmpID(Integer empid);
+    /**
+     * 添加员工emp
+     * @param
+     * @return
+     */
+    int addEmp(Emp emp);
+    int addEmpRole(Integer empID,Integer roleID);
 
 
 }

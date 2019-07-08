@@ -30,10 +30,10 @@ public class MessageController {
     @RequestMapping(value = "/findMessage")
     @ResponseBody
     public Map<String,Object> findmessage(Integer page,Integer limit){
-        System.out.println("page:"+page+"        *****        limit:"+limit);
+//        System.out.println("page:"+page+"        *****        limit:"+limit);
         log.info("*********开始查询消息的数据**********");
         PageInfo<Map<String, Object>> message = messageService.findMessage(2,page,limit);
-        System.err.println(message);
+//        System.err.println(message);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);

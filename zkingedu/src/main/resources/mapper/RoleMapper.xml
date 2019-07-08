@@ -6,7 +6,7 @@
     <!--角色接口Mapper-->
 
     <select id="getRoles" resultType="role">
-        select * from t_role
+        select * from t_role where role_name like #{roleName}
     </select>
 
     <delete id="delRoleByID" parameterType="int">

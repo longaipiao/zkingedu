@@ -72,7 +72,6 @@
 
 
     $(function (){
-      //获取员工现有角色
         //获取所有角色并渲染至页面
         $.ajax({
           url:"/admin/getRolesByEmp",
@@ -98,8 +97,8 @@
     form.on('submit(add)', function(data){
       //发异步，把数据提交给php
       $.ajax({
-        url:"/admin",
-        data:{empID:$('#empid').val(),empPassword:$('#empPassword').val(),roleID:$('#sysBunk').val()},
+        url:"/admin/addEmp",
+        data:{empName:$('#empName').val(),empPassword:$('#empPassword').val(),roleID:$('#sysBunk').val()},
         success:function (data) {
           if(data==true){
             layer.alert("增加成功", {icon: 6},function () {

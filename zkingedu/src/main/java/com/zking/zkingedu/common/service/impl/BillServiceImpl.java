@@ -54,4 +54,22 @@ public class BillServiceImpl implements BillService {
         return new PageInfo<>(billUname);
     }
 
+    /**
+     * 查询用户充值的积分总数
+     * @return
+     */
+    @Override
+    public Integer billIntegraltype1() {
+        return billDao.billIntegraltype1();
+    }
+
+    /**
+     * 查询用户消费的积分总数
+     * @return
+     */
+    @Override
+    public Integer billIntegraltype0() {
+        return billDao.billIntegraltype0();
+    }
+
 }

@@ -30,4 +30,15 @@ public interface BillService {
      */
     public PageInfo<Map<String,Object>> findBillUname(@Param("userName") String userName,Integer page,Integer limit);
 
+
+    /**
+     * 查询用户充值的积分总数
+     */
+    public Integer billIntegraltype1();
+
+    /**
+     * 查询用户消费的积分总数
+     */
+    public Integer billIntegraltype0();
+
 }

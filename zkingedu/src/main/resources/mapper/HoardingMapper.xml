@@ -11,7 +11,8 @@
 
     <!--收藏接口Mapper-->
     <select id="getHoardingsByUid" resultType="hashmap">
-        select a.collection_id,b.course_sid,b.course_num,b.course_id,b.course_name,b.course_desc,b.course_img,c.user_id from t_collection a,t_course b,t_user c where b.course_id=a.collection_zpid AND c.user_id=a.collection_uid AND c.user_id=#{uid}
+        select a.collection_id,b.course_sid,b.course_num,b.course_id,b.course_name,b.course_desc,b.course_img,c.user_id from t_collection a,t_course b,t_user c
+        WHERE a.collection_zpid=b.course_id AND a.collection_uid=c.user_id AND a.collection_uid=#{uid} AND a.collection_state=1 ORDER BY a.collection_time DESC
     </select>
 
 
@@ -29,8 +30,14 @@
     
     
     <!--用户收藏课程-->
-    <insert id="addHoardingAndCourse" keyProperty="collectionId" useGeneratedKeys="true">
+    <insert id="addHoardingAndCourse">
         insert into t_collection (collection_zpid,collection_uid,collection_state,collection_time)
-         values (#{cid},#{uid},2,now());
+         values (#{cid},#{uid},1,now());
     </insert>
+
+
+    <!--用户取消收藏课程-->
+    <delete id="delHoardingByuidAndCid">
+        delete from t_collection where collection_zpid=#{cid}  and collection_uid=#{uid} AND collection_state=1
+    </delete>
 </mapper>

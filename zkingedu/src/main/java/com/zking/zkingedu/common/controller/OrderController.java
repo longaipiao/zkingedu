@@ -73,12 +73,12 @@ public class OrderController {
         //3:根据课程id和用户id查询订单表的
 
 
-        log.info("***************开始查询这个课程需要多少积分*******************");
+//        log.info("***************开始查询这个课程需要多少积分*******************");
         Integer courseInte = courseService.findCourseInte(courseID);
         System.err.println("课程的是否需要积分：" + courseInte);
 
 
-        log.info("***************开始查询这个用户剩下多少积分*******************");
+//        log.info("***************开始查询这个用户剩下多少积分*******************");
         int userintegrsl = userService.findIntegrsl(2);//用户id
         System.err.println("用户剩下积分为：" + userintegrsl);
 
@@ -86,7 +86,7 @@ public class OrderController {
         if (userintegrsl < courseInte) {
             return "1";//积分不够的，需要去充值的
         } else  {
-            log.info("*************开始购买整套视频的方法***********");
+//            log.info("*************开始购买整套视频的方法***********");
             order.setOrderID(idGeneratorUtils.nextId());//生成一个唯一的订单的id
             order.setOrderUid(2);//获取session中用户的id
             order.setOrderSid(courseID);//前台传过来的课程id
@@ -96,20 +96,20 @@ public class OrderController {
             order.setChargeTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
             order.setOrderState(1);//状态
             int gmshiporder = orderService.gmshiporder(order);
-            System.out.println("成功的：" + gmshiporder);
+//            System.out.println("成功的：" + gmshiporder);
 
 
 
-            log.info("****************开始变动这个用户的积分*************"+courseInte);
+//            log.info("****************开始变动这个用户的积分*************"+courseInte);
             userService.updateUserIntegral(integral,2);
-            log.info("****************结束变动这个用户的积分*************");
+//            log.info("****************结束变动这个用户的积分*************");
 
 
-            log.info("*****************结束购买整套视频的方法************");
+//            log.info("*****************结束购买整套视频的方法************");
 
-            log.info("********************开始生成账单表*********************");
+//            log.info("********************开始生成账单表*********************");
             bill.setBillUid(2);//获取session中用户的id
-            bill.setBillType(1);//类型为1的是：支付状态
+            bill.setBillType(0);//类型为1的是：支付状态
             bill.setBillIntegral(integral);//支付的积分
             //账单生成的时间
             bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
@@ -120,7 +120,7 @@ public class OrderController {
             bill.setBillContent("您购买《" + courseName + "》,消费积分：" + integral);
             bill.setBillState(1);//状态
             billService.addBill(bill);
-            log.info("********************结束生成账单标表*****************");
+//            log.info("********************结束生成账单标表*****************");
             return "2";//可以直接购买的
         }
     }
@@ -133,7 +133,7 @@ public class OrderController {
     @RequestMapping(value = "/orderUid")
     @ResponseBody
     public Map<String,Object> findorderUid(Integer page,Integer limit){
-        log.info("**************开始查询自己的订单的方法****************");
+//        log.info("**************开始查询自己的订单的方法****************");
         Map<String,Object> maps = new HashMap<>();
         PageInfo<Map<String, Object>> orderUid = orderService.findOrderUid(2, page, limit);
         maps.put("msg","success");
@@ -177,7 +177,7 @@ public class OrderController {
     //购买视频的方法
     @RequestMapping(value = "/gmsp")
     public void gmship(HttpServletRequest request, HttpServletResponse response, Integer sid, Integer id, Integer courseInte) throws Exception {
-        log.info("**********开始购买章节视频的方法***********");
+//        log.info("**********开始购买章节视频的方法***********");
         order.setOrderID(idGeneratorUtils.nextId());//生成一个唯一的订单的id
         order.setOrderUid(2);//获取session中用户的id
         order.setOrderSid(sid);//前台传过来的课程id
@@ -187,16 +187,16 @@ public class OrderController {
         order.setChargeTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
         order.setOrderState(1);//状态
         int gmdgsection = orderService.gmdgsection(order);
-        System.out.println("成功的：" + gmdgsection);
+//        System.out.println("成功的：" + gmdgsection);
 
-        log.info("****************开始变动这个用户的积分*************"+courseInte);
+//        log.info("****************开始变动这个用户的积分*************"+courseInte);
         userService.updateUserIntegral(courseInte,2);
-        log.info("****************结束变动这个用户的积分*************");
+//        log.info("****************结束变动这个用户的积分*************");
 
 
-        log.info("********************开始生成账单表*********************");
+//        log.info("********************开始生成账单表*********************");
         bill.setBillUid(2);//获取session中用户的id
-        bill.setBillType(1);//类型为1的是：支付状态
+        bill.setBillType(0);//类型为1的是：支付状态
         bill.setBillIntegral(courseInte);//支付的积分
         //账单生成的时间
         bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
@@ -208,7 +208,7 @@ public class OrderController {
         bill.setBillState(1);//状态
         billService.addBill(bill);
         ResponseUtil.write(response,4);//购买成功
-        log.info("********************结束生成账单标表*****************");
+//        log.info("********************结束生成账单标表*****************");
     }
 
 
@@ -240,7 +240,7 @@ public class OrderController {
     @RequestMapping(value = "/findziyuanuid")
     @ResponseBody
     public Map<String,Object> findziyuanUid(Integer page,Integer limit){
-        log.info("**********开始查询自己的资源**************");
+//        log.info("**********开始查询自己的资源**************");
         PageInfo<Map<String, Object>> ziyuanuids = orderService.findziyuanUid(2, page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
@@ -251,10 +251,29 @@ public class OrderController {
     }
 
 
+    /**
+     * 平台收入的图形报表功能
+     */
+    @RequestMapping(value = "/findbbiao")
+    @ResponseBody
+    public Map<String,Object> findbbiao(){
 
+        //订单收入的总金额
+        Integer orderSum = orderService.orderSum();
+        System.err.println("orderSum:"+orderSum);
+        //用户充值的积分总数
+        Integer billIntegraltype1 = billService.billIntegraltype1();
+        System.err.println("billIntegraltype1:"+billIntegraltype1);
+        //用户消费的积分总数
+        Integer billIntegraltype0 = billService.billIntegraltype0();
+        System.err.println("billIntegraltype0:"+billIntegraltype0);
 
-
-
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("orderSum",orderSum);
+        maps.put("billIntegraltype1",billIntegraltype1);
+        maps.put("billIntegraltype0",billIntegraltype0);
+        return maps;
+    }
 
 
 

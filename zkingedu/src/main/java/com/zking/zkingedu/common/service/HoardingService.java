@@ -1,6 +1,5 @@
 package com.zking.zkingedu.common.service;
 
-import com.zking.zkingedu.common.dao.HoardingDao;
 import com.zking.zkingedu.common.model.Hoarding;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -61,6 +60,29 @@ public interface HoardingService {
      * @return
      */
     int addHoardingAndCourse(Integer uid,Integer cid);
+
+
+
+    /**
+     * 用户取消收藏课程
+     * @param uid  用户id
+     * @param cid  课程id
+     * @return
+     * yan
+     */
+    int delHoardingByuidAndCid(Integer uid,Integer cid);
+
+
+    /**
+     * 用户收藏业务
+     * 如果用户收藏了课程  则取消收藏
+     * 如果用户没收藏课程   则收藏
+     * yan
+     * @param uid
+     * @param cid
+     * @return  code=1 收藏  code=2取消收藏
+     */
+    ResultUtil UserAddHoardingAnddelByUidAndCid(Integer uid,Integer cid);
 
 
 }

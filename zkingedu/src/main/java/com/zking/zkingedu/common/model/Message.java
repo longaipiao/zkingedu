@@ -16,14 +16,18 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 4754628991979091255L;
     //消息id
     private Integer messageID;
-    //用户id
-    private Integer messageUid;
+    //session中的用户id
+    private Integer messageUid1;
+    //回复某个用户id
+    private Integer messageUid2;
+    //帖子id
+    private Integer messagePid;
     //消息标题
     private String messageName;
     //消息内容
     private String messageContent;
     //消息发布时间
     private String messageTime;
-    //状态0正常1下架
+    //状态1正常2下架
     private Integer messageState;
 }

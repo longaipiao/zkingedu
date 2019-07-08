@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
   
   <head>
     <meta charset="UTF-8">
@@ -25,10 +26,10 @@
     <div class="x-body">
       <div class="layui-row">
         <span class="layui-breadcrumb">
-          <form class="layui-form layui-col-md10 x-so">
-            <input type="text" name="username"  placeholder="请输入员工名" autocomplete="off" class="layui-input">
-            <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-          </form>
+          <div class="layui-form layui-col-md10 x-so">
+            <input type="text" id="empname" name="empname"  placeholder="请输入员工名" autocomplete="off" class="layui-input">
+            <button id="reload" class="layui-btn" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          </div>
         </span>
         <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
           <i class="layui-icon" style="line-height:38px">ဂ</i>
@@ -40,7 +41,7 @@
     </div>
     <script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addRole"><i class="layui-icon">&#xe654;</i>添加员工</button>
+          <button class="layui-btn layui-btn-sm" lay-event="addRole"><i class="layui-icon">&#xe654;</i>添加员工</button>
       </div>
     </script>
 
@@ -69,7 +70,6 @@
           ,url:'/admin/getEmps'
           ,toolbar: '#toolbarDemo'
           ,title: '员工数据表'
-          ,async: false
           ,cols: [
             [
               {field:'empID', title:'ID', width:150, fixed: 'left', unresize: true, sort: true}
@@ -81,6 +81,7 @@
             ]
           ]
           ,page: true
+          ,id: 'empTable'
         });
 
         //头工具栏事件
@@ -106,6 +107,19 @@
           };
         });
 
+        //搜索
+        $('#reload').on('click', function(){
+          //执行重载
+          table.reload('empTable', {
+            page: {
+              curr: 1 //重新从第 1 页开始
+            }
+            ,where: {
+              empName: $('#empname').val()
+            }
+          });
+        });
+
           //监听行工具事件
           table.on('tool(test)', function(obj){
               var data = obj.data;
@@ -119,9 +133,9 @@
                               {
                                   obj.del();
                                   layer.close(index);
-                                  layer.msg('已删除!',{icon:1,time:1000});
+                                  layer.msg('删除成功!',{icon:1,time:1000});
                               }else{
-                                  layer.msg('删除失败!',{icon:1,time:1000});
+                                  layer.msg('删除失败!',{icon:2,time:1000});
                               }
                           }
                       });
@@ -136,15 +150,14 @@
                   area: ['40%', '80%'],
                   content: '/html/emp-edit?empID='+data.empID+'&empPassword='+data.empPassword+'&EmpName='+data.empName,//设置你要弹出的html页面
                   end:function () {
-                    location.reload();
+                    //执行重载
+                    table.reload('empTable', {});
                   }
                 });
               }
           });
 
         form.on('switch(status)', function(data){
-
-
           // 得到开关的value值，实际是需要修改的ID值。
           var id = data.value;
           var status = this.checked ? '0' : '1';
@@ -153,7 +166,6 @@
           $.ajax({
             type: 'post',
             url: '/admin/updateEmpState',
-            async:false,
             data: {"id" :id,"state":status},
           beforeSend:function(){
             index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
@@ -161,6 +173,8 @@
           error: function(data){
             console.log(data);
             layer.msg('数据异常，操作失败！');
+            //执行重载
+            table.reload('empTable', {});
           },
           success: function(data){
             if(data==true){
@@ -169,10 +183,13 @@
                 layer.msg('操作成功！');},2000);
             }else{
               layer.msg('数据异常，操作失败！');
+              //执行重载
+              table.reload('empTable', {});
             }}
         });
 
         });
+
 
       });
     </script>

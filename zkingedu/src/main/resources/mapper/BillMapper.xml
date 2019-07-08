@@ -29,5 +29,14 @@
          </if>
     </select>
 
+    <!-- 查询用户充值的积分总数-->
+    <select id="billIntegraltype1" resultType="java.lang.Integer">
+        select SUM(bill_integral) from t_bill where bill_type = 1
+    </select>
+    <!--查询用户消费的积分总数-->
+    <select id="billIntegraltype0" resultType="java.lang.Integer">
+        select SUM(bill_integral) from t_bill where bill_type = 0
+    </select>
+
 
 </mapper>
