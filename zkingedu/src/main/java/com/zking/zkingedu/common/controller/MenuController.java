@@ -35,9 +35,9 @@ public class MenuController {
     public Object getMenus(){
         List<Map> list = new ArrayList<>();//已经处理好的包含所有菜单项的集合
         List<Menu> menus = menuService.getMenus();//获取所有菜单项
-        for (Menu menu : menus) {
-            System.out.println("menu = " + menu);
-        }
+//        for (Menu menu : menus) {
+//            System.out.println("menu = " + menu);
+//        }
         if(menus!=null&&menus.size()!=0){//判断有数据
             for (int i = 0; i < menus.size(); ++i) {//遍历菜单集合
                 if(((Menu)menus.get(i)).getMenuFid()==0){//如果菜单父ID==0 证明是最顶级的
@@ -102,13 +102,6 @@ public class MenuController {
         List<Menu> menus = menuService.getMenuByRoleID(Integer.parseInt(roleid));
 
         return menus;
-    }
-    @RequestMapping(value = "/getMenuByEmpID")
-    @ResponseBody
-    public Object getMenuByEmpID(HttpServletRequest request){
-        Emp emp =(Emp) request.getSession().getAttribute("emp");
-
-        return null;
     }
 
 }

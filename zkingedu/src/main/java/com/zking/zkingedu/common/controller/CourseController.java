@@ -1,9 +1,6 @@
 package com.zking.zkingedu.common.controller;
 
-import com.zking.zkingedu.common.model.Course;
-import com.zking.zkingedu.common.model.Emp;
-import com.zking.zkingedu.common.model.Section;
-import com.zking.zkingedu.common.model.User;
+import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.service.*;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -20,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.System;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,6 +48,17 @@ public class CourseController {
 
     @Autowired
     private HoardingService hoardingService;
+
+
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
+
 
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
@@ -277,11 +288,19 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourse")
-    public ResultUtil editCourse(Course course){
+    public ResultUtil editCourse(Course course, HttpServletRequest request){
 //        System.err.println("====================后台接收的到数据:"+course);
         try {
             int i = courseService.updateCourse(course);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程信息，课程ID为："+course.getCourseID());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("success");
             }
         } catch (Exception e) {
@@ -301,7 +320,7 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourseState")
-    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state){
+    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state,HttpServletRequest request){
         try {
             Integer sid;
             if(state){
@@ -312,6 +331,14 @@ public class CourseController {
             }
             int i = courseService.editCourseState(id, sid);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为："+id);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("修改课程状态成功");
             }
         } catch (Exception e) {
