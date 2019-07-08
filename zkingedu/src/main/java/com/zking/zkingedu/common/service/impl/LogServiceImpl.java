@@ -35,8 +35,6 @@ public class LogServiceImpl implements LogService {
         return new PageInfo<>(logs);
     }
 
-    @Resource
-    private LogDao logDao;
 
     @Override
     public int addLog(Log log) {

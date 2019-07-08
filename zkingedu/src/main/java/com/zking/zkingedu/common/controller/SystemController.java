@@ -1,6 +1,8 @@
 package com.zking.zkingedu.common.controller;
 
+import com.zking.zkingedu.common.dao.ScommentDao;
 import com.zking.zkingedu.common.model.System;
+import com.zking.zkingedu.common.service.ScommentService;
 import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -29,6 +31,9 @@ public class SystemController {
     private SystemService systemService;
 
 
+    @Autowired
+    private ScommentService scommentService;
+
     /**
      * 首页获取体系 12个
      * ajax
@@ -56,6 +61,7 @@ public class SystemController {
         mv.addObject("system",systemBySid);
 //        log.info("============================体系信息:"+systemBySid);
         List<System> systems = systemService.getsystemsonByFId(courseId);
+
         mv.addObject("systems",systems);
         mv.setViewName("/user/paths/show");
         return mv;

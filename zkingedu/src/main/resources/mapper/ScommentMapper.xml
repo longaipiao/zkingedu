@@ -30,4 +30,9 @@
         delete from t_scomment where scomment_id=#{id}
     </delete>
 
+    <!--根据课程id  查询有多少课程评论-->
+    <select id="getScommentAndCousecNumber" resultType="integer">
+        SELECT COUNT(0) FROM t_scomment WHERE scomment_cid=#{cid}
+    </select>
+
 </mapper>

@@ -3,30 +3,19 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Order;
 import com.zking.zkingedu.common.model.Section;
-import com.zking.zkingedu.common.model.Video;
 import com.zking.zkingedu.common.service.*;
 import com.zking.zkingedu.common.utils.IdGeneratorUtils;
-import com.zking.zkingedu.common.utils.ResponseUtil;
-import com.zking.zkingedu.common.service.CourseService;
-import com.zking.zkingedu.common.service.SectionService;
-import com.zking.zkingedu.common.service.UserService;
-import com.zking.zkingedu.common.service.VideoService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,7 +54,7 @@ public class SectionController {
      * 作者：颜
      */
     @RequestMapping("/video")
-    public ModelAndView videoPlayer(Model model,HttpServletResponse response, @RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id) throws Exception {
+    public ModelAndView videoPlayer( @RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id) {
         ModelAndView mv = new ModelAndView();
         //获取所有的章节视频
         List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
@@ -84,6 +73,7 @@ public class SectionController {
 
         return mv;
     }
+
 
 
     /**
