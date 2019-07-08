@@ -39,7 +39,7 @@ public class ToolController {
     @RequestMapping(value = "/findTool")
     @ResponseBody
     public Map<String,Object> findTool(Tool tool,Integer page, Integer limit){
-        System.out.println("我想你了");
+        System.out.println(tool.getToolName());
         PageInfo<Tool> tools = toolService.findAll(tool,page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");

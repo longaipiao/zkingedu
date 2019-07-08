@@ -3,7 +3,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.CategoryDao">
 
+    <sql id="categorys">
+        category_id,category_name,category_fid,category_time,category_eid
+        ,category_rank,category_state
+    </sql>
     <!--题库类别接口Mapper-->
+
+    <!--查询所有为0的父数据-->
+    <select id="getAll" resultType="category">
+        select <include refid="categorys"/> from t_category where category_fid=0
+    </select>
+
+    <!-- 根据父id查询子id-->
+    <select id="getAllfid" resultType="category">
+        select <include refid="categorys"/> from t_category where category_fid=#{fid}
+    </select>
+
+    <!--增加体系-->
+    <insert id="addCategory">
+        insert into t_category(category_name,category_fid,category_time,category_eid,category_rank,category_state)
+        values (#{categoryName},#{categoryFid},#{categoryTime},#{categoryEid},#{categoryRank},#{categoryState})
+    </insert>
+    <!--删除所有体现-->
+    <delete id="delete">
+        delete from t_category where  category_id=#{aid} or category_fid=#{fid}
+    </delete>
+    <!--修改体系停用状态-->
+    <update id="updatety">
+        update t_category set category_state=1 where category_fid=0 and category_id=#{aid}
+    </update>
+    <!--修改体系开启状态-->
+    <update id="updatekq">
+         update t_category set category_state=0 where category_fid=0 and category_id=#{aid}
+    </update>
+    <!--修改体系名字-->
+    <update id="updateName">
+       update t_category set category_name=#{name} where category_fid=#{fid} and category_id=#{aid}
+    </update>
 
 
 </mapper>

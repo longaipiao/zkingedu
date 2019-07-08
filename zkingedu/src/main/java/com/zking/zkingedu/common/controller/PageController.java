@@ -100,6 +100,16 @@ public class PageController {
 
 
     /**
+     * 忘记密码页面
+     */
+    @RequestMapping(value = "/zhpasssword")
+    public String wjpassword(){
+        System.out.println("进来了");
+        return "user/zhpassword";
+    }
+
+
+    /**
      * 跳转值学习路径页面
      * yan
      * @return

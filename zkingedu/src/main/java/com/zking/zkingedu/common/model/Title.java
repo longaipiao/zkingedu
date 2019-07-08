@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * 题目表
@@ -26,4 +27,6 @@ public class Title implements Serializable {
     private String titleTime;
     //
     private Integer titleState;
+
+    private List<Answer> answerss=new ArrayList<>();
 }

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @Configuration
 public class WebAppConfig implements HandlerInterceptor {
 
-/*
+
 
     @Autowired
     private UserService userService;
@@ -61,7 +61,7 @@ public class WebAppConfig implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
-    }*/
+    }
 
 
 }

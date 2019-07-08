@@ -1,16 +1,19 @@
 package com.zking.zkingedu.common.controller;
 
 import com.alibaba.fastjson.JSONObject;
-//import com.qq.connect.QQConnectException;
-//import com.qq.connect.api.OpenID;
-//import com.qq.connect.javabeans.AccessToken;
-//import com.qq.connect.javabeans.qzone.UserInfoBean;
-//import com.qq.connect.oauth.Oauth;
-//import com.zhenzi.sms.ZhenziSmsClient;
+import com.github.pagehelper.PageInfo;
+import com.qq.connect.QQConnectException;
+import com.qq.connect.api.OpenID;
+import com.qq.connect.javabeans.AccessToken;
+import com.qq.connect.javabeans.qzone.UserInfoBean;
+import com.qq.connect.oauth.Oauth;
+import com.zhenzi.sms.ZhenziSmsClient;
+import com.zking.zkingedu.common.model.Tool;
 import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.impl.UserServiceImpl;
 import com.zking.zkingedu.common.utils.IpAddress;
+import com.zking.zkingedu.common.utils.MailUtil;
 import com.zking.zkingedu.common.utils.transferImgForRoundImgage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,10 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -37,6 +43,7 @@ public class UserController {
 
     @Autowired
     private User user;
+
 
     // 短信平台相关参数
    /* private String apiUrl = "https://sms_developer.zhenzikj.com";
@@ -51,7 +58,7 @@ public class UserController {
     public String zc(String phone,String password)throws Exception{
         //手机号
         user.setUserPhone(phone);
-        //注册时间
+        //密码
         user.setUserPassword(password);
         //注册时间
         user.setUserRegTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -62,7 +69,7 @@ public class UserController {
         //昵称
         user.setUserName(getRandomJianHan(3));
         //图片
-        user.setUserImg("share-reports.png");
+        user.setUserImg("/user/img/u=2245612340,853442449&fm=26&gp=0.png");
         //错误次数
         user.setUserCwcs(0);
         Integer n = userService.add(user);
@@ -70,17 +77,187 @@ public class UserController {
             return "1";
         }
         return "2";
+    }
+
+    /**
+     * 判断邮箱不能重复
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/Email")
+    @ResponseBody
+    public String cfEmail(HttpServletRequest request,String Email){
+        HttpSession session = request.getSession();
+        User user=(User) session.getAttribute("user");
+        String s = userService.cfEamil(Email);
+        if (s==null){
+            //没有重复
+            return "1";
+        }
+        return "2";
+    }
+    /**
+     * 修改邮箱
+     */
+    @RequestMapping(value = "/updateEmail")
+    @ResponseBody
+    public String updateEmail(String newEmail,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user =(User) session.getAttribute("user");
+        System.out.println(newEmail);
+        Integer integer = userService.updateEamil(user.getUserID(), newEmail);
+        if(integer>0){
+            User user1 = userService.getUser(user.getUserID());
+            session.setAttribute("user",null);
+            session.setAttribute("user",user1);
+            return "1";
+        }
+        return "2";
+    }
+    /**
+     * 邮箱接口
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/Emailjk")
+    @ResponseBody
+    public String Emailjk(HttpServletRequest request, HttpServletResponse response,String phone) {
+        System.out.println(phone);
+        JSONObject json = null;
+        //生成6位验证码
+        String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
+
+        try {
+            MailUtil.configMail(phone,verifyCode);
+        } catch (Exception e) {
+            System.out.println("发送错误");
+            e.printStackTrace();
+        }
+        //发送短信
+       /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+        String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
+
+        //将验证码存到session中,同时存入创建时间
+        //以json存放，这里使用的是阿里的fastjson
+       /* json = new JSONObject();
+        json.put("mobile", mobile);
+        json.put("verifyCode", verifyCode);
+        json.put("createTime", System.currentTimeMillis());*/
+        // 将认证码存入SESSION
+        System.out.println(verifyCode);
+        return verifyCode;
+    }
+
+    /**
+     * 查询所有的用户信息
+     * @return
+     */
+    @RequestMapping(value = "/findUser")
+    @ResponseBody
+    public Map<String,Object> findUser(Integer page, Integer limit,HttpServletRequest request,String sid,String text){
+        System.out.println(sid);
+        if(sid!=null){
+            if(text!=""){
+                if(sid.equals("0")){//查询名字
+                    System.out.println("进来了名字");
+                    user.setUserName(text);
+
+                }
+                else if(sid.equals("1")){//查询手机号
+                    System.out.println("进来了手机号");
+                    user.setUserPhone(text);
+
+                }
+                else if(sid.equals("2")){//查询邮箱号
+                    user.setUserEmail(text);
+
+                }
+            }
+            else{
+                user.setUserEmail("");
+                user.setUserPhone("");
+                user.setUserName("");
+            }
+
+        }
+        System.out.println(user);
 
 
 
+        HttpSession session = request.getSession();
+        PageInfo<User> users = userService.getAll(user,page, limit);
+        System.out.println(user);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","");
+        maps.put("code",0);
+        maps.put("count",users.getTotal());
+        maps.put("data",users.getList());
+        session.setAttribute("zs",users.getTotal());
+        return maps;
+    }
 
+    /**
+     * 冻结
+     * @param uid
+     * @return
+     */
+    @RequestMapping(value = "/dj")
+    @ResponseBody
+    public String dj(Integer uid){
+        Integer integer = userService.updateSpase(uid);
+        if(integer>0){
+            return "1";
+        }
+        return "2";
+    }
+    /**
+     * 解封
+     * @param uid
+     * @return
+     */
+    @RequestMapping(value = "/jf")
+    @ResponseBody
+    public String jf(Integer uid){
+        Integer integer = userService.updatejf(uid);
+        if(integer>0){
+            return "1";
+        }
+        return "2";
+    }
+
+    /**
+     * 根据手机号和邮箱找回密码
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/zhphonepassoword")
+    public String zhphonepassoword(HttpServletRequest request,String phone,String userpasswordss){
+        HttpSession session = request.getSession();
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
+        Pattern e = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
+        if(p.matcher(phone).matches()){//是手机号就根据手机号修改密码
+            Integer integer = userService.updatePhonePassword(phone, userpasswordss);
+            if(integer>0){
+                session.setAttribute("user",null);
+                return "1";
+            }
+        }
+        if(e.matcher(phone).matches()){//是邮箱就根据手机号修改密码
+            Integer integer = userService.updateEmmitPassword(phone, userpasswordss);
+            if(integer>0){
+                session.setAttribute("user",null);
+                return "1";
+            }
+        }
+
+        return "2";
     }
 
     //判断手机号不能重复
     @ResponseBody
     @RequestMapping(value = "/cf")
     public String cf(String phone){
-        System.out.println(phone);
         String pdcf = userService.pdcf(phone);
         if(pdcf==null){
             //没有重复
@@ -112,10 +289,10 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/updatePhonepassword")
     public String updatePhonepassword(String phone,HttpServletRequest request,String password2){
+
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Integer n = userService.updatePhonePassword(phone, password2);
-
         if(n>0){
             session.setAttribute("user",null);
             return "1";
@@ -127,6 +304,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
+        System.out.println("进来了手机号验证码");
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
@@ -180,10 +358,10 @@ public class UserController {
      * @return
      * @throws QQConnectException
      */
-    /*@ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/LoginCallback2")
     public String  LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
-        System.out.println("进来了");
+        HttpSession session = request.getSession();
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
             System.out.println("Token:"+accessTokenObj.getAccessToken());
@@ -200,14 +378,42 @@ public class UserController {
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
                 System.out.println("openid:"+userOpenID+"————用户昵称："+userInfoBean.getNickname());
                 //4.根据openId和access_Token获取用户信息
-                System.out.println(userOpenID);
+                //查询数据库里面有没有这个openId如果有把这个用户的信息拿出来没有就添加
+                User qquser = userService.getopenid(userOpenID);
+
+                session.setAttribute("nickName",userInfoBean.getNickname());
+                session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
+                session.setAttribute("openid",userOpenID);
+                if(qquser==null){
+
+                    try{
+                        response.sendRedirect("/user/binding");
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+                else if(qquser.getUserPhone()==null){
+                    try{
+                        response.sendRedirect("/user/binding");
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    session.setAttribute("user",qquser);
+                    try{
+                        response.sendRedirect("/user/");
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
 
             }
         } catch (QQConnectException e) {
             e.printStackTrace();
         }
         return "user/index";
-    }*/
+    }
 
     /**
      * qq登入绑定新用户
@@ -277,8 +483,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/login")
     public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
-
-
         HttpSession session = request.getSession();
         //手机号
         user.setUserPhone(userPhone);
@@ -290,20 +494,19 @@ public class UserController {
             if(integer>0){
                 session.setAttribute("user",userlogin);
                 return "1";
-                }
-           }
+            }
+        }
         //密码错误
-         if(userlogin==null){
-             //修改错误次数加1
-             userService.updateCwcs(userPhone);
-             //查询错误次数
+        if(userlogin==null){
+            //修改错误次数加1
+            userService.updateCwcs(userPhone);
+           /*  //查询错误次数
              Integer cwcs = userService.getCwcs(userPhone);
-             if(cwcs>5){
+                 if(cwcs>5){
                 //修改用户的状态然后启动定时任务
 
-
-             }
-         }
+             }*/
+        }
         return "";
     }
     /**
@@ -328,14 +531,33 @@ public class UserController {
      * @return
      */
     @RequestMapping("/qqLogin")
-    /*public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
+    public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
         //自动组装qq登陆连接，重定向到qq登陆页面
         String authorizeURL = new Oauth().getAuthorizeURL(request);
         System.out.println("联合登陆请求地址:"+authorizeURL);
         return "redirect:"+authorizeURL;
-    }*/
+    }
 
+    /**
+     * 修改手机号
+     * @param
+     * @return
+     */
+    @RequestMapping("/updatePhone")
+    @ResponseBody
+    public String updatePhone(String phone,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user=(User) session.getAttribute("user");
+        Integer integer = userService.updatePhone(user.getUserPhone(), phone);
+        if(integer>0){
+            User user1 = userService.getUser(user.getUserID());
+            session.setAttribute("user",null);
+            session.setAttribute("user",user1);
+            return "1";
+        }
 
+        return "2";
+    }
     //随机昵称
     public static String getRandomJianHan(int len) {
         String ret = "";

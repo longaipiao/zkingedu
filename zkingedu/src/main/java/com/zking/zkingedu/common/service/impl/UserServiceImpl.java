@@ -1,19 +1,30 @@
 package com.zking.zkingedu.common.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.dao.UserDao;
+import com.zking.zkingedu.common.model.Tool;
 import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
     @Resource
     private UserDao userDao;
+
+    @Override
+    public PageInfo<User> getAll(User user, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<User> all = userDao.getAll(user);
+        return new PageInfo<>(all);
+    }
 
     @Override
     public String pdcf(String phone) {
@@ -78,6 +89,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updateupload(Integer uid, String upload) {
         return userDao.updateupload(uid,upload);
+    }
+
+    @Override
+    public Integer updatePhone(String oldphone, String newphone) {
+        return userDao.updatePhone(oldphone,newphone);
+    }
+
+    @Override
+    public Integer updateEamil(Integer uid, String newEamil) {
+        return userDao.updateEamil(uid,newEamil);
+    }
+
+    @Override
+    public String cfEamil(String Email) {
+        return userDao.cfEamil(Email);
+    }
+
+    @Override
+    public Integer updateSpase(Integer uid) {
+        return userDao.updateSpase(uid);
+    }
+
+    @Override
+    public Integer updatejf(Integer uid) {
+        return userDao.updatejf(uid);
     }
 
     /**
