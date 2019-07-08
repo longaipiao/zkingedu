@@ -3,7 +3,52 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.AdvertisingDao">
 
-    <!--广告接口Mapper-->
-
+    <!--广告接口Mapper--><sql id="adversql">
+      advertising_id,advertising_img,advertising_url,advertising_state,advertising_name,advertising_time
+   </sql>
+    <!-- 查询所有广告的信息 -->
+    <select id="getAll"  resultType="Advertising" parameterType="Advertising">
+        select <include refid="adversql"/> from t_advertising  where 1=1
+        <if test=" advertisingName != null">
+            and advertising_name like '%${advertisingName}%'
+        </if>
+        <!--<if test="advertisingTime !=null">
+            and advertising_time &gt;= #{advertisingTime}
+        </if>
+        <if test=" newtime != null">
+            and advertising_time &lt;=#{newtime}
+        </if>-->
+    </select>
+    <!--增加广告 -->
+    <insert id="addAdvertsing">
+        insert into t_advertising(advertising_img,advertising_url,advertising_state,advertising_name,advertising_time)
+        values(#{advertisingImg},#{advertisingURL},#{advertisingState},#{advertisingName},#{advertisingTime})
+    </insert>
+    <!-- 查询所有广告的信息 -->
+    <select id="getAlls"  resultType="advertising"  >
+        select <include refid="adversql"/> from t_advertising  where advertising_state=0
+    </select>
+    <!--修改广告的信息-->
+    <update id="updateadvertsing" parameterType="advertising">
+        update t_advertising set advertising_img=#{advertisingImg},advertising_url=#{advertisingURL},
+        advertising_name=#{advertisingName}
+        where advertising_id=#{advertisingID}
+    </update>
+    <!-- 根据广告id删除广告-->
+    <delete id="deleteadvertising" parameterType="Integer">
+        delete from t_advertising where advertising_id=#{aid}
+    </delete>
+    <!--根据广告id修改广告的上架状态-->
+    <update id="updatesjState">
+        update t_advertising set advertising_state=0 where advertising_id=#{aid}
+    </update>
+    <!--根据广告id修改广告的下架状态-->
+    <update id="updatexjState">
+        update t_advertising set advertising_state=1 where advertising_id=#{aid}
+    </update>
+    <!--查询所有的广告状态不能超过五条-->
+    <select id="getsjzt" resultType="Integer">
+        select count(*) from t_advertising where advertising_state=0
+    </select>
 
 </mapper>

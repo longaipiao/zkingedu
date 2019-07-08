@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Lei Shi">
-  <meta http-equiv="Cache-Control" content="o-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="csrf-token" content="1483758872##fd2cac389b2b7c009a744bcaecaa41d71592cfe8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Lei Shi">
+    <meta http-equiv="Cache-Control" content="o-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="csrf-token" content="1483758872##fd2cac389b2b7c009a744bcaecaa41d71592cfe8">
+
 
         <title>实验楼 - 做实验，学编程</title>
 
@@ -15,56 +16,56 @@
     <meta content="实验楼,IT培训,IT教育,编程,在线编程,Linux,Linux教程,Linux操作系统,Python,Python教程,Python基础教程,Java,Java编程,C语言,大数据,Node.js,Hadoop,PHP,Docker" name="keywords">
 
     <meta content="实验楼,琛石科技" name="author">
-	<link rel="shortcut icon" href="/user/favicon.ico">
-	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/user/favicon.ico">
+    <link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
-	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/user/static/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/user/static/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
-	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
-	<link rel="stylesheet" href="/user/layui/css/layui.css">
+    <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
     <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
-
-	<style>
-		@font-face {
-			font-family: "lantingxihei";
-			src: url("/user/fonts/FZLTCXHJW.TTF");
-		}
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/layui/layui.js"></script>
+    <style>
+        @font-face {
+            font-family: "lantingxihei";
+            src: url("/user/fonts/FZLTCXHJW.TTF");
+        }
 
         /* modal 模态框*/
         #invite-user .modal-body {
             overflow: hidden;
         }
-		#invite-user .modal-body .form-label {
-			margin-bottom: 16px;
-			font-size:14px;
-		}
-		#invite-user .modal-body .form-invite {
-			width: 80%;
-			padding: 6px 12px;
-			background-color: #eeeeee;
-			border: 1px solid #cccccc;
-			border-radius: 5px;
-			float: left;
-			margin-right: 10px;
-		}
-		#invite-user .modal-body .msg-modal-style {
-			background-color: #7dd383;
-			margin-top: 10px;
-			padding: 6px 0;
-			text-align: center;
-			width: 100%;
-		}
-		#invite-user .modal-body .modal-flash {
-			position: absolute;
-			top: 53px;
-			right: 74px;
-			z-index: 999;
-		}
-		/* end modal */
+        #invite-user .modal-body .form-label {
+            margin-bottom: 16px;
+            font-size:14px;
+        }
+        #invite-user .modal-body .form-invite {
+            width: 80%;
+            padding: 6px 12px;
+            background-color: #eeeeee;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            float: left;
+            margin-right: 10px;
+        }
+        #invite-user .modal-body .msg-modal-style {
+            background-color: #7dd383;
+            margin-top: 10px;
+            padding: 6px 0;
+            text-align: center;
+            width: 100%;
+        }
+        #invite-user .modal-body .modal-flash {
+            position: absolute;
+            top: 53px;
+            right: 74px;
+            z-index: 999;
+        }
+        /* end modal */
 
         .en-footer {
             padding: 30px;
@@ -73,14 +74,14 @@
         }
     </style>
 
-<style style="text/css">
-.navbar-banner {
-    margin-top: 50px;
-    background: url("/user/img/homepage-bg.png");
-    background-size: cover;
-    backgtound-repeat: no-repeat;
-}
-</style>
+    <style type="text/css">
+        .navbar-banner {
+            margin-top: 50px;
+            background: url("/user/img/homepage-bg.png");
+            background-size: cover;
+            backgtound-repeat: no-repeat;
+        }
+    </style>
 
 
 
@@ -144,28 +145,28 @@
 
             <div class="navbar-right btns">
 
-            <!--    <span th:if="${session.b} eq null  ">
-                    <span th:if="${session.a} eq null">
-                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
-                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                <!--    <span th:if="${session.b} eq null  ">
+                        <span th:if="${session.a} eq null">
+                        <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                        </span>
                     </span>
-                </span>
-                <span th:if="${session.b} eq null  ">
-                    <span th:if="${session.a} ne null">
-                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
-                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                    <span th:if="${session.b} eq null  ">
+                        <span th:if="${session.a} ne null">
+                        <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                        </span>
                     </span>
-                </span>
 
-                <span th:if="${session.b} ne null ">
-                    <span th:if="${session.a} eq null">
-                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="/user/userinfo/index" data-toggle="modal">用户：<span th:text="${session.user.userName}"></a>
-                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
+                    <span th:if="${session.b} ne null ">
+                        <span th:if="${session.a} eq null">
+                        <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="/user/userinfo/index" data-toggle="modal">用户：<span th:text="${session.user.userName}"></a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
+                        </span>
                     </span>
-                </span>
--->
+    -->
                 <span th:if="${session.user} eq null">
-                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
+                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
                     <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
                 </span>
                 <span th:if="${session.user} ne null">
@@ -195,33 +196,36 @@
 
 
 <!-- 图片轮播部分 -->
-<div class="carousel slide" id="lb" style="width:100%;">
-    <!-- 三个小按钮区域 -->
-    <ol class="carousel-indicators">
-        <li data-target="#lb" data-slide-to="0"></li>
-        <li data-target="#lb" data-slide-to="1"></li>
-        <li data-target="#lb" data-slide-to="2"></li>
-    </ol>
-    <!-- 图片区域 -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <img src="img/banner_001.jpg" >
-        </div>
-        <div class="item">
-            <img src="img/banner_002.jpg" >
-        </div>
-        <div class="item">
-            <img src="img/banner_003.jpg" >
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+
+</fieldset>
+
+
+<div class="layui-carousel" id="test10">
+    <div carousel-item >
+
+        <div th:each="p:${ps}">
+            <a th:href="${p.advertisingURL}"><img th:src="${p.advertisingImg}"></a>
         </div>
     </div>
-    <!-- 左右按钮 -->
-    <a href="#lb" data-slide="prev" class="carousel-control left">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-    <a href="#lb" data-slide="next" class="carousel-control right">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
 </div>
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+        //图片轮播
+        var ins = carousel.render({
+            elem: '#test10',
+            width: '100%', //设置容器宽度
+            height: '100%',
+            arrow: 'always', //始终显示箭头
+            anim: 'default', //切换动画方式
+            interval:3000,
+        });
+        ins.reload({elem: '#test10'});//重置轮播图
+    })
+</script>
+
 
 
 
@@ -289,14 +293,14 @@
 </div>
 
 <div class="line-and-laboratory">
-	<div class="container">
+    <div class="container">
         <div class="clearfix text-center item-header">
             <span class="line"></span>
             <span class="text-center item-title">学习路径</span>
             <span class="line"></span>
         </div>
-		<div class="tab-content">
-			<div class="tab-pane clearfix active" id="study-line">
+        <div class="tab-content">
+            <div class="tab-pane clearfix active" id="study-line">
 
 
                 <!--绑定课程体系-->
@@ -305,19 +309,19 @@
                 </div>
 
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="line-and-laboratory">
-	<div class="container">
+    <div class="container">
         <div class="clearfix text-center item-header">
             <span class="line"></span>
             <div class="text-center item-title">最热课程</div>
             <span class="line"></span>
         </div>
-		<div class="clearfix courses" id="courseFour">
+        <div class="clearfix courses" id="courseFour">
 
             <!--============================================-->
             <!--============================================-->
@@ -325,47 +329,47 @@
             <!--============================================-->
             <!--============================================-->
 
-<!--            <div class="col-md-3 col-sm-6  course">-->
-<!--    <a class="course-box" href="courses/show.html">-->
-<!--        <div class="sign-box">-->
+            <!--            <div class="col-md-3 col-sm-6  course">-->
+            <!--    <a class="course-box" href="courses/show.html">-->
+            <!--        <div class="sign-box">-->
 
 
 
-<!--            <i class="fa fa-star-o course-follow pull-right"-->
-<!--                data-follow-url="/courses/1/follow"-->
-<!--                data-unfollow-url="/courses/1/unfollow"  style="display:none"  ></i>-->
+            <!--            <i class="fa fa-star-o course-follow pull-right"-->
+            <!--                data-follow-url="/courses/1/follow"-->
+            <!--                data-unfollow-url="/courses/1/unfollow"  style="display:none"  ></i>-->
 
-<!--        </div>-->
-<!--        <div class="course-img">-->
+            <!--        </div>-->
+            <!--        <div class="course-img">-->
 
-<!--            <img alt="Linux 基础入门（新版）" src="/user/img/ncn1.jpg">-->
+            <!--            <img alt="Linux 基础入门（新版）" src="/user/img/ncn1.jpg">-->
 
-<!--        </div>-->
+            <!--        </div>-->
 
-<!--        <div class="course-body">-->
-<!--            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Linux 基础入门（新版）">Linux 基础入门（新版）</span>-->
-<!--        </div>-->
-<!--        <div class="course-footer">-->
-<!--			<span class="course-per-num pull-left">-->
-<!--                <i class="fa fa-users"></i>-->
+            <!--        <div class="course-body">-->
+            <!--            <span class="course-title" data-toggle="tooltip" data-placement="bottom" title="Linux 基础入门（新版）">Linux 基础入门（新版）</span>-->
+            <!--        </div>-->
+            <!--        <div class="course-footer">-->
+            <!--			<span class="course-per-num pull-left">-->
+            <!--                <i class="fa fa-users"></i>-->
 
-<!--                85157-->
+            <!--                85157-->
 
-<!--			</span>-->
+            <!--			</span>-->
 
 
 
-<!--        </div>-->
-<!--    </a>-->
-<!--</div>-->
+            <!--        </div>-->
+            <!--    </a>-->
+            <!--</div>-->
 
-		</div>
+        </div>
         <div class="clearfix item-footer">
             <div class="pull-right watch-all">
                 <a href="/user/courseSearch">查看更多 ></a>
             </div>
         </div>
-	</div>
+    </div>
 </div>
 
 
@@ -373,50 +377,68 @@
 
 
 
-	<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
-				</div>
-				<div class="modal-body">
+<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
+            </div>
+            <div class="modal-body">
 
-                        <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
+                <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
 
-					<div id="msg-modal"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div id="msg-modal"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
-		<div class="modal-dialog" rolw="document">
-		</div>
-	</div>
-	<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">注意</h4>
-				</div>
-				<div class="modal-body">
-				</div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog" rolw="document">
+    </div>
+</div>
+<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">注意</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 
 
+
+<script>
+    //修改手机号
+    function ms(){
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            var index = layer.open({
+                type: 1,
+                title: '修改手机号',
+                maxWidth: 400,
+                shadeClose: true,
+                content: $("#sjpassword"),
+                end:function () {
+                    $("#sjpassword").attr("style","display:none;");//隐藏
+                }
+            });
+        });
+    }
+
+</script>
 
 
 
@@ -450,13 +472,19 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-lock" style="margin:0;"></i>
                                     </div>
-                                    <input name="password" class="form-control" id="upwd" type="password" placeholder="请输入密码">
+                                    <input name="password" class="form-control" id="upwd" type="password" placeholder="请输入密码" />
                                 </div>
                             </div>
 
                             <div class="form-group remember-login">
-                                <a class="pull-right" href="reset_password/index.html">忘记密码？</a>
+                                <a href="/user/zhpasssword">忘记密码？</a>
                             </div>
+                            <!--&lt;!&ndash; 手机号找回密码 &ndash;&gt;
+                          <div id="sjpassword" style="display: none">
+
+                                          <a ><button type="button" class="layui-btn layui-btn-lg layui-btn-normal">手机号找回密码</button></a>
+
+                          </div>-->
                             <div class="form-group">
                                 <input class="btn btn-primary" name="submit" type="button" onclick="loginChak()" value="进入实验楼">
                             </div>
@@ -510,29 +538,30 @@
             </div>
         </div>
     </div>
-    </div>
-    <script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
+</div>
+<script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
 
-    <script src="/user/static/ace/1.2.5/ace.js"></script>
-    <script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
-    <script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
-    <script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
-    <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
-    <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-    <script src="/user/static/videojs/video.min.js"></script>
-    <script src="/userjs/zc.js"></script>
-    <script src="/userjs/login.js"></script>
-    <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<script src="/user/static/ace/1.2.5/ace.js"></script>
+<script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
+<script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
+<script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="/user/static/videojs/video.min.js"></script>
+<script src="/userjs/zc.js"></script>
+<script src="/userjs/login.js"></script>
+<script src="/userjs/index.js"></script>
+<script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
-    <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
-    <script>
-        Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
-            release: '3.12.13'
-        }).install();
-    </script>
+<script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
+<script>
+    Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
+        release: '3.12.13'
+    }).install();
+</script>
 
 
 
@@ -541,7 +570,7 @@
 
 
 <div id="jinja-data"
-    data-post-url="/registercheck"
+     data-post-url="/registercheck"
 ></div>
 
 <script src="/user/app/dest/frontend/index.js?=2016121272249"></script>
@@ -622,19 +651,19 @@
         <script>
             var _hmt = _hmt || [];
             (function() {
-             var hm = document.createElement("script");
-             hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
-             var s = document.getElementsByTagName("script")[0];
-             s.parentNode.insertBefore(hm, s);
-             })();
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
         </script>
         <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-89338452-1', 'auto');
-        ga('send', 'pageview');
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-89338452-1', 'auto');
+            ga('send', 'pageview');
         </script>
         <!-- 轮播图自动切换 -->
         <script type="text/javascript">
@@ -644,7 +673,7 @@
         </script>
 
         <!--映入首页Index.js-->
-<!--        <script type="text/javascript" charset="UTF-8" src="/userjs/userIndex.js"></script>-->
+        <!--        <script type="text/javascript" charset="UTF-8" src="/userjs/userIndex.js"></script>-->
         <script type="text/javascript">
             $(function () {
                 //绑定学习路径数据

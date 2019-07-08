@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
@@ -37,7 +38,7 @@ public class MessageUtil {
         message.setMessagePid(messagePid);
         message.setMessageName("系统消息");
         message.setMessageContent(msg);//内容
-        message.setMessageTime(new Date().toLocaleString());
+        message.setMessageTime(new SimpleDateFormat("YYYY-MM-dd").format(new Date()));
         message.setMessageState(1);
         try {
             int i = messageService.addMessage(message);

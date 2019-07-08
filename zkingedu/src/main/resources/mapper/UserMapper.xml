@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
-   <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--用户接口Mapper-->
 
@@ -10,6 +10,11 @@
       select * from t_user a, t_role b ,t_permission c ,t_user_role d ,t_role_permission e where a.uid=d.uid
 and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     </select>-->
+    <!--sql字段-->
+    <sql id="Usersql">
+       user_id,user_name,user_password,user_integrsl,user_state,user_IP,user_lastTime,
+       user_regTime,user_openid,user_phone,user_img,user_email,user_cwcs
+   </sql>
     <!-- 判断重复-->
     <select id="pdcf" resultType="String" parameterType="String">
         select user_phone from t_user where user_phone=#{phone}
@@ -54,8 +59,6 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <select id="getopenid" resultType="user">
         select * from t_user where user_openid=#{openid} and user_state=0
     </select>
-
-
     <!--/**
      * 查询用户积分的方法
      */
@@ -63,12 +66,10 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <select id="findIntegrsl" resultType="java.lang.Integer">
         select user_integrsl from t_user where user_id = #{userID}
     </select>
-
     <!-- 根据openid修改用户-->
     <update id="updateOpenid" >
         update t_user set user_password=#{password},user_phone=#{phone} where user_openid=#{openid}
     </update>
-
     <!-- 根据手机号绑定openid -->
     <update id="updateOpenids">
         update t_user set  user_openid=#{openid},user_ip=#{ip} where user_phone=#{phone}
@@ -77,23 +78,37 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <update id="updateupload">
         update  t_user set user_img=#{upload} where user_id=#{uid}
     </update>
-
-
-
-
-    <!--Sql Colum-->
-    <sql id="userSql">
-        user_id,user_name,user_password,user_integrsl,user_state,user_ip,user_lastTime,user_regTime,user_openid,user_phone,user_img,user_email,user_cwcs
-    </sql>
-
-
-    <!--根据用户id  查询用户信息-->
-    <select id="getUserById" resultType="user">
-        select <include refid="userSql"/> from t_user where user_id=#{id}
+    <!-- 根据手机号修改手机号-->
+    <update id="updatePhone">
+        update t_user set user_phone=#{newphone} where user_phone=#{oldphone}
+    </update>
+    <!-- 根据用户修改邮箱-->
+    <update id="updateEamil">
+        update t_user set user_email=#{newEamil} where user_id=#{uid}
+    </update>
+    <!-- 判断邮箱不能重复 -->
+    <select id="cfEamil" resultType="String">
+        select user_email from t_user where user_email=#{Email}
     </select>
-
-    <!--根据用户id修改用户积分的方法-->
-    <update id="updateUserIntegral" parameterType="integer">
-        update t_user set user_integrsl=user_integrsl - #{CourseIntegral} where user_id = #{userID}
+    <!-- 查询所有用户的信息 -->
+    <select id="getAll"  resultType="user" parameterType="user">
+        select <include refid="Usersql"/> from t_user  where 1=1
+        <if test="userName !=null and userName!=''">
+            and user_name like '%${userName}%'
+        </if>
+        <if test="userPhone !=null and userPhone!=''">
+            and user_phone =#{userPhone}
+        </if>
+        <if test="userEmail !=null and userEmail!=''">
+            and user_email =#{userEmail}
+        </if>
+    </select>
+    <!-- 根据用户id解封-->
+    <update id="updatejf">
+        update t_user set user_state=0 where user_id=#{uid}
+    </update>
+    <!-- 根据用户id冻结用户-->
+    <update id="updateSpase">
+        update t_user set user_state=1 where user_id=#{uid}
     </update>
 </mapper>

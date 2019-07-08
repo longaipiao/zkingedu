@@ -5,4 +5,51 @@
 
     <!--答案接口Mapper-->
 
+    <sql id="Answersql">
+        answer_id,answer_tid,answer_abcd,answer_content,answer_state
+    </sql>
+    <!--根据题目id查询所有的答案-->
+    <select id="getAll" resultType="answer">
+        select <include refid="Answersql"/> from t_answer where answer_tid=#{tid}
+    </select>
+
+    <!--批量增加答案-->
+    <insert id="addAnswer" >
+        insert into t_answer(answer_tid,answer_abcd,answer_content,answer_state)
+        values
+        <foreach collection="ls" item="item" separator=",">
+            (#{item.answerTid},#{item.answerAbcd},#{item.answerContent},#{item.answerState})
+        </foreach>
+    </insert>
+
+    <!--删除答案-->
+    <delete id="deletedaan">
+        delete from t_answer where answer_tid=#{tid}
+    </delete>
+
+    <!--修改答案a-->
+    <update id="uppdatedaana">
+        update t_answer  set
+            answer_abcd=#{answerAbcd},answer_content=#{answerContent},answer_state=#{answerState}
+            where answer_tid=#{answerTid} and answer_abcd=#{answerAbcd}
+    </update>
+    <!--修改答案B-->
+    <update id="uppdatedaanb">
+        update t_answer  set
+            answer_abcd=#{answerAbcd},answer_content=#{answerContent},answer_state=#{answerState}
+            where answer_tid=#{answerTid} and answer_abcd=#{answerAbcd}
+    </update>
+    <!--修改答案c-->
+    <update id="uppdatedaanc">
+        update t_answer  set
+            answer_abcd=#{answerAbcd},answer_content=#{answerContent},answer_state=#{answerState}
+            where answer_tid=#{answerTid} and answer_abcd=#{answerAbcd}
+    </update>
+    <!--修改答案d-->
+    <update id="uppdatedaand">
+        update t_answer  set
+            answer_abcd=#{answerAbcd},answer_content=#{answerContent},answer_state=#{answerState}
+            where answer_tid=#{answerTid} and answer_abcd=#{answerAbcd}
+    </update>
+
 </mapper>

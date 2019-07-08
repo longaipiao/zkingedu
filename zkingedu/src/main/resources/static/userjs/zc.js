@@ -39,7 +39,7 @@ function zc() {
                 }
                 else{
                     if(s!=captcha_v){
-                       alert("验证码错误")
+                        layer.alert("验证码错误")
                     }
                     else{
                         //注册方法
@@ -53,12 +53,12 @@ function zc() {
                             success: function (data) {
                                 if(data==1){
                                     $("#sd").html("");
-                                    alert("注册成功")
+                                    layer.alert("注册成功")
                                     location.href="/user/";
                                 }
                             },
                             error:function () {
-                                alert("注册失败")
+                                layer.alert("注册失败")
                             }
                         })
                     }
@@ -127,11 +127,11 @@ function qqlogins() {
         },
         success:function (data) {
             if (data == 1) {
-                alert("该手机号没有注册该平台")
+                layer.alert("该手机号没有注册该平台")
             }
             else{
                 if(s!=captcha_v5){
-                    alert("验证码错误")
+                    layer.alert("验证码错误")
                 }else {
                     $.ajax({
                         url: "/user/yjqqlogin",
@@ -141,10 +141,10 @@ function qqlogins() {
                         },
                         success: function (sh) {
                             if (sh==1) {
-                                alert("绑定成功");
+                                alert("绑定成功")
                                 location.href = "/user/";
                             } else if(sh==2) {
-                                alert("登入失败")
+                                layer.alert("登入失败")
                             }
                         }
                     })
@@ -152,9 +152,7 @@ function qqlogins() {
             }
         },
     })
-
 }
-
 
 
 var time=60;
@@ -163,6 +161,7 @@ var time=60;
         var phones=$("#phone").val();
         //手机号验证
         var pdphones=/^1[3-9]\d{9}$/;
+        alert(phones);
         if(""==phones){
             alert("手机号不能为空")
         }
@@ -177,26 +176,25 @@ var time=60;
                     phone: phones,
                 },
                 success:function(n) {
+                    alert("进来了");
                     alert(n);
                     s=n;
-                    timeStart();
+                    timeStart1();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.alert('注册失败');
                 }
             });
         }
     });
 
 
-
-
-function timeStart(){
+function timeStart1(){
     if(time>1){
         $('#sendPhone').css("pointer-events","none");
         time=time-1;
         $('#sendPhone').text("重新获取("+time+")");
-        setTimeout(timeStart,1000);
+        setTimeout(timeStart1,1000);
     }else{
         time=60;
         $('#sendPhone').css("pointer-events","auto");
