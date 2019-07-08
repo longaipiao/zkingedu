@@ -1,35 +1,47 @@
 package com.zking.zkingedu.common.Aop;
 
+import com.zking.zkingedu.common.model.Advertising;
+import com.zking.zkingedu.common.service.AdvertisingService;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/user")
 public class job {
+    @Autowired
+    private AdvertisingService advertisingService;
+
+    @Autowired
+    private Advertising advertising;
 
     @RequestMapping(value = "/")
-    public String tz(){
-        System.out.println("进来了");
+    public String tz(Model m){
+        ModelAndView mv = new ModelAndView();
+        List<Advertising> alls = advertisingService.getAlls();
+        m.addAttribute("ps",alls);
         return "user/index";
     }
+
+
 
 
     @RequestMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
     @ResponseBody
     public ResultUtil uploadFile(MultipartFile file, HttpServletRequest req) {
+        System.out.println("进来了");
         if (file == null) {
 
         }

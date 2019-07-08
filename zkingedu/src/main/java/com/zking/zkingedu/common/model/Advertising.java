@@ -23,5 +23,9 @@ public class Advertising implements Serializable {
     private String advertisingURL;
     //广告状态0正常1封禁
     private Integer advertisingState;
+    //广告标题
+    private String advertisingName;
+    //广告时间
+    private String advertisingTime;
 
 }

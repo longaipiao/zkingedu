@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class WebLogAcpect {
 
-    /*@Resource
+    @Resource
     private UserService userService;
 
     @Autowired
@@ -30,9 +30,9 @@ public class WebLogAcpect {
 
 
 
-    *//**
+    /**
      * 定义切入点，切入点为com.example.aop下的所有函数
-     *//*
+     */
     @Pointcut("execution(* com.zking.zkingedu.common.controller.*.*(..))")
     public void  test(){
 
@@ -61,8 +61,8 @@ public class WebLogAcpect {
                     session.setAttribute("a",1);
 
 
-                   *//* session.setAttribute("ip",IpAddress.getIpAddr(request));
-                    session.setAttribute("sjk",user1.getUserIP());*//*
+                    session.setAttribute("ip",IpAddress.getIpAddr(request));
+                    session.setAttribute("sjk",user1.getUserIP());
                     return false;
                 }catch (IOException e){
                     e.printStackTrace();
@@ -71,6 +71,6 @@ public class WebLogAcpect {
         }
         return  true;
 
-    }*/
+    }
 
 }

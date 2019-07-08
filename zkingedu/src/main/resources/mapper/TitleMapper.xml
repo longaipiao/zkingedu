@@ -1,9 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zking.zkingedu.common.dao.AdvertisingDao">
+<mapper namespace="com.zking.zkingedu.common.dao.TitleDao">
 
     <!--题目接口Mapper-->
+    <sql id="titlesql">
+        title_id,title_cid,title_content,title_describe,title_time,title_state
+    </sql>
+
+    <sql id="Answersql">
+        answer_id,answer_tid,answer_abcd,answer_content,answer_state
+    </sql>
+
+    <!--查询所有的题目条件-->
+    <select id="getAll" resultType="title">
+        select * from t_title where 1=1
+        <if test="titleCid !=null and titleCid!=''">
+            and title_cid=${titleCid}
+        </if>
+    </select>
+
+    <!--查询所有的题目-->
+    <select id="getAlls" resultType="title">
+        select * from t_title where title_id=#{tid}
+    </select>
+
+    <!--增加题目-->
+    <insert id="addTitle"  useGeneratedKeys="true" keyProperty="titleID">
+        insert into t_title(title_cid,title_content,title_describe,title_time,title_state)
+        values (#{titleCid},#{titleContent},#{titleDescribe},#{titleTime},#{titleState})
+    </insert>
+
+    <!--修改题目开启状态-->
+    <update id="updatekq">
+        update t_title set title_state=0 where title_id=#{tid}
+    </update>
+
+    <!--修改题目关闭状态-->
+    <update id="updategb">
+        update t_title set title_state=1 where title_id=#{tid}
+    </update>
+
+    <!--删除题目-->
+    <delete id="deletetim">
+        delete from t_title where title_id=#{tid}
+    </delete>
+
+    <!--修改题目-->
+    <update id="updatetim">
+        update t_title set title_content=#{titleContent},title_describe=#{titleDescribe}
+        where title_id=#{titleID}
+    </update>
+    
+
 
 
 </mapper>

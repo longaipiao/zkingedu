@@ -3,10 +3,15 @@ package com.zking.zkingedu.common.dao;
 import com.zking.zkingedu.common.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户接口
  */
 public interface UserDao {
+    //查询所有的用户信息并且分页
+    public List<User> getAll(User user);
+
     //手机号码重复
     String pdcf(String phone);
     //注册
@@ -33,9 +38,16 @@ public interface UserDao {
     Integer updateOpenids(@Param("phone") String phone,@Param("openid") String openid,@Param("ip") String ip);
     //根据用户id修改图片
     Integer updateupload(@Param("uid") Integer uid,@Param("upload") String upload);
-
-
-
+    //根据手机号修改手机号
+    Integer updatePhone(@Param("oldphone")String oldphone,@Param("newphone") String newphone);
+    //根据邮箱修改邮箱
+    Integer updateEamil(@Param("uid")Integer uid,@Param("newEamil") String newEamil);
+    //判断邮箱不能重复
+    String cfEamil(@Param("Email")String Email);
+    //根据用户id封禁
+    Integer updateSpase(@Param("uid") Integer uid);
+    //根据用户id解封
+    Integer updatejf(@Param("uid") Integer uid);
 
     /**
      * 查询用户积分的方法
