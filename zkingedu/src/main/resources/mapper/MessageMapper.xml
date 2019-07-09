@@ -28,7 +28,12 @@
 
     <!--查询有多少条消息记录-->
     <select id="findCountjl" parameterType="integer" resultType="integer">
-        select COUNT(message_id) from t_message where message_uid1 = #{userID}
+        select COUNT(message_id) from t_message where message_uid1 = #{userID} and message_state = 1
+    </select>
+
+    <!--根据消息id查询评论id-->
+    <select id="findMessahePid" resultType="java.lang.Integer" parameterType="integer">
+        select message_pid from t_message where message_id = #{messageId}
     </select>
 
 </mapper>

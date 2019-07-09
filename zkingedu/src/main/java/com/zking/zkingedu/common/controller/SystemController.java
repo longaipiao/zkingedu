@@ -1,8 +1,11 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.dao.ScommentDao;
+import com.zking.zkingedu.common.model.Emp;
+import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.System;
 import com.zking.zkingedu.common.service.ScommentService;
+import com.zking.zkingedu.common.service.LogService;
 import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +35,14 @@ public class SystemController {
 
     @Autowired
     private SystemService systemService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
 
     @Autowired
@@ -95,13 +109,21 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/addSystem")
-    public ResultUtil addSystem(System system) {
+    public ResultUtil addSystem(System system, HttpServletRequest request) {
         int i = 0;
         try {
             system.setSystemState(0);//状态默认上架
             system.setSystemFid(0);//一级体系  父id默认0
             i = systemService.adminAddSystem(system);
             if (i > 0) {
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了体系，体系id为："+system.getSystemID());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("添加体系成功");
             }
             else{
@@ -134,7 +156,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/updateSystemState")
-    public ResultUtil updateSystemState(boolean state,Integer systemId){
+    public ResultUtil updateSystemState(boolean state,Integer systemId,HttpServletRequest request){
         try {
             Integer stateid=0;
             if(state){
@@ -145,6 +167,14 @@ public class SystemController {
             }
             int i = systemService.updateSystemState(stateid, systemId);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系状态："+state+"，体系id为："+systemId);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("修改成功");
             }
             return ResultUtil.error("您的操作过于频繁，请稍后再试...");
@@ -186,10 +216,18 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/editSystem")
-    public ResultUtil updateSystem(System system){
+    public ResultUtil updateSystem(System system,HttpServletRequest request){
 //        log.info("接收的数据：==============================="+system);
         int i = systemService.updateSystem(system);
         if(i>0){
+            //放入日志
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
+            mylog.setEmp(emp);
+            mylog.setLogTime(time);
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系，体系id为："+system.getSystemID());
+            mylog.setLogDetails(stringBuilder.toString());
+            logService.addLog(mylog);
+            //放入日志结束
             return ResultUtil.ok("修改成功");
         }
         return ResultUtil.error("您的操作过于频繁....");
@@ -239,11 +277,19 @@ public class SystemController {
     @Transactional
     @ResponseBody
     @RequestMapping("/addSystemStage")
-    public ResultUtil adminAddSystemStage(@RequestParam("fid")Integer fid,@RequestParam("stageName")String stageName){
+    public ResultUtil adminAddSystemStage(@RequestParam("fid")Integer fid,@RequestParam("stageName")String stageName,HttpServletRequest request){
         int i=0;
         try {
             i = systemService.addSystemStage(fid, stageName);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了体系阶段，体系父id为："+fid+"，体系阶段名为"+stageName);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("添加成功");
             }
             return ResultUtil.error("系统繁忙，请稍后再试");
@@ -264,11 +310,19 @@ public class SystemController {
     @Transactional
     @ResponseBody
     @RequestMapping("/updateStageName")
-    public  ResultUtil adminUpdateStageName(@RequestParam("sid")Integer sid,@RequestParam("stageName")String stageName){
+    public  ResultUtil adminUpdateStageName(@RequestParam("sid")Integer sid,@RequestParam("stageName")String stageName,HttpServletRequest request){
         int i=0;
         try {
             i = systemService.updateSystemAndStageBySid(sid, stageName);
             if(i>0){
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系阶段名，体系阶段id为："+sid);
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("修改成功");
             }
             return ResultUtil.error("您的操作过于频繁");

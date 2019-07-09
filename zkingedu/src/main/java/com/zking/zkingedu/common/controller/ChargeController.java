@@ -6,9 +6,12 @@ import com.zking.zkingedu.common.model.Bill;
 import com.zking.zkingedu.common.model.Charge;
 import com.zking.zkingedu.common.service.BillService;
 import com.zking.zkingedu.common.service.ChargeService;
+import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.utils.PayUtils;
 import com.zking.zkingedu.common.utils.ResponseUtil;
+import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,10 +46,17 @@ public class ChargeController {
     @Resource
     private BillService billService;
 
+    @Resource
+    private UserService userService;
+
     @Autowired
     private Charge charge;
     @Autowired
     private Bill bill;
+
+
+
+
 
 
     /**
@@ -62,29 +72,43 @@ public class ChargeController {
      */
     @RequestMapping(value = "/pay")
     public String aliPay(String outTradeNo, String chargeIntegral, String chargeMoney, String body, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入充值积分的方法");
         // 为防止订单号重否 此处模拟生成唯一订单号
         outTradeNo = PayUtils.createUnilCode();
 //        //log.info("获取金额和积分");
         String Money = request.getParameter("chargeMoney");
         String Integral = request.getParameter("chargeIntegral");
 //        //log.info("开始增加充值记录表的数据");
-        charge.setChargeUid(1);//用户id
+        charge.setChargeUid(SessionUtil.getUserById());//用户id
         charge.setChargeMoney(Double.parseDouble(Money));//收入金额
         charge.setChargeIntegral(Integer.parseInt(Integral));//充值积分
         //充值时间
         charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         charge.setChargeState(1);//状态
-        chargeService.addCharge(charge);//开始执行充值的方法
+        int i = chargeService.addCharge(charge);//开始执行充值的方法
 //        //log.info("结束增加充值记录表的数据");
+        if(i>0){
+            log.info("****充值记录表成功******");
+            //修改用户的积分的方法
+            int i1 = userService.updateIntegral(Integer.parseInt(Integral), SessionUtil.getUserById());
+            if(i1>0){
+                log.info("*****修改用户积分成功******");
+            }else{
+                log.info("****充值记录表失败******");
+            }
+        }else{
+            log.info("****充值记录表失败******");
+        }
 
 //        //log.info("开始增加账单表的数据");
-        bill.setBillUid(1);//用户id
+        bill.setBillUid(SessionUtil.getUserById());//用户id
         bill.setBillType(1);//充值状态
         bill.setBillIntegral(Integer.parseInt(Integral));//充值积分
         //账单时间
         bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         //账单内容
         bill.setBillContent("本次在本平台消费金额为"+Double.parseDouble(Money)+"元，"+"充值积分为"+Integer.parseInt(Integral)+",充值完成。");
+        bill.setBillState(1);//状态
         billService.addBill(bill);
         //log.info("结束增加账单表的数据");
         //支付宝支付
@@ -116,7 +140,7 @@ public class ChargeController {
     @ResponseBody
     public Map<String,Object> findcharge(Integer page,Integer limit){
         //log.info("***********开始查询充值记录表的数据**************");
-        PageInfo<Charge> charge = chargeService.findCharge(1,page,limit);
+        PageInfo<Charge> charge = chargeService.findCharge(SessionUtil.getUserById(),page,limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);

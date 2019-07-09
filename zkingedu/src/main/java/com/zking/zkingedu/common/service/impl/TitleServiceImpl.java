@@ -51,4 +51,15 @@ public class TitleServiceImpl implements TitleService {
     public Integer updatetim(Title title) {
         return titleDao.updatetim(title);
     }
+
+
+    /**
+     * 查询所有题库
+     * @param title
+     * @return
+     */
+    @Override
+    public List<Title> gettitles(Title title) {
+        return titleDao.gettitles(title);
+    }
 }

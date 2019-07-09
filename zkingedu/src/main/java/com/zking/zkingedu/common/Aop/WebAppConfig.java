@@ -41,6 +41,7 @@ public class WebAppConfig implements HandlerInterceptor {
             User user = (User)request.getSession().getAttribute("user");
             User user2 = userService.getUser(user.getUserID());
             if (!IpAddress.getIpAddr(request).equals(user2.getUserIP())){
+                session.setAttribute("atts","b");
                 //重定向提交
                 response.sendRedirect("/user/");
                 return false;

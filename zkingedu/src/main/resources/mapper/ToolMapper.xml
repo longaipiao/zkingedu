@@ -23,7 +23,7 @@
 
 
     <!--增加工具的方法-->
-    <insert id="addTool" parameterType="com.zking.zkingedu.common.model.Tool">
+    <insert id="addTool" keyProperty="toolID" useGeneratedKeys="true" parameterType="com.zking.zkingedu.common.model.Tool">
         insert into t_tool(tool_name,tool_describe,tool_url,tool_img,tool_time)
         values(#{toolName},#{toolDescribe},#{toolURL},#{toolImg},#{toolTime})
     </insert>

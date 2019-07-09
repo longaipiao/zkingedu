@@ -63,12 +63,12 @@
                     ,{field: 'user_name', title: '用户名称', width:150}
                     ,{field: 'order_integral', title: '消费积分', width:180, sort: true}
                     ,{field: 'charge_time', title: '订单生成时间', width: 180}
-                    ,{field: 'order_cid',title: '操作', width: 150,
+                    ,{field: 'order_cid',title: '类型', width: 150,
                            templet:function(d){
                                if(0==d.order_cid){
                                    return "<span style='color: blue;'>全套</span>";
                                }else{
-                                   return '<span style="color: #c00;" onclick="myf('+d.order_cid+')">查询详情</span>';
+                                   return '<span style="color: #c00; cursor:pointer;" onclick="myf('+d.order_cid+')">查询详情</span>';
                                }
                            }}
                 ]

@@ -179,20 +179,21 @@
 							<span id="text-2">您在使用QQ账号登录卓京课堂-卓京教育</span>
 						</div>
 						<div class="binding">
-							<h5 class=""><a href="/user/binding" style="color:red;">绑定新账号</a><a href="/user/ybbinding" style="color:red;">绑定已有账号</a></h5>
+							<h5 class=""><button class="layui-btn" ><a href="/user/binding" style="color:white;">绑定新账号</a></button>&nbsp;&nbsp;&nbsp;<button class="layui-btn" ><a href="/user/ybbinding" style="color:white;">绑定已有账号</a></button></h5>
 							<form >
 								<div class="form-group">
 									<label>手机号:</label>
-									<input class="form-control col-xs-5" type="text" id="phone" placeholder="请输入手机号"/>
+									<input class="form-control col-xs-5" type="text" id="phone" placeholder="请输入手机号" style="width: 200px"/>
 								</div>
-								<div class="form-group">
+								<br/>
+								<div class="layui-form-item">
 									<label>密码:</label>
-									<input class="form-control" type="password"  id="password" placeholder="请输入密码" />
+									<input class="form-control" type="password"  id="password" placeholder="请输入密码" style="width: 200px" />
 								</div>
 								<div class="form-inline">
 									<div class="form-group">
 										<div class="input-group">
-											<input type="text" class="form-control"  id="captcha_v" placeholder="请输入验证码">
+											<input type="text" class="form-control"  id="captcha_v" placeholder="请输入验证码" style="width: 200px">
 										</div>
 									</div>
 									<div class="form-group">
@@ -200,7 +201,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<input class="btn btn-primary" name="submit" type="button" onclick="qqlogin()" value="绑定">
+									<input class="btn btn-primary" name="submit" type="button" onclick="qqlogin()" value="绑定" >
 								</div>
 							</form>
 						</div>

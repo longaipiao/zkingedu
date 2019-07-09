@@ -164,4 +164,6 @@ public class UrlController {
     public String Loglist(){
         return "/admin/html/log-list";
     }
+
+
 }

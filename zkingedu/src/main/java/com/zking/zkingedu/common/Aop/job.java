@@ -28,7 +28,8 @@ public class job {
     private Advertising advertising;
 
     @RequestMapping(value = "/")
-    public String tz(Model m){
+    public String tz(Model m,HttpServletRequest request){
+        request.getSession().setAttribute("atts","a");
         ModelAndView mv = new ModelAndView();
         List<Advertising> alls = advertisingService.getAlls();
         m.addAttribute("ps",alls);

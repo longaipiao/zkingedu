@@ -41,5 +41,11 @@ public interface MessageDao {
      */
     public int findCountjl(@Param("userID") Integer userID);
 
+    /**
+     * 根据消息id查询评论id
+     */
+    public int findMessahePid(@Param("messageId") Integer messageId);
+
+
 
 }
