@@ -25,4 +25,21 @@ public interface CategoryService {
     Integer updateName(@Param("aid") Integer aid,@Param("name") String name,@Param("fid") Integer fid);
     //根据id修改java初级名字
     Integer updateNames(@Param("aid") Integer aid,@Param("fid") Integer fid,@Param("name") String name);
+    /**
+     * 按ID查询题库类别
+     * @param categoryID
+     * @return
+     */
+    Category getcat(@Param("categoryID") Integer categoryID);
+    /**
+     * 查询所有的题库类别
+     * @return
+     */
+    List<Category> getCategory();
+    /**
+     * 查询所有的题库类别
+     * @return
+     */
+    List<Category> getCategoryall();
+    List<Category> gettikuzitype(@Param("categoryFID") Integer categoryFID);
 }

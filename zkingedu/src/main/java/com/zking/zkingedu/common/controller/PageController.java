@@ -1,14 +1,22 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.dao.EmpDao;
+import com.zking.zkingedu.common.model.Category;
 import com.zking.zkingedu.common.model.Emp;
+import com.zking.zkingedu.common.model.Title;
+import com.zking.zkingedu.common.service.AnswerService;
+import com.zking.zkingedu.common.service.CategoryService;
+import com.zking.zkingedu.common.service.TitleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -21,6 +29,14 @@ import java.util.List;
 @RequestMapping(value = "/user")
 @Slf4j
 public class PageController {
+
+    @Autowired
+    private TitleService titleService;
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Resource
     private EmpDao empDao;
@@ -144,6 +160,56 @@ public class PageController {
             return mv;//搜索论坛帖子
         }
     }
+
+    /**
+     * 前台考试界面
+     */
+
+
+//    /**
+//     * 按条件获取50题
+//     * @param title
+//     * @return
+//     */
+//    @RequestMapping("/gettitles")
+//    public String page13(Title title, Model model,HttpSession session){
+//        List<Title> gettitles = titleService.gettitles(title);//获取所有的题目加答案
+//        Category getcat = categoryService.getcat(title.getTitleCid());//按照ID获取类别表的对象
+//        model.addAttribute("getCategoryName",getcat.getCategoryName());//展示渲染
+//        model.addAttribute("titles",gettitles);//数据渲染
+//        session.setAttribute("titles",gettitles);//阅卷需要
+//        model.addAttribute("size",gettitles.size());//判空
+//        return "admin/jdy/grid";
+//    }
+
+
+    @RequestMapping(value = "/grids")
+    public String grid(Title title, Model model, HttpSession session){
+        List<Title> gettitles = titleService.gettitles(title);//获取所有的题目加答案
+        Category getcat = categoryService.getcat(title.getTitleCid());//按照ID获取类别表的对象
+        model.addAttribute("getCategoryName",getcat.getCategoryName());//展示渲染
+        model.addAttribute("titles",gettitles);//数据渲染
+        session.setAttribute("titles",gettitles);//阅卷需要
+        model.addAttribute("size",gettitles.size());//判空
+        System.err.println(getcat+"哈哈哈哈哈");
+        System.err.println(gettitles);
+        System.err.println(gettitles.size());
+        return "/user/grid";
+    }
+
+    /**
+     * 前台题库界面
+     */
+    @RequestMapping(value = "/tiku")
+    public String tiku(Model model,Integer categoryFID){
+        List<Category> category = categoryService.getCategory();//获取所有的题库类别
+        List<Category> gettikuzitype = categoryService.gettikuzitype(categoryFID);
+        model.addAttribute("gettikuzitype",gettikuzitype);//子
+        model.addAttribute("category",category);//父
+        return "/user/tiku";
+    }
+
+
 
 
 }

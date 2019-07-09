@@ -51,6 +51,31 @@
         update t_title set title_content=#{titleContent},title_describe=#{titleDescribe}
         where title_id=#{titleID}
     </update>
+
+    <!--题目接口Mapper-->
+    <select id="gettitles" resultMap="titlemap">
+        select * from t_title a,t_answer b where a.title_id = b.answer_tid
+        <if test="titleCid!=null">
+            and a.title_cid = #{titleCid}
+        </if>
+        ORDER BY a.title_id,b.answer_abcd
+    </select>
+
+    <resultMap id="titlemap" type="title">
+        <id property="titleID" column="title_id"></id>
+        <result property="titleCid" column="title_cid"></result>
+        <result property="titleContent" column="title_content"></result>
+        <result property="titleDescribe" column="title_describe"></result>
+        <result property="titleTime" column="title_time"></result>
+        <result property="titleState" column="title_state"></result>
+        <collection property="answerss" ofType="answer" column="answer_tid">
+            <id property="answerID" column="answer_id"></id>
+            <result property="answerTid" column="answer_tid"></result>
+            <result property="answerAbcd" column="answer_abcd"></result>
+            <result property="answerContent" column="answer_content"></result>
+            <result property="answerState" column="answer_state"></result>
+        </collection>
+    </resultMap>
     
 
 
