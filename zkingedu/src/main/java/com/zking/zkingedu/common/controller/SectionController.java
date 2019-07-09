@@ -1,5 +1,6 @@
 package com.zking.zkingedu.common.controller;
 
+import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.model.Course;
 import com.zking.zkingedu.common.model.Order;
 import com.zking.zkingedu.common.model.Section;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.System;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +51,16 @@ public class SectionController {
 
     @Autowired
     private Order order;
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     /**
      * 用户点击章节开始学习  视频播放
@@ -134,7 +150,7 @@ public class SectionController {
     @Transactional
     @ResponseBody
     @RequestMapping("/addSection")
-    public ResultUtil addSection(Section section){
+    public ResultUtil addSection(Section section, HttpServletRequest request){
 //        System.err.println("进来了==========================================");
 //        System.err.println("section = " + section);
         if(section==null){
@@ -144,6 +160,14 @@ public class SectionController {
             int i = sectionService.addSection(section);
             if(i>0){
                 courseService.editFreeAndInte(section.getSectionCid());
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了课程章节，课程id为："+section.getSectionCid()+"章节id为"+section.getSectionID());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("添加成功");
             }
             else{
@@ -178,12 +202,20 @@ public class SectionController {
      */
     @ResponseBody
     @RequestMapping("/updateSection")
-    public ResultUtil editSection(Section section){
+    public ResultUtil editSection(Section section,HttpServletRequest request){
         try {
             Section section1 = sectionService.getSectionById(section.getSectionID());//查询章节信息，获取课程id'
             int i = sectionService.updateSection(section);
             if(i>0){
                 courseService.editFreeAndInte(section1.getSectionCid());
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了课程章节，课程id为："+section1.getSectionCid()+"章节id为"+section.getSectionID());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("修改成功");
             }
             else{
@@ -205,12 +237,20 @@ public class SectionController {
     @Transactional
     @ResponseBody
     @RequestMapping(value = "/delSections")
-    public ResultUtil delSections(@RequestParam(value = "ids[]") List<Integer> ids){
+    public ResultUtil delSections(@RequestParam(value = "ids[]") List<Integer> ids,HttpServletRequest request){
         try {
             int i = sectionService.delSections(ids);
             if(i>0){
                 //更新  课程免费章节数  以及课程购买总积分
                 editCourseInteAndFree(ids);
+                //放入日志
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                mylog.setEmp(emp);
+                mylog.setLogTime(time);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了课程章节，章节id为"+ids.toString());
+                mylog.setLogDetails(stringBuilder.toString());
+                logService.addLog(mylog);
+                //放入日志结束
                 return ResultUtil.ok("操作成功");
             }
             return ResultUtil.error("您的操作过于频繁");
@@ -231,7 +271,7 @@ public class SectionController {
      */
     public int editCourseInteAndFree(List<Integer> ids)throws Exception{
         Integer secId = ids.get(ids.size()-1);
-        System.err.println("=========================章节id:"+secId);
+//        System.err.println("=========================章节id:"+secId);
         Section section = sectionService.getSectionById(secId);
         //开始更新课程数据
         int i = courseService.editFreeAndInte(section.getSectionCid());

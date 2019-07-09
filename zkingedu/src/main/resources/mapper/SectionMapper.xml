@@ -29,7 +29,7 @@
     </select>
 
 
-    <!--添加课程-->
+    <!--添加章节-->
     <insert id="addSection" useGeneratedKeys="true" keyProperty="sectionID">
         insert into t_section (section_cid,section_name,section_time,section_seq,section_inte,video_id)
         values (#{sectionCid},#{sectionName},now(),#{sectionSeq},#{sectionInte},#{videoId});

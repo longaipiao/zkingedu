@@ -1,46 +1,21 @@
 
 
-function yx(aa,bb){
-      $.ajax({
-          type:"post",
-          url:"/pst/updatePcat",
-          dataType:"json",
-          data:{
-              pzt:aa,
-              pid:bb
-          },
-          success:function(data){
-              if(data==1){
-                  inintdata();
-                  alert("对用户隐藏成功");
-              }
-              if (data==0){
-                  inintdata();
-                  alert("对用户显示成功");
-              }
-          },
-          error:function(jqXHR){
-              alert("发生错误："+ jqXHR.status);
-          }
-      });
-
-}
-
 
 //删除自己的帖子，假删
-function delPost(aa){
-    var t=confirm("你确定要删除帖子吗？");
+function delPostTz(aa){
+
+    var t=confirm("你确定要取消取消这个吗？");
     if (t==true) {
-       $.ajax({
+        $.ajax({
             type: "post",
-            url: "/pst/updatePState",
+            url: "/pst/deletecollec",
             dataType: "json",
             data: {
                 id: aa
             },
             success: function (data) {
                 if (data > 0) {
-                    inintdata();//开始刷新
+                    ini();//开始刷新
                 }
             },
             error: function (jqXHR) {
@@ -59,20 +34,20 @@ $(function () {
 
     //方法二则直接使分用layui-v2.0.2里面的页功能，没有用到core.js里面的方法
 
-  inintdata();
+    ini();
 
 
 });
 
-function inintdata() {
+function ini() {
     layui.use('laypage', function () {
         var laypage = layui.laypage;
         var config = {page: 1, pageSize: 5};
-        var url = "/pst/getAllposts";
+        var url = "/pst/getAllpbid";
         $.getJSON(url, config, function (res) {
             //alert(res);
             laypage.render({
-                elem: 'fy',//必须放id
+                elem: 'scfy',//必须放id
                 count: 100,
                 first: '首页',
                 last: '尾页',
@@ -116,25 +91,16 @@ function inintdata() {
             content += '</div>';
             content += '<div class="col-sm-10">';
             content += '<h4>';
-            content += '<a  class="question-item-title" href="/pst/userinfo?id=' + o.postID + '" target="_blank">"' + o.postName + '"</a>';
+            content += '<a  class="question-item-title" href="/pst/userinfo?id=' + o.postID + '" target="_blank">"' + o.post_name + '"</a>';
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';
-            content += '<a class="avatar" href="../user/13/study.html" target="_blank">' + o.postTime + '</a>';
+            content += '<a class="avatar" href="../user/13/study.html" target="_blank">' + o.post_time + '</a>';
 
-            content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i class="layui-icon">&#xe705;</i>' + o.postNum + '</span>'
+            content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i class="layui-icon">&#xe705;</i>' + o.post_num + '</span>'
             content += '</div>';
-            if (o.postState == 0) {
-                content += '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="' + o.postID + '" type="button" class="layui-btn layui-btn-primary" onclick="yx(' + o.postState + ',' + o.postID + ')">对用户隐藏</button>' +
-                    '</span>';
-            }
-            if (o.postState == 1) {
-                content += '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="' + o.postID + '" type="button" class="layui-btn layui-btn-primary" onclick="yx(' + o.postState + ',' + o.postID + ')">对用户显示</button>' +
-                    '</span>';
-            }
-            content += '<span><button  type="button" class="layui-btn layui-btn-primary" onclick="delPost(' + o.postID + ')">删除</button></span>'
+
+            content += '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button  type="button" class="layui-btn layui-btn-primary" onclick="delPostTz(' + o.post_id + ')">取消收藏</button></span>'
             content += ' </div>';
 
             content += ' </div>';
@@ -148,7 +114,7 @@ function inintdata() {
 
 
         });
-        $('#tbody').html(content);
+        $('#scsj').html(content);
     }
 
 }
