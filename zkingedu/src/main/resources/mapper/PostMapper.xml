@@ -6,8 +6,8 @@
     <!--帖子接口Mapper-->
      <insert id="addPost" parameterType="com.zking.zkingedu.common.model.Post">
               insert  into
-                          t_post(post_id,post_uid,post_name,post_content,post_time,post_state,post_category)
-              values (#{postID},#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory})
+                          t_post(post_uid,post_name,post_content,post_time,post_state,post_category,post_num)
+              values (#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory},#{postNum})
      </insert>
 
 <!--    获取所有分类的帖子-->
@@ -19,9 +19,9 @@
 
 <!--    根据自己的uid找到所有的帖子-->
     <select id="getAllPosts" parameterType="integer" resultType="com.zking.zkingedu.common.model.Post">
-               select post_id,post_name,post_time,post_state
+               select post_id,post_name,post_time,post_state,post_num
                                from t_post
-               where post_uid=#{postUid}
+               where post_uid=#{postUid} and post_state!=3
     </select>
 
 
@@ -42,19 +42,6 @@
     </select>
 
 
-    <!--<resultMap id="bass" type="com.zking.zkingedu.common.model.Tcomment">
-                <id property="tcommentID" column="tcomment_id"></id>
-                <result property="tcommentCid" column="tcomment_cid"></result>
-                <result property="tcommentUid" column="tcomment_uid"></result>
-                <result property="tcommentContent" column="tcomment_content"></result>
-                <result property="tcommentTime" column="tcomment_time"></result>
-                <result property="tcommentFid" column="tcomment_fid"></result>
-                <association property="user" javaType="com.zking.zkingedu.common.model.User">
-                               <id property="userID" column="user_id"></id>
-                               <result property="userImg" column="user_img"></result>
-                               <result property="userName" column="user_name"></result>
-                </association>
-    </resultMap>-->
 
 
 <!--    根据id找到所有的评论-->
@@ -66,8 +53,8 @@
 
 
 <!--    找到最大的楼主号-->
-<select id="getMaxlouZnum" resultType="integer" >
-           select MAX(tcomment_lounum) from t_tcomment
+<select id="getMaxlouZnum"  parameterType="integer" resultType="integer">
+           select IFNULL(MAX(tcomment_lounum),0) from t_tcomment where tcomment_cid=#{id}
 </select>
 
 <!--发表评论 -->
@@ -77,6 +64,192 @@
              value (#{tcommentCid},#{tcommentUid},#{tcommentContent},#{tcommentTime},#{tcommentFid},#{tcommentUid2},#{tcommentLounum})
 
     </insert>
+
+<!-- 删除评论表-->
+<delete id="deletePl" parameterType="integer">
+
+      DELETE from t_tcomment where tcomment_id=#{id};
+</delete>
+
+   <!--删除父评论的同时删除子评论-->
+    <delete id="deleteFpl" parameterType="integer">
+               DELETE from t_tcomment where tcomment_fid=#{id};
+    </delete>
+
+    <!--增加浏览量的方法-->
+    <insert id="addpostNum" parameterType="integer">
+             update t_post set
+                             post_num=post_num+1
+             where post_id=#{id}
+    </insert>
+
+
+<!--    根据uid查到点赞表-->
+    <select id="queryGive" parameterType="com.zking.zkingedu.common.model.Give" resultType="integer">
+         select count(*) from t_give where give_pid=#{givePid} AND give_uid=#{giveUid}
+    </select>
+
+<!--    根据uid和帖子id删除点赞表-->
+    <delete id="delGive" parameterType="com.zking.zkingedu.common.model.Give" >
+              delete  from
+                          t_give
+              where give_uid=#{giveUid} and  give_pid=#{givePid}
+    </delete>
+
+<!--    增加帖子表-->
+    <insert id="addGive" parameterType="com.zking.zkingedu.common.model.Give">
+             insert  into
+                        t_give(give_id,give_pid,give_uid,give_time)
+             values (#{giveID},#{givePid},#{giveUid},#{giveTime})
+    </insert>
+
+
+<!--  添加收藏-->
+<insert id="addCollection" parameterType="com.zking.zkingedu.common.model.Hoarding">
+           insert into
+                       t_collection(collection_zpid,collection_state,collection_uid,collection_time)
+           values (#{collectionZpid},2,#{collectionUid},now())
+</insert>
+
+<!--    取消收藏-->
+    <delete id="deleteCollention" parameterType="com.zking.zkingedu.common.model.Hoarding" >
+              delete  from
+                          t_collection
+              where collection_zpid=#{collectionZpid} and collection_state=#{collectionState} and collection_uid=#{collectionUid}
+    </delete>
+
+<!--查询收藏时否有-->
+    <select id="queryCollection" parameterType="com.zking.zkingedu.common.model.Hoarding" resultType="integer">
+             select count(*) from t_collection where collection_uid=#{collectionUid} and collection_zpid=#{collectionZpid} AND collection_state=#{collectionState}
+    </select>
+
+<!--    根据uid修改状态-->
+    <update id="update">
+              update t_post
+                           set post_state=#{yx}
+              where post_uid=#{uid} and post_id=#{pid}
+    </update>
+
+<!--根据用户id和pid找到状态-->
+    <select id="queryCate" resultType="integer">
+              select post_state
+                              from
+              t_post where post_uid=#{uid} and post_id=#{pid}
+    </select>
+
+    <!--根据用户id修改帖子状态-->
+    <update id="updatePostzt" >
+               update t_post
+                            set post_state=#{zt}
+               where post_uid=#{uid} and post_id=#{id}
+    </update>
+
+
+  <!--根据类别id和模糊查查找帖子-->
+    <select id="getPandU" resultType="java.util.HashMap">
+              select a.*,b.user_id,b.user_img,b.user_name,(select COUNT(tcomment_id) FROM t_tcomment where tcomment_cid=a.post_id) jishu
+                            from t_post a,t_user b
+                 where a.post_uid=b.user_id and post_state!=3
+        <if test="cid!=null ">
+            and a.post_category=#{cid}
+        </if>
+        <if test="nr!=null ">
+            and a.post_name like '%${nr}%'
+        </if>
+        ORDER BY a.post_num DESC
+
+    </select>
+
+
+<!--    根据uid查找到我的收藏帖子-->
+    <select id="getApstByUId" parameterType="integer" resultType="java.util.HashMap">
+               select a.post_id,a.post_name,a.post_time,a.post_num,c.user_img from
+                                         t_post a,t_collection b,t_user c
+            where b.collection_uid=#{uid} and collection_state=2 AND a.post_id=b.collection_zpid AND b.collection_uid=c.user_id
+    </select>
+
+
+<!--    批量删除分类-->
+    <delete id="deletePcts" parameterType="list">
+               delete  from
+                            t_pcata
+                where pc_id in
+        <foreach collection="list"  item="item"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <!--添加分类-->
+    <insert id="addPcts" parameterType="string">
+             insert  into t_pcata(pc_name)
+             values (#{pname})
+    </insert>
+
+<!--    根据uid修改 分类-->
+    <update id="updatePcts">
+                update t_pcata
+                              set pc_name=#{pname}
+                where pc_id=#{id}
+    </update>
+
+<!--    根据id删除分类，单个删除-->
+    <delete id="deletePc" parameterType="integer">
+              delete from t_pcata
+              where pc_id=#{id}
+    </delete>
+
+<!--    找到所有后台帖子-->
+<select id="gethtpost" resultType="hashmap">
+          select a.post_id,c.user_name,a.post_name,a.post_time,a.post_num,a.post_state,b.pc_name from t_post a,t_pcata b,t_user c
+                              where a.post_category=b.pc_id AND a.post_uid=c.user_id
+    <if test="puname!=null ">
+        and c.user_name like '%${puname}%'
+    </if>
+    <if test="pname!=null ">
+        and a.post_name LIKE '%${pname}%'
+    </if>
+    <if test="pcname!=null ">
+        and b.pc_name=#{pcname}
+    </if>
+    ORDER BY a.post_num DESC
+
+
+</select>
+
+<!--    根据帖子id修改状态-->
+    <update id="updatepSta3" parameterType="integer">
+               update t_post set post_state=3
+               where post_id=#{id}
+    </update>
+
+    <update id="updatepSta0" parameterType="integer">
+               update t_post set post_state=0
+               where post_id=#{id}
+    </update>
+
+
+<!--    根据帖子id删除所有的帖子-->
+    <delete id="deletepost" parameterType="integer">
+               delete  from
+                           t_post
+               where post_id=#{id}
+    </delete>
+
+
+<!--    根据帖子id删除所有的评论-->
+    <delete id="deleteTcomments" parameterType="integer">
+              DELETE FROM t_tcomment where tcomment_cid=#{id}
+
+    </delete>
+
+<!--    根据用户id获取用户名-->
+    <select id="queryUserByid" parameterType="integer" resultType="string">
+             select user_name
+                             from t_user
+             where user_id=#{id}
+    </select>
+
 
 
 </mapper>

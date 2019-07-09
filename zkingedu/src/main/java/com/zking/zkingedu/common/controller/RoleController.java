@@ -47,9 +47,8 @@ public class RoleController {
      */
     @RequestMapping(value = "/getRoles")
     @ResponseBody
-    public Object getMenus(int page, int limit, HttpServletRequest request) {
+    public Object getMenus(int page, int limit,@RequestParam("roleName")String roleName) {
         Page<Object> objects = PageHelper.startPage(page, limit);
-        String roleName = request.getParameter("roleName");
         if(roleName==null)
             roleName="";
         List<Role> roles = roleService.getRoles("%"+roleName+"%");

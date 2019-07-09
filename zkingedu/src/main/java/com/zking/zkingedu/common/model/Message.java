@@ -30,4 +30,5 @@ public class Message implements Serializable {
     private String messageTime;
     //状态1正常2下架
     private Integer messageState;
+
 }
