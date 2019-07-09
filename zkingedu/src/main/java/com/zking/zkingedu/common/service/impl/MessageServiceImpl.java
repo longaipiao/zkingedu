@@ -59,4 +59,15 @@ public class MessageServiceImpl implements MessageService {
     public int findCountjl(Integer userID) {
         return messageDao.findCountjl(userID);
     }
+
+    /**
+     * 根据消息id查询评论id
+     * @param messageId 消息id
+     * @return
+     */
+
+    @Override
+    public int findMessahePid(Integer messageId) {
+        return messageDao.findMessahePid(messageId);
+    }
 }

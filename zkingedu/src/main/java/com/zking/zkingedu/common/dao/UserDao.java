@@ -64,7 +64,15 @@ public interface UserDao {
 
 
     /**
-     *  根据用户id修改用户积分的方法
+     *  根据用户id 购买视频消费用户积分的方法
      */
     public void updateUserIntegral(@Param("CourseIntegral") Integer CourseIntegral,@Param("userID") Integer userID);
+
+
+    /**
+     *根据用户id 充值积分的方法
+     */
+    public int updateIntegral(@Param("CourseIntegral") Integer CourseIntegral,@Param("userID") Integer userID);
+
+
 }

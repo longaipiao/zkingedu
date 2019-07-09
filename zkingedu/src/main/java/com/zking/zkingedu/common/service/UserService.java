@@ -70,8 +70,15 @@ public interface UserService {
 
 
     /**
-     *  根据用户id修改用户积分的方法
+     *  根据用户id 消费用户积分的方法
      */
     public void updateUserIntegral(Integer CourseIntegral,Integer userID);
+
+
+    /**
+     *根据用户id 充值积分的方法
+     */
+    public int updateIntegral(Integer CourseIntegral, Integer userID);
+
 
 }

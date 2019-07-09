@@ -38,4 +38,10 @@ public interface MessageService {
      */
     public int findCountjl(Integer userID);
 
+
+    /**
+     * 根据消息id查询评论id
+     */
+    public int findMessahePid(Integer messageId);
+
 }

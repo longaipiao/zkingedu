@@ -61,12 +61,12 @@
                           ,{field: 'bill_time', title: '账单时间', width:180, sort: true}
                           ,{field: 'bill_content', title: '账单内容', width: 380}
                             //类型0收入1支出
-                          ,{field: 'bill_type',title: '操作', width: 150,
+                          ,{field: 'bill_type',title: '类型', width: 150,
                            templet:function(d){
-                              if(0==d.bill_type){
-                                  return "<span style='color: blue;'>支出</span>";
+                              if(1==d.bill_type){
+                                  return "<span style='color: blue;'>收入</span>";
                               }else{
-                                  return '<span style="color: #c00;">收入</span>';
+                                  return '<span style="color: #c00;">支出</span>';
                               }
                           }}
                       ]
