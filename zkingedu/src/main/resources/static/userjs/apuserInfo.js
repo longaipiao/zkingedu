@@ -3,7 +3,6 @@
 
     $(function () {
 
-
         /**
          * 获取消息的记录数   messageCount
          * 阿飘
@@ -13,7 +12,11 @@
             //alert(data.mess);
             var sa = data.mess;
             var a = ss+=sa;
-            $("#sss").html(a);
+            if(parseInt(a)==0){
+                $("#sss").html("  ");
+            }else{
+                $("#sss").html(a);
+            }
         });
 
 
@@ -293,7 +296,6 @@
                                 }else{
                                     content += '<span style="margin-left: 600px; color: #9E792E">已读消息</span>';
                                 }
-
                                 content += '<hr/>';
                                 content += '</div>';
                                 content += '</div>';
@@ -341,10 +343,10 @@
      */
     function ydzt(message_id) {
         var messageID = message_id;
-        alert(messageID);
+        //alert(messageID);
         $.post('/updateMessageState',{messageid:messageID},function (data) {
-            alert(data);
-            window.location.href = 'https://www.baidu.com';
+            //alert(data);
+            window.location.href = '/user/showCourse?sid='+data;
         });
 
 
