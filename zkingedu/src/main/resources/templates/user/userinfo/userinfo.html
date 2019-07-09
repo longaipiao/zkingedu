@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="author" content="Lei Shi">
-		<meta http-equiv="Cache-Control" content="o-transform">
-		<meta http-equiv="Cache-Control" content="no-siteapp">
-		<meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
-		<title>个人中心</title>
-		<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
-		<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
-		<meta content="实验楼,琛石科技" name="author">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Lei Shi">
+	<meta http-equiv="Cache-Control" content="o-transform">
+	<meta http-equiv="Cache-Control" content="no-siteapp">
+	<meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
+	<title>个人中心</title>
+	<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
+	<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
+	<meta content="实验楼,琛石科技" name="author">
 
 
 	<link rel="shortcut icon" href="favicon.ico">
@@ -24,22 +24,16 @@
 	<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
 	<script src="/layui/layui.js"></script>
 
-		<link rel="stylesheet" href="/user/layui/css/layui.css">
-		<script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
-
-		<script src="/user/layui/layui.js"></script>
-		<script src="/user/layui/lay/modules/laypage.js"></script>
-		<script src="/userjs/apuserInfo.js"></script>
-		<style>
+	<style>
 		@font-face {
 			font-family: "lantingxihei";
-			src: url("/user/fonts/FZLTCXHJW.TTF");
+
 		}
 
-        /* modal 模态框*/
-        #invite-user .modal-body {
-            overflow: hidden;
-        }
+		/* modal 模态框*/
+		#invite-user .modal-body {
+			overflow: hidden;
+		}
 		#invite-user .modal-body .form-label {
 			margin-bottom: 16px;
 			font-size:14px;
@@ -68,88 +62,88 @@
 		}
 		/* end modal */
 
-        .en-footer {
-            padding: 30px;
-            text-align: center;
-            font-size: 14px;
-        }
-    </style>
+		.en-footer {
+			padding: 30px;
+			text-align: center;
+			font-size: 14px;
+		}
+	</style>
 
-<style>
-	a:hover,
-    a:focus {
-        text-decoration: none;
-    }
-    span.label {
-        display: inline-block;
-        margin: 10px 3px 16px 3px;
-        padding: 6px 16px;
-        border: none;
-        font-size: 14px;
-        font-weight: 100;
-    }
-    span.label-default {
-        color: #999;
-        background: none;
-    }
-    span.label-success {
-        color: #0c9;
-        background: #E7F8F2;
-    }
-    .userinfo-banner [data-toggle="tooltip"] {
-        display: inline-block;
-        border-bottom: dashed 1px #999;;
-        color: #999 !important;
-    }
-	.certificate-item {
-		padding-top: 10px;
-	}
-	.certificate-item a {
-		color: #444;
-	}
-</style>
-	</head>
-	<body>
-		<nav class="navbar navbar-default navbar-fixed-top header">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse"
-					 aria-expanded="false">
-						<span class="sr-only">实验楼</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="/user/index.html">
-						<img src="/user/img/logo_03.png">
+	<style>
+		a:hover,
+		a:focus {
+			text-decoration: none;
+		}
+		span.label {
+			display: inline-block;
+			margin: 10px 3px 16px 3px;
+			padding: 6px 16px;
+			border: none;
+			font-size: 14px;
+			font-weight: 100;
+		}
+		span.label-default {
+			color: #999;
+			background: none;
+		}
+		span.label-success {
+			color: #0c9;
+			background: #E7F8F2;
+		}
+		.userinfo-banner [data-toggle="tooltip"] {
+			display: inline-block;
+			border-bottom: dashed 1px #999;;
+			color: #999 !important;
+		}
+		.certificate-item {
+			padding-top: 10px;
+		}
+		.certificate-item a {
+			color: #444;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top header">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse"
+					aria-expanded="false">
+				<span class="sr-only">实验楼</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/user/index.html">
+				<img src="/user/img/logo_03.png">
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="header-navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown active">
+					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+						课程
+						<span class="caret"></span>
 					</a>
-				</div>
-				<div class="collapse navbar-collapse" id="header-navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li class="dropdown active">
-							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-								课程
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a class="active" href="/user/courses/index.html">全部课程</a></li>
-								<li><a class="" href="/user/courses/index.html?status=preview">即将上线</a></li>
-								<li><a class="" href="/user/developer/index.html">开发者</a></li>
-							</ul>
-						</li>
-						<li class="">
-							<a href="/user/paths/index.html">路径</a>
-						</li>
-						<li class="">
-							<a href="/user/questions/index.html">讨论区</a>
-						</li>
-						<li class=" bootcamp new-nav logo-1111">
-							<a href="/user/bootcamp/index.html">训练营</a>
-						</li>
-						<li class=" new-nav logo-1111">
-							<a href="/user/vip/index.html">会员</a>
-						</li>
+					<ul class="dropdown-menu">
+						<li><a class="active" href="/user/courses/index.html">全部课程</a></li>
+						<li><a class="" href="/user/courses/index.html?status=preview">即将上线</a></li>
+						<li><a class="" href="/user/developer/index.html">开发者</a></li>
 					</ul>
+				</li>
+				<li class="">
+					<a href="/user/paths/index.html">路径</a>
+				</li>
+				<li class="">
+					<a href="/user/questions/index.html">讨论区</a>
+				</li>
+				<li class=" bootcamp new-nav logo-1111">
+					<a href="/user/bootcamp/index.html">训练营</a>
+				</li>
+				<li class=" new-nav logo-1111">
+					<a href="/user/vip/index.html">会员</a>
+				</li>
+			</ul>
 
 			<div class="navbar-right btns" style="margin: 12px;">
 				<img th:src="${session.user.userImg}" class="img-circle img-responsive" style="width:30px;height: 30px; display: inline" >
@@ -609,197 +603,20 @@
 													<div class="input-group">
 														<input type="text" name="captcha_v" class="form-control"  id="captcha_v" placeholder="请输入验证码">
 													</div>
-		<div class="container layout">
-			<div class="row">
-				<div class="col-md-2 layout-side" >
-					<ul class="list-group">
-						<div class="text-center">
-							<a href="#get1" class="list-group-item" id="zhongxin" >个人中心</a>
-							<a href="#get2" class="list-group-item" id="kecheng">我的课程</a>
-							<a href="#get3" class="list-group-item" id="huida">我的文章</a>
-							<a href="#get4" class="list-group-item" id="shoucang">我的收藏</a>
-							<a href="#get5" class="list-group-item" id="xiaoxi">消息中心
-								<i class="layui-icon" style="color: red">&#xe756;<em id="sss"></em></i>
-								<input type="hidden" id="messa"/>
-							</a>
-						</div>
-					</ul>
-					<ul class="list-group">
-						<div class="text-center">
-							<a href="#get6" class="list-group-item" id="xinxi">个人信息</a>
-							<a href="#get7" class="list-group-item" id="haoyou">我的资源</a>
-							<a href="#get8" class="list-group-item" id="chongzhi">会员充值</a>
-						</div>
-					</ul>
-				</div>
-				<div class="col-md-10 layout-body " id="get1">
-							<div class="content" role="tabpanel" >
-								<ul class="nav nav-tabs" rolw="tablist" id="nav">
-									<li role="presentation" class="active">
-										<a href="#yi" class="active">基本信息</a>
-									</li>
-									<li role="presentation">
-										<a href="#er" >修改密码</a>
-									</li>
-									<li role="presentation">
-										<a href="#san">我的课程</a>
-									</li>
-									<li role="presentation">
-										<a href="#si" id="dingdan">我的订单</a>
-									</li>
-									<li role="presentation">
-										<a href="#wu" id="chji">我的充值记录</a>
-								    </li>
-									<li role="presentation">
-										<a href="#liu" id="zhangdan">我的账单</a>
-								    </li>
-								</ul>
-
-								<div class="tab-content">
-									<div id="yi" class="tab-pane fade in active" style="height: 300px;">
-										<form class="form-horizontal">
-												  <div class="form-group">
-													<label for="inputEmail3" class="col-xs-4 control-label">昵称</label>
-													<div class="col-sm-3">
-													  <input type="text" class="form-control" id="inputEmail3" value="艰难人生">
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label for="inputName" class="col-xs-4 control-label">姓名</label>
-													<div class="col-xs-3">
-													  <input type="text" class="form-control" id="inputName" value="颜值帅">
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label for="inputAge" class="col-xs-4 control-label">年龄</label>
-													<div class="col-xs-3">
-													  <input type="text" class="form-control" id="inputAge" value="21">
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label for="inputShou" class="col-xs-4 control-label">手机号</label>
-													<div class="col-xs-3">
-													  <input type="text" class="form-control" id="inputShou" value="123456789101">
-													</div>
-												  </div>
-												  <div class="form-group">
-													<label for="inputEmail" class="col-xs-4 control-label">邮箱</label>
-													<div class="col-xs-3">
-													  <input type="email" class="form-control" id="inputEmail" value="123456@qq.com">
-													</div>
-												  </div>
-												  <div class="form-group">
-													<div class="col-xs-offset-4 col-xs-9">
-														<label>
-														  注:完善信息方便找回密码，账号更安全。
-														</label>
-													</div>
-												  </div>
-												  <div class="form-group">
-													<div class="col-xs-offset-5 col-xs-9">
-													  <button type="submit" class="btn btn-default">编辑资料</button>
-													</div>
-												  </div>
+												</div>
+												<button id="sendPhone10" class="layui-btn">获取验证码</button>
+											</div>
+											<div class="form-group">
+												<input class="btn btn-primary"  type="button" onclick="updatephonepassword()" value="手机号修改" />
+											</div>
 										</form>
 									</div>
-									<div id="er" class="tab-pane fade" style="height: 300px;">
-										<form class="form-horizontal">
-											  <div class="form-group">
-												<label for="inputEmail3" class="col-xs-4 control-label">原密码</label>
-												<div class="col-sm-3">
-												  <input type="email" class="form-control" id="inputEmail3" placeholder="原密码">
-												</div>
-											  </div>
-											  <div class="form-group">
-												<label for="inputPassword3" class="col-xs-4 control-label">新密码</label>
-												<div class="col-xs-3">
-												  <input type="password" class="form-control" id="inputPassword3" placeholder="新密码">
-												</div>
-											  </div>
-											  <div class="form-group">
-												<label for="inputPassword3" class="col-xs-4 control-label">确认密码</label>
-												<div class="col-xs-3">
-												  <input type="password" class="form-control" id="inputPassword3" placeholder="确认密码">
-												</div>
-											  </div>
-											  <div class="form-group">
-												<div class="col-xs-offset-5 col-xs-9">
-												  <button type="submit" class="btn btn-default">修改</button>
-												</div>
-											  </div>
-										</form>
-									</div>
-									<div id="san" class="tab-pane fade" style="height: 300px;">3</div>
-
-									<!--我的订单模块-->
-									<div id="si" class="tab-pane fade" style="height: 300px;">
-										<table class="table table-hover">
-											<caption>我的订单</caption>
-											<thead>
-											<tr>
-												<th>订单id</th>
-												<th>课程名称</th>
-												<th>消费积分</th>
-												<th>订单时间</th>
-												<!--<th>状态</th>-->
-											</tr>
-											</thead>
-											<!--数据位置-->
-											<tbody id="wddd">
-
-											</tbody>
-										</table>
-										<!--分页位置-->
-										<div id="page3" align="center"></div>
-									</div>
-
-
-
-									<!--我的充值记录模块-->
-									<div id="wu" class="tab-pane fade" style="height: 300px;">
-										<table class="table table-hover">
-											<caption>我的充值记录</caption>
-											<thead>
-											<tr>
-												<th>充值积分</th>
-												<th>充值金额</th>
-												<th>充值时间</th>
-												<th>状态</th>
-											</tr>
-											</thead>
-											<!--数据位置-->
-											<tbody id="cjjl">
-
-											</tbody>
-										</table>
-										<!--分页位置-->
-										<div id="page2" align="center"></div>
-									</div>
-
-									<!--我的账单模块-->
-									<div id="liu" class="tab-pane fade" style="height: 300px;">
-										<table class="table table-hover" style="height: 150px;">
-											<caption>我的账单详情</caption>
-											<thead>
-											<tr>
-												<th>积分</th>
-												<th>账单内容</th>
-												<th>账单生成时间</th>
-												<th>状态</th>
-											</tr>
-											</thead>
-											<!--数据位置-->
-											<tbody id="shuj">
-
-											</tbody>
-										</table>
-										<!--分页位置-->
-										<div id="page1" align="center"></div>
-									</div>
-
 								</div>
 							</div>
-				     </div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 			<div class="col-md-11 layout-body" id="get2" >
@@ -820,124 +637,64 @@
 			<div class="col-md-11 layout-body" id="get5" >
 				<div class="content" style="height: 300px;">
 					<h3>消息中心</h3>
-					<div class="col-md-10 layout-body" id="get2" >
-						<div class="content" style="height: 300px;">
-							<h3>我的课程</h3>
-						</div>
-					</div>
-					<div class="col-md-10 layout-body" id="get3" >
-						<div class="content" style="height: 800px;">
-                            <button type="button" class="layui-btn layui-btn-primary"><a href="/pst/addtz">发布文章</a></button>
-							<div id="tbody">
-								<!-- 用来放数据 -->
+
+				</div>
+			</div>
+			<div class="col-md-11 layout-body" id="get9" >
+				<div class="content" style="height: 300px;">
+					<h3>我的文章</h3>
+					<div class="col-sm-10">
+						<h4>
+
+							<img src="/user/img/topQuestion.png">
+
+							<a class="question-item-title" href="show.html" target="_blank">
+								实验楼百楼俱乐部成立，欢迎100楼的你加入！</a>
+
+						</h4>
+						<div class="question-item-summary">
+
+
+							<div class="user-username ">
+								<a class="avatar" href="/user/user/13/study.html" target="_blank">
+									shiyanlouadmin
+								</a>
+								<span class="user-level">L14</span>
 							</div>
 
-							<div id="fy" style="text-align: center">
-								<!--分页位置-->
-							</div>
-						</div>
-					</div>
-					<div class="col-md-10 layout-body" id="get4" >
-						<div class="content" style="height: 300px;">
-							<ul class="nav nav-tabs" rolw="tablist" id="nav">
-								<li role="presentation" class="active">
-									<a href="#1si" class="active">课程收藏</a>
-								</li>
-								<li role="presentation">
-									<a href="#1wu" >帖子收藏</a>
-								</li>
-							</ul>
 
-							<div class="tab-content">
-								<div id="1si" class="tab-pane fade in active" style="height: 300px;">
-									<!--=================================-->
-									<!--=================================-->
-									<!--=================================-->
-									<!--=================================-->
-									<!--=================================-->
-									<!--=================================-->
-									<!--=================================-->
-									<!--收藏的课程-->
-
-									<!--<div class="col-md-4 col-sm-6  course">
-										<a class="course-box" href="/courses/20">
-											<div class="sign-box">
-
-												<i class="fa fa-star-o course-follow pull-right"
-												   data-follow-url="/courses/20/follow"
-												   data-unfollow-url="/courses/20/unfollow"  style="display:none"  ></i>
-
-											</div>
-											<div class="course-img">
-
-												<img alt="数据结构(新版)" src="https://dn-simplecloud.shiyanlou.com/ncn20.jpg">
-
-											</div>
-
-											<div class="course-body">
-												<span class="course-title" data-toggle="tooltip" data-placement="bottom" title="数据结构(新版)">数据结构(新版)</span>
-											</div>
-											<div class="course-footer">
-												<span class="course-per-num pull-left">
-													<i class="fa fa-users"></i>
-
-													8565
-
-												</span>
-											</div>
+							<span class="question-item-date">3小时前</span>
+							最后回复 <span class="question-item-date">
+									<div class="user-username ">
+										<a class="username" href="/user/256544" target="_blank">
+												芃逆明
 										</a>
-									</div>-->
-									<div id="datas">
-
+										<span class="user-level">L38</span>
 									</div>
-									<hr>
-									<br>
-									<!--课程收藏分页位置  yan-->
-									<div id="pagess" style="margin-right: 200px;margin-bottom: 150px;" align="center"></div>
-								</div>
+                             </span>
 
-								<div id="1wu" class="tab-pane fade" style="height: 600px;">
-
-									<div id="scsj">
-										<!-- 用来放数据 -->
-									</div>
-
-									<div id="scfy" style="text-align: center">
-										<!--分页位置-->
-									</div>
-
-
-								</div>
-							</div>
 						</div>
 					</div>
-					<div class="col-md-10 layout-body" id="get5" >
-						<div class="content" style="height: 300px;">
-							<h3>消息中心</h3>
-							<!--数据位置-->
-							<div id="message"></div>
-
-
-							</div>
-							<!--分页位置-->
-							<div id="page5" align="center"></div>
+					<div class="col-md-2 question-item-rank">
+						<div class="question-item-answered">
+							<div>89</div>
+							<div>回复</div>
+						</div>
+						<div class="question-item-views">
+							<div>2409</div>
+							<div>查看</div>
 						</div>
 					</div>
-					<div class="col-md-10 layout-body" id="get6" >
+
+					<div class="col-md-11 layout-body" id="get6" >
 						<div class="content" style="height: 300px;">
-							<h3>个人信息</h3>						
+							<h3>个人信息</h3>
 						</div>
 					</div>
-					<div class="col-md-10 layout-body" id="get7" >
+					<div class="col-md-11 layout-body" id="get7" >
 						<div class="content" style="height: 300px;">
-							<h3>我的资源</h3>
-								<!--数据位置-->
-							<div class="row" id="ziyuan">
-
-							</div>
+							<h3>邀请好友</h3>
 						</div>
-						<!--分页位置-->
-						<div id="page4" align="center"></div>
 					</div>
 					<!--积分充值-->
 					<div class="col-md-11 layout-body" id="get8" >
@@ -958,45 +715,39 @@
 						</div>
 					</div>
 
+					<script type="text/javascript">
+						function submitForm(action) {
+							document.getElementById("form").action = action;
+							document.getElementById("form").submit();
+						}
+					</script>
 
-				<script type="text/javascript">
-                    function submitForm(action) {
-                        document.getElementById("form").action = action;
-                        document.getElementById("form").submit();
-                    }
-				</script>
 
-				<script type="text/javascript">
-
-					function myf() {
-                        var money = $("#money").val();
-                        var sum = money * 10;
-                        $("#integral").val(sum);
-                    }
-
-				</script>
-
+				</div>
 			</div>
-		</div>
-		
 
-		<div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title">发送消息给 石头山</h4>
-					</div>
-					<div class="modal-body">
-						<textarea style="width:100%; min-height:100px; max-width:100%;"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-default" data-dismiss="modal">取消</button>
-						<button class="btn btn-primary send-btn">发送</button>
+
+			<div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title">发送消息给 石头山</h4>
+						</div>
+						<div class="modal-body">
+							<textarea style="width:100%; min-height:100px; max-width:100%;"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal">取消</button>
+							<button class="btn btn-primary send-btn">发送</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+</div>
 
 <script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
 <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
@@ -1017,119 +768,135 @@
 <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
-		<script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
-		<script src="/user/layui/layui.js"></script>
-		<script src="/user/post/userpost.js"></script>
-		<script src="/user/post/sctz.js"></script>
-		<script>
-			Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
-				release: '3.12.13'
-			}).install();
-			
-			/* 标签页 */
-			$("#nav a").click(function(e){
-				e.preventDefault(); //阻止a标签的跳转
-				$(this).tab("show"); //展示相对应的内容
-			})
-			$(function(){
-				$("#yi").tab("show");
-			})
-			
-			/* 控制标签跳转 */
-				$("#get2").hide();
-				$("#get3").hide();
-				$("#get4").hide();
-				$("#get5").hide();
-				$("#get6").hide();
-				$("#get7").hide();
-				$("#get8").hide();
-				$("#kecheng").click(function(){
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-					
-					$("#get2").show();
-				});
-				$("#zhongxin").click(function(){
-					$("#get2").hide();
-					$("#get1").show();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-				});
-				$("#huida").click(function(){
-					$("#get2").hide();
-					$("#get3").show();
-					$("#get1").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-				});
-				$("#shoucang").click(function(){
-					$("#get2").hide();
-					$("#get4").show();
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-				});
-				$("#xiaoxi").click(function(){
-					$("#get2").hide();
-					$("#get5").show();
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-				});
-				$("#xinxi").click(function(){
-					$("#get2").hide();
-					$("#get6").show();
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get7").hide();
-					$("#get8").hide();
-				});
-				$("#haoyou").click(function(){
-					$("#get2").hide();
-					$("#get7").show();
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get8").hide();
-				});
-				$("#chongzhi").click(function(){
-					$("#get2").hide();
-					$("#get8").show();
-					$("#get1").hide();
-					$("#get3").hide();
-					$("#get4").hide();
-					$("#get5").hide();
-					$("#get6").hide();
-					$("#get7").hide();
-				});
-			
-			
-		</script>
+<script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
+<!--<script src="/userjs/charge.js"></script>-->
+<script>
+	Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
+		release: '3.12.13'
+	}).install();
+
+	/* 标签页 */
+	$("#nav a").click(function(e){
+		e.preventDefault(); //阻止a标签的跳转
+		$(this).tab("show"); //展示相对应的内容
+	})
+	$(function(){
+		$("#yi").tab("show");
+	})
+
+	/* 控制标签跳转 */
+	$("#get2").hide();
+	$("#get3").hide();
+	$("#get4").hide();
+	$("#get5").hide();
+	$("#get6").hide();
+	$("#get7").hide();
+	$("#get8").hide();
+	$("#get9").hide();
+	$("#kecheng").click(function(){
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+
+		$("#get2").show();
+	});
+	$("#zhongxin").click(function(){
+		$("#get2").hide();
+		$("#get1").show();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#huida").click(function(){
+		$("#get2").hide();
+		$("#get3").show();
+		$("#get1").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#shoucang").click(function(){
+		$("#get2").hide();
+		$("#get4").show();
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#xiaoxi").click(function(){
+		$("#get2").hide();
+		$("#get5").show();
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#xinxi").click(function(){
+		$("#get2").hide();
+		$("#get6").show();
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get7").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#haoyou").click(function(){
+		$("#get2").hide();
+		$("#get7").show();
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get8").hide();
+		$("#get9").hide();
+	});
+	$("#chongzhi").click(function(){
+		$("#get2").hide();
+		$("#get8").show();
+		$("#get1").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+		$("#get9").hide();
+	});
+	$("#tiezi").click(function(){
+		$("#get8").hide();
+		$("#get9").show();
+		$("#get2").hide();
+		$("#get3").hide();
+		$("#get4").hide();
+		$("#get5").hide();
+		$("#get6").hide();
+		$("#get7").hide();
+	});
+
+
+</script>
 
 <script src="/user/app/dest/user/index.js?=2016121272249"></script>
 
-
-	</body>
+</body>
 </html>
