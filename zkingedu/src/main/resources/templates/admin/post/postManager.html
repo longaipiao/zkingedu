@@ -132,7 +132,35 @@
             switch(obj.event){
                 case 'getCheckData':
                     var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                    if (data.length > 0) {
+                        layer.confirm('需要删除这些么', function(index){
+                            var arr = new Array();
+                            for (var i = 0; i < data.length; i++) {
+                                arr[i] = data[i].post_id;
+                            }
+
+                            //开始调用ajax
+                            $.ajax({
+                                type: "post",
+                                url: "/pst/deletePandTcoms",
+                                dataType: "json",
+                                data: {
+                                    arr: arr
+                                },
+                                success: function (data) {
+                                    if (data > 0) {
+                                        location.reload();//刷新
+                                    }
+                                },
+                                error: function (jqXHR) {
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
+                        });
+                    }
+                    else{
+                        layer.msg('请先选中',{icon:2})
+                    }
                     break;
                 case 'getCheckLength':
                     var data = checkStatus.data;

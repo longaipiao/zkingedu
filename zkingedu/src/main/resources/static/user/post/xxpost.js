@@ -268,13 +268,13 @@ function initdata() {
 
             var content = ""
             $.each(data, function (i, obj) {
-                var g=0;
                 if (obj.tcommentFid==0) {
+                    var g=0;
                     content += "<div class=\"answer-item\">\n" +
                         "                    <div class=\"answer-head\">\n" +
                         "                            <div class=\"user-avatar \">\n" +
                         "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
-                        "                                            <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200\">\n" +
+                        "                                            <img src=\""+obj.user.userImg+"\">\n" +
                         "                                        </a>\n" +
                         "\n" +
                         "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
@@ -296,7 +296,7 @@ function initdata() {
 
                         "                                    <span>(" + obj.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;#" + obj.tcommentLounum + "楼)</span>\n" +
                         "                                    &nbsp;&nbsp;&nbsp;&nbsp;\n" +
-                        "                                    <a href=\"javascript:void(0);\"   onclick=\"aha('" + obj.tcommentID + "')\">查看回复</a>（"+g+"）\n"
+                        "                                    <a href=\"javascript:void(0);\"   onclick=\"aha('" + obj.tcommentID + "')\">查看回复</a>（"+obj.user.userLastTime+"）\n"
                        if (userid==obj.user.userID) {
                        content+= "                                    <a href=\"javascript:void(0);\" onclick=\"plkk('" + obj.user.userID + "','" + obj.user.userName + "','" + obj.tcommentID + "')\">&nbsp;&nbsp;&nbsp;&nbsp;回复:&nbsp;&nbsp;&nbsp;&nbsp;</a><a href='javascript:void(0);'  onclick=\"delpl('" + obj.tcommentID + "','" + obj.tcommentFid + "' )\"  >删除</a>\n"
                        }
@@ -320,11 +320,10 @@ function initdata() {
 
                     $.each(data, function (j, obj2) {
                         if (obj.tcommentID==obj2.tcommentFid) {
-                            g++;
                             content += "<div class=\"answer-head\">\n" +
                                 "                                    <div class=\"user-avatar \">\n" +
                                 "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
-                                "                                            <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarNTY0MzE5MjI0Njgz.png?v=1477283063583&amp;imageView2/1/w/200/h/200\">\n" +
+                                "                                            <img src=\""+obj2.user.userImg+"\">\n" +
                                 "                                        </a>\n" +
                                 "\n" +
                                 "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
@@ -442,7 +441,7 @@ function jztzxx() {
                 "\n" +
                 "        <div class=\"user-avatar \">\n" +
                 "        <a class=\"avatar\" href=\"/user/347060\" target=\"_blank\">\n" +
-                "        <img src=\"https://dn-simplecloud.shiyanlou.com/gravatarM7Q8G5B92TNJ.jpg?imageView2/1/w/200/h/200\">\n" +
+                "        <img src=\""+data.mg+"\">\n" +
                 "        </a>\n" +
                 "\n" +
                 "        </div>\n" +

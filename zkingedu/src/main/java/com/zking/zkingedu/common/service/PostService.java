@@ -315,4 +315,19 @@ public interface PostService {
      */
     String queryUserByid(Integer id);
 
+
+
+    /**
+     *批量删除id
+     * @param id
+     * @return
+     */
+    int deletePosts(List<Integer> id);
+
+    /**
+     * 根据帖子id删除所有的评论
+     * @param id
+     * @return
+     */
+    int deleteTcommetsBypid(List<Integer> id);
 }

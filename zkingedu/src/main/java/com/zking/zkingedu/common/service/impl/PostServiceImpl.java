@@ -218,6 +218,16 @@ public class PostServiceImpl implements PostService {
         return postDao.queryUserByid(id);
     }
 
+    @Override
+    public int deletePosts(List<Integer> id) {
+        return postDao.deletePosts(id);
+    }
+
+    @Override
+    public int deleteTcommetsBypid(List<Integer> id) {
+        return postDao.deleteTcommetsBypid(id);
+    }
+
 
     @Override
     public Map<String, Object> getPostandUse(Integer id) {
