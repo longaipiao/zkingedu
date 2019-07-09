@@ -108,7 +108,7 @@ function tk(){
             type:1,
             title: '找回密码',
             content: $('#xgphones'),
-            maxWidth: 400,
+            area : [ '500px', '400px' ],
             shadeClose: true,
             end:function () {
                 $("#xgphones").attr("style","display:none;");//隐藏

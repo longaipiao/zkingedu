@@ -225,27 +225,33 @@
     $("#but1").on('click', function() {
         var sid = $("#xm").val();//下拉框ID
         var text = $("#tiximin").val();//添加的文本的值
-        $.ajax({
-            datatype: "json",
-            type: "post",
-            url: '/addCategory',
-            data: {
-                categoryName:text,
-                categoryFid:sid,
-            },
-            success: function (data) {
-                if(data=='1'){
-                    layer.alert("体系添加成功",function(){
-                        location.replace(location.href);
-                    });
-                }else{
-                    layer.msg("增加失败")
+        if(text!=""){
+            $.ajax({
+                datatype: "json",
+                type: "post",
+                url: '/addCategory',
+                data: {
+                    categoryName:text,
+                    categoryFid:sid,
+                },
+                success: function (data) {
+                    if(data=='1'){
+                        layer.alert("体系添加成功",function(){
+                            location.replace(location.href);
+                        });
+                    }else{
+                        layer.msg("增加失败")
+                    }
+                },
+                error: function () {
+                    layer.msg("异常")
                 }
-            },
-            error: function () {
-                layer.msg("异常")
-            }
-        });
+            });
+        }
+        else{
+           layer.msg("名字不能为空");
+        }
+
 
     });
     //停用点击按钮

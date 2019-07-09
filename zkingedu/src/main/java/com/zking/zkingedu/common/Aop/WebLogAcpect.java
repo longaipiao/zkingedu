@@ -42,13 +42,8 @@ public class WebLogAcpect {
     @Before("test()")
     public boolean doBefore(){
         HttpSession session = request.getSession();
-        session.setAttribute("a",null);
-        session.setAttribute("b",null);
 
         if(session.getAttribute("user")==null){//为空不执行下面的操作
-            session.setAttribute("b",1);
-
-
             return false;
         }
         User user=(User)session.getAttribute("user");
@@ -58,11 +53,6 @@ public class WebLogAcpect {
                 try {
                     //重定向提交
                     response.sendRedirect("/user/");
-                    session.setAttribute("a",1);
-
-
-                    session.setAttribute("ip",IpAddress.getIpAddr(request));
-                    session.setAttribute("sjk",user1.getUserIP());
                     return false;
                 }catch (IOException e){
                     e.printStackTrace();

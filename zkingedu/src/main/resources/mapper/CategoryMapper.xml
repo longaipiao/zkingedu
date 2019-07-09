@@ -40,6 +40,34 @@
     <update id="updateName">
        update t_category set category_name=#{name} where category_fid=#{fid} and category_id=#{aid}
     </update>
+    <!--获取题库类别名称-->
+    <select id="getcat" resultType="Category">
+        select * from t_category where category_id = #{categoryID}
+    </select>
+
+    <!--题库类别-->
+    <select id="getCategoryall" resultType="Category">
+        select * from t_category
+    </select>
+
+    <!--题库类别非停用-->
+    <select id="getCategory" resultType="Category">
+        select * from t_category where category_state = 0
+    </select>
+
+
+    <!--根据父题库ID查询子题库字段-->
+    <select id="gettikuzitype" resultType="Category">
+        select * from t_category
+        <where>
+            <if test="categoryFID==null">
+                category_fid = 1
+            </if>
+            <if test="categoryFID!=null">
+                category_fid = #{categoryFID}
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

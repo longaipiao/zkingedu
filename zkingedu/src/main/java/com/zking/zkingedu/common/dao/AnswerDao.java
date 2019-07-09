@@ -24,4 +24,7 @@ public interface AnswerDao {
     Integer uppdatedaanc(Answer answer);
     //修改答案D
     Integer uppdatedaand(Answer answer);
+
+
+
 }

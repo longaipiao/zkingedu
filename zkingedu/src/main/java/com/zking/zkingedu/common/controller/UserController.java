@@ -192,9 +192,6 @@ public class UserController {
 
         }
         System.out.println(user);
-
-
-
         HttpSession session = request.getSession();
         PageInfo<User> users = userService.getAll(user,page, limit);
         System.out.println(user);
@@ -412,7 +409,6 @@ public class UserController {
                 session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
-
                     try{
                         response.sendRedirect("/user/binding");
                     }catch (IOException e){
@@ -540,7 +536,7 @@ public class UserController {
      * 注销
      */
     @RequestMapping(value = "/zhuxiao")
-    public String zhuxiao(HttpServletRequest request){
+    public void zhuxiao(HttpServletResponse response,HttpServletRequest request){
         HttpSession session = request.getSession();
         //清空用户的session
         session.setAttribute("user",null);
@@ -549,8 +545,13 @@ public class UserController {
         session.setAttribute("nickName",null);
         session.setAttribute("Avatar",null);
         session.setAttribute("openid",null);
+        try{
+            response.sendRedirect("/user/");
+        }catch (Exception e){
+            System.out.println("异常");
+            e.printStackTrace();
+        }
 
-        return "user/index";
     }
 
     /**
