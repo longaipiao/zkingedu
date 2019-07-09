@@ -242,37 +242,64 @@
 
         </div>
         <div class="col-md-3 layout-side">
-
-
             <div class="panel panel-default panel-userinfo">
                 <div class="panel-body body-userinfo">
                     <div class="media userinfo-header">
                         <div class="media-left">
                             <div class="user-avatar">
-
-                                <a class="avatar" href="#sign-modal" data-toggle="modal" data-sign="signin">
+                                 <span th:if="${session.user} ne null ">
+                        <span th:if="${session.atts!=a}">
+                            <a href="/user/userinfo/index"><img th:src="${session.user.userImg}" class="circle"  style="width:30px;height: 30px; display: inline" ></a>
+                                        </span>
+                                     </span>
+                                <span th:if="${session.user} eq null  ">
                                     <img class="circle" src="/user/img/logo-grey.png">
-                                </a>
+                                </span>
+                                <span th:if="${session.atts==a} eq null  ">
+                                     <img class="circle" src="/user/img/logo-grey.png">
+                                </span>
+
 
                             </div>
                         </div>
                         <div class="media-body">
-
-                            <span class="media-heading username">欢迎来到实验楼</span>
+                        <span th:if="${session.user} ne null ">
+                        <span th:if="${session.atts!=a}">
+                            <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到实验楼</span>
+                        </span>
+                        </span>
+                            <span th:if="${session.user} eq null  ">
+                            <span class="media-heading username">欢迎</span>来到实验楼</span>
+                            </span>
+                            <span th:if="${session.atts==a} eq null  ">
+                            <span class="media-heading username">欢迎</span>来到实验楼</span>
+                            </span>
                             <p class="vip-remain">做实验，学编程</p>
-
                         </div>
                     </div>
 
                     <div class="row userinfo-data">
 
+
+
                         <hr>
                         <div class="btn-group-lr">
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn"
-                               data-toggle="modal" data-sign="signin">登录</a>
-                            <a href="#sign-modal" type="button"
-                               class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn"
-                               data-toggle="modal" data-sign="signup">注册</a>
+                            <span th:if="${session.user} eq null  ">
+                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                            </span>
+                            <span th:if="${session.atts==a} eq null  ">
+                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                            </span>
+                            <span th:if="${session.user} ne null ">
+                        <span th:if="${session.atts!=a}">
+
+
+                                            <a href="/user/zhuxiao" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注销</a>
+
+                              </span>
+                        </span>
                         </div>
 
                     </div>
@@ -396,8 +423,7 @@
 <div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
@@ -415,7 +441,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope" style="margin:0;"></i>
                                     </div>
-                                    <input type="email" name="login" class="form-control" placeholder="请输入邮箱">
+                                    <input  name="login" class="form-control" id="userPhone" placeholder="请输入手机号">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -423,45 +449,42 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-lock" style="margin:0;"></i>
                                     </div>
-                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
+                                    <input name="password" class="form-control" id="upwd" type="password" placeholder="请输入密码" />
                                 </div>
                             </div>
-                            <div class="form-inline verify-code-item" style="display:none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" name="captcha_v" class="form-control" placeholder="请输入验证码">
-                                    </div>
-                                </div>
-                                <img class="verify-code" src="" source="https://www.shiyanlou.com/captcha.gif">
-                            </div>
+
                             <div class="form-group remember-login">
-                                <input name="remember" type="checkbox" value="y"> 下次自动登录
-                                <a class="pull-right" href="/user/reset_password/index.html">忘记密码？</a>
+                                <a href="/user/zhpasssword">忘记密码？</a>
                             </div>
+                            <!--&lt;!&ndash; 手机号找回密码 &ndash;&gt;
+                          <div id="sjpassword" style="display: none">
+
+                                          <a ><button type="button" class="layui-btn layui-btn-lg layui-btn-normal">手机号找回密码</button></a>
+
+                          </div>-->
                             <div class="form-group">
-                                <input class="btn btn-primary" name="submit" type="submit" value="进入实验楼">
+                                <input class="btn btn-primary" name="submit" type="button" onclick="loginChak()" value="进入实验楼">
                             </div>
                             <div class="form-group widget-signin">
                                 <span>快速登录</span>
-                                <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-                                <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-                                <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-                                <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-                                <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
+                                <a href="/user/qqLogin"><i class="fa fa-qq"></i></a>
                             </div>
                             <div class="form-group error-msg">
                                 <div class="alert alert-danger" role="alert"></div>
                             </div>
                         </form>
                     </div>
+
+
+                    <!--注册-->
                     <div role="tabpanel" class="tab-pane" id="signup-form">
-                        <form action="/register" method="post">
+                        <form action="#" method="post" id="table">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope" style="margin:0;"></i>
                                     </div>
-                                    <input type="email" name="email" class="form-control" placeholder="请输入邮箱">
+                                    <input  name="phone" id="phone" class="form-control" placeholder="请输入手机号">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -469,33 +492,22 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-lock" style="margin:0;"></i>
                                     </div>
-                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
+                                    <input  name="password" id="password" class="form-control" type="password" placeholder="请输入密码">
                                 </div>
                             </div>
                             <div class="form-inline">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" name="captcha_v" class="form-control" placeholder="请输入验证码">
+                                        <input type="text" name="captcha_v" class="form-control"  id="captcha_v" placeholder="请输入验证码">
                                     </div>
                                 </div>
-                                <img class="verify-code" src="" source="https://www.shiyanlou.com/captcha.gif">
+                                <button id="sendPhone" class="verify-code">获取验证码</button>
+
                             </div>
+
+                            <span id="sd"></span>
                             <div class="form-group">
-                                <input class="btn btn-primary" name="submit" type="submit" value="注册">
-                            </div>
-                            <div class="form-group agree-privacy">
-                                注册表示您已经同意我们的<a href="/user/privacy/index.html" target="_blank">隐私条款</a>
-                            </div>
-                            <div class="form-group widget-signup">
-                                <span>快速注册</span>
-                                <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-                                <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-                                <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-                                <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-                                <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
-                            </div>
-                            <div class="form-group error-msg">
-                                <div class="alert alert-danger" role="alert"></div>
+                                <input class="btn btn-primary" name="submit" type="button" onclick="zc()" value="注册">
                             </div>
                         </form>
                     </div>
@@ -504,7 +516,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="base-data"
 
@@ -529,6 +540,9 @@
 <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
 <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
 <script src="/user/static/videojs/video.min.js"></script>
+<script src="/userjs/zc.js"></script>
+<script src="/userjs/login.js"></script>
+<script src="/userjs/index.js"></script>
 <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>

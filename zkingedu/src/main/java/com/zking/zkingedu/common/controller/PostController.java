@@ -66,6 +66,7 @@ public class PostController {
         Integer uid=8;
         pt.setPostUid(uid);
         pt.setPostState(Integer.parseInt(zt));
+        //System.out.println(pt);
         pt.setPostTime(new Date().toLocaleString());//获取当前时间
         pt.setPostNum(0);//设置浏览量
         int i = postService.addPost(pt);//调用增加方法*/
@@ -127,8 +128,7 @@ public class PostController {
         maps.put("i",postandUse.get("post_time"));
         maps.put("j",postandUse.get("post_num"));
         maps.put("k",postandUse.get("jishu"));
-        maps.put("mg",postandUse.get("user_img"));
-        maps.put("l",3);//设置用户ID
+        maps.put("l",uid);//设置用户ID
 
         return maps;
     }
@@ -150,6 +150,7 @@ public class PostController {
 
         for (Map<String, Object> map : allTandUser) {
             //if((Integer) map.get("tcomment_fid")==0){
+                System.out.println("进来");
                 Tcomment tcomment=new Tcomment();
                 tcomment.setTcommentID((Integer) map.get("tcomment_id"));
                 tcomment.setTcommentCid((Integer) map.get("tcomment_cid"));
@@ -163,13 +164,36 @@ public class PostController {
                 user1.setUserID((Integer) map.get("user_id"));
                 user1.setUserImg(map.get("user_img").toString());
                 user1.setUserName(map.get("user_name").toString());
-                user1.setUserLastTime(map.get("sl").toString());
                 //回复对应的用户名 。。我回复他（用户名）
                 User user3=new User();
                 user3.setUserName(map.get("uname2").toString());
                 tcomment.setUser(user1);
                 tcomment.setUser2(user3);
+                /*List<Tcomment> tcomments2=new ArrayList<>();
 
+                for (Map<String, Object> map2 : allTandUser) {
+                    if((Integer) map.get("tcomment_id")==map2.get("tcomment_fid")){
+                        Tcomment tcomment2=new Tcomment();
+                        tcomment2.setTcommentID((Integer) map2.get("tcomment_id"));
+                        tcomment2.setTcommentCid((Integer) map2.get("tcomment_cid"));
+                        tcomment2.setTcommentContent(map2.get("tcomment_content").toString());
+                        tcomment2.setTcommentTime(map2.get("tcomment_time").toString());
+                        tcomment2.setTcommentFid((Integer)map2.get("tcomment_fid"));
+                        tcomment2.setTcommentLounum((Integer)map2.get("tcomment_lounum"));
+                        tcomment2.setTcommentUid2((Integer)map2.get("uid2"));
+
+                        User user2=new User();
+                        user2.setUserID((Integer) map2.get("user_id"));
+                        user2.setUserImg(map2.get("user_img").toString());
+                        user2.setUserName(map2.get("user_name").toString());
+                        User user4=new User();
+                        user4.setUserName(map2.get("uname2").toString());
+                        tcomment2.setUser(user2);
+                        tcomment2.setUser2(user4);
+                        tcomments2.add(tcomment2);
+                    }
+                }
+                tcomment.setChirden(tcomments2);*/
                 tcomments.add(tcomment);
             }
         //}
@@ -177,12 +201,6 @@ public class PostController {
 
         return tcomments;
     }
-
-
-
-
-
-
 
 
     /**
@@ -645,23 +663,6 @@ public class PostController {
 
 
     }
-
-    /**
-     * 批量删除帖子
-     * @param arr
-     * @return
-     */
-    @RequestMapping(value = "/deletePandTcoms")
-    @ResponseBody
-    public  int deletepostandTcoms(@RequestParam(value = "arr[]") List<Integer> arr){
-        //首先开始删除帖子下面的所有评论
-        int i = postService.deleteTcommetsBypid(arr);
-        //开始删除帖子
-        int i1 = postService.deletePosts(arr);
-        return i1;
-    }
-
-
 
     /**
      * 跳转界面

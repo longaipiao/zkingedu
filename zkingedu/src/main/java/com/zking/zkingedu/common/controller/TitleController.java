@@ -1,16 +1,20 @@
 package com.zking.zkingedu.common.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.zking.zkingedu.common.model.Answer;
 import com.zking.zkingedu.common.model.Category;
 import com.zking.zkingedu.common.model.Title;
 import com.zking.zkingedu.common.service.AnswerService;
+import com.zking.zkingedu.common.service.CategoryService;
 import com.zking.zkingedu.common.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,6 +28,9 @@ public class TitleController {
     private TitleService titleService;
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private CategoryService categoryService;
 
 
     /**
@@ -39,8 +46,6 @@ public class TitleController {
         if(sid.equals("0")){
             title2.setTitleCid(null);
         }
-        System.out.println(sid+"h哈");
-
         System.out.println(title2+"dasdasd");
         List<Map<String,Object>> maps = new ArrayList<>();
         List<Title> all = titleService.getAll(title2);//所有的题目
@@ -108,6 +113,7 @@ public class TitleController {
     @RequestMapping(value = "/addtm")
     @ResponseBody
     public String addTm(Title title,String a,String b,String c,String d,String tm,String s,String titleDescribe,String titleContent){
+        System.out.println("哈哈");
         System.out.println(s+"答案为b");
         System.out.println(title.getTitleContent());
         Answer a1=new Answer();//答案a的对象
@@ -251,16 +257,56 @@ public class TitleController {
             d3.setAnswerState(1);
         }
         //增加答案
-        Integer updatedanan=0;
-        updatedanan = answerService.uppdatedaana(a1);//a的方法
-        updatedanan = answerService.uppdatedaanb(b2);//b的方法
-        updatedanan = answerService.uppdatedaanc(c2);//c的方法
-        updatedanan = answerService.uppdatedaand(d3);//d的方法
-        if(updatedanan>0){
+
+        Integer updatedanana = answerService.uppdatedaana(a1);//a的方法
+        Integer updatedananb = answerService.uppdatedaanb(b2);//b的方法
+        Integer updatedananc = answerService.uppdatedaanc(c2);//c的方法
+        Integer updatedanand = answerService.uppdatedaand(d3);//d的方法
+        if(updatedanana>0 || updatedananb>0 || updatedananc>0 ||updatedanand>0){
             return "1";
         }
 
         return "2";
+    }
+
+
+
+    /**
+     * 阅卷
+     * @param str
+     * @return
+     */
+    @RequestMapping("/pingfen")
+    @ResponseBody
+    public Map pingfen(String str, HttpSession session){
+        Map<String,Object> map = new HashMap();
+        Map maps = (Map) JSON.parse(str);
+        int score=0;
+        List<Title> titles = (List<Title>)session.getAttribute("titles");
+        List<Integer> cuoti = new ArrayList<>();//实例化一个装错误答案题号的集合
+        int count = titles.size()-maps.size();//未做题目
+        for(int i=0;i<titles.size();++i){
+            if(maps.get(titles.get(i).getTitleID()+"")!=null){//答案的json中存在
+                for (Answer answer : titles.get(i).getAnswerss()) {//遍历该题目的答案
+                    if(answer.getAnswerState()==0){//从4个答案中找出真确的答案
+                        if(maps.get(titles.get(i).getTitleID()+"").equals(answer.getAnswerAbcd())){//答案的json的值等于正确答案的话
+                            score+=2;//分数加2
+                        }
+                        else{
+                            cuoti.add(answer.getAnswerTid());//错误的加入集合
+                        }
+                    }
+                }
+            }
+        }
+        StringBuffer ct = new StringBuffer();
+        for (Integer integer : cuoti) {
+            ct.append("第"+integer+"题  ");
+        }
+        map.put("score",score);
+        map.put("cuoti",ct);
+        map.put("weizuo",count);
+        return map;
     }
 
 }

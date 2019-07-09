@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 题库类别表
@@ -28,4 +30,6 @@ public class Category implements Serializable {
     private Integer categoryRank;
     //状态0正常1下架
     private Integer categoryState;
+    //装子ID的集合
+    List<Category> categories = new ArrayList<>();
 }

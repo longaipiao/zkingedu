@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>zking小课堂在线考核</title>
+
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+  <script src="/admin/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/admin/layui/css/layui.css"/>
+  <script src="/admin/layui/layui.js" charset="utf-8"></script>
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body >
+
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<div class="layui-container" >
+
+  <blockquote class="layui-elem-quote">Zking 小课堂 答题区(随机50题,一小题两分,满分100分)</blockquote>
+  <blockquote class="layui-elem-quote layui-quote-nm">
+    该题目类型为:<span th:text="${getCategoryName}" style="font-size:16px;font-weight:bold;"></span>
+  </blockquote>
+
+  <div th:if="${size}==0">
+    <h1><a href="/url/tiku">该题目类型还未录题库,敬请期待~点此返回上一级</a></h1>
+  </div>
+<div th:if="${size}!=0">
+  <form class="layui-form" action="" lay-filter="example" id="forma">
+    <div id="timu" th:each="item:${titles}">
+     <fieldset class="layui-elem-field" style="margin-top: 30px;" >
+      <legend id="1"><span th:text="${item.titleContent}"></span></legend>
+        <div class="layui-field-box" th:each="zitme:${item.answerss}" style="position: relative;">
+          <input th:value="${zitme.answerAbcd}" type="radio" th:name="${zitme.answerTid}" name="1" value="A" title="" lay-filter="filter">
+          <span th:text="${zitme.answerAbcd}+'&nbsp;&nbsp;'+${zitme.answerContent}" style="position: absolute; top:21px"></span>
+        </div>
+     </fieldset>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="*">提交答卷</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+</div>
+
+<div style="padding: 20px; background-color: #D8BFD8;" id="text" th:if="${size}!=0">
+  <div class="layui-row layui-col-space15">
+
+    <div class="layui-col-md4">
+      <div class="layui-card">
+        <div class="layui-card-header">所得分数</div>
+        <div class="layui-card-body">
+          <h1><span id="h1"></span></h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-col-md4">
+      <div class="layui-card">
+        <div class="layui-card-header">错题</div>
+        <div class="layui-card-body" id="cuoti">
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-col-md4">
+      <div class="layui-card">
+        <div class="layui-card-header">未做题数</div>
+        <div class="layui-card-body" >
+          <h1><span id="weizuo"></span></h1>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script type="text/javascript" src="/admin/lib/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+  <script>
+  layui.use(['util', 'laydate', 'layer','form'], function(){
+    var util = layui.util
+            ,form = layui.form
+            ,laydate = layui.laydate
+            ,layer = layui.layer;
+            var $ = layui.jquery;
+            var table = layui.table;
+
+    //固定块
+    util.fixbar({
+      bar1: '&#xe9aa;',
+      // bar2: true,
+      css: {right: 50, bottom: 100}
+      ,bgcolor: '#393D49'
+      ,click: function(type){
+        if(type === 'bar1'){
+          layer.confirm('确定要重新开始吗?', function(index){
+            location.reload(location.href)
+          });
+        } else if(type === 'bar2') {
+          layer.msg('两个bar都可以设定是否开启')
+        }
+      }
+    });
+
+    form.on('submit(*)', function(data){
+      $("input").attr("disabled",true);
+      $(".layui-btn").hide();
+      // $("#cuoti").html(JSON.stringify(data.field));
+      var str = JSON.stringify(data.field)
+      $.ajax({
+        type:"post",
+        url:"/pingfen",
+        data:{
+          str:str
+        },
+        success:function(data){
+          $("#h1").html(data.score);
+          $("#cuoti").html(data.cuoti);
+          $("#weizuo").html(data.weizuo);
+        },
+        error:function () {
+          layer.msg("出现bug了，请联系921607915")
+        }
+      })
+      return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+  });
+</script>
+
+</body>
+</html>

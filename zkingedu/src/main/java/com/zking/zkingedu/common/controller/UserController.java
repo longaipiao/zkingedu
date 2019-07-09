@@ -7,9 +7,12 @@ import com.qq.connect.api.OpenID;
 import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
-import com.zhenzi.sms.ZhenziSmsClient;
+//import com.zhenzi.sms.ZhenziSmsClient;
+import com.zking.zkingedu.common.model.Emp;
+import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.Tool;
 import com.zking.zkingedu.common.model.User;
+import com.zking.zkingedu.common.service.LogService;
 import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.service.impl.UserServiceImpl;
 import com.zking.zkingedu.common.utils.IpAddress;
@@ -44,6 +47,14 @@ public class UserController {
     @Autowired
     private User user;
 
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private Log mylog;
+
+    //获取系统当前时间
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     // 短信平台相关参数
    /* private String apiUrl = "https://sms_developer.zhenzikj.com";
@@ -181,9 +192,6 @@ public class UserController {
 
         }
         System.out.println(user);
-
-
-
         HttpSession session = request.getSession();
         PageInfo<User> users = userService.getAll(user,page, limit);
         System.out.println(user);
@@ -203,9 +211,17 @@ public class UserController {
      */
     @RequestMapping(value = "/dj")
     @ResponseBody
-    public String dj(Integer uid){
+    public String dj(Integer uid,HttpServletRequest request){
         Integer integer = userService.updateSpase(uid);
         if(integer>0){
+            //放入日志
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
+            mylog.setEmp(emp);
+            mylog.setLogTime(time);
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"冻结了一个用户，用户id为："+uid);
+            mylog.setLogDetails(stringBuilder.toString());
+            logService.addLog(mylog);
+            //放入日志结束
             return "1";
         }
         return "2";
@@ -217,9 +233,17 @@ public class UserController {
      */
     @RequestMapping(value = "/jf")
     @ResponseBody
-    public String jf(Integer uid){
+    public String jf(Integer uid,HttpServletRequest request){
         Integer integer = userService.updatejf(uid);
         if(integer>0){
+            //放入日志
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
+            mylog.setEmp(emp);
+            mylog.setLogTime(time);
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"解封了一个用户，用户id为："+uid);
+            mylog.setLogDetails(stringBuilder.toString());
+            logService.addLog(mylog);
+            //放入日志结束
             return "1";
         }
         return "2";
@@ -385,7 +409,6 @@ public class UserController {
                 session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
-
                     try{
                         response.sendRedirect("/user/binding");
                     }catch (IOException e){
@@ -513,7 +536,7 @@ public class UserController {
      * 注销
      */
     @RequestMapping(value = "/zhuxiao")
-    public String zhuxiao(HttpServletRequest request){
+    public void zhuxiao(HttpServletResponse response,HttpServletRequest request){
         HttpSession session = request.getSession();
         //清空用户的session
         session.setAttribute("user",null);
@@ -522,8 +545,13 @@ public class UserController {
         session.setAttribute("nickName",null);
         session.setAttribute("Avatar",null);
         session.setAttribute("openid",null);
+        try{
+            response.sendRedirect("/user/");
+        }catch (Exception e){
+            System.out.println("异常");
+            e.printStackTrace();
+        }
 
-        return "user/index";
     }
 
     /**

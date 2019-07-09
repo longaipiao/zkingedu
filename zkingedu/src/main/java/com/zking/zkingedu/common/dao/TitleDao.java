@@ -25,4 +25,12 @@ public interface TitleDao {
   Integer deletetim(@Param("tid") Integer tid);
   //根据tid修改
   Integer updatetim(Title title);
+
+  /**
+   * 查询所有题库
+   * @param title
+   * @return
+   */
+  List<Title> gettitles(Title title);
+
 }
