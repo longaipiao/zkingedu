@@ -66,6 +66,7 @@ public class PostController {
         Integer uid=8;
         pt.setPostUid(uid);
         pt.setPostState(Integer.parseInt(zt));
+        //System.out.println(pt);
         pt.setPostTime(new Date().toLocaleString());//获取当前时间
         pt.setPostNum(0);//设置浏览量
         int i = postService.addPost(pt);//调用增加方法*/
@@ -149,6 +150,7 @@ public class PostController {
 
         for (Map<String, Object> map : allTandUser) {
             //if((Integer) map.get("tcomment_fid")==0){
+                System.out.println("进来");
                 Tcomment tcomment=new Tcomment();
                 tcomment.setTcommentID((Integer) map.get("tcomment_id"));
                 tcomment.setTcommentCid((Integer) map.get("tcomment_cid"));
@@ -179,6 +181,7 @@ public class PostController {
                         tcomment2.setTcommentFid((Integer)map2.get("tcomment_fid"));
                         tcomment2.setTcommentLounum((Integer)map2.get("tcomment_lounum"));
                         tcomment2.setTcommentUid2((Integer)map2.get("uid2"));
+
                         User user2=new User();
                         user2.setUserID((Integer) map2.get("user_id"));
                         user2.setUserImg(map2.get("user_img").toString());
@@ -198,24 +201,6 @@ public class PostController {
 
         return tcomments;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
