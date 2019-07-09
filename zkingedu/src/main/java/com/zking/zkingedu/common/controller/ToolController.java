@@ -1,6 +1,7 @@
 package com.zking.zkingedu.common.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.Tool;
 import com.zking.zkingedu.common.service.LogService;
@@ -66,10 +67,18 @@ public class ToolController {
      * 增加工具的方法
      */
     @RequestMapping(value = "/User/addTool")
-    public void addTool(Tool tool, HttpServletResponse response) throws Exception {
+    public void addTool(Tool tool, HttpServletResponse response,HttpServletRequest request) throws Exception {
         tool.setToolTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
         //log.info("*************开始增加工具的方法*************");
         int t = toolService.addTool(tool);
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了工具，工具id为："+tool.getToolID());
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         ResponseUtil.write(response,t);
         //log.info("***********结束增加工具的方法**************");
     }
@@ -93,10 +102,18 @@ public class ToolController {
      * 修改工具的方法
      */
     @RequestMapping(value = "/User/updateTool")
-    public void updateTool(Tool tool,HttpServletResponse response) throws Exception {
+    public void updateTool(Tool tool,HttpServletResponse response,HttpServletRequest request) throws Exception {
         //log.info("************开始修改工具的方法****************");
         tool.setToolTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
         int tool1 = toolService.updateTool(tool);
+        //放入日志
+        Emp emp =(Emp) request.getSession().getAttribute("emp");
+        mylog.setEmp(emp);
+        mylog.setLogTime(time);
+        StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了工具，工具id为："+tool.getToolID());
+        mylog.setLogDetails(stringBuilder.toString());
+        logService.addLog(mylog);
+        //放入日志结束
         ResponseUtil.write(response,tool1);
         //log.info("************结束修改工具的方法****************");
     }

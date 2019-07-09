@@ -49,8 +49,6 @@ public class RoleController {
     @ResponseBody
     public Object getMenus(int page, int limit,@RequestParam("roleName")String roleName) {
         Page<Object> objects = PageHelper.startPage(page, limit);
-        if(roleName==null)
-            roleName="";
         List<Role> roles = roleService.getRoles("%"+roleName+"%");
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
