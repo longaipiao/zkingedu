@@ -4,6 +4,7 @@ package com.zking.zkingedu.common.controller;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.service.MessageService;
 import com.zking.zkingedu.common.utils.MessageUtil;
+import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class MessageController {
     public Map<String,Object> findmessage(Integer page,Integer limit){
 //        System.out.println("page:"+page+"        *****        limit:"+limit);
         log.info("*********开始查询消息的数据**********");
-        PageInfo<Map<String, Object>> message = messageService.findMessage(2,page,limit);
+        PageInfo<Map<String, Object>> message = messageService.findMessage(SessionUtil.getUserById(),page,limit);
 //        System.err.println(message);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
@@ -63,6 +64,21 @@ public class MessageController {
             log.info("修改失败");
         }
         return messahePid;
+    }
+
+
+    /**
+     * 查询出消息的记录数
+     */
+    @RequestMapping(value = "/messageCount")
+    @ResponseBody
+    public Map<String,Object> countjls(){
+        //查询出用户的消息数量
+        int countjl = messageService.findCountjl(SessionUtil.getUserById());
+        System.out.println("消息数量数："+countjl);
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("mess",countjl);
+        return maps;
     }
 
 

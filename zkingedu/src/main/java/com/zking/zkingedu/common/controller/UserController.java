@@ -409,6 +409,7 @@ public class UserController {
                 session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
+
                     try{
                         response.sendRedirect("/user/binding");
                     }catch (IOException e){

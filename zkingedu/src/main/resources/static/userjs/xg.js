@@ -7,7 +7,9 @@ function updatephonepassword() {
     //邮箱认证
     var Emails=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
     //获得用户手机号文本框的值
-    var inputShou=$("#inputShou2").html();
+    var inputShou=$("#yhphone").val();
+
+    alert(inputShou);
     //获得用户输入原来密码的的值
     var password1=$("#password1").val();
     //获得用户输入密码的值
@@ -72,6 +74,7 @@ function updatephonepassword() {
                 }
             } else {
                 alert("手机号不是绑定账号的手机号");
+
             }
         }
 

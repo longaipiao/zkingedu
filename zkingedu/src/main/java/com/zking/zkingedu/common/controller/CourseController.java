@@ -69,7 +69,7 @@ public class CourseController {
     @RequestMapping("/showCourse")
     public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
         //获取登录过来的用户积分    需要后期改变用户ID
-        int integrsl = userService.findIntegrsl(2);
+        int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
         System.err.println("用户的积分是："+integrsl);
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
         System.err.println("整套课程的积分是："+courseIntegrsl);
@@ -81,7 +81,7 @@ public class CourseController {
         //课程id
         model.addAttribute("courseId",sid);
         System.err.println("课程id是："+sid);
-        model.addAttribute("userId",2);
+        model.addAttribute("userId",SessionUtil.getUserById());
         System.err.println("用户id是"+2);
 
         //单个用户的积分
@@ -129,7 +129,7 @@ public class CourseController {
     public ModelAndView SystemRequestCourse(@RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id, HttpServletRequest request, Model model){
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
-        int integrsl = userService.findIntegrsl(2);
+        int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
         System.err.println("用户的积分是："+integrsl);
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
         System.err.println("整套课程的积分是："+courseIntegrsl);
@@ -141,7 +141,7 @@ public class CourseController {
         //课程id
         model.addAttribute("courseId",sid);
 //        System.err.println("课程id是："+sid);
-        model.addAttribute("userId",2);
+        model.addAttribute("userId",SessionUtil.getUserById());
 //        System.err.println("用户id是"+2);
 
         //单个用户的积分

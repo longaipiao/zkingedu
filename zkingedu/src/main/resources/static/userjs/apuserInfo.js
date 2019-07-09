@@ -12,6 +12,7 @@
             //alert(data.mess);
             var sa = data.mess;
             var a = ss+=sa;
+            //alert(a);
             if(parseInt(a)==0){
                 $("#sss").html("  ");
             }else{
@@ -129,7 +130,7 @@
                         content += '<td>'+o.billIntegral+'</td>';
                         content += '<td>'+o.billContent+'</td>';
                         content += '<td>'+o.billTime+'</td>';
-                        if(o.billType==0){
+                        if(o.billType==1){
                             content += '<td style="color: royalblue">收入积分</td>';
                         }else{
                             content += '<td style="color: red">支出积分</td>';
@@ -309,7 +310,91 @@
                 });
 
             });
+
+
+
+            /**
+             *点击查看收藏的课程
+             * yan
+             */
+
+            $("#shoucang").click(function () {
+                var config = {page:1,limit:3};
+                var url = "/hoarding/getCourseHoarding";//请求地址
+                $.getJSON(url,config,function(res){
+                    //alert(res);
+                    laypage.render({
+                        elem: 'pagess',//必须放id
+                        count: 100,
+                        first: '首页',
+                        last: '尾页',
+                        count: res.count, //总条数
+                        limit:config.limit, //每页条数
+                        theme: '#FFB800', //自定义颜色
+                        jump: function(obj, first){
+                            //alert(obj.curr)
+                            if(!first){ //首次则不进入
+                                config.page = obj.curr;
+                                getUserListByPage(url,config);
+                            }
+                        }
+                    });
+                    parseUserList(res,config.page);
+                });
+
+
+                //点击页数从后台获取数据
+                function getUserListByPage(url,config){
+                    $.getJSON(url,config,function(res){
+                        parseUserList(res,config.page);
+                    });
+                }
+                //解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
+                function parseUserList(res,currPage){
+                    //alert(res.data)
+                    var content = "";
+                    $.each(res.data, function (i, o) {
+                        //alert(o.billType);
+                        content+="<div class=\"col-md-4 col-sm-6  course\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<a class=\"course-box\" href=\"/user/showCourse?sid="+o.course_id+"\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<div class=\"sign-box\">\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star-o course-follow pull-right\"\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t   data-follow-url=\"/courses/20/follow\"\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t   data-unfollow-url=\"/courses/20/unfollow\"  style=\"display:none\"  ></i>\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<div class=\"course-img\">\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t<img alt=\""+o.course_name+"\" src=\""+o.course_img+"\">\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<div class=\"course-body\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"course-title\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+o.course_name+"\">"+o.course_name+"</span>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<div class=\"course-footer\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"course-per-num pull-left\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-users\"></i>\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t\t"+o.course_num+"\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t\t</span>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t</a>\n" +
+                            "\t\t\t\t\t\t\t\t\t</div>";
+                    });
+                    $('#datas').html(content);
+                    if(res.count==0){
+                        $("#datas").html("<span style='font-size: 20px;color: red; align-content: center'>暂无数据！</span>");
+                    }
+                }
+            });
+
         });
+
+
+
     });
 
 

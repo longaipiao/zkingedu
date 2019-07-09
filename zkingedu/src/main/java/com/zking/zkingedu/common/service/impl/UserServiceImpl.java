@@ -136,10 +136,23 @@ public class UserServiceImpl implements UserService {
     }
     /**
      *  根据用户id修改用户积分的方法
+     *  阿飘
      */
     @Override
     public void updateUserIntegral(Integer CourseIntegral, Integer userID) {
         userDao.updateUserIntegral(CourseIntegral,userID);
+    }
+
+
+    /**
+     * 根据用户id 充值积分的方法
+     * @param CourseIntegral 积分
+     * @param userID 用户id
+     * @return 阿飘
+     */
+    @Override
+    public int updateIntegral(Integer CourseIntegral, Integer userID) {
+        return userDao.updateIntegral(CourseIntegral,userID);
     }
 
 

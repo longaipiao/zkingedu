@@ -1171,16 +1171,20 @@
                         integral : s2
                     },
                     success : function (data) {
-                        if(data==1){
-                            //积分不够的话，需要充值，才能购买视频
-                            //layer.msg("你需要去充值积分，去购买视频吧！",{icon: 1} );
-                            setTimeout(function() {
-                                layer.msg("您的积分余额不足，请前去个人中心充值积分，再进行购买此课程吧！",{icon: 5} )
-                            }, 2000);
+                        if(parseInt(data)==3){
+                            layer.msg("您还没有登录，快去登录吧！",{icon: 5} );
                         }else{
-                            //积分足够的话，就可以购买视频了
-                            // 停顿一秒后,进行刷新详情页面.
-                            layer.msg("恭喜你，此课程购买成功！",{icon: 1} );
+                            if(parseInt(data)==1){
+                                //积分不够的话，需要充值，才能购买视频
+                                //layer.msg("你需要去充值积分，去购买视频吧！",{icon: 1} );
+                                setTimeout(function() {
+                                    layer.msg("您的积分余额不足，请前去个人中心充值积分，再进行购买此课程吧！",{icon: 5} )
+                                }, 2000);
+                            }else{
+                                //积分足够的话，就可以购买视频了
+                                // 停顿一秒后,进行刷新详情页面.
+                                layer.msg("恭喜你，此课程购买成功！",{icon: 1} );
+                            }
                         }
                     }
                 });
@@ -1208,33 +1212,38 @@
                 courseInte : jf//单章视频积分
             },
             success : function (data) {
-                if(parseInt(jf)>0){
-                    if(data==1){
-                        window.location.href = "/user/showVideo?sid="+course+"&id="+section;
-                    }else if(data==2){
-                        layer.msg("提示用户积分不足，快去充值吧。");
-                    }else if(data=3){
-                        layer.confirm('亲，您确定要购买本章视频吗？', function(){
-                            $.ajax({
-                                type : "post",
-                                url : "/gmsp",
-                                data : {
-                                    sid : course,//课程id
-                                    id : section,//章节id
-                                    courseInte : jf//单章视频积分
-                                },
-                                success : function (data) {
-                                    if(data==4){
-                                        layer.msg("购买成功！");
-                                        window.location.href = "/user/showVideo?sid="+course+"&id="+section;
-                                    }
-                                }
-                            });
-                            layer.close();
-                        });
-                    }
-                }else{
+
+                if(parseInt(jf)==0){
                     window.location.href = "/user/showVideo?sid="+course+"&id="+section;
+                }else{
+                    if(parseInt(data)==4){
+                        layer.msg("您还没有登录，快去登录吧！",{icon: 5} );
+                    }else{
+                        if(data==1){
+                            window.location.href = "/user/showVideo?sid="+course+"&id="+section;
+                        }else if(data==2){
+                            layer.msg("您的积分不足，快去充值吧。");
+                        }else if(data=3){
+                            layer.confirm('亲，您确定要购买本章视频吗？', function(){
+                                $.ajax({
+                                    type : "post",
+                                    url : "/gmsp",
+                                    data : {
+                                        sid : course,//课程id
+                                        id : section,//章节id
+                                        courseInte : jf//单章视频积分
+                                    },
+                                    success : function (data) {
+                                        if(data==4){
+                                            layer.msg("购买成功！");
+                                            window.location.href = "/user/showVideo?sid="+course+"&id="+section;
+                                        }
+                                    }
+                                });
+                                layer.close();
+                            });
+                        }
+                    }
                 }
             }
         });

@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.controller;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.model.Bill;
 import com.zking.zkingedu.common.service.BillService;
+import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class BillController {
     public Map<String,Object> findbill(Integer page,Integer limit){
         //需要修改用户id的   后期用户id得从session中获取
         log.info("**********开始查询账单信息*********");
-        PageInfo<Bill> bills = billService.findAll(2, page, limit);
+        PageInfo<Bill> bills = billService.findAll(SessionUtil.getUserById(), page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);
