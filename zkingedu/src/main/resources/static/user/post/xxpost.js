@@ -385,6 +385,8 @@ function initdata() {
 }
 
 
+
+
 //查看点赞记录
 function querydz() {
     //如果用户id不为空时

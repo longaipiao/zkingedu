@@ -330,4 +330,5 @@ public interface PostService {
      * @return
      */
     int deleteTcommetsBypid(List<Integer> id);
+
 }

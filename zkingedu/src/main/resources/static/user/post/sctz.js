@@ -73,6 +73,7 @@ function ini() {
         });
     }
 
+
     //解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
     function parseUserList(res, currPage) {
         var content = "";
