@@ -157,6 +157,8 @@ public class PageController {
             return mv;//跳转至课程搜索页面
         }
         else{
+            mv.addObject("leibie",SearchName);
+            mv.setViewName("/user/questions/index");
             return mv;//搜索论坛帖子
         }
     }

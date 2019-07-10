@@ -6,11 +6,15 @@ var nr="";
 //分类长度
 var cd;
 
+//记录上次的样式
+var jl="";
+
 
 //调用分类的方法
 
 function hh(aa){
-
+    //给之前的那个设置为空
+     $("#"+jl+"").attr("class","");
 
     $("#"+aa+"").attr("class","active");
 
@@ -20,7 +24,11 @@ function hh(aa){
     $("#Linddd").html("");
      cid=aa;
      jz();//开始调用加载
+    jl=aa;
 }
+
+
+
 
 //调用搜索的方法
 $("#tzss").click(function () {
@@ -33,26 +41,39 @@ $("#tzss").click(function () {
     jz();
     nr="";
     $("#sstz").val("");
-    //设置样式
 
-  /*  $("#"+cid+"").attr("class","active");*/
 
 });
 
 
 
 $(function () {
+    //如果搜索不为空
+
+   /* if($("#cgldez").val()!=""){
+        //给原来的赋值为空，才能刷新
+        $("#Linddd").html("");
+        //开始获取值
+        nr=$("#cgldez").val();
+        //开始调用方法
+        jz();
+        nr="";
+    }*/
 
     //加载分类
     hq();
 
     //调用加载方法
-      jz();
+
+        //开始
+        jz();
+
+
 
 
 });
 
-
+//
 function jz() {
     layui.use('flow', function(){
         var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
@@ -61,7 +82,7 @@ function jz() {
         elem: '#Linddd' //流加载容器
         , done: function (page, next) { //执行下一页的回调
             //模拟数据插入
-            $.post("/pst/getTcomments", {cid: cid, nr: nr, page: page, pageSize: 2}, function (res) {
+            $.post("/pst/getTcomments", {cid: cid, nr: nr, page: page, pageSize: 10}, function (res) {
                 var content = "";
                 var lis = [];
                 layui.each(res.data, function (index, item) {
@@ -75,7 +96,7 @@ function jz() {
                         "\n" +
                         "        <div class=\"user-avatar \">\n" +
                         "        <a class=\"avatar\" href=\"../user/13/study.html\" target=\"_blank\">\n" +
-                        "        <img src=\"https://dn-simplecloud.shiyanlou.com/gravataradmin.png?imageView2/1/w/100/h/100\">\n" +
+                        "        <img src=\""+item.user_img+"\">\n" +
                         "        </a>\n" +
                         "\n" +
                         "        </div>\n" +

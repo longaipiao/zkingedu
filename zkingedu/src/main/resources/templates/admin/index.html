@@ -23,6 +23,7 @@
 
 </head>
 <body>
+
 <shiro:lacksPermission name="login">
     <script>
         // $(function () {
@@ -151,7 +152,8 @@
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <shiro:hasPermission name="帖子列表"><li><a _href="/html/cate"><i class="iconfont">&#xe6a7;</i><cite>帖子列表</cite></a></li ></shiro:hasPermission>
+                    <li><a _href="/pst/pkp"><i class="iconfont">&#xe6a7;</i><cite>帖子列表</cite></a></li >
+                    <li><a _href="/pst/lbindex"><i class="iconfont">&#xe6a7;</i><cite>帖子分类</cite></a></li >
                 </ul>
             </li></shiro:hasPermission>
             <!--  论坛管理  end -->
