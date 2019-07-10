@@ -39,16 +39,28 @@
                     <li class="">
                         <a href="/user/questions/index.html">讨论区</a>
                     </li>
-                    <li class=" bootcamp new-nav logo-1111">
-                        <a href="/user/bootcamp/index.html">训练营</a>
-                    </li>
                     <li class=" new-nav logo-1111">
-                        <a href="/user/vip/index.html">会员</a>
+                        <a href="/user/vip/index.html">个人中心</a>
                     </li>
                 </ul>
                 <div class="navbar-right btns">
-                    <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
-                    <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                     <span th:if="${session.user} eq null  ">
+                        <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                    </span>
+
+                    <span th:if="${session.atts==a}">
+                        <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
+                        </span>
+
+
+                    <span th:if="${session.user} ne null ">
+                        <span th:if="${session.atts!=a}">
+                            <a href="/user/userinfo/index"><img th:src="${session.user.userImg}"class="img-circle img-responsive" style="width:30px;height: 30px; display: inline" ></a>
+                        <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
+                        </span>
+                    </span>
                 </div>
                 <form class="navbar-form navbar-right" action="/user/PageSearch" method="post" role="search">
                     <select class="form-control" name="type">
@@ -61,7 +73,107 @@
             </div>
         </div>
     </nav>
+
+    <div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#signin-form" aria-controls="signin-form" role="tab" data-toggle="tab">登录</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#signup-form" aria-controls="signup-form" role="tab" data-toggle="tab">注册</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="signin-form">
+                            <form action="/login" method="post">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope" style="margin:0;"></i>
+                                        </div>
+                                        <input  name="login" class="form-control" id="userPhone" placeholder="请输入手机号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-lock" style="margin:0;"></i>
+                                        </div>
+                                        <input name="password" class="form-control" id="upwd" type="password" placeholder="请输入密码" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group remember-login">
+                                    <a href="/user/zhpasssword">忘记密码？</a>
+                                </div>
+                                <!--&lt;!&ndash; 手机号找回密码 &ndash;&gt;
+                              <div id="sjpassword" style="display: none">
+
+                                              <a ><button type="button" class="layui-btn layui-btn-lg layui-btn-normal">手机号找回密码</button></a>
+
+                              </div>-->
+                                <div class="form-group">
+                                    <input class="btn btn-primary" name="submit" type="button" onclick="loginChak()" value="进入实验楼">
+                                </div>
+                                <div class="form-group widget-signin">
+                                    <span>快速登录</span>
+                                    <a href="/user/qqLogin"><i class="fa fa-qq"></i></a>
+                                </div>
+                                <div class="form-group error-msg">
+                                    <div class="alert alert-danger" role="alert"></div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <!--注册-->
+                        <div role="tabpanel" class="tab-pane" id="signup-form">
+                            <form action="#" method="post" id="table">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-envelope" style="margin:0;"></i>
+                                        </div>
+                                        <input  name="phone" id="phone" class="form-control" placeholder="请输入手机号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-lock" style="margin:0;"></i>
+                                        </div>
+                                        <input  name="password" id="password" class="form-control" type="password" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" name="captcha_v" class="form-control"  id="captcha_v" placeholder="请输入验证码">
+                                        </div>
+                                    </div>
+                                    <button id="sendPhone" class="verify-code">获取验证码</button>
+
+                                </div>
+
+                                <span id="sd"></span>
+                                <div class="form-group">
+                                    <input class="btn btn-primary" name="submit" type="button" onclick="zc()" value="注册">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </footer>
+
+
+
 
 </body>
 </html>

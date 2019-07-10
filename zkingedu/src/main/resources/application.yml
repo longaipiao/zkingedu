@@ -70,8 +70,9 @@ spring:
         min-idle: 1
       #连接超时(毫秒)
     timeout: 1000
-#配置Mybatis参数
 
+  # 配置静态资源文件路径
+#配置Mybatis参数
 mybatis:
   #扫描映射文件
   mapper-locations: classpath*:mapper/*Mapper.xml

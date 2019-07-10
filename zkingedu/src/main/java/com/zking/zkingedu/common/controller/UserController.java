@@ -18,6 +18,7 @@ import com.zking.zkingedu.common.service.impl.UserServiceImpl;
 import com.zking.zkingedu.common.utils.IpAddress;
 import com.zking.zkingedu.common.utils.MailUtil;
 import com.zking.zkingedu.common.utils.transferImgForRoundImgage;
+import com.zking.zkingedu.common.utils.MailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;

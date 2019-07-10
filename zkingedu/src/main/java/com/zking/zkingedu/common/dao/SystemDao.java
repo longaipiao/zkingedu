@@ -128,4 +128,12 @@ public interface SystemDao {
      */
     List<System> getAll();
 
+
+    /**
+     * 查询最热的体系
+     * yan
+     * @return
+     */
+    List<System> getSystemByRe();
+
 }

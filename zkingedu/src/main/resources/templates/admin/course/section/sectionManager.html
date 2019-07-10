@@ -53,13 +53,35 @@
                 ,{field:'sectionID', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
                 ,{field:'sectionName', title:'章节名称', width:160}
                 ,{field:'sectionTime', title:'添加时间', width:160}
-                ,{field:'sectionSeq', title:'排序编号', width:120,sort: true}
-                ,{field:'sectionInte', title:'视频积分', width:120,sort: true}
+                ,{field:'sectionSeq', title:'排序编号', width:120,sort: true,event: 'setSeq'}
+                ,{field:'sectionInte', title:'视频积分', width:120,sort: true,edit:true}
                 ,{field:'videoId', title:'视频编号', width:210}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:280}
             ]
             ]
             ,page: true
+        });
+
+
+        //监听单元格事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'setSeq'){
+                layer.prompt({
+                    formType: 2
+                    ,title: '修改 ID 为 ['+ data.id +'] 的用户签名'
+                    ,value: data.sign
+                }, function(value, index){
+                    layer.close(index);
+
+                    //这里一般是发送修改的Ajax请求
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        sign: value
+                    });
+                });
+            }
         });
 
         //工具栏事件
