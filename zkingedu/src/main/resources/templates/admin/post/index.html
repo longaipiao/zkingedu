@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/user/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<form class="layui-form" action="" style="display: none;" id="fo">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="pname" required lay-verify="required" placeholder="请输入类别名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formD">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<form class="layui-form" action="" style="display: none;" id="fo2">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别名称</label>
+        <div class="layui-input-inline">
+            <input type="hidden"id="pcid2" name="pcid2">
+            <input type="text" id="pname2" name="pname2" required lay-verify="required" placeholder="请输入类别名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formD2">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<div style="margin-bottom: 2px;">
+    <!-- 示例-970 -->
+    <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+
+</div>
+
+<div class=" demoTable">
+    <button class="layui-btn" data-type="getCheckData">删除</button>
+
+    <button class="layui-btn" data-type="isAll">增加分类</button>
+</div>
+
+<table class="layui-table" lay-data="{width: 1400, height:330, url:'/pst/getPCTS', page:true, id:'idTest'}" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'pcid', width:400, sort: true, fixed: true}">ID</th>
+        <th lay-data="{field:'pcname', width:430}">类别名称</th>
+        <th lay-data="{fixed: 'right', width:400, align:'center', toolbar: '#barDemo'}">操作</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script src="/user/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['table','form'] ,function(){
+        var table = layui.table;
+        var form = layui.form;
+
+
+        //监听form
+        form.on('submit(formD)', function(data){
+            $.ajax({
+                type:"post",
+                url:"/pst/addPca",
+                dataType:"json",
+                data:{
+                    pname:data.field.pname
+                },
+                success:function(data){
+                    if(data>0){
+                        layer.close("iframe");
+                        location.reload();//刷新
+                    }else{
+                        parent.layer.msg('增加失败！', {icon: 2,shade:0.2});
+                    }
+                },
+                error:function(jqXHR){
+                    alert("发生错误："+ jqXHR.status);
+                }
+            });
+            return false;
+
+
+        });
+
+        form.on('submit(formD2)', function(data){
+            $.ajax({
+                type:"post",
+                url:"/pst/updatePca",
+                dataType:"json",
+                data:{
+                     id:data.field.pcid2,
+                     pcname:data.field.pname2
+                },
+                success:function(data){
+                    if(data>0){
+                        layer.close("iframe");
+                        location.reload();//刷新
+                    }else{
+                        parent.layer.msg('修改失败！', {icon: 2,shade:0.2});
+                    }
+                },
+                error:function(jqXHR){
+                    alert("发生错误："+ jqXHR.status);
+                }
+            });
+            return false;
+
+
+        });
+
+
+
+//
+
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                   //开始调用方法删除
+                    $.ajax({
+                        type:"post",
+                        url:"/pst/delPc",
+                        dataType:"json",
+                        data:{
+                            id:data.pcid
+                        },
+                        success:function(data){
+                            if(data>0){
+                                //刷新
+                               location.reload();
+                            }else{
+                                parent.layer.msg('删除失败！', {icon: 2,shade:0.2});
+                            }
+                        },
+                        error:function(jqXHR){
+                            alert("发生错误："+ jqXHR.status);
+                        }
+                    });
+
+
+                });
+            } else if(obj.event === 'edit'){
+              //赋值
+                $("#pname2").val(data.pcname);
+                $("#pcid2").val(data.pcid);
+                layer.open({
+                    type: 1,
+                    title: "修改分类",
+                    area: ['400px', '200px'],
+                    content: $("#fo2"),//引用的弹出层的页面层的方式加载修改界面表单
+                    maxmin: true
+                });
+
+
+            }
+        });
+
+        var $ = layui.$, active = {
+            getCheckData: function() { //获取选中数据
+
+                var checkStatus = table.checkStatus('idTest')
+                    , data = checkStatus.data;
+                if (data.length > 0) {
+                    layer.confirm('需要删除这些么', function(index){
+
+                    var arr = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        arr[i] = data[i].pcid;
+                    }
+
+
+                    //开始调用ajax
+                    $.ajax({
+                        type: "post",
+                        url: "/pst/deltePCSSS",
+                        dataType: "json",
+                        data: {
+                            arr: arr
+                        },
+                        success: function (data) {
+                            if (data > 0) {
+                                location.reload();//刷新
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                     });
+                    });
+                }
+                else{
+                    layer.msg('请先选中',{icon:2})
+                }
+            }
+            ,getCheckLength: function(){ //获取选中数目
+                var checkStatus = table.checkStatus('idTest')
+                    ,data = checkStatus.data;
+                layer.msg('选中了：'+ data.length + ' 个');
+            }
+            ,isAll: function() { //验证是否全选
+                var checkStatus = table.checkStatus('idTest');
+                layer.open({
+                    type: 1,
+                    title: "添加分类",
+                    area: ['400px', '200px'],
+                    content: $("#fo"),//引用的弹出层的页面层的方式加载修改界面表单
+                    maxmin: true
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+</body>
+</html>

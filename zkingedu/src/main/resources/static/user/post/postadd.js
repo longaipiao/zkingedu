@@ -47,7 +47,7 @@ layui.use(['table','layer','jquery','layedit', 'laydate'], function(){
 
     });
     /*****************************************************************************************************/
-
+//
 
     //监听表格复选框选择
     table.on('checkbox(demo)', function(obj){

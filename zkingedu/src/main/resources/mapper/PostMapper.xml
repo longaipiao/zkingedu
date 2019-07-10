@@ -46,7 +46,7 @@
 
 <!--    根据id找到所有的评论-->
     <select id="getAllTandUser" parameterType="integer" resultType="java.util.HashMap">
-               select a.*,b.user_id,b.user_img,b.user_name,c.user_name uname2,c.user_id uid2
+               select a.*,b.user_id,b.user_img,b.user_name,c.user_name uname2,c.user_id uid2,(select IFNULL(COUNT(*),0) FROM t_tcomment WHERE tcomment_fid=a.tcomment_id) sl
                         from t_tcomment a,t_user b,t_user c
               where a.tcomment_cid=#{id} and a.tcomment_uid=b.user_id AND a.tcomment_dyuid=c.user_id ORDER BY a.tcomment_lounum DESC
     </select>
@@ -249,6 +249,29 @@
                              from t_user
              where user_id=#{id}
     </select>
+
+
+<!--    批量删除帖子表-->
+    <delete id="deletePosts" parameterType="list">
+                 delete  from
+                             t_post
+                 where post_id in
+        <foreach collection="list"  item="item"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+<!--    根据帖子id删除所有的评论-->
+    <delete id="deleteTcommetsBypid" parameterType="list">
+                   delete  from
+                                t_tcomment
+                   where  tcomment_cid in
+        <foreach collection="list"  item="item"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </delete>
 
 
 

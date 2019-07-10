@@ -73,6 +73,7 @@ function ini() {
         });
     }
 
+
     //解析数据，currPage参数为预留参数，当删除一行刷新列表时，可以记住当前页而不至于显示到首页去
     function parseUserList(res, currPage) {
         var content = "";
@@ -85,13 +86,13 @@ function ini() {
             content += '<div class="user-avatar ">';
             content += '<a class="avatar" href="../user/13/study.html" target="_blank">';
 
-            content += '<img src="https://dn-simplecloud.shiyanlou.com/gravataradmin.png?imageView2/1/w/100/h/100">';
+            content += '<img src="'+o.user_img+'">';
             content += '</a>';
             content += '</div>';
             content += '</div>';
             content += '<div class="col-sm-10">';
             content += '<h4>';
-            content += '<a  class="question-item-title" href="/pst/userinfo?id=' + o.postID + '" target="_blank">"' + o.post_name + '"</a>';
+            content += '<a  class="question-item-title" href="/pst/userinfo?id=' + o.post_id + '" target="_blank">"' + o.post_name + '"</a>';
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';

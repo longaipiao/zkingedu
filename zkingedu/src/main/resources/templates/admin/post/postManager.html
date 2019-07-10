@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/user/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<script type="text/html" id="checkboxTpl">
+
+    <input type="checkbox" name="lock" value="{{d.post_id}}" title="展示"  lay-filter="lockDemo" {{ d.post_state == 0 ? 'checked' : '' }}>
+</script>
+
+
+
+<div class="demoTable layui-form ">
+    <div class="layui-inline">
+        用户名
+        <input class="layui-input" name="uname" id="uname" autocomplete="off">
+    </div>
+
+    <div class="layui-inline">
+        标题
+        <input class="layui-input" name="ptitle" id="ptitle" autocomplete="off">
+    </div>
+
+
+    <div class="layui-input-inline" >
+        帖子类别
+        <div id="xlk"></div>
+
+    </div>
+
+    <div class="layui-input-inline">
+        是否展示
+        <select id="zs" name="zs" lay-verify="required">
+            <option value="">请选择</option>
+            <option value="1">展示</option>
+            <option value="2">不展示</option>
+        </select>
+    </div>
+    <button class="layui-btn layui-btn-radius" data-type="reload" id="search1">搜索</button>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+
+
+
+
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
+
+    </div>
+
+
+
+
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script src="/admin/js/jquery.min.js"></script>
+<script src="/user/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+
+    function xg(aa){
+        alert(aa);
+    }
+    layui.use('table', function(){
+        var table = layui.table
+            ,form = layui.form;
+
+
+
+
+
+
+
+        $.ajax({
+            type: "post",
+            url: "/pst/getpcs",
+            success: function (data) {
+                var content = '<select name="postCategory" lay-verify="required" id="ca">';
+                content += '<option value="">请选择</option>';
+                $.each(data, function (i, obj) {
+                    content += '<option value="' + obj.pcname + '">' + obj.pcname + '</option>';
+                });
+                content += '</select>';
+                $("#xlk").html(content);
+                form.render('select');//渲染
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
+            }
+        });
+
+        table.render({
+            elem: '#test'
+            ,url:'/pst/gethtpsot'
+            ,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,id:'yy'
+            ,cols: [
+                [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'post_id',  align:'center',title:'帖子ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'user_name',align:'center', title:'用户名', width:150, unresize: true, sort: true}
+                ,{field:'post_name', align:'center',title:'标题', width:150}
+                ,{field:'post_num', align:'center',title:'浏览量',width:150, sort: true}
+                ,{field:'post_state', align:'center',title:'是否展示',templet: '#checkboxTpl', width:150}
+                ,{field:'pc_name', align:'center', title:'类别',width:150}
+                ,{field:'post_time', align:'center',title:'时间',width:150}
+                ,{fixed: 'right', title:'操作', align:'center' ,toolbar: '#barDemo', width:150}
+            ]
+            ]
+            ,page: true
+        });
+//
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    if (data.length > 0) {
+                        layer.confirm('需要删除这些么', function(index){
+                            var arr = new Array();
+                            for (var i = 0; i < data.length; i++) {
+                                arr[i] = data[i].post_id;
+                            }
+
+                            //开始调用ajax
+                            $.ajax({
+                                type: "post",
+                                url: "/pst/deletePandTcoms",
+                                dataType: "json",
+                                data: {
+                                    arr: arr
+                                },
+                                success: function (data) {
+                                    if (data > 0) {
+                                        location.reload();//刷新
+                                    }
+                                },
+                                error: function (jqXHR) {
+                                    alert("发生错误：" + jqXHR.status);
+                                }
+                            });
+                        });
+                    }
+                    else{
+                        layer.msg('请先选中',{icon:2})
+                    }
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+
+            };
+        });
+
+        $("#search1").click(function () {
+            table.reload('yy', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                    puname:$("#uname").val(),
+                    pname:$("#ptitle").val(),
+                    pcname:$("#ca").val()
+                }
+            });
+          $("#uname").val("");
+              $("#ptitle").val("");
+               $("#ca").val("");
+
+        });
+
+        //监听
+        form.on('checkbox(lockDemo)', function(obj){
+
+            $.ajax({
+                type: "post",
+                url: "/pst/updatePstate",
+                async:true,
+                data:{
+                    state:obj.elem.checked,
+                    id : this.value
+                },
+                dataType:"json",
+                success:function(d){
+                    if(d>0){
+                        layer.msg("修改成功");
+                    }
+                    else{
+                        layer.msg("修改失败");
+                    }
+                }
+            });
+
+        });
+
+
+        //监听行工具事件
+        var data;
+        table.on('tool(test)', function(obj){
+            data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+               layer.confirm('真的删除么', function(index){
+                   $.ajax({
+                       type: "post",
+                       url: "/pst/deletePost",
+                       async:true,
+                       data:{
+                           id : data.post_id
+                       },
+                       dataType:"json",
+                       success:function(d){
+                           if(d>0){
+                               //刷新
+                               location.reload();
+                           }
+                           else{
+                               layer.msg("删除失败");
+                           }
+                       }
+                   });
+
+
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
