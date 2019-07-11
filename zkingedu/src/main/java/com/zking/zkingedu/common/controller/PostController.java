@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -677,9 +678,11 @@ public class PostController {
      * 增加帖子成功跳转的界面
      * @return
      */
-    @RequestMapping(value = "/userinfo")
-    public String tz(){
-        return "user/questions/show";
+    @RequestMapping(value = "/userinfo/{id}",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    public ModelAndView tz(@PathVariable("id") Integer id,ModelAndView mv){
+        mv.addObject("id",id);
+        mv.setViewName("user/questions/show");
+        return mv;
     }
 
     /**
