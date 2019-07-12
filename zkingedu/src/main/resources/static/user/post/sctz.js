@@ -85,7 +85,7 @@ function ini() {
             content += '</div>';
             content += '<div class="col-sm-10">';
             content += '<h4>';
-            content += '<a  class="question-item-title" href="/pst/userinfo?id=' + o.post_id + '" target="_blank">"' + o.post_name + '"</a>';
+            content += '<a  class="question-item-title" href="/pst/userinfo/' + o.post_id + '" target="_blank">"' + o.post_name + '"</a>';
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';

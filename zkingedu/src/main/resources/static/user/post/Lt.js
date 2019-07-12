@@ -110,7 +110,7 @@ function jz() {
                         "\n" +
 
                         "\n" +
-                        "        <a class=\"question-item-title\" href=\"/pst/userinfo?id=" + item.post_id + "\" target=\"_blank\"> " + item.post_name + "</a>\n" +
+                        "        <a class=\"question-item-title\" href=\"/pst/userinfo/" + item.post_id + "\" target=\"_blank\"> " + item.post_name + "</a>\n" +
                         "\n" +
                         "    </h4>\n" +
                         "    <div class=\"question-item-summary\">\n" +
