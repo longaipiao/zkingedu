@@ -16,6 +16,7 @@ public class WebAppConfig2 extends WebMvcConfigurerAdapter {
 
     @Autowired
     private WebAppConfig webAppConfig;
+
     /**
      * 阻止用户进行个人信息有关操作
      */
@@ -23,7 +24,7 @@ public class WebAppConfig2 extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(webAppConfig)
-                .addPathPatterns("/user/userinfo/index","/user/courses/index");
+                .addPathPatterns("/user/userinfo/index", "/user/courses/index");
     }
 
 

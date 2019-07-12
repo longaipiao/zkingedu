@@ -26,7 +26,7 @@
     </select>
 
     <!--增加题目-->
-    <insert id="addTitle"  useGeneratedKeys="true" keyProperty="titleID">
+    <insert id="addTitle" useGeneratedKeys="true" keyProperty="titleID">
         insert into t_title(title_cid,title_content,title_describe,title_time,title_state)
         values (#{titleCid},#{titleContent},#{titleDescribe},#{titleTime},#{titleState})
     </insert>
@@ -76,8 +76,6 @@
             <result property="answerState" column="answer_state"></result>
         </collection>
     </resultMap>
-    
-
 
 
 </mapper>

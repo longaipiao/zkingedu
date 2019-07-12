@@ -18,11 +18,11 @@ public class QuartzConfiguration {
     private MyJobFactory myJobFactory;
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(){
+    public SchedulerFactoryBean schedulerFactoryBean() {
         //1.创建ScheduleFactoryBean
         //2.加载自定义的quartz.properites配置文件
         //3.注入自定义的MyJobFactory
-        SchedulerFactoryBean sc=new SchedulerFactoryBean();
+        SchedulerFactoryBean sc = new SchedulerFactoryBean();
 
         try {
             sc.setQuartzProperties(quartzProperties());
@@ -35,14 +35,14 @@ public class QuartzConfiguration {
 
     @Bean
     public Properties quartzProperties() throws IOException {
-        PropertiesFactoryBean propertiesFactoryBean=new PropertiesFactoryBean();
+        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocation(new ClassPathResource("/application.yml"));
         propertiesFactoryBean.afterPropertiesSet();
         return propertiesFactoryBean.getObject();
     }
 
-    @Bean(name="scheduler")
-    public Scheduler scheduler(){
+    @Bean(name = "scheduler")
+    public Scheduler scheduler() {
         return schedulerFactoryBean().getScheduler();
     }
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * 角色表
+ *
  * @ClassName Role
  * @Author likai
  **/
@@ -22,9 +23,9 @@ public class Role implements Serializable {
     //角色名
     private String roleName;
     //用户
-    private Set<Emp> emps=new HashSet<>();
+    private Set<Emp> emps = new HashSet<>();
     //菜单
-    private Set<Menu> menus=new HashSet<>();
+    private Set<Menu> menus = new HashSet<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

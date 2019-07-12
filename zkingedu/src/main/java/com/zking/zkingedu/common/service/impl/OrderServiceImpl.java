@@ -22,8 +22,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderDao orderDao;
+
     /**
      * 购买整套视频的方法
+     *
      * @param
      * @return
      */
@@ -53,13 +55,14 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public PageInfo<Map<String, Object>> findOrderUid(Integer userID, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<Map<String, Object>> orderUid = orderDao.findOrderUid(userID);
         return new PageInfo<>(orderUid);
     }
 
     /**
      * 购买单个章节视频的方法
+     *
      * @param order
      * @return
      */
@@ -70,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 查询章节视频id是否存在
+     *
      * @param cid 章节id
      * @return
      */
@@ -79,28 +83,29 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     /**
-     *  根据用户id查询订单表中是否存在重负的视频
-     * @param userId 用户id
+     * 根据用户id查询订单表中是否存在重负的视频
+     *
+     * @param userId    用户id
      * @param courseId  课程id
-     * @param sectionId  章节id
+     * @param sectionId 章节id
      * @return
      */
     @Override
     public Integer finduidsidcid(Integer userId, Integer courseId, Integer sectionId) {
-        return orderDao.finduidsidcid(userId,courseId,sectionId);
+        return orderDao.finduidsidcid(userId, courseId, sectionId);
     }
 
     /**
      * 后台的订单查询记录
+     *
      * @param userName
      * @param orderID
      * @return
      */
     @Override
     public PageInfo<Map<String, Object>> findOrder(String userName, String orderID, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<Map<String, Object>> orders = orderDao.findOrder(userName, orderID);
         return new PageInfo<>(orders);
     }
@@ -110,8 +115,8 @@ public class OrderServiceImpl implements OrderService {
      * 阿飘
      */
     @Override
-    public PageInfo<Map<String, Object>> findziyuanUid(Integer userID,Integer page,Integer limit) {
-        PageHelper.startPage(page,limit);
+    public PageInfo<Map<String, Object>> findziyuanUid(Integer userID, Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
         List<Map<String, Object>> ziyuans = orderDao.findziyuanUid(userID);
         return new PageInfo<>(ziyuans);
     }
@@ -119,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 查询订单收入的总金额数
+     *
      * @return
      */
     @Override

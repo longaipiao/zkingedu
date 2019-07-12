@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class app {
 
     public static void main(String[] args) {
-        SpringApplication.run(app.class,args);
+        SpringApplication.run(app.class, args);
     }
 
 
     @RequestMapping(value = "/")
-    public String index(){
+    public String index() {
         return "springbootApp_8989";
     }
 }

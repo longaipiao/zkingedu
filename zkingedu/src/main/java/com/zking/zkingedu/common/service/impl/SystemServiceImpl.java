@@ -20,7 +20,6 @@ import java.util.Map;
 
 /**
  * 课程体系接口   服务实现层
- *
  */
 @Service("systemService")
 @Slf4j
@@ -33,6 +32,7 @@ public class SystemServiceImpl implements SystemService {
     /**
      * yan
      * 返回所有课程体系数据  result
+     *
      * @return
      */
     @Override
@@ -51,14 +51,15 @@ public class SystemServiceImpl implements SystemService {
                 newsystems.add(system);
             }
         } catch (Exception e) {
-            return new ResultUtil(500,"数据接口异常");
+            return new ResultUtil(500, "数据接口异常");
         }
-        return new ResultUtil(200,"success",newsystems);
+        return new ResultUtil(200, "success", newsystems);
     }
 
     /**
      * 首页加载课程体系12个
      * yan
+     *
      * @return
      */
     @Override
@@ -90,9 +91,9 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 根据fid查询子体系
+     *
      * @param fid
-     * @return
-     * yan
+     * @return yan
      */
     @Override
     public List<System> getsystemsonByFId(Integer fid) {
@@ -108,14 +109,15 @@ public class SystemServiceImpl implements SystemService {
     /**
      * 根据体系id查询体系对应信息
      * yan
+     *
      * @param id
      * @return
      */
     @Override
     public System getSystemBySid(Integer id) {
         System systemBySid = systemDao.getSystemBySid(id);
-            System systemCourseNum = systemDao.getSystemCourseNum(systemBySid.getSystemID());
-            systemBySid.setSourcesNum(systemCourseNum.getSourcesNum());
+        System systemCourseNum = systemDao.getSystemCourseNum(systemBySid.getSystemID());
+        systemBySid.setSourcesNum(systemCourseNum.getSourcesNum());
         return systemBySid;
     }
 
@@ -124,8 +126,8 @@ public class SystemServiceImpl implements SystemService {
      * admin
      * 获取所有的体系信息  1级
      * 分页  查询
-     * @return
-     * yan
+     *
+     * @return yan
      */
     @Override
     public ResultUtil getAllSystems(PageBean<System> pageBean) {
@@ -143,7 +145,7 @@ public class SystemServiceImpl implements SystemService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultUtil(500,e.getMessage());
+            return new ResultUtil(500, e.getMessage());
         }
         ResultUtil result = new ResultUtil();
         result.setData(systems);
@@ -157,6 +159,7 @@ public class SystemServiceImpl implements SystemService {
      * admin
      * 体系添加
      * yan
+     *
      * @param system
      * @return
      */
@@ -168,24 +171,24 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 修改课程状态
+     *
      * @param stateId
      * @param systemId
-     * @return
-     * yan
+     * @return yan
      */
     @Transactional
     @Override
     public int updateSystemState(Integer stateId, Integer systemId) {
-        return systemDao.updateSystemState(stateId,systemId);
+        return systemDao.updateSystemState(stateId, systemId);
     }
 
 
     /**
      * admin
      * 体系信息修改
+     *
      * @param system
-     * @return
-     * yan
+     * @return yan
      */
     public int updateSystem(System system) {
         try {
@@ -199,9 +202,9 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 根据fid查询子体系
-     * @param pageBean  分页
-     * @return
-     * yan
+     *
+     * @param pageBean 分页
+     * @return yan
      */
     @Override
     public ResultUtil getsystemsonByFId(PageBean<Integer> pageBean) {
@@ -224,19 +227,21 @@ public class SystemServiceImpl implements SystemService {
     /**
      * admin添加体系阶段
      * yan
-     * @param sid  体系id
-     * @param stageName  阶段名称
+     *
+     * @param sid       体系id
+     * @param stageName 阶段名称
      * @return
      */
     @Override
     public int addSystemStage(Integer sid, String stageName) {
-        return systemDao.addSystemStage(sid,stageName);
+        return systemDao.addSystemStage(sid, stageName);
     }
 
 
     /**
      * yan
      * 根据fid  查询对应的体系阶段
+     *
      * @param fid
      * @return
      */
@@ -249,13 +254,13 @@ public class SystemServiceImpl implements SystemService {
     /**
      * admin
      * 修改 阶段名称
-     * @param sid  体系id
-     * @return
-     * yan
+     *
+     * @param sid 体系id
+     * @return yan
      */
     @Override
     public int updateSystemAndStageBySid(Integer sid, String stageName) {
-        return systemDao.updateSystemAndStageBySid(sid,stageName);
+        return systemDao.updateSystemAndStageBySid(sid, stageName);
     }
 
 
@@ -263,6 +268,7 @@ public class SystemServiceImpl implements SystemService {
      * admin
      * 获取所有的体系
      * yan
+     *
      * @return
      */
     @Override
@@ -274,17 +280,18 @@ public class SystemServiceImpl implements SystemService {
     /**
      * yan
      * 获取 所有的体系 以及对应的体系阶段
+     *
      * @return
      */
     @Override
-    public List<Map<String,Object>> getSystemAndStageMenu() {
+    public List<Map<String, Object>> getSystemAndStageMenu() {
         ArrayList<Map<String, Object>> maps = new ArrayList<>();
         List<System> all = systemDao.getAll();
         for (System system : all) {
             HashMap<String, Object> map = new HashMap<>();
-            map.put("id",system.getSystemID());
-            map.put("sysName",system.getSystemName());
-            map.put("stages",systemDao.getSystemStages(system.getSystemID()));
+            map.put("id", system.getSystemID());
+            map.put("sysName", system.getSystemName());
+            map.put("stages", systemDao.getSystemStages(system.getSystemID()));
             maps.add(map);
         }
         return maps;

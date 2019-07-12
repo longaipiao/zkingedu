@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!--定时器-->
-<mapper namespace="com.zking.zkingedu.common.dao.ScheduleTriggerMapper" >
-  <resultMap id="BaseResultMap" type="com.zking.zkingedu.common.model.ScheduleTrigger" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="cron" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="status" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="job_group" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, cron, status, job_name, job_group
-  </sql>
-  <select id="queryScheduleTrigger" resultType="com.zking.zkingedu.common.model.ScheduleTrigger">
-    select *
-    from t_schedule_trigger
-  </select>
+<mapper namespace="com.zking.zkingedu.common.dao.ScheduleTriggerMapper">
+    <resultMap id="BaseResultMap" type="com.zking.zkingedu.common.model.ScheduleTrigger">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="cron" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="status" jdbcType="CHAR" javaType="java.lang.String"/>
+            <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="job_group" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, cron, status, job_name, job_group
+    </sql>
+    <select id="queryScheduleTrigger" resultType="com.zking.zkingedu.common.model.ScheduleTrigger">
+        select *
+        from t_schedule_trigger
+    </select>
 
 </mapper>

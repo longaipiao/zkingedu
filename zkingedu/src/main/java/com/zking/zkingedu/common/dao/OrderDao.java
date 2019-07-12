@@ -37,7 +37,7 @@ public interface OrderDao {
     /**
      * 根据用户id查询该用户的订单
      */
-    public List<Map<String,Object>> findOrderUid(Integer userID);
+    public List<Map<String, Object>> findOrderUid(Integer userID);
 
     /**
      * 购买单个章节视频的方法
@@ -49,20 +49,20 @@ public interface OrderDao {
     /**
      * 根据用户id查询订单表中是否存在重负的视频
      */
-    public Integer finduidsidcid(@Param("userId") Integer userId,@Param("courseId")Integer courseId,@Param("sectionId")Integer sectionId);
+    public Integer finduidsidcid(@Param("userId") Integer userId, @Param("courseId") Integer courseId, @Param("sectionId") Integer sectionId);
 
 
     /**
      * 后台的订单查询记录
      */
-    public List<Map<String,Object>> findOrder(@Param("userName") String userName,@Param("orderID") String orderID);
+    public List<Map<String, Object>> findOrder(@Param("userName") String userName, @Param("orderID") String orderID);
 
 
     /**
      * 根据用户id查询出自己的资源
      * 阿飘
      */
-    public List<Map<String,Object>> findziyuanUid(@Param("userID") Integer userID);
+    public List<Map<String, Object>> findziyuanUid(@Param("userID") Integer userID);
 
 
     /**

@@ -9,6 +9,7 @@ import java.util.Set;
 
 /**
  * 菜单表
+ *
  * @ClassName Menu
  * @Author likai
  **/
@@ -33,8 +34,8 @@ public class Menu implements Serializable {
     //类别0菜单1授权码（按钮)
     private Integer menuSort;
     //角色
-    private Set<Role> roles=new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
     //子菜单
-    private Set<Menu> menus=new HashSet<>();
+    private Set<Menu> menus = new HashSet<>();
 
 }

@@ -16,6 +16,7 @@ public interface MessageDao {
 
     /**
      * 增加消息的方法
+     *
      * @param message 消息对象
      * @return
      */
@@ -26,14 +27,14 @@ public interface MessageDao {
      * 根据用户id查询所以的消息通知
      * 阿飘
      */
-    public List<Map<String,Object>> findMessage(@Param("userID") Integer userID);
+    public List<Map<String, Object>> findMessage(@Param("userID") Integer userID);
 
 
     /**
      * 修改未读状态为已读状态
      * 阿飘
      */
-    public int updateState(@Param("messageid")Integer messageid);
+    public int updateState(@Param("messageid") Integer messageid);
 
     /**
      * 查询有多少条消息记录
@@ -45,7 +46,6 @@ public interface MessageDao {
      * 根据消息id查询评论id
      */
     public int findMessahePid(@Param("messageId") Integer messageId);
-
 
 
 }

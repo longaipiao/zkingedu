@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 课程表
+ *
  * @ClassName Course
  * @Author likai
  **/

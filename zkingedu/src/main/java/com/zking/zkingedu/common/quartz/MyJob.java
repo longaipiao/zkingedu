@@ -14,7 +14,7 @@ import java.util.Date;
 public class MyJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        int a = 0/5;
-        System.out.println("这是一个空的执行任务,时间："+new SimpleDateFormat("yyyy-MM-dd  hh-mm-ss").format(new Date()));
+        int a = 0 / 5;
+        System.out.println("这是一个空的执行任务,时间：" + new SimpleDateFormat("yyyy-MM-dd  hh-mm-ss").format(new Date()));
     }
 }

@@ -1,67 +1,71 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Lei Shi">
-  <meta http-equiv="Cache-Control" content="o-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
-        <title>开发者 - 实验楼</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Lei Shi">
+    <meta http-equiv="Cache-Control" content="o-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
+    <title>开发者 - 实验楼</title>
 
-<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
-<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
+    <meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
+    <meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
 
     <meta content="实验楼,琛石科技" name="author">
 
-	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
-	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
-	<link rel="stylesheet" href="/user/layui/css/layui.css">
+    <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
+    <link rel="stylesheet" href="/user/layui/css/layui.css">
 
-	<style>
-		@font-face {
-			font-family: "lantingxihei";
-			src: url("/user/fonts/FZLTCXHJW.TTF");
-		}
+    <style>
+        @font-face {
+            font-family: "lantingxihei";
+            src: url("/user/fonts/FZLTCXHJW.TTF");
+        }
 
         /* modal 模态框*/
         #invite-user .modal-body {
             overflow: hidden;
         }
-		#invite-user .modal-body .form-label {
-			margin-bottom: 16px;
-			font-size:14px;
-		}
-		#invite-user .modal-body .form-invite {
-			width: 80%;
-			padding: 6px 12px;
-			background-color: #eeeeee;
-			border: 1px solid #cccccc;
-			border-radius: 5px;
-			float: left;
-			margin-right: 10px;
-		}
-		#invite-user .modal-body .msg-modal-style {
-			background-color: #7dd383;
-			margin-top: 10px;
-			padding: 6px 0;
-			text-align: center;
-			width: 100%;
-		}
-		#invite-user .modal-body .modal-flash {
-			position: absolute;
-			top: 53px;
-			right: 74px;
-			z-index: 999;
-		}
-		/* end modal */
+
+        #invite-user .modal-body .form-label {
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        #invite-user .modal-body .form-invite {
+            width: 80%;
+            padding: 6px 12px;
+            background-color: #eeeeee;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        #invite-user .modal-body .msg-modal-style {
+            background-color: #7dd383;
+            margin-top: 10px;
+            padding: 6px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        #invite-user .modal-body .modal-flash {
+            position: absolute;
+            top: 53px;
+            right: 74px;
+            z-index: 999;
+        }
+
+        /* end modal */
 
         .en-footer {
             padding: 30px;
@@ -69,67 +73,79 @@
             font-size: 14px;
         }
     </style>
-<style>
-.org-header {
-    padding: 100px 0;
-    color: #fff;
-    background: url(/user/img/org-bg.png);
-    text-align: center;
-}
-.org-header h2 {
-    font-size: 45px;
-}
-.org-header p {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: 700;
-}
-.org-body-desc {
-    padding: 50px 0 150px;
-}
-.org-body-desc .media-body {
-    font-size: 16px;
-}
-.org-body-courses {
-    padding: 50px 0;
-    background: #fff;
-}
-.org-body-courses .container {
-    position: relative;
-    top: -110px;
-}
-.org-body-courses .media {
-    display: block;
-    padding: 10px;
-    margin-bottom: 50px;
-    color: #333;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 0 4px 2px #eee;
-}
-.org-body-courses .media:hover,
-.org-body-courses .media:focus {
-    text-decoration: none;
-}
-.org-body-courses .media img {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    box-shadow: 0 0 4px 2px #eee;
-}
-.org-body-courses .media-body h4 {
-    word-break: break-all;
-    font-size: 16px;
-    line-height: 1.6em;
-}
-.org-course-more {
-    text-align: center;
-}
-.org-course-more .btn {
-    padding: 4px 20px;
-    border-radius: 4px;
-}
-</style>
+    <style>
+        .org-header {
+            padding: 100px 0;
+            color: #fff;
+            background: url(/user/img/org-bg.png);
+            text-align: center;
+        }
+
+        .org-header h2 {
+            font-size: 45px;
+        }
+
+        .org-header p {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .org-body-desc {
+            padding: 50px 0 150px;
+        }
+
+        .org-body-desc .media-body {
+            font-size: 16px;
+        }
+
+        .org-body-courses {
+            padding: 50px 0;
+            background: #fff;
+        }
+
+        .org-body-courses .container {
+            position: relative;
+            top: -110px;
+        }
+
+        .org-body-courses .media {
+            display: block;
+            padding: 10px;
+            margin-bottom: 50px;
+            color: #333;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 4px 2px #eee;
+        }
+
+        .org-body-courses .media:hover,
+        .org-body-courses .media:focus {
+            text-decoration: none;
+        }
+
+        .org-body-courses .media img {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px 2px #eee;
+        }
+
+        .org-body-courses .media-body h4 {
+            word-break: break-all;
+            font-size: 16px;
+            line-height: 1.6em;
+        }
+
+        .org-course-more {
+            text-align: center;
+        }
+
+        .org-course-more .btn {
+            padding: 4px 20px;
+            border-radius: 4px;
+        }
+    </style>
 
 </head>
 
@@ -195,53 +211,53 @@
 </div>
 
 
+<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
+            </div>
+            <div class="modal-body">
+
+                <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！
+            </h4></p>
+
+                <div id="msg-modal"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog" rolw="document">
+    </div>
+</div>
+<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">注意</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
-	<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
-				</div>
-				<div class="modal-body">
-
-                        <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
-
-					<div id="msg-modal"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
-		<div class="modal-dialog" rolw="document">
-		</div>
-	</div>
-	<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">注意</h4>
-				</div>
-				<div class="modal-body">
-				</div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-    <div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
@@ -350,62 +366,60 @@
 </div>
 
 
-    <div id="base-data"
+<div id="base-data"
 
 
-            data-flash="false"
+     data-flash="false"
 
 
+     data-is-login=false
 
-        data-is-login=false
+     data-is-jwt=true
+     data-socket-url="wss://comet.shiyanlou.com"
+     data-msg-user=""
+     data-msg-system=""
+></div>
 
-        data-is-jwt=true
-        data-socket-url="wss://comet.shiyanlou.com"
-        data-msg-user=""
-        data-msg-system=""
-    ></div>
+<script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
+<script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
+<script src="/user/static/ace/1.2.5/ace.js"></script>
+<script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
+<script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
+<script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="/user/static/videojs/video.min.js"></script>
+<script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
-    <script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
-    <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
-    <script src="/user/static/ace/1.2.5/ace.js"></script>
-    <script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
-    <script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
-    <script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
-    <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
-    <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-    <script src="/user/static/videojs/video.min.js"></script>
-    <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
+<script src="/layui/lay/modules/laypage.js"></script>
+<script src="/user/layui/layui.js"></script>
+<script src="/userjs/tool.js"></script>
 
-    <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
-    <script src="/layui/lay/modules/laypage.js"></script>
-    <script src="/user/layui/layui.js"></script>
-    <script src="/userjs/tool.js"></script>
-
-    <script>
-        Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
-            release: '3.12.13'
-        }).install();
-    </script>
+<script>
+    Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
+        release: '3.12.13'
+    }).install();
+</script>
 
 
 <script src="/user/app/dest/base/index.js?=2016121272249"></script>
 <script>
-$('.org-body-courses .media h4').each(function() {
-    var h = $(this).height();
-    if (h > 25) {
-        $(this).css({
-            width: $(this).width(),
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
-            overflow: 'hidden'
-        });
-    }
-});
+    $('.org-body-courses .media h4').each(function () {
+        var h = $(this).height();
+        if (h > 25) {
+            $(this).css({
+                width: $(this).width(),
+                'white-space': 'nowrap',
+                'text-overflow': 'ellipsis',
+                overflow: 'hidden'
+            });
+        }
+    });
 </script>
-
 
 
 <div class="footer">
@@ -454,7 +468,8 @@ $('.org-body-courses .media h4').each(function() {
                 <a href="/user/bootcamp/index.html" target="_blank">实战训练营</a><br>
                 <a href="/user/vip/index.html" target="_blank">会员服务</a><br>
                 <a href="/user/courses/reports/index.html" target="_blank">实验报告</a><br>
-                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank">常见问题</a><br>
+                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"
+                   target="_blank">常见问题</a><br>
                 <a href="/user/privacy/index.html" target="_blank">隐私条款</a>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-2 footer-col">
@@ -464,7 +479,7 @@ $('.org-body-courses .media h4').each(function() {
                 <a href="/user/paths/bigdata/index.html" target="_blank">大数据学习路径</a><br>
                 <a href="/user/paths/java/index.html" target="_blank">Java学习路径</a><br>
                 <a href="/user/paths/php/index.html" target="_blank">PHP学习路径</a><br>
-                <a href="/user/paths/index.html", target="_blank">全部</a>
+                <a href="/user/paths/index.html" , target="_blank">全部</a>
             </div>
         </div>
     </div>
@@ -478,26 +493,31 @@ $('.org-body-courses .media h4').each(function() {
         </script>
         <script>
             var _hmt = _hmt || [];
-            (function() {
-             var hm = document.createElement("script");
-             hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
-             var s = document.getElementsByTagName("script")[0];
-             s.parentNode.insertBefore(hm, s);
-             })();
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
         </script>
         <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-89338452-1', 'auto');
-        ga('send', 'pageview');
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-89338452-1', 'auto');
+            ga('send', 'pageview');
         </script>
     </div>
 </div>
 
-            
-        
-	
+
 </body>
 </html>

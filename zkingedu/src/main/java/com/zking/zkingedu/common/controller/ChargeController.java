@@ -55,19 +55,15 @@ public class ChargeController {
     private Bill bill;
 
 
-
-
-
-
     /**
      * 充值积分的方法
      * @return charge 充值积分的对象
      */
     /**
-     * @param outTradeNo  订单号
-     * @param chargeMoney     商品名称
+     * @param outTradeNo     订单号
+     * @param chargeMoney    商品名称
      * @param chargeIntegral 付款金额
-     * @param body        商品描述
+     * @param body           商品描述
      * @return String
      */
     @RequestMapping(value = "/pay")
@@ -87,16 +83,16 @@ public class ChargeController {
         charge.setChargeState(1);//状态
         int i = chargeService.addCharge(charge);//开始执行充值的方法
 //        //log.info("结束增加充值记录表的数据");
-        if(i>0){
+        if (i > 0) {
             log.info("****充值记录表成功******");
             //修改用户的积分的方法
             int i1 = userService.updateIntegral(Integer.parseInt(Integral), SessionUtil.getUserById());
-            if(i1>0){
+            if (i1 > 0) {
                 log.info("*****修改用户积分成功******");
-            }else{
+            } else {
                 log.info("****充值记录表失败******");
             }
-        }else{
+        } else {
             log.info("****充值记录表失败******");
         }
 
@@ -107,7 +103,7 @@ public class ChargeController {
         //账单时间
         bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         //账单内容
-        bill.setBillContent("本次在本平台消费金额为"+Double.parseDouble(Money)+"元，"+"充值积分为"+Integer.parseInt(Integral)+",充值完成。");
+        bill.setBillContent("本次在本平台消费金额为" + Double.parseDouble(Money) + "元，" + "充值积分为" + Integer.parseInt(Integral) + ",充值完成。");
         bill.setBillState(1);//状态
         billService.addBill(bill);
         //log.info("结束增加账单表的数据");
@@ -138,14 +134,14 @@ public class ChargeController {
      */
     @RequestMapping(value = "/findCharge")
     @ResponseBody
-    public Map<String,Object> findcharge(Integer page,Integer limit){
+    public Map<String, Object> findcharge(Integer page, Integer limit) {
         //log.info("***********开始查询充值记录表的数据**************");
-        PageInfo<Charge> charge = chargeService.findCharge(SessionUtil.getUserById(),page,limit);
-        Map<String,Object> maps = new HashMap<>();
-        maps.put("msg","success");
-        maps.put("code",0);
-        maps.put("count",charge.getTotal());
-        maps.put("data",charge.getList());
+        PageInfo<Charge> charge = chargeService.findCharge(SessionUtil.getUserById(), page, limit);
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("msg", "success");
+        maps.put("code", 0);
+        maps.put("count", charge.getTotal());
+        maps.put("data", charge.getList());
         //log.info("***********结束查询充值记录表的数据**************");
         return maps;
     }
@@ -155,14 +151,12 @@ public class ChargeController {
      * 修改充值记录表的状态 为2 ，页面上的按钮是删除
      */
     @RequestMapping(value = "/updateState")
-    public void updatestate(HttpServletResponse response,Integer chargeID) throws Exception {
+    public void updatestate(HttpServletResponse response, Integer chargeID) throws Exception {
 //        //log.info("**************开始删除充值记录的方法***********");
         int state = chargeService.updateState(chargeID);
-        ResponseUtil.write(response,state);
+        ResponseUtil.write(response, state);
 //        //log.info("**************结束删除充值记录的方法***********");
     }
-
-
 
 
 }

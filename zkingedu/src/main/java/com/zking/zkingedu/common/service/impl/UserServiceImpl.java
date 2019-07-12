@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updateipaddrlastTime(Integer uid, String ipaddr, String lastTime) {
-        return userDao.updateipaddrlastTime(uid,ipaddr,lastTime);
+        return userDao.updateipaddrlastTime(uid, ipaddr, lastTime);
     }
 
     @Override
@@ -63,12 +63,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updatePhonePassword(String phone, String password) {
-        return userDao.updatePhonePassword(phone,password);
+        return userDao.updatePhonePassword(phone, password);
     }
 
     @Override
     public Integer updateEmmitPassword(String emit, String password) {
-        return userDao.updateEmmitPassword(emit,password);
+        return userDao.updateEmmitPassword(emit, password);
     }
 
     @Override
@@ -78,27 +78,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updateOpenid(String openid, String phone, String password) {
-        return userDao.updateOpenid(openid,phone,password);
+        return userDao.updateOpenid(openid, phone, password);
     }
 
     @Override
-    public Integer updateOpenids(String phone,String openid,String ip) {
-        return userDao.updateOpenids(phone,openid,ip);
+    public Integer updateOpenids(String phone, String openid, String ip) {
+        return userDao.updateOpenids(phone, openid, ip);
     }
 
     @Override
     public Integer updateupload(Integer uid, String upload) {
-        return userDao.updateupload(uid,upload);
+        return userDao.updateupload(uid, upload);
     }
 
     @Override
     public Integer updatePhone(String oldphone, String newphone) {
-        return userDao.updatePhone(oldphone,newphone);
+        return userDao.updatePhone(oldphone, newphone);
     }
 
     @Override
     public Integer updateEamil(Integer uid, String newEamil) {
-        return userDao.updateEamil(uid,newEamil);
+        return userDao.updateEamil(uid, newEamil);
     }
 
     @Override
@@ -127,6 +127,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 根据用户id  查询用户信息
      * yan
+     *
      * @param id
      * @return
      */
@@ -134,25 +135,27 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Integer id) {
         return userDao.getUserById(id);
     }
+
     /**
-     *  根据用户id修改用户积分的方法
-     *  阿飘
+     * 根据用户id修改用户积分的方法
+     * 阿飘
      */
     @Override
     public void updateUserIntegral(Integer CourseIntegral, Integer userID) {
-        userDao.updateUserIntegral(CourseIntegral,userID);
+        userDao.updateUserIntegral(CourseIntegral, userID);
     }
 
 
     /**
      * 根据用户id 充值积分的方法
+     *
      * @param CourseIntegral 积分
-     * @param userID 用户id
+     * @param userID         用户id
      * @return 阿飘
      */
     @Override
     public int updateIntegral(Integer CourseIntegral, Integer userID) {
-        return userDao.updateIntegral(CourseIntegral,userID);
+        return userDao.updateIntegral(CourseIntegral, userID);
     }
 
 

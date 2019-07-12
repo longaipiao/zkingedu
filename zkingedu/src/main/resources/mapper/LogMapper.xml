@@ -11,10 +11,10 @@
         <id column="log_id" property="logID"/>
         <result column="log_details" property="logDetails"/>
         <result column="log_time" property="logTime"/>
-        <association  property="emp" javaType="emp">
+        <association property="emp" javaType="emp">
             <id column="emp_id" property="empID"/>
             <result column="emp_name" property="empName"/>
-        </association >
+        </association>
     </resultMap>
 
     <insert id="addLog" parameterType="log">

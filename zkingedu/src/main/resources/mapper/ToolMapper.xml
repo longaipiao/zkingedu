@@ -9,13 +9,16 @@
     <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--sql字段-->
-   <sql id="toolsql">
-       tool_id,tool_name,tool_describe,tool_url,tool_img,tool_time
-   </sql>
+    <sql id="toolsql">
+        tool_id,tool_name,tool_describe,tool_url,tool_img,tool_time
+    </sql>
 
     <!--查询所有的工具信息-->
-    <select id="findAll" resultType="com.zking.zkingedu.common.model.Tool" parameterType="com.zking.zkingedu.common.model.Tool">
-        select  <include refid="toolsql"/> from t_tool where 1 = 1
+    <select id="findAll" resultType="com.zking.zkingedu.common.model.Tool"
+            parameterType="com.zking.zkingedu.common.model.Tool">
+        select
+        <include refid="toolsql"/>
+        from t_tool where 1 = 1
         <if test="toolName != null">
             and tool_name like '%${toolName}%'
         </if>
@@ -23,14 +26,17 @@
 
 
     <!--增加工具的方法-->
-    <insert id="addTool" keyProperty="toolID" useGeneratedKeys="true" parameterType="com.zking.zkingedu.common.model.Tool">
+    <insert id="addTool" keyProperty="toolID" useGeneratedKeys="true"
+            parameterType="com.zking.zkingedu.common.model.Tool">
         insert into t_tool(tool_name,tool_describe,tool_url,tool_img,tool_time)
         values(#{toolName},#{toolDescribe},#{toolURL},#{toolImg},#{toolTime})
     </insert>
 
     <!--根据工具id查询图片-->
     <select id="findImg" parameterType="integer" resultType="com.zking.zkingedu.common.model.Tool">
-        select <include refid="toolsql"/> from t_tool where tool_id = #{toolID}
+        select
+        <include refid="toolsql"/>
+        from t_tool where tool_id = #{toolID}
     </select>
 
     <!--根据工具id修改的方法-->

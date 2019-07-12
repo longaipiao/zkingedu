@@ -17,7 +17,9 @@
 
     <!--根据用户id查询出所有的充值记录信息-->
     <select id="findCharge" resultType="com.zking.zkingedu.common.model.Charge" parameterType="integer">
-        select <include refid="chargeall"/> from t_charge where charge_uid = #{userId} and charge_state = 1
+        select
+        <include refid="chargeall"/>
+        from t_charge where charge_uid = #{userId} and charge_state = 1
     </select>
 
     <!--修改充值记录表的状态 为2 ，页面上的按钮是删除-->

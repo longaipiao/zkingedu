@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 论坛类别表
+ *
  * @ClassName Sort
  * @Author likai
  **/

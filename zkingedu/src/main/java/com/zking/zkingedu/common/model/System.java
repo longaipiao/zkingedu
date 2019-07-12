@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 课程体系表
+ *
  * @ClassName Advertising
  * @Author likai
  **/
@@ -34,6 +35,6 @@ public class System implements Serializable {
     private Integer sourcesNum;
 
     //对应多个课程
-    private List<Course> courses=new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
 }

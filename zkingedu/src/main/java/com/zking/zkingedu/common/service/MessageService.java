@@ -14,6 +14,7 @@ public interface MessageService {
 
     /**
      * 增加消息的方法
+     *
      * @param message 消息对象
      * @return
      */
@@ -23,7 +24,7 @@ public interface MessageService {
      * 根据用户id查询所以的消息通知
      * 阿飘
      */
-    public PageInfo<Map<String,Object>> findMessage(Integer userID,Integer page,Integer limit);
+    public PageInfo<Map<String, Object>> findMessage(Integer userID, Integer page, Integer limit);
 
 
     /**

@@ -15,36 +15,29 @@ public interface SystemService {
 
 
     //首页获取课程12个
+
     /**
      * 首页加载课程体系
-     * @return
-     * yan
+     *
+     * @return yan
      */
     List<System> getsystemsEight();
 
 
     /**
-     * 获取课程体系5个热门
-     * yan
-     * @return
-     */
-    List<System> getsystemsFive();
-
-
-    /**
      * yan
      * 返回所有课程体系数据
+     *
      * @return
      */
     ResultUtil getSystemsResult();
 
 
-
     /**
      * 根据fid查询子体系
+     *
      * @param fid
-     * @return
-     * yan
+     * @return yan
      */
     List<System> getsystemsonByFId(Integer fid);
 
@@ -59,6 +52,7 @@ public interface SystemService {
     /**
      * 根据体系id查询体系对应信息
      * yan
+     *
      * @param id
      * @return
      */
@@ -68,8 +62,8 @@ public interface SystemService {
     /**
      * admin
      * 获取所有的体系信息  1级
-     * @return
-     * yan
+     *
+     * @return yan
      */
     ResultUtil getAllSystems(PageBean<System> pageBean);
 
@@ -78,18 +72,19 @@ public interface SystemService {
      * admin
      * 体系添加
      * yan
+     *
      * @param system
      * @return
      */
-    int adminAddSystem( System system);
+    int adminAddSystem(System system);
 
 
     /**
      * 修改课程状态
+     *
      * @param stateId
      * @param systemId
-     * @return
-     * yan
+     * @return yan
      */
     int updateSystemState(Integer stateId, Integer systemId);
 
@@ -97,19 +92,18 @@ public interface SystemService {
     /**
      * admin
      * 体系信息修改
+     *
      * @param system
-     * @return
-     * yan
+     * @return yan
      */
     int updateSystem(System system);
 
 
-
     /**
      * 根据fid查询子体系
-     * @param pageBean  分页
-     * @return
-     * yan
+     *
+     * @param pageBean 分页
+     * @return yan
      */
     ResultUtil getsystemsonByFId(PageBean<Integer> pageBean);
 
@@ -117,16 +111,18 @@ public interface SystemService {
     /**
      * admin添加体系阶段
      * yan
-     * @param
-     * @param stageName  阶段名称
+     *
+     * @param fid       体系id
+     * @param stageName 阶段名称
      * @return
      */
-    int addSystemStage(Integer sid,String stageName);
+    int addSystemStage(Integer sid, String stageName);
 
 
     /**
      * yan
      * 根据fid  查询对应的体系阶段
+     *
      * @param fid
      * @return
      */
@@ -136,18 +132,18 @@ public interface SystemService {
     /**
      * admin
      * 修改 阶段名称
-     * @param sid  体系id
-     * @return
-     * yan
+     *
+     * @param sid 体系id
+     * @return yan
      */
-    int updateSystemAndStageBySid(Integer sid,String stageName);
-
+    int updateSystemAndStageBySid(Integer sid, String stageName);
 
 
     /**
      * admin
      * 获取所有的体系
      * yan
+     *
      * @return
      */
     List<System> getAll();
@@ -156,8 +152,9 @@ public interface SystemService {
     /**
      * yan
      * 获取 所有的体系 以及对应的体系阶段
+     *
      * @return
      */
-    List<Map<String,Object>> getSystemAndStageMenu();
+    List<Map<String, Object>> getSystemAndStageMenu();
 
 }

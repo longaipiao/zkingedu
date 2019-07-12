@@ -26,40 +26,39 @@ public class WebLogAcpect {
     private HttpServletRequest request;
 
     @Resource
-    private  HttpServletResponse response;
-
+    private HttpServletResponse response;
 
 
     /**
      * 定义切入点，切入点为com.example.aop下的所有函数
      */
     @Pointcut("execution(* com.zking.zkingedu.common.controller.*.*(..))")
-    public void  test(){
+    public void test() {
 
     }
 
 
     @Before("test()")
-    public boolean doBefore(){
+    public boolean doBefore() {
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("user")==null){//为空不执行下面的操作
+        if (session.getAttribute("user") == null) {//为空不执行下面的操作
             return false;
         }
-        User user=(User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         User user1 = userService.getUser(user.getUserID());
-        if(user1!=null){
-            if(!IpAddress.getIpAddr(request).equals(user1.getUserIP())){
+        if (user1 != null) {
+            if (!IpAddress.getIpAddr(request).equals(user1.getUserIP())) {
                 try {
                     //重定向提交
                     response.sendRedirect("/user/");
                     return false;
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return  true;
+        return true;
 
     }
 

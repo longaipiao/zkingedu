@@ -25,61 +25,60 @@
 </script>
 
 
-
 <script>
-    layui.use(['table','jquery'], function(){
+    layui.use(['table', 'jquery'], function () {
         var table = layui.table;
         var $ = layui.jquery;
 
         table.render({
             elem: '#test'
-            ,url:'/user/getAllCourseTypesAndPage'
-            ,toolbar: '#toolbarDemo'
-            ,id:"tb1"
-            ,title: '类别数据表'
-            ,limit:10
-            ,cols: [
+            , url: '/user/getAllCourseTypesAndPage'
+            , toolbar: '#toolbarDemo'
+            , id: "tb1"
+            , title: '类别数据表'
+            , limit: 10
+            , cols: [
                 [
-                {type: 'checkbox', fixed: 'left'}
-                ,{field:'tid', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                ,{field:'tname', title:'课程类别名称', width:150}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'tid', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
+                    , {field: 'tname', title: '课程类别名称', width: 150}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                ]
             ]
-            ]
-            ,page: true
+            , page: true
         });
 
         //头工具栏事件
-        table.on('toolbar(test)', function(obj){
+        table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
+            switch (obj.event) {
                 case 'dels':
                     var data = checkStatus.data;
-                    if(data.length<1){
+                    if (data.length < 1) {
                         layer.msg("请选择要删除的类别");
                         break;
                     }
 
-                    layer.confirm('确认删除这'+data.length+'个类别吗？', function(index){
+                    layer.confirm('确认删除这' + data.length + '个类别吗？', function (index) {
                         layer.close(index);
-                        var arr=new Array();
-                        for (var i=0;i<data.length;i++){
-                            arr[i]=data[i].tid;
+                        var arr = new Array();
+                        for (var i = 0; i < data.length; i++) {
+                            arr[i] = data[i].tid;
                         }
                         // console.log(arr);
                         $.ajax({
                             type: "post",
-                            url:"/user/courseType/dels",
-                            data:{
-                                ids : arr
+                            url: "/user/courseType/dels",
+                            data: {
+                                ids: arr
                             },
-                            dataType:"json",
-                            success:function (data) {
-                                if(data.code==0){
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.code == 0) {
                                     table.reload("tb1");
                                     layer.msg(data.msg);
                                 }
-                                else{
+                                else {
                                     layer.msg("您的操作过于频繁...");
                                 }
                             }
@@ -87,21 +86,21 @@
                     });
                     break;
                 case 'add':
-                    layer.prompt({title: '添加类别', formType: 0}, function(text, index){
+                    layer.prompt({title: '添加类别', formType: 0}, function (text, index) {
                         layer.close(index);
                         $.ajax({
-                            url:"/user/courseType/add",
-                            type:"post",
-                            data:{
-                                tName:text
+                            url: "/user/courseType/add",
+                            type: "post",
+                            data: {
+                                tName: text
                             },
-                            dataType:"json",
-                            success:function (req) {
-                                if(req.code==0){
+                            dataType: "json",
+                            success: function (req) {
+                                if (req.code == 0) {
                                     layer.msg(req.msg);
                                     table.reload("tb1");
                                 }
-                                else{
+                                else {
                                     layer.msg(req.msg);
                                 }
                             }
@@ -109,54 +108,55 @@
                         // layer.msg('您最后写下了：'+text);
                     });
                     break;
-            };
+            }
+            ;
         });
 
         //监听行工具事件
-        table.on('tool(test)', function(obj){
+        table.on('tool(test)', function (obj) {
             var data = obj.data;
             //console.log(obj)
-            if(obj.event === 'del'){
-                layer.confirm('确认要删除吗？', function(index){
+            if (obj.event === 'del') {
+                layer.confirm('确认要删除吗？', function (index) {
                     layer.close(index);
-                    var arr=new Array();
-                    arr[0]=data.tid;
+                    var arr = new Array();
+                    arr[0] = data.tid;
                     $.ajax({
                         type: "post",
-                        url:"/user/courseType/dels",
-                        data:{
-                            ids : arr
+                        url: "/user/courseType/dels",
+                        data: {
+                            ids: arr
                         },
-                        dataType:"json",
-                        success:function (data) {
-                            if(data.code==0){
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 0) {
                                 obj.del();
                                 table.reload("tb1");
                                 layer.msg(data.msg);
                             }
-                            else{
+                            else {
                                 layer.msg("您的操作过于频繁...");
                             }
                         }
                     })
                 });
-            } else if(obj.event === 'edit'){
-                layer.prompt({title: '修改类别', formType: 0,value:data.tname}, function(text, index){
+            } else if (obj.event === 'edit') {
+                layer.prompt({title: '修改类别', formType: 0, value: data.tname}, function (text, index) {
                     layer.close(index);
                     $.ajax({
-                        url:"/user/courseType/edit",
-                        type:"post",
-                        data:{
-                            tId:data.tid,
-                            tName:text
+                        url: "/user/courseType/edit",
+                        type: "post",
+                        data: {
+                            tId: data.tid,
+                            tName: text
                         },
-                        dataType:"json",
-                        success:function (req) {
-                            if(req.code==0){
+                        dataType: "json",
+                        success: function (req) {
+                            if (req.code == 0) {
                                 layer.msg(req.msg);
                                 table.reload("tb1");
                             }
-                            else{
+                            else {
                                 layer.msg(req.msg);
                             }
                         }

@@ -58,36 +58,37 @@ public class CourseController {
     private Log mylog;
 
     //获取系统当前时间
-    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    String time=dateFormat.format(new Date());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time = dateFormat.format(new Date());
 
 
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
+     *
      * @return sid 是课程ID
      */
     @RequestMapping("/showCourse")
     public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
         //获取登录过来的用户积分    需要后期改变用户ID
         int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
-        System.err.println("用户的积分是："+integrsl);
+        System.err.println("用户的积分是：" + integrsl);
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
-        System.err.println("整套课程的积分是："+courseIntegrsl);
+        System.err.println("整套课程的积分是：" + courseIntegrsl);
 
-        request.getSession().setAttribute("userintegrsl",integrsl);
-        request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
+        request.getSession().setAttribute("userintegrsl", integrsl);
+        request.getSession().setAttribute("courseIntegrsl", courseIntegrsl);
 
 
         //课程id
-        model.addAttribute("courseId",sid);
-        System.err.println("课程id是："+sid);
-        model.addAttribute("userId",SessionUtil.getUserById());
-        System.err.println("用户id是"+2);
+        model.addAttribute("courseId", sid);
+        System.err.println("课程id是：" + sid);
+        model.addAttribute("userId", SessionUtil.getUserById());
+        System.err.println("用户id是" + 2);
 
         //单个用户的积分
-        mv.addObject("userintegrsl",integrsl);
+        mv.addObject("userintegrsl", integrsl);
         //整套课程的积分
-        mv.addObject("courseIntegrsl",courseIntegrsl);
+        mv.addObject("courseIntegrsl", courseIntegrsl);
 
         //获取所有的章节视频
         List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
@@ -95,22 +96,22 @@ public class CourseController {
         Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
 
 
-
         //课程点击量增加 yan
-        courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum()+1);
-        courseService.updatecliNum(sid,courseBYcourseID.getCourseNum());
+        courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum() + 1);
+        courseService.updatecliNum(sid, courseBYcourseID.getCourseNum());
 
         User user = new User();
         user.setUserID(SessionUtil.getUserById());
-        mv.addObject("user",user);//模拟登陆
-        mv.addObject("sections",sectionsBycid);
-        mv.addObject("section",null);//视频id默认为空
-        mv.addObject("course",courseBYcourseID);
+        mv.addObject("user", user);//模拟登陆
+        mv.addObject("sections", sectionsBycid);
+        mv.addObject("section", null);//视频id默认为空
+        mv.addObject("course", courseBYcourseID);
 
-        mv.addObject("scommentNum",scommentService.getScommentAndCousecNumber(sid));//课程评论数量
-        mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
-        mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
-        mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
+        System.err.println("评论数量==================================" + scommentService.getScommentAndCousecNumber(sid));
+        mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
+        mv.addObject("courseNum", hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
+        mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
+        mv.addObject("coursefours", courseService.getCoursefour());//获取最热的四个课程（播放量）
 
         mv.setViewName("/user/courses/show1");
         return mv;
@@ -120,6 +121,7 @@ public class CourseController {
     /**
      * 重载  点击章节观看视频
      * yan
+     *
      * @param sid
      * @param id
      * @return
@@ -129,9 +131,9 @@ public class CourseController {
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
         int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
-//        System.err.println("用户的积分是："+integrsl);
+        System.err.println("用户的积分是："+integrsl);
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
-//        System.err.println("整套课程的积分是："+courseIntegrsl);
+        System.err.println("整套课程的积分是："+courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl",integrsl);
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
@@ -156,6 +158,7 @@ public class CourseController {
         //根据章节id获取视频信息
         //Video videoById = videoService.getVideoById(id);
         Section section = sectionService.getSectionById(id);
+        System.err.println("section 章节信息= " + section);
 
         User user = new User();
         user.setUserID(SessionUtil.getUserById());
@@ -177,6 +180,7 @@ public class CourseController {
     private SystemService systemService;
     /**
      * 用户点击进入course课程搜索页面
+     *
      * @return
      */
     @RequestMapping("/courseSearch")
@@ -191,46 +195,50 @@ public class CourseController {
 
     /**
      * 用户课程搜索页面
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/searchCourse")
-    public ResultUtil userCourseSearch(Course course,Integer page,Integer limit){
+    public ResultUtil userCourseSearch(Course course, Integer page, Integer limit) {
 //        log.info("===========================page:"+page+"____limit:"+limit);
         PageBean<Course> pageBean = new PageBean<Course>();
         pageBean.setT(course);
         pageBean.setPageIndex(page);//当前页
         pageBean.setPageSize(limit);//没页多少条
-       return courseService.SearchCourse(pageBean);
+        System.err.println("数据接收：==============================" + pageBean);
+        return courseService.SearchCourse(pageBean);
     }
 
 
     /**
      * index首页获取最热课程四个
      * yan
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/indexGetFour")
-    public ResultUtil indexgetCoursefour(){
+    public ResultUtil indexgetCoursefour() {
         List<Course> coursefour;
         try {
             coursefour = courseService.getCoursefour();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultUtil(500,e.getMessage());
+            return new ResultUtil(500, e.getMessage());
         }
-        return new ResultUtil(200,coursefour);
+        return new ResultUtil(200, coursefour);
     }
 
 
     /**
      * admin 进入课程管理页面
      * yan
+     *
      * @return
      */
     @RequestMapping("/stageManager")
-    public String StageManager(){
+    public String StageManager() {
         return "admin/course/courseManager";
     }
 
@@ -238,6 +246,7 @@ public class CourseController {
     /**
      * admin 查询所有的课程信息  分页 查询
      * yan
+     *
      * @param page
      * @param limit
      * @param course
@@ -245,7 +254,7 @@ public class CourseController {
      */
     @ResponseBody
     @RequestMapping("/getCourses")
-    public ResultUtil getCourses(Integer page,Integer limit,Course course){
+    public ResultUtil getCourses(Integer page, Integer limit, Course course) {
         PageBean<Course> pageBean = new PageBean<>();
         pageBean.setPageSize(limit);
         pageBean.setPageIndex(page);
@@ -257,10 +266,11 @@ public class CourseController {
     /**
      * 跳转至  添加课程页面
      * yan
+     *
      * @return
      */
     @RequestMapping(value = "/addCoursePage")
-    public String enterAddCoursePage(){
+    public String enterAddCoursePage() {
         return "admin/course/courseAdd";
     }
 
@@ -268,13 +278,14 @@ public class CourseController {
     /**
      * yan
      * 管理员添加课程 信息
+     *
      * @param course
      * @return
      */
     @ResponseBody
     @Transactional
     @RequestMapping("/addCourse")
-    public ResultUtil adminAddCourse(Course course){
+    public ResultUtil adminAddCourse(Course course) {
         try {
             //获取当前员工信息
             Emp emp = SessionUtil.getEmp();
@@ -288,10 +299,9 @@ public class CourseController {
             course.setCourseNum(0);
             //开始添加
             int i = courseService.addCourse(course);
-            if(i>0){
+            if (i > 0) {
                 return ResultUtil.ok("添加课程成功");
-            }
-            else {
+            } else {
                 return ResultUtil.error("您的操作过于频繁");
             }
         } catch (Exception e) {
@@ -303,14 +313,14 @@ public class CourseController {
 
     /**
      * 根据课程id  返回对应的课程信息
+     *
      * @param sid
-     * @return
-     * yan
+     * @return yan
      * yan
      */
     @ResponseBody
     @RequestMapping("/getCourseBySid")
-    public ResultUtil getCourseById(@RequestParam(value = "sid") Integer sid){
+    public ResultUtil getCourseById(@RequestParam(value = "sid") Integer sid) {
         return ResultUtil.ok(courseService.getCourseBySid(sid));
     }
 
@@ -318,14 +328,15 @@ public class CourseController {
     /**
      * 修改课程之前跳转页面 加载数据
      * yan
+     *
      * @param sid
      * @return
      */
     @RequestMapping("/PreUpCourseloaddata")
-    public ModelAndView editPerUpCourse(@RequestParam(value = "sid") Integer sid){
+    public ModelAndView editPerUpCourse(@RequestParam(value = "sid") Integer sid) {
         ModelAndView mv = new ModelAndView();
         //加载数据
-        mv.addObject("course",courseService.getCourseBySid(sid));
+        mv.addObject("course", courseService.getCourseBySid(sid));
 
         mv.setViewName("admin/course/courseEdit");
         return mv;
@@ -334,22 +345,23 @@ public class CourseController {
 
     /**
      * 修改课程信息
+     *
      * @param course
      * @return
      */
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourse")
-    public ResultUtil editCourse(Course course, HttpServletRequest request){
+    public ResultUtil editCourse(Course course, HttpServletRequest request) {
 //        System.err.println("====================后台接收的到数据:"+course);
         try {
             int i = courseService.updateCourse(course);
-            if(i>0){
+            if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程信息，课程ID为："+course.getCourseID());
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程信息，课程ID为：" + course.getCourseID());
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -365,6 +377,7 @@ public class CourseController {
 
     /**
      * 修改课程状态 修改课程状态  0显示  1影藏
+     *
      * @param id
      * @param state
      * @return
@@ -372,22 +385,21 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourseState")
-    public ResultUtil editCourseState(@RequestParam(value = "id")Integer id,@RequestParam("state")boolean state,HttpServletRequest request){
+    public ResultUtil editCourseState(@RequestParam(value = "id") Integer id, @RequestParam("state") boolean state, HttpServletRequest request) {
         try {
             Integer sid;
-            if(state){
-                sid=0;
-            }
-            else{
-                sid=1;
+            if (state) {
+                sid = 0;
+            } else {
+                sid = 1;
             }
             int i = courseService.editCourseState(id, sid);
-            if(i>0){
+            if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为："+id);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为：" + id);
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -399,17 +411,6 @@ public class CourseController {
         }
         return ResultUtil.error("您的操作过于频繁，请稍后再试....");
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

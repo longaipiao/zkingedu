@@ -12,8 +12,10 @@
 
     <!--根据章节id  查询视频-->
     <select id="getVideoById" resultType="com.zking.zkingedu.common.model.Video">
-        select <include refid="VideoSql"/> from t_video where video_sid=#{sid};
+        select
+        <include refid="VideoSql"/>
+        from t_video where video_sid=#{sid};
     </select>
-    
+
 
 </mapper>

@@ -285,15 +285,18 @@ public interface PostService {
 
     /**
      * 根据帖子id修改状态
+     *
      * @param id
      * @return
      */
     int updatepSta3(Integer id);
+
     int updatepSta0(Integer id);
 
 
     /**
      * 根据id删除帖子
+     *
      * @param id
      * @return
      */
@@ -302,6 +305,7 @@ public interface PostService {
 
     /**
      * 根据帖子id删除所有的评论
+     *
      * @param id
      * @return
      */
@@ -310,15 +314,16 @@ public interface PostService {
 
     /**
      * 根据id获取用户名
+     *
      * @param id
      * @return
      */
     String queryUserByid(Integer id);
 
 
-
     /**
-     *批量删除id
+     * 批量删除id
+     *
      * @param id
      * @return
      */
@@ -326,6 +331,7 @@ public interface PostService {
 
     /**
      * 根据帖子id删除所有的评论
+     *
      * @param id
      * @return
      */

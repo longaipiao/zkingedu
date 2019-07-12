@@ -26,6 +26,7 @@ public class PostServiceImpl implements PostService {
 
     /**
      * 增加贴子
+     *
      * @param post
      * @return
      */
@@ -47,6 +48,7 @@ public class PostServiceImpl implements PostService {
 
     /**
      * 我的文章的所有分页功能
+     *
      * @param uid
      * @param page
      * @param pageSize
@@ -54,14 +56,14 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public PageInfo<Post> getAllposts(Integer uid, Integer page, Integer pageSize) {
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Post> allPosts = postDao.getAllPosts(uid);
         return new PageInfo<>(allPosts);
     }
 
     @Override
-    public PageInfo<Tcomment> getAllTcomments(Integer page, Integer pageSize,List<Tcomment> tcomments) {
-            PageHelper.startPage(page,pageSize);
+    public PageInfo<Tcomment> getAllTcomments(Integer page, Integer pageSize, List<Tcomment> tcomments) {
+        PageHelper.startPage(page, pageSize);
         return new PageInfo<>(tcomments);
     }
 
@@ -113,29 +115,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int update(Integer uid, Integer yx,Integer pid) {
-        return postDao.update(uid,yx,pid);
+    public int update(Integer uid, Integer yx, Integer pid) {
+        return postDao.update(uid, yx, pid);
     }
 
     @Override
     public int queryCate(Integer uid, Integer pid) {
-        return postDao.queryCate(uid,pid);
+        return postDao.queryCate(uid, pid);
     }
 
     @Override
-    public int updatePostzt(Integer uid, Integer zt,Integer id) {
-        return postDao.updatePostzt(uid,zt,id);
+    public int updatePostzt(Integer uid, Integer zt, Integer id) {
+        return postDao.updatePostzt(uid, zt, id);
     }
 
     @Override
     public List<Map<String, Object>> getPandU(Integer cid, String nr) {
-        return postDao.getPandU(cid,nr);
+        return postDao.getPandU(cid, nr);
     }
 
     @Override
     public PageInfo<Map<String, Object>> getAllLt(Integer page, Integer pageSize, Integer cid, String nr) {
         //开始调用方法
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Map<String, Object>> pandU = postDao.getPandU(cid, nr);
         return new PageInfo<>(pandU);
     }
@@ -148,14 +150,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageInfo<Map<String, Object>> getAllpstByUId(Integer page, Integer pageSize, Integer uid) {
         //开始调用方法
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Map<String, Object>> apstByUId = postDao.getApstByUId(uid);//获取所有的值
         return new PageInfo<>(apstByUId);
     }
 
     @Override
     public PageInfo<Pcata> getps(Integer page, Integer pageSize) {
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Pcata> getpctae = postDao.getpctae();
         return new PageInfo<>(getpctae);
     }
@@ -173,7 +175,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int updatePcts(Integer id, String pname) {
-        return postDao.updatePcts(id,pname);
+        return postDao.updatePcts(id, pname);
     }
 
     @Override
@@ -183,12 +185,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Map<String, Object>> gethtpost(String puname, String pname, String pcname) {
-        return postDao.gethtpost(puname,pname,pcname);
+        return postDao.gethtpost(puname, pname, pcname);
     }
 
     @Override
     public PageInfo<Map<String, Object>> hqhtpost(Integer page, Integer pageSize, String puname, String pname, String pcname) {
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Map<String, Object>> gethtpost = postDao.gethtpost(puname, pname, pcname);
         return new PageInfo<>(gethtpost);
     }
@@ -229,7 +231,6 @@ public class PostServiceImpl implements PostService {
     }
 
 
-
     @Override
     public Map<String, Object> getPostandUse(Integer id) {
         return postDao.getPostandUse(id);
@@ -255,8 +256,6 @@ public class PostServiceImpl implements PostService {
     public int addTcomment(Tcomment tcomment) {
         return postDao.addTcomment(tcomment);
     }
-
-
 
 
 }

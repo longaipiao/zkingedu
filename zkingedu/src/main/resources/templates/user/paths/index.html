@@ -1,71 +1,73 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Lei Shi">
-  <meta http-equiv="Cache-Control" content="o-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
-	
-		
-      <title>学习路径 - 实验楼</title>
-		
-	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Lei Shi">
+    <meta http-equiv="Cache-Control" content="o-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="csrf-token" content="1483780974##87f89328c5616669f00302a263fe9061bb852818">
 
-    
-<meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
-<meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
+
+    <title>学习路径 - 实验楼</title>
+
+
+    <meta content="实验楼课程分为基础课和项目课，内容涵盖了Linux、Python、Java、C语言、Ruby、Android、IOS开发、大数据、信息安全等IT技术领域。" name="description">
+    <meta content="实验楼课程,IT培训课程,IT实训课程,IT在线课程,all" name="keywords">
 
     <meta content="实验楼,琛石科技" name="author">
 
-	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/user/static/font-awesome//4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/user/static/highlight.js/9.8.0/monokai-sublime.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
     <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
-	<link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
+    <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
 
-	<style>
-		@font-face {
-			font-family: "lantingxihei";
-			src: url("/user/fonts/FZLTCXHJW.TTF");
-		}
+    <style>
+        @font-face {
+            font-family: "lantingxihei";
+            src: url("/user/fonts/FZLTCXHJW.TTF");
+        }
 
         /* modal 模态框*/
         #invite-user .modal-body {
             overflow: hidden;
         }
-		#invite-user .modal-body .form-label {
-			margin-bottom: 16px;
-			font-size:14px;
-		}
-		#invite-user .modal-body .form-invite {
-			width: 80%;
-			padding: 6px 12px;
-			background-color: #eeeeee;
-			border: 1px solid #cccccc;
-			border-radius: 5px;
-			float: left;
-			margin-right: 10px;
-		}
-		#invite-user .modal-body .msg-modal-style {
-			background-color: #7dd383;
-			margin-top: 10px;
-			padding: 6px 0;
-			text-align: center;
-			width: 100%;
-		}
-		#invite-user .modal-body .modal-flash {
-			position: absolute;
-			top: 53px;
-			right: 74px;
-			z-index: 999;
-		}
-		/* end modal */
+
+        #invite-user .modal-body .form-label {
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        #invite-user .modal-body .form-invite {
+            width: 80%;
+            padding: 6px 12px;
+            background-color: #eeeeee;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        #invite-user .modal-body .msg-modal-style {
+            background-color: #7dd383;
+            margin-top: 10px;
+            padding: 6px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        #invite-user .modal-body .modal-flash {
+            position: absolute;
+            top: 53px;
+            right: 74px;
+            z-index: 999;
+        }
+
+        /* end modal */
 
         .en-footer {
             padding: 30px;
@@ -74,8 +76,7 @@
         }
     </style>
 
-	
-    
+
 </head>
 
 <body>
@@ -86,116 +87,121 @@
 <div th:replace="user/header::header"></div>
 <link rel="stylesheet" href="/user/layui/css/layui.css">
 
-	
+
 <div class="container layout layout-margin-top">
-    
-    
+
+
     <div class="row">
         <div class="col-md-9 layout-body">
-            
-    <div class="content">
-        <div class="row" id="coursedata">
 
-            <!--=============================================-->
-            <!--=============================================-->
-            <!--=============================================-->
-            <!--=====================数据绑定========================-->
-            <!--=============================================-->
-            <!--=============================================-->
-               <!-- <div class="col-sm-6">
-            <a href="show.html" target="_blank">
-                <div class="path-item">
-                    <div class="col-xs-5 col-md-4  path-img">
-                        <img src="/user/img/1471513730333.png">
-                    </div>
-                    <div class="col-xs-7 col-md-8">
-                        <div class="path-name">新手入门</div>
-                        <div class="path-course-num"><span>6</span> 门课程</div>
-                    </div>
-                    &lt;!&ndash;<div class="desc-layer">
-                        <div class="center">新手入门路径帮助对 IT 技术感兴趣的新手0基础入门计算机编程。本路径通过新手入门、Linux 及 Vim课程熟悉实验楼的实践学习环境，再以 C 语言和一个简单的项目引导你一步步进入计算机技术的殿堂。</div>
-                    </div>&ndash;&gt;
+            <div class="content">
+                <div class="row" id="coursedata">
+
+                    <!--=============================================-->
+                    <!--=============================================-->
+                    <!--=============================================-->
+                    <!--=====================数据绑定========================-->
+                    <!--=============================================-->
+                    <!--=============================================-->
+                    <!-- <div class="col-sm-6">
+                 <a href="show.html" target="_blank">
+                     <div class="path-item">
+                         <div class="col-xs-5 col-md-4  path-img">
+                             <img src="/user/img/1471513730333.png">
+                         </div>
+                         <div class="col-xs-7 col-md-8">
+                             <div class="path-name">新手入门</div>
+                             <div class="path-course-num"><span>6</span> 门课程</div>
+                         </div>
+                         &lt;!&ndash;<div class="desc-layer">
+                             <div class="center">新手入门路径帮助对 IT 技术感兴趣的新手0基础入门计算机编程。本路径通过新手入门、Linux 及 Vim课程熟悉实验楼的实践学习环境，再以 C 语言和一个简单的项目引导你一步步进入计算机技术的殿堂。</div>
+                         </div>&ndash;&gt;
+                     </div>
+                 </a>
+             </div>-->
+
                 </div>
-            </a>
-        </div>-->
-
-        </div>
-    </div>
+            </div>
 
         </div>
         <div class="col-md-3 layout-side">
-            
-    
 
 
+            <div class="panel panel-default panel-userinfo">
+                <div class="panel-body body-userinfo">
+                    <div class="media userinfo-header">
+                        <div class="media-left">
+                            <div class="user-avatar">
 
-<div class="panel panel-default panel-userinfo">
-    <div class="panel-body body-userinfo">
-        <div class="media userinfo-header">
-            <div class="media-left">
-                <div class="user-avatar">
-                    
-                     <a class="avatar" href="#sign-modal" data-toggle="modal" data-sign="signin">
-                         <img class="circle" src="/user/img/logo-grey.png">
-                     </a>
-                      
-                </div>
-             </div>
-            <div class="media-body">
-                
-                 <span class="media-heading username">欢迎来到实验楼</span>
-                 <p class="vip-remain">做实验，学编程</p>
-                 
-            </div>
-        </div> 
-        
-        <div class="row userinfo-data">
-            
-            <hr>
-            <div class="btn-group-lr">
-            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
-            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
-            </div>
-            
-        </div>
-        
-        <div class="userinfo-footer row">
-            <div class="col-md-6 col-xs-6 pos-left">
-                
-                <a href="#sign-modal" data-toggle="modal" data-sign="signin"><span class="glyphicon glyphicon-bookmark"></span> 加入私有课</a>
-                
-            </div>
-            <div class="col-md-6 col-xs-6 pos-right">
-                <a href="/contribute" target="_blank"><span class="glyphicon glyphicon-send"></span> 我要投稿</a>
-            </div>
+                                <a class="avatar" href="#sign-modal" data-toggle="modal" data-sign="signin">
+                                    <img class="circle" src="/user/img/logo-grey.png">
+                                </a>
 
-            <div id="join-private-course" class="modal fade words-ctrl" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">加入私有课</h4>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div style="margin:15px 0; font:16px;">输入教师提供的私有课程码可以加入教师的私有课程。</div>
-                            <form id="private-course-form" method="POST" action="/courses/join">
-                                <div class="form-group">
-                                    <label for="code">邀请码</label>
-                                    <input class="form-control" id="code" name="code" type="text" value="">
-                                    <input name="_csrf_token" type=hidden value="1483786710##0229e038fd44e98fbb3031ffe65d41ef52368b10">
+                        <div class="media-body">
+
+                            <span class="media-heading username">欢迎来到实验楼</span>
+                            <p class="vip-remain">做实验，学编程</p>
+
+                        </div>
+                    </div>
+
+                    <div class="row userinfo-data">
+
+                        <hr>
+                        <div class="btn-group-lr">
+                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn"
+                               data-toggle="modal" data-sign="signin">登录</a>
+                            <a href="#sign-modal" type="button"
+                               class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn"
+                               data-toggle="modal" data-sign="signup">注册</a>
+                        </div>
+
+                    </div>
+
+                    <div class="userinfo-footer row">
+                        <div class="col-md-6 col-xs-6 pos-left">
+
+                            <a href="#sign-modal" data-toggle="modal" data-sign="signin"><span
+                                    class="glyphicon glyphicon-bookmark"></span> 加入私有课</a>
+
+                        </div>
+                        <div class="col-md-6 col-xs-6 pos-right">
+                            <a href="/contribute" target="_blank"><span class="glyphicon glyphicon-send"></span>
+                                我要投稿</a>
+                        </div>
+
+                        <div id="join-private-course" class="modal fade words-ctrl" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">加入私有课</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div style="margin:15px 0; font:16px;">输入教师提供的私有课程码可以加入教师的私有课程。</div>
+                                        <form id="private-course-form" method="POST" action="/courses/join">
+                                            <div class="form-group">
+                                                <label for="code">邀请码</label>
+                                                <input class="form-control" id="code" name="code" type="text" value="">
+                                                <input name="_csrf_token" type=hidden
+                                                       value="1483786710##0229e038fd44e98fbb3031ffe65d41ef52368b10">
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary"
+                                                onclick="document.getElementById('private-course-form').submit();">确定
+                                        </button>
+                                    </div>
                                 </div>
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" onclick="document.getElementById('private-course-form').submit();">确定</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
             <!--=========================-->
             <!--=========================-->
@@ -223,58 +229,53 @@
 </div>
 
 
-	<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
-				</div>
-				<div class="modal-body">
-                    
-                        <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！</h4></p>
-                    
-					<div id="msg-modal"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
+            </div>
+            <div class="modal-body">
 
-	<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
-		<div class="modal-dialog" rolw="document">
-		</div>
-	</div>
-	<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">注意</h4>
-				</div>
-				<div class="modal-body">
-				</div>
-				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
-				</div>
-			</div>
-		</div>
-	</div>
-    
+                <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！
+            </h4></p>
 
-    
-    
+                <div id="msg-modal"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-	
-		
-			
-		
-	
+<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog" rolw="document">
+    </div>
+</div>
+<div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">注意</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirm" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
+
+<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+            </button>
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
@@ -383,59 +384,57 @@
 </div>
 
 
-    <div id="base-data"
-        
-        
-            data-flash="false"
-            
-        
-        
-        data-is-login=false
-        
-        data-is-jwt=true
-        data-socket-url="wss://comet.shiyanlou.com"
-        data-msg-user=""
-        data-msg-system=""
-    ></div>
-    <script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
-    <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
-    <script src="/user/static/ace/1.2.5/ace.js"></script>
-    <script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
-    <script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
-    <script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
-    <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
-    <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-    <script src="/user/static/videojs/video.min.js"></script>
-    <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<div id="base-data"
 
-    <script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
-    <script>
-        Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
-            release: '3.12.13'
-        }).install();
-    </script>
 
-    
+     data-flash="false"
+
+
+     data-is-login=false
+
+     data-is-jwt=true
+     data-socket-url="wss://comet.shiyanlou.com"
+     data-msg-user=""
+     data-msg-system=""
+></div>
+<script src="/user/app/dest/lib/lib.js?=2016121272249"></script>
+<script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
+<script src="/user/static/ace/1.2.5/ace.js"></script>
+<script src="/user/static/aliyun/aliyun-oss-sdk-4.3.0.min.js"></script>
+<script src="/user/static/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="/user/static/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
+<script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="/user/static/videojs/video.min.js"></script>
+<script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/user/static/bootstrap-table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+<script src="/user/static/ravenjs/3.7.0/raven.min.js"></script>
+<script>
+    Raven.config('https://bc3878b7ed0a4468a65390bd79e6e73f@sentry.shiyanlou.com/5', {
+        release: '3.12.13'
+    }).install();
+</script>
+
+
 <script src="/user/app/dest/base/index.js?=2016121272249"></script>
 <script>
-$('.org-body-courses .media h4').each(function() {
-    var h = $(this).height();
-    if (h > 25) {
-        $(this).css({
-            width: $(this).width(),
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
-            overflow: 'hidden'
-        });
-    }
-});
-</script>	
-        
-            
-            
+    $('.org-body-courses .media h4').each(function () {
+        var h = $(this).height();
+        if (h > 25) {
+            $(this).css({
+                width: $(this).width(),
+                'white-space': 'nowrap',
+                'text-overflow': 'ellipsis',
+                overflow: 'hidden'
+            });
+        }
+    });
+</script>
+
+
 <div class="footer">
     <div class="container">
         <div class="row">
@@ -482,7 +481,8 @@ $('.org-body-courses .media h4').each(function() {
                 <a href="/user/bootcamp/index.html" target="_blank">实战训练营</a><br>
                 <a href="/user/vip/index.html" target="_blank">会员服务</a><br>
                 <a href="/user/courses/reports/index.html" target="_blank">实验报告</a><br>
-                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank">常见问题</a><br>
+                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"
+                   target="_blank">常见问题</a><br>
                 <a href="/user/privacy/index.html" target="_blank">隐私条款</a>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-2 footer-col">
@@ -492,7 +492,7 @@ $('.org-body-courses .media h4').each(function() {
                 <a href="/user/paths/bigdata/index.html" target="_blank">大数据学习路径</a><br>
                 <a href="/user/paths/java/index.html" target="_blank">Java学习路径</a><br>
                 <a href="/user/paths/php/index.html" target="_blank">PHP学习路径</a><br>
-                <a href="/user/paths/index.html", target="_blank">全部</a>
+                <a href="/user/paths/index.html" , target="_blank">全部</a>
             </div>
         </div>
     </div>
@@ -506,20 +506,27 @@ $('.org-body-courses .media h4').each(function() {
         </script>
         <script>
             var _hmt = _hmt || [];
-            (function() {
-             var hm = document.createElement("script");
-             hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
-             var s = document.getElementsByTagName("script")[0];
-             s.parentNode.insertBefore(hm, s);
-             })();
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
         </script>
         <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-89338452-1', 'auto');
-        ga('send', 'pageview');
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-89338452-1', 'auto');
+            ga('send', 'pageview');
         </script>
         <script>
             $(function () {
@@ -530,30 +537,30 @@ $('.org-body-courses .media h4').each(function() {
             //数据接口请求
             function reqData() {
                 $.ajax({
-                    type:"GET",
-                    url:"/user/CourseEight",
-                    dataType:"json", //预期服务器返回数据的类型
-                    success:function(data){
+                    type: "GET",
+                    url: "/user/CourseEight",
+                    dataType: "json", //预期服务器返回数据的类型
+                    success: function (data) {
                         mycourseData(data.data);
                     }
                 })
             }
 
             function mycourseData(data) {
-                var str="";
-                for (var i=0;i<data.length;i++){
-                    str+=" <div class=\"col-sm-6\">\n" +
-                        "            <a href=\"/user/resourseShow?courseId="+data[i].systemID+"\" >\n" +
+                var str = "";
+                for (var i = 0; i < data.length; i++) {
+                    str += " <div class=\"col-sm-6\">\n" +
+                        "            <a href=\"/user/resourseShow?courseId=" + data[i].systemID + "\" >\n" +
                         "                <div class=\"path-item\">\n" +
                         "                    <div class=\"col-xs-5 col-md-4  path-img\">\n" +
-                        "                        <img src=\""+data[i].systemImg+"\">\n" +
+                        "                        <img src=\"" + data[i].systemImg + "\">\n" +
                         "                    </div>\n" +
                         "                    <div class=\"col-xs-7 col-md-8\">\n" +
-                        "                        <div class=\"path-name\">"+data[i].systemName+"</div>\n" +
-                        "                        <div class=\"path-course-num\"><span>"+data[i].sourcesNum+"</span> 门课程</div>\n" +
-                        "                    </div>"+
+                        "                        <div class=\"path-name\">" + data[i].systemName + "</div>\n" +
+                        "                        <div class=\"path-course-num\"><span>" + data[i].sourcesNum + "</span> 门课程</div>\n" +
+                        "                    </div>" +
                         "                    <div class=\"desc-layer\">\n" +
-                        "                        <div class=\"center\">"+data[i].systemDesc+"</div>\n" +
+                        "                        <div class=\"center\">" + data[i].systemDesc + "</div>\n" +
                         "                    </div>\n" +
                         "                </div>\n" +
                         "            </a>\n" +
@@ -565,8 +572,6 @@ $('.org-body-courses .media h4').each(function() {
     </div>
 </div>
 
-            
-        
-	
+
 </body>
 </html>

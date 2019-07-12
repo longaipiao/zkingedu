@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class ZkingeduApplicationTests {
     @Test
     public void contextLoads() {
         System.out.println("爱情是什么");
-        PageInfo<Map<String, Object>> orderUid = orderService.findOrderUid(2,1,2);
+        PageInfo<Map<String, Object>> orderUid = orderService.findOrderUid(2, 1, 2);
         List<Map<String, Object>> list = orderUid.getList();
         for (Map<String, Object> objectMap : list) {
             System.out.println(objectMap);
@@ -43,7 +45,6 @@ public class ZkingeduApplicationTests {
     }
 
 
-
     @Test
     public void dsad() {
         System.out.println("爱情是什么");
@@ -56,16 +57,15 @@ public class ZkingeduApplicationTests {
     }
 
     @Test
-    public void sdasd(){
-        Map<String,Object> maps = new HashMap<>();
-        maps.put("3213","订单收入金额");
-        maps.put("321321","账单支出积分记录");
-        String [] str = new String[]{maps.toString()};
+    public void sdasd() {
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("3213", "订单收入金额");
+        maps.put("321321", "账单支出积分记录");
+        String[] str = new String[]{maps.toString()};
         for (String s : str) {
             System.out.println(s);
         }
     }
-
 
 
 }

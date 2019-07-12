@@ -38,20 +38,20 @@ public class fileController {
             try {
                 // uploadFile.transferTo(new
                 // File(req.getServletContext().getRealPath("WEB-INF/upload"),img));
-                File f=new File("E:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
-                if(!f.exists()){
+                File f = new File("E:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
+                if (!f.exists()) {
                     f.mkdirs();
                 }
                 file.transferTo(new File(f, img));
 
-                System.out.println("img是图片是："+img);
+                System.out.println("img是图片是：" + img);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Map<String, String> map = new HashMap<>();
-            map.put("src", "/imgs/"+img);
+            map.put("src", "/imgs/" + img);
             return ResultUtil.ok(map);
         } else {
             return ResultUtil.error("文件格式不支持,请重新选择！");

@@ -11,12 +11,16 @@
 
     <!--查询所有为0的父数据-->
     <select id="getAll" resultType="category">
-        select <include refid="categorys"/> from t_category where category_fid=0
+        select
+        <include refid="categorys"/>
+        from t_category where category_fid=0
     </select>
 
     <!-- 根据父id查询子id-->
     <select id="getAllfid" resultType="category">
-        select <include refid="categorys"/> from t_category where category_fid=#{fid}
+        select
+        <include refid="categorys"/>
+        from t_category where category_fid=#{fid}
     </select>
 
     <!--增加体系-->
@@ -26,7 +30,7 @@
     </insert>
     <!--删除所有体现-->
     <delete id="delete">
-        delete from t_category where  category_id=#{aid} or category_fid=#{fid}
+        delete from t_category where category_id=#{aid} or category_fid=#{fid}
     </delete>
     <!--修改体系停用状态-->
     <update id="updatety">
@@ -34,11 +38,11 @@
     </update>
     <!--修改体系开启状态-->
     <update id="updatekq">
-         update t_category set category_state=0 where category_fid=0 and category_id=#{aid}
+        update t_category set category_state=0 where category_fid=0 and category_id=#{aid}
     </update>
     <!--修改体系名字-->
     <update id="updateName">
-       update t_category set category_name=#{name} where category_fid=#{fid} and category_id=#{aid}
+        update t_category set category_name=#{name} where category_fid=#{fid} and category_id=#{aid}
     </update>
     <!--获取题库类别名称-->
     <select id="getcat" resultType="Category">

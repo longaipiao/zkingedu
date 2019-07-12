@@ -1,11 +1,8 @@
-
-
-
 //删除自己的帖子，假删
-function delPostTz(aa){
+function delPostTz(aa) {
 
-    var t=confirm("你确定要取消取消这个吗？");
-    if (t==true) {
+    var t = confirm("你确定要取消取消这个吗？");
+    if (t == true) {
         $.ajax({
             type: "post",
             url: "/pst/deletecollec",
@@ -24,10 +21,6 @@ function delPostTz(aa){
         });
     }
 }
-
-
-
-
 
 
 $(function () {
@@ -86,7 +79,7 @@ function ini() {
             content += '<div class="user-avatar ">';
             content += '<a class="avatar" href="../user/13/study.html" target="_blank">';
 
-            content += '<img src="'+o.user_img+'">';
+            content += '<img src="' + o.user_img + '">';
             content += '</a>';
             content += '</div>';
             content += '</div>';

@@ -41,8 +41,8 @@ public class SystemController {
     private Log mylog;
 
     //获取系统当前时间
-    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    String time=dateFormat.format(new Date());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time = dateFormat.format(new Date());
 
 
     @Autowired
@@ -52,46 +52,32 @@ public class SystemController {
      * 首页获取体系 12个
      * ajax
      * yan
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/CourseEight")
-    public ResultUtil indexgetCourseEight(){
+    public ResultUtil indexgetCourseEight() {
         return systemService.getSystemsResult();
     }
 
 
     /**
-     * 获取最热体系
-     * 5 个
      * yan
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/getSysFive")
-    public ResultUtil getSystemsFive(){
-        List<System> systems = systemService.getsystemsFive();
-        return ResultUtil.ok(systems);
-    }
-
-
-    /**
-     * yan
-     * @return
-     * 点击课程体系 既然体系详情课程页面
+     *
+     * @return 点击课程体系 既然体系详情课程页面
      * 获取体系id 查询所有子体系以及子体系下面的课程
      */
     @ResponseBody
     @RequestMapping("/resourseShow")
-    public ModelAndView coursepathsShow(Integer courseId){
+    public ModelAndView coursepathsShow(Integer courseId) {
         ModelAndView mv = new ModelAndView();
         System systemBySid = systemService.getSystemBySid(courseId);
-        mv.addObject("system",systemBySid);
+        mv.addObject("system", systemBySid);
 //        log.info("============================体系信息:"+systemBySid);
         List<System> systems = systemService.getsystemsonByFId(courseId);
 
-        mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
-        mv.addObject("systems",systems);
+        mv.addObject("systems", systems);
         mv.setViewName("/user/paths/show");
         return mv;
     }
@@ -100,6 +86,7 @@ public class SystemController {
     /**
      * 后台admin 管理课程体系   展示所有课程体系一级   搜索分页
      * 作者：yan
+     *
      * @param page
      * @param limit
      * @param system
@@ -107,18 +94,19 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/getSystems")
-    public Object getSystemMenu(Integer page,Integer limit,System system){
+    public Object getSystemMenu(Integer page, Integer limit, System system) {
         PageBean<System> systemPageBean = new PageBean<>();
         systemPageBean.setPageIndex(page);
         systemPageBean.setPageSize(limit);
         systemPageBean.setT(system);
-        return  systemService.getAllSystems(systemPageBean);
+        return systemService.getAllSystems(systemPageBean);
     }
 
 
     /**
      * admin体系添加
      * yan
+     *
      * @param system
      * @return
      */
@@ -132,16 +120,15 @@ public class SystemController {
             i = systemService.adminAddSystem(system);
             if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了体系，体系id为："+system.getSystemID());
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "添加了体系，体系id为：" + system.getSystemID());
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
                 return ResultUtil.ok("添加体系成功");
-            }
-            else{
+            } else {
                 return ResultUtil.error("您的操作过于频繁");
             }
         } catch (Exception e) {
@@ -154,10 +141,11 @@ public class SystemController {
     /**
      * 进入体系添加页面
      * yan
+     *
      * @return
      */
     @RequestMapping("/addSystemPage")
-    public String pageAddSystem(){
+    public String pageAddSystem() {
         return "/admin/course/systemAdd";
     }
 
@@ -165,28 +153,28 @@ public class SystemController {
     /**
      * 修改体系状态接口
      * yan
+     *
      * @param state
      * @param systemId
      * @return
      */
     @ResponseBody
     @RequestMapping("/updateSystemState")
-    public ResultUtil updateSystemState(boolean state,Integer systemId,HttpServletRequest request){
+    public ResultUtil updateSystemState(boolean state, Integer systemId, HttpServletRequest request) {
         try {
-            Integer stateid=0;
-            if(state){
-                stateid=0;
-            }
-            else if (!state){
-                stateid=1;
+            Integer stateid = 0;
+            if (state) {
+                stateid = 0;
+            } else if (!state) {
+                stateid = 1;
             }
             int i = systemService.updateSystemState(stateid, systemId);
-            if(i>0){
+            if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系状态："+state+"，体系id为："+systemId);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了体系状态：" + state + "，体系id为：" + systemId);
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -203,11 +191,12 @@ public class SystemController {
     /**
      * admin
      * 修改 之前表单数据加载
-     * @return  editSystem.html
+     *
+     * @return editSystem.html
      * yan
      */
     @RequestMapping("/sysperedit")
-    public ModelAndView PreadminEditSystem(@RequestParam("sid")Integer sid){
+    public ModelAndView PreadminEditSystem(@RequestParam("sid") Integer sid) {
         ModelAndView mv = new ModelAndView();
 
         System system = null;
@@ -217,7 +206,7 @@ public class SystemController {
             system.setSystemName("数据异常");
             e.printStackTrace();
         }
-        mv.addObject("system",system);
+        mv.addObject("system", system);
         mv.setViewName("/admin/course/systemEdit");
         return mv;
     }
@@ -225,21 +214,21 @@ public class SystemController {
 
     /**
      * admin 修改体系
+     *
      * @param system
-     * @return
-     * yan
+     * @return yan
      */
     @ResponseBody
     @RequestMapping("/editSystem")
-    public ResultUtil updateSystem(System system,HttpServletRequest request){
+    public ResultUtil updateSystem(System system, HttpServletRequest request) {
 //        log.info("接收的数据：==============================="+system);
         int i = systemService.updateSystem(system);
-        if(i>0){
+        if (i > 0) {
             //放入日志
-            Emp emp =(Emp) request.getSession().getAttribute("emp");
+            Emp emp = (Emp) request.getSession().getAttribute("emp");
             mylog.setEmp(emp);
             mylog.setLogTime(time);
-            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系，体系id为："+system.getSystemID());
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了体系，体系id为：" + system.getSystemID());
             mylog.setLogDetails(stringBuilder.toString());
             logService.addLog(mylog);
             //放入日志结束
@@ -251,14 +240,14 @@ public class SystemController {
 
     /**
      * 跳转至课程 阶段管理页面
-     * @return
-     * yan
+     *
+     * @return yan
      */
     @RequestMapping("/pageStageManager")
-    public ModelAndView pageStageManager(@RequestParam("systemID")Integer systemID){
+    public ModelAndView pageStageManager(@RequestParam("systemID") Integer systemID) {
         ModelAndView mv = new ModelAndView();
 
-        mv.addObject("id",systemID);
+        mv.addObject("id", systemID);
         mv.setViewName("/admin/course/stage/stageManger");
         return mv;
     }
@@ -267,13 +256,13 @@ public class SystemController {
     /**
      * yan
      * admin管理体系阶段
-     * @param sid  体系id
-     * @return  返回体系对应的阶段数据
      *
+     * @param sid 体系id
+     * @return 返回体系对应的阶段数据
      */
     @ResponseBody
     @RequestMapping("/getSystemStages")
-    public ResultUtil getSystemStages(@RequestParam("sid") Integer sid,Integer page,Integer limit){
+    public ResultUtil getSystemStages(@RequestParam("sid") Integer sid, Integer page, Integer limit) {
         PageBean<Integer> pageBean = new PageBean<>();
         pageBean.setT(sid);
         pageBean.setPageIndex(page);
@@ -284,24 +273,24 @@ public class SystemController {
 
     /**
      * admin  添加体系阶段
-     * @param fid  阶段父id
-     * @param stageName  阶段名称
-     * @return
-     * yan
+     *
+     * @param fid       阶段父id
+     * @param stageName 阶段名称
+     * @return yan
      */
     @Transactional
     @ResponseBody
     @RequestMapping("/addSystemStage")
-    public ResultUtil adminAddSystemStage(@RequestParam("fid")Integer fid,@RequestParam("stageName")String stageName,HttpServletRequest request){
-        int i=0;
+    public ResultUtil adminAddSystemStage(@RequestParam("fid") Integer fid, @RequestParam("stageName") String stageName, HttpServletRequest request) {
+        int i = 0;
         try {
             i = systemService.addSystemStage(fid, stageName);
-            if(i>0){
+            if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了体系阶段，体系父id为："+fid+"，体系阶段名为"+stageName);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "添加了体系阶段，体系父id为：" + fid + "，体系阶段名为" + stageName);
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -317,24 +306,25 @@ public class SystemController {
 
     /**
      * admin
-     * @param sid  阶段id
-     * @param stageName  名称
-     * @return  result
+     *
+     * @param sid       阶段id
+     * @param stageName 名称
+     * @return result
      * yan
      */
     @Transactional
     @ResponseBody
     @RequestMapping("/updateStageName")
-    public  ResultUtil adminUpdateStageName(@RequestParam("sid")Integer sid,@RequestParam("stageName")String stageName,HttpServletRequest request){
-        int i=0;
+    public ResultUtil adminUpdateStageName(@RequestParam("sid") Integer sid, @RequestParam("stageName") String stageName, HttpServletRequest request) {
+        int i = 0;
         try {
             i = systemService.updateSystemAndStageBySid(sid, stageName);
-            if(i>0){
+            if (i > 0) {
                 //放入日志
-                Emp emp =(Emp) request.getSession().getAttribute("emp");
+                Emp emp = (Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"修改了体系阶段名，体系阶段id为："+sid);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了体系阶段名，体系阶段id为：" + sid);
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -348,14 +338,11 @@ public class SystemController {
     }
 
 
-
     @ResponseBody
     @RequestMapping("/getSystemAndStageMenu")
-    public ResultUtil getSysMenu(){
+    public ResultUtil getSysMenu() {
         return ResultUtil.ok(systemService.getSystemAndStageMenu());
     }
-
-
 
 
 }

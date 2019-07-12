@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 广告表
+ *
  * @ClassName Advertising
  * @Author likai
  **/

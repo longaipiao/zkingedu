@@ -42,14 +42,14 @@
             display: none;
         }
 
-        #input01,#input02,select{
+        #input01, #input02, select {
             width: 300px;
             height: 40px;
         }
 
-        #textarea{
-            width:300px;
-            height:80px;
+        #textarea {
+            width: 300px;
+            height: 80px;
             border-color: #ccc;
         }
     </style>
@@ -57,140 +57,148 @@
 <body>
 
 
-    <form class="layui-form" action="">
+<form class="layui-form" action="">
 
-        <div class="layui-form-item layui-hide" >
-            <div class="layui-inline">
-                <label class="layui-form-label" >课程id</label>
-                <div class="layui-input-block">
-                    <input type="text" name="sectionCid" th:value="${id}" lay-verify="required" lay-reqtext="视频不能为空，请先上传视频" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label" style="width: 100px;">章节标题:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="sectionName" lay-verify="required" autocomplete="off" lay-reqtext="章节标题是必填项，岂能为空？" placeholder="请输入章节标题" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label" style="width: 100px;">章节积分:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="sectionInte" lay-verify="required"  lay-reqtext="章节积分购买积分是必填项，岂能为空？" placeholder="请输入章节购买积分" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label" style="width: 100px;">顺序号:</label>
-                <div class="layui-input-block">
-                    <input type="text" name="sectionSeq" lay-verify="required" lay-reqtext="顺序号是必填项，岂能为空？" placeholder="请输入章节排序编号" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item layui-hide" >
-            <div class="layui-inline">
-                <label class="layui-form-label">视频id</label>
-                <div class="layui-input-block">
-                    <input type="text" name="videoId" id="videoid" lay-verify="required" lay-reqtext="视频不能为空，请先上传视频" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-
-        <div class="upload-wrap" id="youku-upload" >
-            <div class="well form-horizontal" name="video-upload" id="upload_form">
-                <div class="control-group" id="contoral-group1">
-                    <p id="ossfileInfor"></p>
-                    <div class="progress" id="oss-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                    <input type="file" id="selectfiles">选择文件</a>
-                    <div id="uploadControl" class="controls">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
-                </div>
-                <div class="well" style="margin-left:0;">
-                    <h4>说明</h4>
-                    <ul>
-                        <li>最大支持上传<strong>4 GB</strong> 视频文件</li>
-                        <li>允许上传的视频格式为：wmv,avi,dat,asf,rm,rmvb,ram,mpg,mpeg,3gp,mov,mp4,m4v,dvix,dv,dat,</br>mkv,flv,vob,ram,qt,divx,cpk,fli,flc,mod。不符合格式的视频将会被丢弃，请确保视频格式的正确性，避免上传失败</li>
-                    </ul>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label" for="input01">标题</label>
-                    <div class="controls">
-                        <input type="text" class="input-xlarge" id="input01" name="title" style="padding-left: 6px;">
-                    </div>
-                </div>
-
-
-                <div class="control-group">
-                    <a id="postfiles" href="javascript:void(0);" class='btn'>开始上传</a>
-                </div>
-                <div class="control-group">
-                    <p id="console"></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="span5" id="upload-status-wraper"></div>
-            </div>
-            <div id="complete"></div>
-            <div id="login" style="width:100%;height:100%;position:fixed;z-index:999;left:0px;top:0px;overflow:hidden;display:none;"></div>
-        </div>
-
-        <div class="layui-form-item">
+    <div class="layui-form-item layui-hide">
+        <div class="layui-inline">
+            <label class="layui-form-label">课程id</label>
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo2">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <input type="text" name="sectionCid" th:value="${id}" lay-verify="required" lay-reqtext="视频不能为空，请先上传视频"
+                       autocomplete="off" class="layui-input">
             </div>
         </div>
-    </form>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">章节标题:</label>
+            <div class="layui-input-block">
+                <input type="text" name="sectionName" lay-verify="required" autocomplete="off"
+                       lay-reqtext="章节标题是必填项，岂能为空？" placeholder="请输入章节标题" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">章节积分:</label>
+            <div class="layui-input-block">
+                <input type="text" name="sectionInte" lay-verify="required" lay-reqtext="章节积分购买积分是必填项，岂能为空？"
+                       placeholder="请输入章节购买积分" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: 100px;">顺序号:</label>
+            <div class="layui-input-block">
+                <input type="text" name="sectionSeq" lay-verify="required" lay-reqtext="顺序号是必填项，岂能为空？"
+                       placeholder="请输入章节排序编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+        <div class="layui-inline">
+            <label class="layui-form-label">视频id</label>
+            <div class="layui-input-block">
+                <input type="text" name="videoId" id="videoid" lay-verify="required" lay-reqtext="视频不能为空，请先上传视频"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-wrap" id="youku-upload">
+        <div class="well form-horizontal" name="video-upload" id="upload_form">
+            <div class="control-group" id="contoral-group1">
+                <p id="ossfileInfor"></p>
+                <div class="progress" id="oss-progress">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+                <input type="file" id="selectfiles">选择文件</a>
+                <div id="uploadControl" class="controls">
+                </div>
+            </div>
+            <div class="control-group">
+                <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+            </div>
+            <div class="well" style="margin-left:0;">
+                <h4>说明</h4>
+                <ul>
+                    <li>最大支持上传<strong>4 GB</strong> 视频文件</li>
+                    <li>允许上传的视频格式为：wmv,avi,dat,asf,rm,rmvb,ram,mpg,mpeg,3gp,mov,mp4,m4v,dvix,dv,dat,</br>
+                        mkv,flv,vob,ram,qt,divx,cpk,fli,flc,mod。不符合格式的视频将会被丢弃，请确保视频格式的正确性，避免上传失败
+                    </li>
+                </ul>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="input01">标题</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="input01" name="title" style="padding-left: 6px;">
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <a id="postfiles" href="javascript:void(0);" class='btn'>开始上传</a>
+            </div>
+            <div class="control-group">
+                <p id="console"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span5" id="upload-status-wraper"></div>
+        </div>
+        <div id="complete"></div>
+        <div id="login"
+             style="width:100%;height:100%;position:fixed;z-index:999;left:0px;top:0px;overflow:hidden;display:none;"></div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo2">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 </body>
 <script type="text/javascript" src="https://cloud.youku.com/assets/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="https://cloud.youku.com/assets/js/browser-md5-file.min.js"></script>
 <script type="text/javascript" src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.1.0.min.js"></script>
 <script type="text/javascript">
     var layer;
-    layui.use(['form', 'layedit', 'laydate'], function() {
+    layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form
             , layedit = layui.layedit
             , laydate = layui.laydate;
-              layer = parent.layer === undefined ? layui.layer : parent.layer;
+        layer = parent.layer === undefined ? layui.layer : parent.layer;
 
         //监听提交
-        form.on('submit(demo2)', function(data){
+        form.on('submit(demo2)', function (data) {
             //弹出loading
-            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:10000,shade:0.8});
+            var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: 10000, shade: 0.8});
             var msg;
             $.ajax({
                 type: "post",
                 url: "/user/addSection",
-                data:data.field,
-                dataType:"json",
-                success:function(d){
-                    if(d.code==0){
-                        msg="添加成功";
-                    }else{
-                        msg=d.msg;
+                data: data.field,
+                dataType: "json",
+                success: function (d) {
+                    if (d.code == 0) {
+                        msg = "添加成功";
+                    } else {
+                        msg = d.msg;
                     }
                 }
             });
-            setTimeout(function(){
+            setTimeout(function () {
                 top.layer.close(index);
                 top.layer.msg(msg);
                 layer.closeAll("iframe");
                 //刷新父页面
                 parent.location.reload();
-            },2000);
+            }, 2000);
             return false;
         });
     });
@@ -203,6 +211,7 @@
     client_id = '59c9a21060e1d847';
     //acces_token有时效性，可以用接口获取
     access_token = '2a5a40a1c30244b120f3e66427376f08';
+
     //上传成功后的回调
     function cloudUploadSuccess(res) {
         // console.log(res);
@@ -216,18 +225,19 @@
         //....your code....
         // uploadAgain();
     }
+
     //调用
-    window.onload = function(){
-        cloud_outside_upload(client_id,access_token,cloudUploadSuccess);
+    window.onload = function () {
+        cloud_outside_upload(client_id, access_token, cloudUploadSuccess);
     }
 </script>
 
 
 <script type="text/javascript">
-    function cloud_outside_upload(client_id,access_token,cloudUploadSuccess,uploadAgain){
+    function cloud_outside_upload(client_id, access_token, cloudUploadSuccess, uploadAgain) {
         paramInit();
-        if(!uploadAgain){
-            uploadAgain =function() {
+        if (!uploadAgain) {
+            uploadAgain = function () {
                 $("#input01").val('');
                 $("#textarea").val('');
                 $("#input02").val('');
@@ -253,17 +263,17 @@
             document.getElementById('ossfile').innerHTML = '';
             var postfiles = document.getElementById('postfiles');
             var selectfiles = document.getElementById('selectfiles');
-            selectfiles.addEventListener('change', function(e){
+            selectfiles.addEventListener('change', function (e) {
                 e.preventDefault();
                 var name = selectfiles.files && selectfiles.files[0].name;
                 $("#input01").val(name);
                 $("#textarea").val(name);
             })
 
-            postfiles.onclick = function() {
+            postfiles.onclick = function () {
                 postfiles.setAttribute('disabled', true);
                 postfiles.background = '#ccc';
-                selectfiles.setAttribute('disabled',true);
+                selectfiles.setAttribute('disabled', true);
                 //创建上传任务，获取参数
                 var uploadFlag = true;
                 var ossFile = '';
@@ -336,7 +346,7 @@
                         }
                     }
                     //开始上传加载动画
-                    indexmsg = layer.msg('视频上传中...', {icon: 16,time:false,shade:0.7});
+                    indexmsg = layer.msg('视频上传中...', {icon: 16, time: false, shade: 0.7});
                     //回到页面顶部，方面观察上传相关数据
                     document.documentElement.scrollTop ?
                         document.documentElement.scrollTop = 0 :
@@ -345,10 +355,10 @@
                             window.pageYOffset ?
                                 window.pageYOffset = 0 :
                                 null;
-                    browserMD5File(ossFile, function(err, md5){
-                        console.log('md5 error:'+ err);
+                    browserMD5File(ossFile, function (err, md5) {
+                        console.log('md5 error:' + err);
                         filemd5 = md5;
-                        if(filemd5){
+                        if (filemd5) {
                             if (!filename) {
                                 layer.msg('请选择上传文件!');
                                 // alert('请选择上传文件!');
@@ -377,7 +387,7 @@
                                     isnew: 1
                                 },
                                 dataType: 'JSON',
-                                success: function(res) {
+                                success: function (res) {
                                     if (res) {
                                         var accessid = res.temp_access_id;
                                         var accesskey = res.temp_access_secret;
@@ -397,14 +407,14 @@
                                         return;
                                     }
                                 },
-                                error: function(error) {
+                                error: function (error) {
                                     alert('create接口返回失败,' + error);
                                     postfiles.removeAttribute('disabled');
                                     postfiles.style.background = '#2a8bd0';
                                     selectfiles.removeAttribute('disabled');
                                 }
                             });
-                        }else{
+                        } else {
                             postfiles.removeAttribute('disabled');
                             postfiles.style.background = '#2a8bd0';
                             selectfiles.removeAttribute('disabled');
@@ -435,7 +445,7 @@
                 bucket: bucket
             });
             var result = client.multipartUpload(oss_object, ossFile, {
-                progress: function(p, c, r) {
+                progress: function (p, c, r) {
                     console.log('progress:' + p);
                     if (p == 0) {
                         p = 0.01;
@@ -450,7 +460,7 @@
                 parallel: 2,
                 partSize: 20971520,
                 mime: 'video/*'
-            }).then(function(result) {
+            }).then(function (result) {
                 console.log('上传result:' + JSON.stringify(result));
                 if (result && result.res.status == 200) {
                     var requestUrls = result.res.requestUrls;
@@ -464,7 +474,7 @@
                             upload_server_name: requestUrls
                         },
                         dataType: 'JSON',
-                        success: function(res) {
+                        success: function (res) {
                             if (res) {
                                 cloudUploadSuccess(res);
                                 //$("#success_modal",parent.document).modal('show');
@@ -476,7 +486,7 @@
                             }
                             //uploadAgain();
                         },
-                        error: function(res) {
+                        error: function (res) {
                             alert('上传失败！' + res);
                             uploadAgain();
                         }
@@ -485,7 +495,7 @@
                     console.log('上传失败:' + JSON.stringify(result));
                     uploadAgain();
                 }
-            }).then(function(err) {
+            }).then(function (err) {
                 console.log('error:' + JSON.stringify(err));
             })
         }

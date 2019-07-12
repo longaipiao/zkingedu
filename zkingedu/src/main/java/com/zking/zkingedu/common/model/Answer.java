@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 答案表
+ *
  * @ClassName Answer
  * @Author likai
  **/

@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.ScommentDao">
 
     <!--课程评论接口Mapper-->
-    
+
     <!--公共字段-->
     <sql id="scommentSql">
         scomment_id,scomment_cid,scomment_uid,scomment_content,scomment_time
@@ -13,7 +13,9 @@
 
     <!--根据课程id  查询课程下面所有评论-->
     <select id="getScommentByCid" resultType="com.zking.zkingedu.common.model.Scomment">
-        select <include refid="scommentSql"/> from t_scomment where scomment_cid=#{cid}  order by scomment_time desc
+        select
+        <include refid="scommentSql"/>
+        from t_scomment where scomment_cid=#{cid} order by scomment_time desc
     </select>
 
 
@@ -22,7 +24,6 @@
         insert into t_scomment (scomment_cid,scomment_uid,scomment_content,scomment_time)
         values (#{scommentCid},#{scommentUid},#{scommentContent},now());
     </insert>
-
 
 
     <!--删除课程评论-->

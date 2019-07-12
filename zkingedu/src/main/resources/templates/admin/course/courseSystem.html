@@ -3,169 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <title>课程体系管理</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script type="text/javascript" src="/layui/layui.js"></script>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
-	<style type="text/css">
-		.layui-table-cell{
-			height:100px;
-			line-height: 36px;
-		}
-	</style>
+    <style type="text/css">
+        .layui-table-cell {
+            height: 100px;
+            line-height: 36px;
+        }
+    </style>
 </head>
 <body>
 <div class="demoTable">
-	搜索：
-	<div class="layui-inline">
-		<input class="layui-input" name="search" id="demoReload" autocomplete="off">
-	</div>
-	<button class="layui-btn" id="search" data-type="reload">搜索</button>
+    搜索：
+    <div class="layui-inline">
+        <input class="layui-input" name="search" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" id="search" data-type="reload">搜索</button>
 </div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script type="text/html" id="toolbarDemo">
-	<div class="layui-btn-container">
-		<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-		<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-		<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-		<button class="layui-btn layui-btn-sm" lay-event="add">添加体系</button>
-	</div>
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加体系</button>
+    </div>
 </script>
 
 
 </body>
 <script type="text/html" id="barDemo">
-	<a class="layui-btn layui-btn-xs" lay-event="stagemanger">阶段管理</a>
-	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="stagemanger">阶段管理</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <script type="text/html" id="checkboxTpl">
-	<!-- 这里的 checked 的状态只是演示 -->
-	<input type="checkbox" name="lock" value="{{d.systemID}}" title="展示体系" lay-filter="lockDemo" {{ d.systemState == 0 ? 'checked' : '' }}>
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="lock" value="{{d.systemID}}" title="展示体系" lay-filter="lockDemo" {{ d.systemState== 0
+           ? 'checked' : '' }}>
 </script>
 
 <script>
-	layui.use(['table','layer','form','jquery'], function(){
-		var table = layui.table;
-		var layer = layui.layer;
-		var form = layui.form;
-		var $ = layui.jquery;
+    layui.use(['table', 'layer', 'form', 'jquery'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
 
-		table.render({
-			elem: '#test'
-			,url:'/user/getSystems'
-			,toolbar: '#toolbarDemo'
-			,title: '体系数据表'
-			,id:"tableReload"
-			,limit:5
-			,cols: [
-					[
-				{type: 'checkbox', fixed: 'left'}
-				,{field:'systemID', title:'ID'}
-				,{field:'systemName', title:'体系名称', }
-				/*,{field:'systemState', title:'体系状态',  templet: function(res){
-						return '<em>'+ res.systemState +'</em>'
-					}}*/
-				,{field:'systemDesc', title:'体系描述'}
-				,{field:'systemImg', title:'体系图片',width:150,templet:function (res) {
-					return '<img src="'+res.systemImg+'"/>'
-				}}
-				,{field:'systemState', title:'体系状态', templet: '#checkboxTpl',unresize: true}
-				,{field:'sourcesNum', title:'体系课程数量'}
-				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
-			]
-			]
-			,page: true//开启分页
-		});
+        table.render({
+            elem: '#test'
+            , url: '/user/getSystems'
+            , toolbar: '#toolbarDemo'
+            , title: '体系数据表'
+            , id: "tableReload"
+            , limit: 5
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    , {field: 'systemID', title: 'ID'}
+                    , {field: 'systemName', title: '体系名称',}
+                    , {
+                    field: 'systemState', title: '体系状态', templet: function (res) {
+                        return '<em>' + res.systemState + '</em>'
+                    }
+                }
+                    , {field: 'systemDesc', title: '体系描述'}
+                    , {
+                    field: 'systemImg', title: '体系图片', width: 150, templet: function (res) {
+                        return '<img src="' + res.systemImg + '"/>'
+                    }
+                }
+                    , {field: 'systemState', title: '体系状态', templet: '#checkboxTpl', unresize: true}
+                    , {field: 'sourcesNum', title: '体系课程数量'}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 250}
+                ]
+            ]
+            , page: true//开启分页
+        });
 
 
-		$("#search").on('click', function(){
-			//执行重载
-			table.reload('tableReload', {
-				page: {
-					curr: 1 //重新从第 1 页开始
-				}
-				,where: {
-					systemName:$('#demoReload').val()
-				}
-			});
-		});
+        $("#search").on('click', function () {
+            //执行重载
+            table.reload('tableReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , where: {
+                    systemName: $('#demoReload').val()
+                }
+            });
+        });
 
-		//头工具栏事件
-		table.on('toolbar(test)', function(obj){
-			var checkStatus = table.checkStatus(obj.config.id);
-			switch(obj.event){
-				case 'getCheckData':
-					var data = checkStatus.data;
-					layer.alert(JSON.stringify(data));
-					break;
-				case 'getCheckLength':
-					var data = checkStatus.data;
-					layer.msg('选中了：'+ data.length + ' 个');
-					break;
-				case 'isAll':
-					layer.msg(checkStatus.isAll ? '全选': '未全选');
-					break;
-				case 'add': //添加体系
-					layer.open({
-						type: 2,
-						title:"添加体系",
-						area: ['500px', '600px'],
-						content:"/user/addSystemPage", //这里content是一个普通的String
-					})
-			};
-		});
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+                case 'add': //添加体系
+                    layer.open({
+                        type: 2,
+                        title: "添加体系",
+                        area: ['500px', '600px'],
+                        content: "/user/addSystemPage", //这里content是一个普通的String
+                    })
+            }
+            ;
+        });
 
-		//监听状态操作
-		form.on('checkbox(lockDemo)', function(obj){
-			$.ajax({
-				type: "post",
-				url: "/user/updateSystemState",
-				async:true,
-				data:{
-					state:obj.elem.checked,
-					systemId : this.value
-				},
-				dataType:"json",
-				success:function(d){
-					if(d.code==0){
-						layer.msg(d.msg);
-					}
-					else{
-						layer.msg(d.msg);
-					}
-				}
-			});
-			// console.log("value:"+this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-		});
+        //监听状态操作
+        form.on('checkbox(lockDemo)', function (obj) {
+            $.ajax({
+                type: "post",
+                url: "/user/updateSystemState",
+                async: true,
+                data: {
+                    state: obj.elem.checked,
+                    systemId: this.value
+                },
+                dataType: "json",
+                success: function (d) {
+                    if (d.code == 0) {
+                        layer.msg(d.msg);
+                    }
+                    else {
+                        layer.msg(d.msg);
+                    }
+                }
+            });
+            // console.log("value:"+this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+        });
 
-		//监听行工具事件
-		table.on('tool(test)', function(obj){
-			var data = obj.data;
-			//console.log(obj)
-			if(obj.event === 'del'){
-				layer.confirm('真的删除行么', function(index){
-					obj.del();
-					layer.close(index);
-				});
-			} else if(obj.event === 'edit'){
-				layer.open({
-					type: 2,
-					title:"编辑体系",
-					area: ['500px', '600px'],
-					content:"/user/sysperedit?sid="+data.systemID, //这里content是一个普通的String
-				})
-			}else if(obj.event === 'stagemanger'){
-				layer.open({
-					type: 2,
-					title:"体系阶段管理",
-					area: ['600px', '500px'],
-					content:"/user/pageStageManager?systemID="+data.systemID //这里content是一个普通的String
-				})
-			}
-		});
-	});
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    title: "编辑体系",
+                    area: ['500px', '600px'],
+                    content: "/user/sysperedit?sid=" + data.systemID, //这里content是一个普通的String
+                })
+            } else if (obj.event === 'stagemanger') {
+                layer.open({
+                    type: 2,
+                    title: "体系阶段管理",
+                    area: ['600px', '500px'],
+                    content: "/user/pageStageManager?systemID=" + data.systemID //这里content是一个普通的String
+                })
+            }
+        });
+    });
 </script>
 </html>

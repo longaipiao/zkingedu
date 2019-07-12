@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class app{
+public class app {
 
     public static void main(String[] args) {
         SpringApplication.run(app.class, args);
@@ -15,7 +15,7 @@ public class app{
 
 
     @RequestMapping(value = "/")
-    public String index(){
+    public String index() {
         return "springbootApp_8080";
     }
 
