@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.SystemDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
 
     <!--返回结果集，存在体系里面的课程-->
     <resultMap id="resultSystems" type="com.zking.zkingedu.common.model.System">

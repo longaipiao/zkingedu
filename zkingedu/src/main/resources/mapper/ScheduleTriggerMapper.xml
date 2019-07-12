@@ -11,6 +11,9 @@
       <arg column="job_group" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+
+  <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
+  <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
   <sql id="Base_Column_List" >
     id, cron, status, job_name, job_group
   </sql>

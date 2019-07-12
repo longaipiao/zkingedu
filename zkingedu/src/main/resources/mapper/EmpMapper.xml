@@ -3,6 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.EmpDao">
 
+    <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
     <!--员工接口Mapper-->
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
