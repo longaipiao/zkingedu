@@ -149,9 +149,7 @@ public class PostController {
         maps.put("j",postandUse.get("post_num"));
         maps.put("k",postandUse.get("jishu"));
         maps.put("mg",postandUse.get("user_img"));
-
         maps.put("l",getUserid(session));//设置用户ID
-
 
 
         return maps;
@@ -165,7 +163,7 @@ public class PostController {
      */
     @RequestMapping(value = "/getAllTs")
     @ResponseBody
-    public List<Tcomment> getTs(Integer id,Integer page,Integer pageSize){
+    public List<Tcomment> getTs(Integer id,Integer page,Integer pageSize,HttpSession session){
         //根据id获取所欲的评论
         List<Map<String,Object>> allTandUser = postService.getAllTandUser(id);
 
@@ -203,8 +201,17 @@ public class PostController {
     }
 
 
-
-
+    /**
+     * 获取用户id
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/getuid")
+    @ResponseBody
+     int getUsersid(HttpSession session){
+        int userid = getUserid(session);
+        return userid;
+     }
 
 
 
