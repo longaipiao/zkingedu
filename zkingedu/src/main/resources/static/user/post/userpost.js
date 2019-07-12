@@ -112,7 +112,7 @@ function inintdata() {
             content += '</div>';
             content += '<div class="col-sm-10">';
             content += '<h4>';
-            content += '<a  class="question-item-title" href="/pst/userinfo/' + o.postID + '" target="_blank">"' + o.postName + '"</a>';
+            content += '<a  class="question-item-title" href="/pst/userinfo/' + o.postID + '" target="_blank">' + o.postName + '</a>';
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';
