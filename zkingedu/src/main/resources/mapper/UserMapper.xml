@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
-    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
 
     <!--用户接口Mapper-->
 
@@ -130,6 +130,7 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <update id="updateIntegral" parameterType="integer">
         update t_user set user_integrsl = user_integrsl + #{CourseIntegral} where user_id = #{userID}
     </update>
+
 
 
 </mapper>

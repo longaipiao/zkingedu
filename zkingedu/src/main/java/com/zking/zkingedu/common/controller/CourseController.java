@@ -107,7 +107,6 @@ public class CourseController {
         mv.addObject("section",null);//视频id默认为空
         mv.addObject("course",courseBYcourseID);
 
-        System.err.println("评论数量=================================="+scommentService.getScommentAndCousecNumber(sid));
         mv.addObject("scommentNum",scommentService.getScommentAndCousecNumber(sid));//课程评论数量
         mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
         mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
@@ -130,9 +129,9 @@ public class CourseController {
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
         int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
-        System.err.println("用户的积分是："+integrsl);
+//        System.err.println("用户的积分是："+integrsl);
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
-        System.err.println("整套课程的积分是："+courseIntegrsl);
+//        System.err.println("整套课程的积分是："+courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl",integrsl);
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
@@ -157,7 +156,6 @@ public class CourseController {
         //根据章节id获取视频信息
         //Video videoById = videoService.getVideoById(id);
         Section section = sectionService.getSectionById(id);
-        System.err.println("section 章节信息= " + section);
 
         User user = new User();
         user.setUserID(SessionUtil.getUserById());
@@ -174,14 +172,18 @@ public class CourseController {
     }
 
 
+
+    @Autowired
+    private SystemService systemService;
     /**
      * 用户点击进入course课程搜索页面
      * @return
      */
     @RequestMapping("/courseSearch")
     public ModelAndView courseSearch(){
-        ModelAndView mv = new ModelAndView();
 
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         mv.setViewName("/user/courses/index");
         return mv;
     }
@@ -199,7 +201,6 @@ public class CourseController {
         pageBean.setT(course);
         pageBean.setPageIndex(page);//当前页
         pageBean.setPageSize(limit);//没页多少条
-        System.err.println("数据接收：=============================="+pageBean);
        return courseService.SearchCourse(pageBean);
     }
 

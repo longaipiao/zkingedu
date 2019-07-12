@@ -1,6 +1,7 @@
 <!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -109,6 +110,9 @@
     </style>
 </head>
 <body>
+
+
+
 <nav class="navbar navbar-default navbar-fixed-top header">
     <div class="container">
         <div class="navbar-header">
@@ -216,39 +220,10 @@
             }*/
         });
 
-        //普通图片上传
-        var uploadInst = upload.render({
-            elem: '#test7'
-            ,url: '/user/upload'
-            ,before: function(obj){
-                //预读本地文件
-                obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                    $('#demo2').attr('src', result); //图片链接（base64）
-                    alert(result+"dsads");
-                });
-            }
-            ,done: function(res){
-                //如果上传失败
-                if(res.code > 0){
-                    return layer.msg(res.msg);
-                }
-                //上传成功
-                //设置src给图片隐藏域
-                $("#newsImg").val(res.data.src);
-                layer.msg('上传成功')
-            }
-            ,error: function(){
-                //失败状态，并实现重传
-                var uploadError = $('#uploadError');
-                uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                uploadError.find('.demo-reload').on('click', function(){
-                    uploadInst.upload();
-                });
-            }
+
         });
 
-    });
+
 
 
     //修改手机号
@@ -259,6 +234,7 @@
                 type:1,
                 title: '修改手机号',
                 content: $('#xgphones'),
+                area: ['400px', '330px'],
                 maxWidth: 400,
                 shadeClose: true,
                 end:function () {
@@ -269,7 +245,7 @@
     }
     //修改邮箱
     function ms2() {
-        alert("进来了")
+        // alert("进来了")
         layui.use('layer', function () {
             var layer = layui.layer;
             var inputEmail=$("#inputEmail").html();
@@ -281,6 +257,7 @@
                 type: 1,
                 title: a,
                 content: $('#xgEmail'),
+                area: ['400px', '330px'],
                 maxWidth: 400,
                 shadeClose: true,
                 end:function () {
@@ -288,6 +265,59 @@
                 }
             });
         });
+    }
+
+    function test3() {
+        layui.use('upload', function () {
+            var $ = layui.jquery
+                , upload = layui.upload;
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#testssss'
+                , url: '/user/upload'
+                , before: function (obj) {
+                    //预读本地文件
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                        $('#demo2').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    var upload = res.data.src;
+                    if (res.code == 0) {
+                        //修改数据库
+                        $.ajax({
+                            url: "/user/updateupload",
+                            type: "post",
+                            data: {
+                                upload: upload,
+                            },
+                            success: function (data) {
+                                if (data == 1) {
+                                    location.href = "/user/userinfo/index";
+                                }
+                            }
+                        })
+                    }
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg(res.msg);
+                    }
+                    //上传成功
+                    //设置src给图片隐藏域
+                    $("#newsImg").val(res.data.src);
+                    layer.msg('上传成功')
+                }
+                , error: function () {
+                    //失败状态，并实现重传
+                    var uploadError = $('#uploadError');
+                    uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                    uploadError.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+        })
     }
 
 
@@ -329,13 +359,7 @@
             </div>
 
             <div class="col-md-3 userinfo-banner-labinfo">
-                <div class="userinfo-banner-level">
-                    <img src="/user/img/lou-level.png">
-                    <div class="userinfo-current-level"><span>195</span> 楼</div>
-                    <div class="userinfo-level-more" data-toggle="tooltip" data-placement="bottom" title="在实验环境中动手输入代码或命令时才计入有效学习时间">
-                        距 196 楼还需 16 分钟有效学习时间
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -354,18 +378,20 @@
                         <i class="layui-icon" style="color: red">&#xe756;<em id="sss"></em></i>
                         <input type="hidden" id="messa"/>
                     </a>
-                </div>
-            </ul>
-            <ul class="list-group">
-                <div class="text-center">
-                    <!--<a href="#get6" class="list-group-item" id="xinxi">个人信息</a>-->
                     <a href="#get7" class="list-group-item" id="haoyou">我的资源</a>
                     <a href="#get8" class="list-group-item" id="chongzhi">会员充值</a>
                 </div>
             </ul>
+            <!--            <ul class="list-group"> -->
+            <!--                <div class="text-center">-->
+            <!--                    &lt;!&ndash;<a href="#get6" class="list-group-item" id="xinxi">个人信息</a>&ndash;&gt;-->
+            <!--                    <a href="#get7" class="list-group-item" id="haoyou">我的资源</a>-->
+            <!--                    <a href="#get8" class="list-group-item" id="chongzhi">会员充值</a>-->
+            <!--                </div>-->
+            <!--            </ul>-->
         </div>
         <div class="col-md-10 layout-body " id="get1">
-            <div class="content" role="tabpanel" >
+            <div class="content" role="tabpanel" style="height: 450px">
                 <ul class="nav nav-tabs" rolw="tablist" id="nav">
                     <li role="presentation" class="active">
                         <a href="#yi" class="active">基本信息</a>
@@ -392,7 +418,7 @@
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label for="demo2" class="col-xs-4 control-label" o>头像：</label>
-                                <a id="test7" style="cursor:pointer;">
+                                <a id="testssss" style="cursor:pointer;">
                                     <div class="col-xs-3">
                                         <img class="img-circle img-responsive" onclick="test3()" id="demo2" th:src="${session.user.userImg}" style="width:100px;height: 100px; display: inline">
                                         <p id="demoText2"></p>
@@ -401,20 +427,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputShous" class="col-xs-4 control-label">昵称：</label>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="margin-top: 5px">
                                     <label th:text="${session.user.userName}"   id="inputShous" ></label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputShou" class="col-xs-4 control-label">年龄：</label>
-                                <div class="col-xs-3">
-                                    <label   id="inputShou" >18</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputShou2" class="col-xs-4 control-label">手机号：</label>
                                 <div class="col-xs-3">
-                                    <label id="inputShou2">
+                                    <label id="inputShou2" style="margin-top: -6px">
                                         <em th:text="${session.user.userPhone}">
                                         </em>
                                         <input type="button" class="btn btn-default navbar-btn sign-in" onclick="ms()" value="修改"/>
@@ -423,25 +443,21 @@
                             </div>
                             <div class="form-group">
                                 <label  class="col-xs-4 control-label" >邮箱：</label>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="margin-top: -6px">
 											<span th:if="${session.user.userEmail} eq null">
 												 &nbsp;&nbsp;&nbsp;&nbsp;
 												<label>你还未绑定邮箱
 													<input type="button" class="btn btn-default navbar-btn sign-in" onclick="ms2()" value="绑定"/>
 												</label>
 											</span>
+                                    <span th:if="${session.user.userEmail} ne null">
                                     <em th:text="${session.user.userEmail}" id="inputEmail"></em>
-                                    <input type="button" class="btn btn-default navbar-btn sign-in" onclick="ms2()" value="绑定"/>
+                                        <input type="button" class="btn btn-default navbar-btn sign-in" onclick="ms2()" value="修改"/>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-xs-offset-4 col-xs-9">
-                                    <label>
-                                        注:完善信息方便找回密码，账号更安全。
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
+
+                            <div class="form-group" style="margin-left: -90px">
                                 <div class="col-xs-offset-5 col-xs-9">
                                     <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">修改密码</a>
                                 </div>
@@ -451,47 +467,47 @@
 
                     <!-- 修改手机号 -->
                     <form class="layui-form layui-form-pane" action="" id="xgphones" style="display: none">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" style="margin-top: 40px;margin-left: 40px">
                             <label class="layui-form-label">手机号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="userphone" id="userphone" lay-verify="title" autocomplete="off" placeholder="请输入手机号" class="layui-input"/>
+                                <input type="text" name="userphone" id="userphone" lay-verify="title" autocomplete="off" placeholder="请输入手机号" class="layui-input" style="width: 200px"/>
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" style="margin-left: 40px">
                             <label class="layui-form-label">验证码</label>
                             <div class="layui-input-block">
-                                <input type="text" id="usercaptcha_v" lay-verify="title" autocomplete="off" placeholder="请输入验证码" class="layui-input"/>
+                                <input type="text" id="usercaptcha_v" lay-verify="title" autocomplete="off" placeholder="请输入验证码" class="layui-input" style="width: 200px"/>
                             </div>
                         </div>
-                        <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
-                            <div>
-                                <button type="button" class="layui-btn" id="sendPhone2" >获取验证码</button>
-                                <button type="button" class="layui-btn layui-btn-normal" onclick="updatePhone3()">修改</button>
-                            </div>
-                        </fieldset>
+
+                        <div style="margin-left: 100px">
+                            <button type="button" class="layui-btn" id="sendPhone2" >获取验证码</button>
+                            <button type="button" class="layui-btn" onclick="updatePhone3()">修改</button>
+                        </div>
+
                     </form>
 
 
                     <!-- 修改邮箱 -->
                     <form class="layui-form layui-form-pane" action="" id="xgEmail" style="display: none">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" style="margin-top: 40px;margin-left: 40px">
                             <label class="layui-form-label">邮箱</label>
                             <div class="layui-input-block">
-                                <input type="text" name="userphone" id="userEmail" lay-verify="title" autocomplete="off" placeholder="请输入邮箱" class="layui-input"/>
+                                <input type="text" name="userphone" id="userEmail" lay-verify="title" autocomplete="off" placeholder="请输入邮箱" class="layui-input" style="width: 200px"/>
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" style="margin-left: 40px">
                             <label class="layui-form-label">验证码</label>
                             <div class="layui-input-block">
-                                <input type="text" id="userEmailcaptcha_v" lay-verify="title" autocomplete="off" placeholder="请输入邮箱验证码" class="layui-input"/>
+                                <input type="text" id="userEmailcaptcha_v" lay-verify="title" autocomplete="off" placeholder="请输入邮箱验证码" class="layui-input" style="width: 200px"/>
                             </div>
                         </div>
-                        <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
-                            <div>
-                                <button type="button" class="layui-btn" id="sendPhone7"  >获取验证码</button>
-                                <button type="button" class="layui-btn layui-btn-normal" onclick="updateEmail()">修改</button>
-                            </div>
-                        </fieldset>
+
+                        <div style="margin-left: 100px">
+                            <button type="button" class="layui-btn" id="sendPhone7"  >获取验证码</button>
+                            <button type="button" class="layui-btn" onclick="updateEmail()">修改</button>
+                        </div>
+
                     </form>
 
                     <!--修改弹框 -->
@@ -502,12 +518,12 @@
                                 <div class="modal-body">
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li role="presentation">
-                                            <a href="#signup-form" aria-controls="signup-form" role="tab" data-toggle="tab">手机号修改</a>
+                                            <a href="#sss" aria-controls="signup-form" role="tab" data-toggle="tab" style="margin-left: 100px">修改密码</a>
                                         </li>
                                     </ul>
 
                                     <!--手机号修改-->
-                                    <div role="tabpanel" class="tab-pane" id="signup-form">
+                                    <div role="tabpanel" class="tab-pane" id="sss">
                                         <form action="#" method="post" id="table">
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -516,7 +532,6 @@
                                                     </div>
                                                     <input  name="password" id="password1" class="form-control" type="password" placeholder="请输入原密码">
                                                     <input type="hidden" th:value="${session.user.userPassword}" id="passwordy">
-
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -767,7 +782,8 @@
 
 </div>
 </div>
-
+<!--嵌套头部header-->
+<div th:replace="user/header::header"></div>
 
 <div class="modal fade" id="message-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

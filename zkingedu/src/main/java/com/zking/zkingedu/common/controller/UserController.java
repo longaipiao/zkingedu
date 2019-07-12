@@ -8,6 +8,7 @@ import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
 //import com.zhenzi.sms.ZhenziSmsClient;
+import com.zhenzi.sms.ZhenziSmsClient;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.Tool;
@@ -18,6 +19,7 @@ import com.zking.zkingedu.common.service.impl.UserServiceImpl;
 import com.zking.zkingedu.common.utils.IpAddress;
 import com.zking.zkingedu.common.utils.MailUtil;
 import com.zking.zkingedu.common.utils.transferImgForRoundImgage;
+import com.zking.zkingedu.common.utils.MailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -33,10 +35,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Controller
@@ -57,9 +56,9 @@ public class UserController {
     String time=dateFormat.format(new Date());
 
     // 短信平台相关参数
-   /* private String apiUrl = "https://sms_developer.zhenzikj.com";
+    private String apiUrl = "https://sms_developer.zhenzikj.com";
     private String appId = "101158";
-    private String appSecret ="NmNhYzRmMmUtNGQ0NS00MmJlLWFjNDYtNWYyOGQyMTYyYWRl";*/
+    private String appSecret ="NmNhYzRmMmUtNGQ0NS00MmJlLWFjNDYtNWYyOGQyMTYyYWRl";
     @Autowired
     private UserService userService;
 
@@ -148,12 +147,7 @@ public class UserController {
        /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
         String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
 
-        //将验证码存到session中,同时存入创建时间
-        //以json存放，这里使用的是阿里的fastjson
-       /* json = new JSONObject();
-        json.put("mobile", mobile);
-        json.put("verifyCode", verifyCode);
-        json.put("createTime", System.currentTimeMillis());*/
+
         // 将认证码存入SESSION
         System.out.println(verifyCode);
         return verifyCode;
@@ -166,7 +160,6 @@ public class UserController {
     @RequestMapping(value = "/findUser")
     @ResponseBody
     public Map<String,Object> findUser(Integer page, Integer limit,HttpServletRequest request,String sid,String text){
-        System.out.println(sid);
         if(sid!=null){
             if(text!=""){
                 if(sid.equals("0")){//查询名字
@@ -181,7 +174,6 @@ public class UserController {
                 }
                 else if(sid.equals("2")){//查询邮箱号
                     user.setUserEmail(text);
-
                 }
             }
             else{
@@ -194,6 +186,11 @@ public class UserController {
         System.out.println(user);
         HttpSession session = request.getSession();
         PageInfo<User> users = userService.getAll(user,page, limit);
+        List<User> list = users.getList();
+        for (User user1 : list) {
+
+        }
+
         System.out.println(user);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");
@@ -325,6 +322,19 @@ public class UserController {
 
     }
 
+    /**
+     * 查看图片
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/ckimg")
+    public  String ckimg(String uid,HttpServletRequest request){
+        User user = userService.getUser(Integer.parseInt(uid));
+
+        return user.getUserImg();
+    }
+
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
@@ -333,8 +343,8 @@ public class UserController {
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
         //发送短信
-       /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
-        String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
+        ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+        String result = client.send(phone, "您正在注册zking在线课堂用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");
 
         //将验证码存到session中,同时存入创建时间
         //以json存放，这里使用的是阿里的fastjson
@@ -384,7 +394,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/LoginCallback2")
-    public String  LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
+    public boolean LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
         HttpSession session = request.getSession();
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
@@ -409,7 +419,6 @@ public class UserController {
                 session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
-
                     try{
                         response.sendRedirect("/user/binding");
                     }catch (IOException e){
@@ -424,9 +433,13 @@ public class UserController {
                     }
                 }
                 else{
-                    session.setAttribute("user",qquser);
+                   session.setAttribute("user",qquser);
+                    User user=(User) session.getAttribute("user");
+                    //修改ip地址
+                    userService.updateipaddrlastTime(user.getUserID(),IpAddress.getIpAddr(request),new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     try{
-                        response.sendRedirect("/user/");
+                        response.sendRedirect("/user/");//登入界面
+                       return false;
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -436,7 +449,8 @@ public class UserController {
         } catch (QQConnectException e) {
             e.printStackTrace();
         }
-        return "user/index";
+        return true;
+
     }
 
     /**

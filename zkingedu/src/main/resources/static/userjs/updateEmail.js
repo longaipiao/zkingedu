@@ -6,44 +6,47 @@ function updateEmail() {
     var Email = $("#userEmail").val();
     //判断重复
     var captcha_v5 = $("#userEmailcaptcha_v").val();
-    $.ajax({
-        url: "/user/Email",
-        type: "post", //请求方式
-        data:{
-            Email:Email,
-        },
-        success: function (data) {
-            if (data == 2) {
-                alert("该邮箱重复了")
-            } else {
-                if (s != captcha_v5) {
-                    alert("验证码错误")
+    if(""==Email){
+        alert("邮箱不能为空");
+    }else{
+        $.ajax({
+            url: "/user/Email",
+            type: "post", //请求方式
+            data:{
+                Email:Email,
+            },
+            success: function (data) {
+                if (data == 2) {
+                    alert("该邮箱重复了")
                 } else {
-                    $.ajax({
-                        url: "/user/updateEmail",
-                        type: "post",
-                        data: {
-                            newEmail:Email,
-                        },
-                        success: function (sh) {
-                            if (sh == 1) {
-                                alert("修改成功");
-                                location.href = "/user/userinfo/index";
-                            } else if (sh == 2) {
-                                alert("修改失败")
+                    if (s != captcha_v5) {
+                        alert("验证码错误")
+                    } else {
+                        $.ajax({
+                            url: "/user/updateEmail",
+                            type: "post",
+                            data: {
+                                newEmail:Email,
+                            },
+                            success: function (sh) {
+                                if (sh == 1) {
+                                    alert("修改成功");
+                                    location.href = "/user/userinfo/index";
+                                } else if (sh == 2) {
+                                    alert("修改失败")
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
-            }
-        },
-    })
+            },
+        })
+    }
 }
 
 
 
 $('#sendPhone7').click(function(){
-    alert("进来了邮箱");
     //获得手机号文本框的值
     var Email=$("#userEmail").val();
     //手机号验证
@@ -52,7 +55,7 @@ $('#sendPhone7').click(function(){
         alert("邮箱不能为空")
     }
     else if(!Emails.test(Email)){
-       alert("邮箱格式不对");
+        alert("邮箱格式不对");
     }
     else {
         $.ajax({

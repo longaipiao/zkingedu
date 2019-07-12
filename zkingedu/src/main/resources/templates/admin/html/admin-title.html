@@ -53,7 +53,7 @@
                 </select>
             </div>
         </div>
-        <button type="button" onclick="zjtm()" class="layui-btn layui-btn-primary layui-btn-sm refresh">新增</button>
+        <button type="button" onclick="zjtm()" class="layui-btn  refresh">新增</button>
         <div class="layui-inline">
             <label class="layui-form-label">请选择阶段</label>
             <div class="layui-input-inline">
@@ -328,7 +328,6 @@
         // })
         // 刷新重载树表（一般在异步处理数据后刷新显示）
         o('.refresh').click(function(){
-            alert("进来了")
             var tm = $("#xm").val();
             if(tm==""){
                 alert("请选择你要添加题目的类型");

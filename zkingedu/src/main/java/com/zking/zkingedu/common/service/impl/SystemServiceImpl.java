@@ -66,6 +66,27 @@ public class SystemServiceImpl implements SystemService {
         return systemDao.getsystemsEight();
     }
 
+    /**
+     * 获取课程体系5个热门
+     * yan
+     * @return
+     */
+    @Override
+    public List<System> getsystemsFive() {
+        List<System> sys = new ArrayList<>();
+        List<System> systems = systemDao.getsystemsEight();
+        if (systems.size()>5){
+            int i=0;
+            for (System system : systems) {
+                i++;
+                if(i>5){
+                    break;
+                }
+                sys.add(system);
+            }
+        }
+        return sys;
+    }
 
     /**
      * 根据fid查询子体系

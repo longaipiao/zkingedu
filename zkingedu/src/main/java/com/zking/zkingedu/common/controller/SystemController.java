@@ -62,6 +62,20 @@ public class SystemController {
 
 
     /**
+     * 获取最热体系
+     * 5 个
+     * yan
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getSysFive")
+    public ResultUtil getSystemsFive(){
+        List<System> systems = systemService.getsystemsFive();
+        return ResultUtil.ok(systems);
+    }
+
+
+    /**
      * yan
      * @return
      * 点击课程体系 既然体系详情课程页面
@@ -76,6 +90,7 @@ public class SystemController {
 //        log.info("============================体系信息:"+systemBySid);
         List<System> systems = systemService.getsystemsonByFId(courseId);
 
+        mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         mv.addObject("systems",systems);
         mv.setViewName("/user/paths/show");
         return mv;

@@ -11,7 +11,7 @@
 
     <!--根据课程id获取所有的章节-->
     <select id="getSectionsBycid"  resultType="com.zking.zkingedu.common.model.Section">
-        select <include refid="sectionMap"/> from t_section where section_cid=#{cid}
+        select <include refid="sectionMap"/> from t_section where section_cid=#{cid} ORDER BY section_seq ASC
     </select>
 
     <!--根据章节的id查询单个章节下的积分-->
@@ -26,6 +26,7 @@
         <if test="section.sectionName != null">
             and section_name like '%${section.sectionName}%'
         </if>
+        ORDER BY section_seq ASC
     </select>
 
 

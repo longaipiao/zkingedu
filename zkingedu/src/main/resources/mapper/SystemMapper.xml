@@ -116,4 +116,8 @@
     </select>
 
 
+    <select id="getSystemByRe" resultType="com.zking.zkingedu.common.model.System">
+
+    </select>
+
 </mapper>

@@ -32,7 +32,6 @@ function hh(aa){
 
 //调用搜索的方法
 $("#tzss").click(function () {
-
     //给原来的赋值为空，才能刷新
     $("#Linddd").html("");
     //开始获取值
@@ -49,16 +48,21 @@ $("#tzss").click(function () {
 
 $(function () {
     //如果搜索不为空
+    if($("#cgldez").val()==""){
 
-   /* if($("#cgldez").val()!=""){
+        jz();
+    }
+
+    if($("#cgldez").val()!=""){
         //给原来的赋值为空，才能刷新
         $("#Linddd").html("");
         //开始获取值
         nr=$("#cgldez").val();
         //开始调用方法
         jz();
-        nr="";
-    }*/
+        //nr="";
+    }
+
 
     //加载分类
     hq();
@@ -66,7 +70,6 @@ $(function () {
     //调用加载方法
 
         //开始
-        jz();
 
 
 

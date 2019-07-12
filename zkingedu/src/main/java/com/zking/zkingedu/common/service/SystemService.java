@@ -24,6 +24,14 @@ public interface SystemService {
 
 
     /**
+     * 获取课程体系5个热门
+     * yan
+     * @return
+     */
+    List<System> getsystemsFive();
+
+
+    /**
      * yan
      * 返回所有课程体系数据
      * @return
@@ -109,7 +117,7 @@ public interface SystemService {
     /**
      * admin添加体系阶段
      * yan
-     * @param fid  体系id
+     * @param
      * @param stageName  阶段名称
      * @return
      */

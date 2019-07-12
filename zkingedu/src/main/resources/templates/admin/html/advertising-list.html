@@ -22,8 +22,8 @@
 </head>
 <style type="text/css">
     .layui-table-cell{
-       /* height:100px;
-        line-height: 30px;*/
+        /* height:100px;
+         line-height: 30px;*/
     }
 </style>
 
@@ -44,264 +44,272 @@
 
 
 
-    <script type="text/html" id="switchTpl">
-        <input type="checkbox"  value="{{d.advertisingID}}" lay-skin="switch" lay-text="上架|下架" lay-filter="sexDemo" {{ d.advertisingState == 0 ? "checked":"上架" }}>
-    </script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox"  value="{{d.advertisingID}}" lay-skin="switch" lay-text="上架|下架" lay-filter="sexDemo" {{ d.advertisingState == 0 ? "checked":"上架" }}>
+</script>
 
 
 
-    <!-- 表格-->
-    <table id="demo" lay-filter="test" class="layui-table-cell"></table>
-    <script type="text/javascript" th:inline="none">
-        layui.use(['layer','form', 'table','laydate', 'element','upload'], function(){
-            var table = layui.table
-                ,laydate = layui.laydate
-                ,upload = layui.upload
-                ,$ = layui.jquery
-                , element = layui.element //元素操作
-                , form = layui.form;
-            test();
-    //第一个实例
-            function test() {
-                table.render({
-                    elem: '#demo'
-                    , id: 'id'
-                    , url: '/findadvertising' //数据接口
-                    , toolbar: 'default'
-                    , toolbar: '#toolbarDemo'
-                    , page: true //开启分页
-                    , cols: [[ //表头
-                        {field: 'advertisingID', title: 'ID', sort: true, fixed: 'left'}
-                        , {
-                            field: 'advertisingImg', title: '广告图片', sort: true,
-                            templet: function (data) {
-                                return "<img src='" + data.advertisingImg + "'/>";
-                            }
+<!-- 表格-->
+<table id="demo" lay-filter="test" class="layui-table-cell"></table>
+<script type="text/javascript" th:inline="none">
+    layui.use(['layer','form', 'table','laydate', 'element','upload'], function(){
+        var table = layui.table
+            ,laydate = layui.laydate
+            ,upload = layui.upload
+            ,$ = layui.jquery
+            , element = layui.element //元素操作
+            , form = layui.form;
+        test();
+        //第一个实例
+        function test() {
+            table.render({
+                elem: '#demo'
+                , id: 'id'
+                , url: '/findadvertising' //数据接口
+                , toolbar: 'default'
+                , toolbar: '#toolbarDemo'
+                , page: true //开启分页
+                , cols: [[ //表头
+                    {field: 'advertisingID', title: 'ID', sort: true, fixed: 'left'}
+                    , {
+                        field: 'advertisingImg', title: '广告图片', sort: true,
+                        templet: function (data) {
+                            return "<img src='" + data.advertisingImg + "'/>";
                         }
-                        , {field: 'advertisingURL', title: '地址',}
-                        , {field: 'advertisingName', title: '标题',}
-                        , {field: 'advertisingTime', title: '时间',}
-                        , {field: 'advertisingState', title: '状态', templet: '#switchTpl', unresize: true}
-                        , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
-                    ]]
+                    }
+                    , {field: 'advertisingURL', title: '地址',}
+                    , {field: 'advertisingName', title: '标题',}
+                    , {field: 'advertisingTime', title: '时间',}
+                    , {field: 'advertisingState', title: '状态', templet: '#switchTpl', unresize: true}
+                    , {fixed: 'right', align: 'center', toolbar: '#barDemo'}
+                ]]
 
+            });
+        }
+
+        var $ = layui.$, layer = layui.layer, active = {
+            getCheckData: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('id')
+                    ,data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            },
+            // 模糊查询的页面重载
+            reload : function() { //拿到页面每一个值
+                var advertisingName = $('#advertisingNam').val();
+                var start = $('#start').val();
+                var end = $('#end').val();
+                //alert(toolName);
+                // 执行重载
+                table.reload('id', {
+                    page : {
+                        curr : 1// 重新从第 1 页开始
+                    },
+                    where : {//传的参数到后台
+                        'advertisingName' : advertisingName,
+                        'start' : start,
+                        'end' : end,
+                    }
                 });
             }
+        };
+        // 查询按钮实现
+        $('.demoTable .layui-btn').on('click', function() {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
 
-            var $ = layui.$, layer = layui.layer, active = {
-                getCheckData: function(){ //获取选中数据
-                    var checkStatus = table.checkStatus('id')
-                        ,data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                },
-                // 模糊查询的页面重载
-                reload : function() { //拿到页面每一个值
-                    var advertisingName = $('#advertisingNam').val();
-                    var start = $('#start').val();
-                    var end = $('#end').val();
-                    //alert(toolName);
-                    // 执行重载
-                    table.reload('id', {
-                        page : {
-                            curr : 1// 重新从第 1 页开始
-                        },
-                        where : {//传的参数到后台
-                            'advertisingName' : advertisingName,
-                            'start' : start,
-                            'end' : end,
-                        }
-                    });
+
+
+
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#onePicUpload'
+            ,url: '/user/upload'
+            ,before: function(obj){
+                //预读本地文件
+                obj.preview(function(index, file, result){
+                    $('#preview').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg(res.msg);
                 }
-            };
-            // 查询按钮实现
-            $('.demoTable .layui-btn').on('click', function() {
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
+                //上传成功
+                //设置src给图片隐藏域
+                $("#advertisingImg").val(res.data.src);
+                layer.msg('上传成功')
+            }
+            ,error: function(){
+                //失败状态，并实现重传
+                var uploadError = $('#uploadError');
+                uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                uploadError.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
 
 
 
 
+        //监听上架操作
+        form.on('switch(sexDemo)', function(obj){
+            var aid=this.value;
+            //判断上架广告不能超过五条
+            $.ajax({
+                url:"/getsjzt",
+                success:function (data) {
+                    if(data==2){
+                        if(obj.elem.checked==true) {//上架
+                            $.ajax({
+                                url:"/updateStatesj",
+                                data:{
+                                    aid:aid,
+                                },
+                                success:function (data2) {
+                                    if(data2==1){
+                                        index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
+                                        layer.alert('上架成功');
 
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#onePicUpload'
-                ,url: '/user/upload'
-                ,before: function(obj){
-                    //预读本地文件
-                    obj.preview(function(index, file, result){
-                        $('#preview').attr('src', result); //图片链接（base64）
-                    });
-                }
-                ,done: function(res){
-                    //如果上传失败
-                    if(res.code > 0){
-                        return layer.msg(res.msg);
-                    }
-                    //上传成功
-                    //设置src给图片隐藏域
-                    $("#advertisingImg").val(res.data.src);
-                    layer.msg('上传成功')
-                }
-                ,error: function(){
-                    //失败状态，并实现重传
-                    var uploadError = $('#uploadError');
-                    uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                    uploadError.find('.demo-reload').on('click', function(){
-                        uploadInst.upload();
-                    });
-                }
-            });
-
-
-
-
-            //监听上架操作
-            form.on('switch(sexDemo)', function(obj){
-                var aid=this.value;
-                //判断上架广告不能超过五条
-                $.ajax({
-                    url:"/getsjzt",
-                    success:function (data) {
-                        if(data==2){
-                            if(obj.elem.checked==true) {//上架
-                                $.ajax({
-                                    url:"/updateStatesj",
-                                    data:{
-                                        aid:aid,
-                                    },
-                                    success:function (data2) {
-                                        if(data2==1){
-                                            index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
-                                            layer.alert('上架成功');
-
-                                        }
-                                    },
-                                    error:function () {
-                                        layer.alert('异常');
                                     }
-                                })
-                            }
-
+                                },
+                                error:function () {
+                                    layer.alert('异常');
+                                }
+                            })
                         }
-                        else{
-                            layer.alert('上架不能超过五条');
-                            test();
+
+                    }
+                    else{
+                        layer.alert('上架不能超过五条');
+                        test();
+
+                    }
+                },
+                error:function () {
+                    layer.alert('异常');
+                }
+            });
+            if(obj.elem.checked==false){//下架
+                $.ajax({
+                    url:"/updateStatexj",
+                    data:{
+                        aid:this.value,
+                    },
+                    success:function (data) {
+                        if(data==1){
+                            index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
+                            layer.alert('下架成功');
 
                         }
                     },
                     error:function () {
                         layer.alert('异常');
                     }
-                });
-                if(obj.elem.checked==false){//下架
-                    $.ajax({
-                        url:"/updateStatexj",
-                        data:{
-                            aid:this.value,
-                        },
-                        success:function (data) {
-                            if(data==1){
-                                index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
-                                layer.alert('下架成功');
-
-                            }
-                        },
-                        error:function () {
-                            layer.alert('异常');
-                        }
-                    })
-                }
-
-            });
-
-
-
-            //监听修改提交
-            form.on('submit(demo1)', function(data){
-               var preview=$("#preview")[0].src;
-               if( data.field.advertisingImg==""){
-                   data.field.advertisingImg=preview;
-               }
-                //弹出loading
-                var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-                var msg;
-                $.ajax({
-                    type: "post",
-                    url: "/updateadvertising",
-                    data:data.field,
-                    ataType:"json",
-                    success:function(d){
-                        if(d.code==0){
-                            msg="修改成功！";
-                        }else{
-                            msg=d.msg;
-                        }
-                    }
-                });
-                setTimeout(function(){
-                    top.layer.close(index);
-                    layer.msg(msg);
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    location.reload();
-                },3000);
-                return false;
-            });
-
-            //监听工具条
-            table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                var data = obj.data; //获得当前行数据
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                var tr = obj.tr; //获得当前行 tr 的DOM对象
-                var msg;
-                if(layEvent === 'edit'){ //编辑
-                    //do something
-                    $("#advertisingName").val(data.advertisingName);
-                    $("#advertisingURL").val(data.advertisingURL);
-                   $('#preview').attr('src', data.advertisingImg);
-                    $("#advertisingID").val(data.advertisingID);
-
-                    layer.open({
-                        //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
-                        type: 1,
-                        title: "修改信息",
-                        area: ['620px', '530px'],
-                        content: $("#toolupdate"),//引用的弹出层的页面层的方式加载修改界面表单
-                        maxmin : true
-                    });
-                }
-                if(layEvent === 'del'){//删除
-                    layer.confirm('您确定要删除吗？', {
-                        btn: ['确定','取消'] //按钮
-                    },function(){
-                            $.ajax({
-                                url:"/deleteadvertising",
-                                data:{
-                                    aid:data.advertisingID,
-                                },
-                                success:function (d) {
-                                   if(d==1){
-                                       layer.msg("删除成功");
-                                       test();
-                                   }
-                                   else{
-                                       layer.msg("删除失败");
-                                   }
-                                }
-                            })
-                    });
-                }
-
-            });
+                })
+            }
 
         });
-    </script>
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>
+
+
+        //监听修改提交
+        form.on('submit(demo1)', function(data){
+            var preview=$("#preview")[0].src;
+            var advertisingURL=$("#advertisingURL").val();
+            var advertisingName= $("#advertisingName").val();
+            if( data.field.advertisingImg==""){
+                data.field.advertisingImg=preview;
+            }
+            if(data.field.advertisingURL==""){
+                data.field.advertisingURL=advertisingURL;
+            }
+            if(data.field.advertisingName==""){
+                data.field.advertisingName=advertisingName;
+            }
+            //弹出loading
+            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            var msg;
+            $.ajax({
+                type: "post",
+                url: "/updateadvertising",
+                data:data.field,
+                ataType:"json",
+                success:function(d){
+                    if(d.code==0){
+                        layer.alert("修改成功！");
+                    }else{
+                        layer.alert("修改失败");
+                    }
+                }
+            });
+            setTimeout(function(){
+                top.layer.close(index);
+                layer.msg(msg);
+                layer.closeAll("iframe");
+                //刷新父页面
+                location.reload();
+            },3000);
+            return false;
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            var msg;
+            if(layEvent === 'edit'){ //编辑
+                //do something
+                $("#advertisingName").val(data.advertisingName);
+                $("#advertisingURL").val(data.advertisingURL);
+                $('#preview').attr('src', data.advertisingImg);
+                $("#advertisingID").val(data.advertisingID);
+
+                layer.open({
+                    //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                    type: 1,
+                    title: "修改信息",
+                    area: ['620px', '530px'],
+                    content: $("#toolupdate"),//引用的弹出层的页面层的方式加载修改界面表单
+                    maxmin : true
+                });
+            }
+            if(layEvent === 'del'){//删除
+                layer.confirm('您确定要删除吗？', {
+                    btn: ['确定','取消'] //按钮
+                },function(){
+                    $.ajax({
+                        url:"/deleteadvertising",
+                        data:{
+                            aid:data.advertisingID,
+                        },
+                        success:function (d) {
+                            if(d==1){
+                                layer.msg("删除成功");
+                                test();
+                            }
+                            else{
+                                layer.msg("删除失败");
+                            }
+                        }
+                    })
+                });
+            }
+
+        });
+
+    });
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 
 
 
