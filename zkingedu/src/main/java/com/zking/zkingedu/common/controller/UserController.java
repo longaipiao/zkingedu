@@ -7,7 +7,7 @@ import com.qq.connect.api.OpenID;
 import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
-//import com.zhenzi.sms.ZhenziSmsClient;
+import com.zhenzi.sms.ZhenziSmsClient;
 import com.zhenzi.sms.ZhenziSmsClient;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
