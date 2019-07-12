@@ -17,7 +17,7 @@ public interface OrderDao {
     public int gmshiporder(Order order);
 
     /**
-     * 查询课程id和用户id是否存在
+     * 根据课程id查询是否存在
      */
     public Integer findCourseID(Integer courseID);
 

@@ -280,7 +280,9 @@
                            data-stat="course_comment" data-toggle="tab">课程评论(<span
                                 th:text="${scommentNum}">0</span>)</a>
                     </li>
+
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
+
                     <!--从后台获取的课程id-->
                     <input type="hidden" id="courseID" th:value="${courseId}"/>
                 </ul>
@@ -1180,6 +1182,7 @@
         $("#qtsp").click(function () {
             //alert("开始购买视频。。。。。");
             //courseID sectionID
+            //课程id
             var courseid = $("#courseID").val();
             //alert(courseid);
             layer.confirm('亲，您确定要购买本套视频吗？', function () {
@@ -1203,9 +1206,15 @@
                                     layer.msg("您的积分余额不足，请前去个人中心充值积分，再进行购买此课程吧！", {icon: 5})
                                 }, 2000);
                             } else {
-                                //积分足够的话，就可以购买视频了
-                                // 停顿一秒后,进行刷新详情页面.
-                                layer.msg("恭喜你，此课程购买成功！", {icon: 1});
+                                alert(parseInt(data));
+                                if(parseInt(data) == 4){
+                                    layer.msg("此课程已经购买过了，无需重新购买！", {icon: 5});
+                                    $("#qtsp").hide();
+                                }else{
+                                    //积分足够的话，就可以购买视频了
+                                    // 停顿一秒后,进行刷新详情页面.
+                                    layer.msg("恭喜你，此课程购买成功！", {icon: 1});
+                                }
                             }
                         }
                     }

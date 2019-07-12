@@ -47,6 +47,7 @@ public class SessionUtil {
      * @return
      */
     public static Integer getUserById() {
-        return 3;
+
+        return null;
     }
 }

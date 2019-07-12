@@ -73,6 +73,12 @@ public class OrderController {
 
         User user = (User) request.getSession().getAttribute("user");
         System.err.println("session中的值是："+user);
+
+        //查询订单表中是否有课程id
+        Integer courseID1 = orderService.findCourseID(courseID);
+        //查询订单表中是否有用户id
+        Integer userID = orderService.findUserID(SessionUtil.getUserById());
+
         //判断用户是否登录
         if(user==null){
             ResponseUtil.write(response,3);
@@ -84,49 +90,51 @@ public class OrderController {
 
 
 //        log.info("***************开始查询这个用户剩下多少积分*******************");
-            int userintegrsl = userService.findIntegrsl(SessionUtil.getUserById());//用户id
+            Integer userintegrsl = userService.findIntegrsl(SessionUtil.getUserById());//用户id
             System.err.println("用户剩下积分为：" + userintegrsl);
-
-
+            /*if(userID==SessionUtil.getUserById()&&courseID==courseID1){
+                return "4";
+            }*/
             if (userintegrsl < courseInte) {
                 return "1";//积分不够的，需要去充值的
-            } else  {
+            }else{
+                if(userID==SessionUtil.getUserById()&&courseID==courseID1){
+                    return "4";
+                }else{
 //            log.info("*************开始购买整套视频的方法***********");
-                order.setOrderID(idGeneratorUtils.nextId());//生成一个唯一的订单的id
-                order.setOrderUid(SessionUtil.getUserById());//获取session中用户的id
-                order.setOrderSid(courseID);//前台传过来的课程id
-                order.setOrderCid(0);//购买整套视频章节id默认为0
-                order.setOrderIntegral(integral);//整套视频的积分
-                //订单生成的日期
-                order.setChargeTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
-                order.setOrderState(1);//状态
-                int gmshiporder = orderService.gmshiporder(order);
-//            System.out.println("成功的：" + gmshiporder);
+                    order.setOrderID(idGeneratorUtils.nextId());//生成一个唯一的订单的id
+                    order.setOrderUid(SessionUtil.getUserById());//获取session中用户的id
+                    order.setOrderSid(courseID);//前台传过来的课程id
+                    order.setOrderCid(0);//购买整套视频章节id默认为0
+                    order.setOrderIntegral(integral);//整套视频的积分
+                    //订单生成的日期
+                    order.setChargeTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+                    order.setOrderState(1);//状态
+                    int gmshiporder = orderService.gmshiporder(order);
 
-
-
-//            log.info("****************开始变动这个用户的积分*************"+courseInte);
-                userService.updateUserIntegral(integral,SessionUtil.getUserById());
-//            log.info("****************结束变动这个用户的积分*************");
+                    //log.info("****************开始变动这个用户的积分*************"+courseInte);
+                    userService.updateUserIntegral(integral,SessionUtil.getUserById());
+                    //log.info("****************结束变动这个用户的积分*************");
 
 
 //            log.info("*****************结束购买整套视频的方法************");
 
 //            log.info("********************开始生成账单表*********************");
-                bill.setBillUid(SessionUtil.getUserById());//获取session中用户的id
-                bill.setBillType(2);//类型为1的是：支付状态
-                bill.setBillIntegral(integral);//支付的积分
-                //账单生成的时间
-                bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+                    bill.setBillUid(SessionUtil.getUserById());//获取session中用户的id
+                    bill.setBillType(2);//类型为1的是：支付状态
+                    bill.setBillIntegral(integral);//支付的积分
+                    //账单生成的时间
+                    bill.setBillTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
 
-                //调用根据课程id查询的课程名称方法
-                String courseName = courseService.findCourseName(courseID);
-                //账单内容
-                bill.setBillContent("您购买《" + courseName + "》,消费积分：" + integral);
-                bill.setBillState(1);//状态
-                billService.addBill(bill);
+                    //调用根据课程id查询的课程名称方法
+                    String courseName = courseService.findCourseName(courseID);
+                    //账单内容
+                    bill.setBillContent("您购买《" + courseName + "》,消费积分：" + integral);
+                    bill.setBillState(1);//状态
+                    billService.addBill(bill);
 //            log.info("********************结束生成账单标表*****************");
-                return "2";//可以直接购买的
+                    return "2";//可以直接购买的
+            }
             }
         }
         return null;

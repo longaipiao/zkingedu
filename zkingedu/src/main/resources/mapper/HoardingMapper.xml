@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.HoardingDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+  <!--  <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--公sql-->
     <sql id="hoardingSql">
         collection_id,collection_zpid,collection_uid,collection_state,collection_time

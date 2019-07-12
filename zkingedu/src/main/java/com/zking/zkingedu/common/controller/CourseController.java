@@ -62,6 +62,32 @@ public class CourseController {
     String time = dateFormat.format(new Date());
 
 
+
+
+
+    /**
+     * 查询课程需要的值
+     * @param sid 课程id
+     * @param request
+     * @param model
+     * @param mv
+     * @return
+     */
+    /*@RequestMapping("/showCourse1")
+    public String findUserDenglu(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
+
+        //获取登录过来的用户积分    需要后期改变用户ID
+
+        Integer integrsl = userService.findIntegrsl(SessionUtil.getUserById());
+
+        return null;
+    }*/
+
+
+
+
+
+
     /**
      * 在体系页面选择课程 点击跳转至课程详情页面
      *
@@ -69,24 +95,23 @@ public class CourseController {
      */
     @RequestMapping("/showCourse")
     public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
-        //获取登录过来的用户积分    需要后期改变用户ID
-        int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
-        System.err.println("用户的积分是：" + integrsl);
-        int courseIntegrsl = courseService.findCourseIntegrsl(sid);
+
+        User u = (User) request.getSession().getAttribute("user");
+        if(u!=null){
+
+        Integer courseIntegrsl = courseService.findCourseIntegrsl(sid);
         System.err.println("整套课程的积分是：" + courseIntegrsl);
 
-        request.getSession().setAttribute("userintegrsl", integrsl);
+        request.getSession().setAttribute("userintegrsl", u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl", courseIntegrsl);
-
 
         //课程id
         model.addAttribute("courseId", sid);
         System.err.println("课程id是：" + sid);
         model.addAttribute("userId", SessionUtil.getUserById());
-        System.err.println("用户id是" + 2);
 
         //单个用户的积分
-        mv.addObject("userintegrsl", integrsl);
+        mv.addObject("userintegrsl", u.getUserIntegrsl());
         //整套课程的积分
         mv.addObject("courseIntegrsl", courseIntegrsl);
 
@@ -114,7 +139,34 @@ public class CourseController {
         mv.addObject("coursefours", courseService.getCoursefour());//获取最热的四个课程（播放量）
 
         mv.setViewName("/user/courses/show1");
-        return mv;
+            return mv;
+        }else{
+            //获取所有的章节视频
+            List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
+            //获取课程信息
+            Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
+
+
+            //课程点击量增加 yan
+            courseBYcourseID.setCourseNum(courseBYcourseID.getCourseNum() + 1);
+            courseService.updatecliNum(sid, courseBYcourseID.getCourseNum());
+
+            User user = new User();
+            user.setUserID(SessionUtil.getUserById());
+            mv.addObject("user", user);//模拟登陆
+            mv.addObject("sections", sectionsBycid);
+            mv.addObject("section", null);//视频id默认为空
+            mv.addObject("course", courseBYcourseID);
+
+            System.err.println("评论数量==================================" + scommentService.getScommentAndCousecNumber(sid));
+            mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
+            mv.addObject("courseNum", hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
+            mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
+            mv.addObject("coursefours", courseService.getCoursefour());//获取最热的四个课程（播放量）
+
+            mv.setViewName("/user/courses/show1");
+            return mv;
+        }
     }
 
 
@@ -130,12 +182,16 @@ public class CourseController {
     public ModelAndView SystemRequestCourse(@RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id, HttpServletRequest request, Model model){
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
-        int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
-        System.err.println("用户的积分是："+integrsl);
+        //int integrsl = userService.findIntegrsl(SessionUtil.getUserById());
+        User u = (User) request.getSession().getAttribute("user");
+        if(u!=null){
+
+
+        System.err.println("用户的积分是："+u.getUserIntegrsl());
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
         System.err.println("整套课程的积分是："+courseIntegrsl);
 
-        request.getSession().setAttribute("userintegrsl",integrsl);
+        request.getSession().setAttribute("userintegrsl",u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
 
 
@@ -146,7 +202,8 @@ public class CourseController {
 //        System.err.println("用户id是"+2);
 
         //单个用户的积分
-        mv.addObject("userintegrsl",integrsl);
+        mv.addObject("userintegrsl",u.getUserIntegrsl());
+
         //整套课程的积分
         mv.addObject("courseIntegrsl",courseIntegrsl);
 
@@ -172,6 +229,30 @@ public class CourseController {
 
         mv.setViewName("/user/courses/show1");
         return mv;
+        }else{
+            //获取所有的章节视频
+            List<Section> sectionsBycid = sectionService.getSectionsBycid(sid);
+            //获取课程信息
+            Course courseBYcourseID = courseService.getCourseBYcourseID(sid);
+
+            //根据章节id获取视频信息
+            //Video videoById = videoService.getVideoById(id);
+            Section section = sectionService.getSectionById(id);
+            System.err.println("section 章节信息= " + section);
+
+            User user = new User();
+            user.setUserID(SessionUtil.getUserById());
+            mv.addObject("user",user);//模拟登陆
+            mv.addObject("sections",sectionsBycid);
+            mv.addObject("section",section);//视频id默认为空
+            mv.addObject("course",courseBYcourseID);
+            mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
+            mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
+            mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
+
+            mv.setViewName("/user/courses/show1");
+            return mv;
+        }
     }
 
 
@@ -388,18 +469,19 @@ public class CourseController {
     public ResultUtil editCourseState(@RequestParam(value = "id") Integer id, @RequestParam("state") boolean state, HttpServletRequest request) {
         try {
             Integer sid;
-            if (state) {
-                sid = 0;
-            } else {
-                sid = 1;
+            if(state){
+                sid=0;
+            }
+            else{
+                sid=1;
             }
             int i = courseService.editCourseState(id, sid);
-            if (i > 0) {
+            if(i>0){
                 //放入日志
-                Emp emp = (Emp) request.getSession().getAttribute("emp");
+                Emp emp =(Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为：" + id);
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "修改了课程状态，课程ID为："+id);
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
@@ -411,6 +493,17 @@ public class CourseController {
         }
         return ResultUtil.error("您的操作过于频繁，请稍后再试....");
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -6,7 +6,7 @@
     <!--开发者工具接口Mapper-->
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--sql字段-->
     <sql id="toolsql">

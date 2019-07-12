@@ -157,4 +157,11 @@ public interface SystemService {
      */
     List<Map<String, Object>> getSystemAndStageMenu();
 
+    /**
+     * 获取课程体系5个热门
+     * yan
+     * @return
+     */
+    List<System> getsystemsFive();
+
 }

@@ -167,12 +167,12 @@ public class PageController {
         if ("course".equals(type)) {//搜索课程
             mv.addObject("content", SearchName);
             mv.setViewName("/user/courses/index");
-            mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+            //mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             return mv;//跳转至课程搜索页面
         }
         else  {
             mv.addObject("leibie",SearchName);
-            mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+           // mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             mv.setViewName("/user/questions/index");
             return mv;//搜索论坛帖子
         }
@@ -226,7 +226,7 @@ public class PageController {
     public String tiku(Model model, Integer categoryFID) {
         List<Category> category = categoryService.getCategory();//获取所有的题库类别
         List<Category> gettikuzitype = categoryService.gettikuzitype(categoryFID);
-        model.addAttribute("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+        //model.addAttribute("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         model.addAttribute("gettikuzitype",gettikuzitype);//子
         model.addAttribute("category",category);//父
         return "/user/tiku";
