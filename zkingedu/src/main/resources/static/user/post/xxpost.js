@@ -31,7 +31,7 @@ function plkk(cs,cs2,cs3){
 }
 
 
-var  id="";//获取从界面转过来的值帖子id
+var  id=$("#hqid").val();//获取从界面转过来的值帖子id
 
 
 
@@ -126,14 +126,6 @@ function ghg() {
 
 
 $(function () {
-
-
-    var url=window.location.search; //获取url中"?"符后的字串  
-    if(url.indexOf("?")!=-1){
-        id = url.substr(url.indexOf("=")+1);
-
-    }
-
   var tieuid="";//帖子uid
 
     //调用ajax
