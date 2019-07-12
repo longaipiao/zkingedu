@@ -44,19 +44,24 @@
                     </li>-->
                 </ul>
                 <div class="navbar-right btns">
-                     <span th:if="${session.user} eq null  ">
+
+                <span th:if="${session.user} eq null  ">
                         <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
                         <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
                     </span>
 
-                    <!--<span th:if="${session.atts==a}">
+
+
+                    <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} eq b">
                         <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登入</a>
                         <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
-                        </span>-->
+                        </span>
+                </span>
 
 
                     <span th:if="${session.user} ne null ">
-                        <span th:if="${session.atts!=a}">
+                        <span th:if="${session.s2} ne b">
                             <a href="/user/userinfo/index"><img th:src="${session.user.userImg}"class="img-circle img-responsive" style="width:30px;height: 30px; display: inline" ></a>
                         <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="/user/zhuxiao" data-toggle="modal">注销</a>
                         </span>

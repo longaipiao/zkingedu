@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -91,8 +91,7 @@
 
 
 <link rel="stylesheet" href="/user/layui/css/layui.css">
-<!--嵌套头部header-->
-<div th:replace="user/header::header"></div>
+
 
 
 <!--头部-->
@@ -228,50 +227,60 @@
         <div class="col-md-3 layout-side">
 
 
-            <div class="panel panel-default panel-userinfo">
-                <div class="panel-body body-userinfo">
-                    <div class="media userinfo-header">
-                        <div class="media-left">
-                            <div class="user-avatar">
+            <div class="panel-body body-userinfo">
+                <div class="media userinfo-header">
+                    <div class="media-left">
+                        <div class="user-avatar">
+                                 <span th:if="${session.user} ne null ">
+                            <a href="/user/userinfo/index"><img th:src="${session.user.userImg}" class="circle"  style="width:30px;height: 30px; display: inline" ></a>
+                                        </span>
 
-                                <a class="avatar" href="#sign-modal" data-toggle="modal" data-sign="signin">
+                            <span th:if="${session.user} eq null  ">
                                     <img class="circle" src="/user/img/logo-grey.png">
-                                </a>
+                                </span>
 
-                            </div>
-                        </div>
-                        <div class="media-body">
-
-                            <span class="media-heading username">欢迎来到实验楼</span>
-                            <p class="vip-remain">做实验，学编程</p>
 
                         </div>
                     </div>
+                    <div class="media-body">
+                        <span th:if="${session.user} ne null ">
+
+                            <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到实验楼</span>
+                        </span>
+                        <span th:if="${session.user} eq null  ">
+                            <span class="media-heading username">欢迎</span>来到实验楼</span>
+                        </span>
+                        <p class="vip-remain">做实验，学编程</p>
+                    </div>
+                </div>
 
                     <div class="row userinfo-data">
 
                         <hr>
                         <div class="btn-group-lr">
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn"
-                               data-toggle="modal" data-sign="signin">登录</a>
-                            <a href="#sign-modal" type="button"
-                               class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn"
-                               data-toggle="modal" data-sign="signup">注册</a>
+                            <span th:if="${session.user} eq null  ">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
+
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} eq b">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
+                </span>
+
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} ne b">
+            <a href="/user/zhuxiao" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注销</a>
+                 </span>
+                </span>
                         </div>
 
                     </div>
 
                     <div class="userinfo-footer row">
-                        <div class="col-md-6 col-xs-6 pos-left">
 
-                            <a href="#sign-modal" data-toggle="modal" data-sign="signin"><span
-                                    class="glyphicon glyphicon-bookmark"></span> 加入私有课</a>
-
-                        </div>
-                        <div class="col-md-6 col-xs-6 pos-right">
-                            <a href="/contribute" target="_blank"><span class="glyphicon glyphicon-send"></span>
-                                我要投稿</a>
-                        </div>
 
                         <div id="join-private-course" class="modal fade words-ctrl" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
@@ -305,19 +314,21 @@
             </div>
 
 
-            <div class="sidebox">
-                <div class="sidebox-header">
-                    <h4 class="sidebox-title">最热体系</h4>
-                </div>
-                <div class="sidebox-body course-content side-list-body" th:each="sys:${sysFive}">
-                    <a  ><img style="width:25px;height:25px" src="/user/img/1471513769430.png" th:src="${sys.systemImg}" >
-                        <span th:text="${sys.systemName}"></span></a>
-                </div>
+
+        <!--最热课程数据绑定-->
+        <div class="sidebox">
+            <div class="sidebox-header">
+                <h4 class="sidebox-title">最热体系</h4>
             </div>
-            <div class="side-image side-qrcode">
-                <img src="http://www.veryedu.cn/templates/zhuojing/images/index_129.jpg">
-                <div class="side-image-text">关注公众号，手机看教程</div>
+            <div class="sidebox-body course-content side-list-body" th:each="sys:${sysFive}">
+                <a th:href="@{/user/resourseShow?courseId={id}(id=${sys.systemID})}"><img style="width:25px;height:25px" src="/user/img/1471513769430.png" th:src="${sys.systemImg}" >
+                    <span th:text="${sys.systemName}"></span></a>
             </div>
+        </div>
+        <div class="side-image side-qrcode">
+            <img src="http://www.veryedu.cn/templates/zhuojing/images/index_129.jpg">
+            <div class="side-image-text">关注zking公众号，手机看教程</div>
+        </div>
 
         </div>
     </div>
@@ -392,6 +403,9 @@
 <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
 <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
 <script src="/user/static/videojs/video.min.js"></script>
+<script src="/userjs/zc.js"></script>
+<script src="/userjs/login.js"></script>
+<script src="/userjs/index.js"></script>
 <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -599,6 +613,9 @@
 
 
 </script>
+
+<!--嵌套头部header-->
+<div th:replace="user/header::header"></div>
 
 
 </body>

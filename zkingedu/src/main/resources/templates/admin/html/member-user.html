@@ -6,10 +6,9 @@
     <title>欢迎页面-L-admin1.0</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <script src="/admin/js/jquery.min.js"></script>
-    <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/admin/css/font.css">
     <link rel="stylesheet" href="/admin/css/xadmin.css">
     <script type="text/javascript" src="/admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -30,7 +29,7 @@
 <body>
 <div class="demoTable layui-form">
     <div class="layui-row">
-        <span class="layui-breadcrumb">
+        <span class="layui-breadcrumb" >
           <div class="layui-form layui-col-md10 x-so layui-form-pane">
             <!--下拉框-->
         <div class="layui-inline">
@@ -52,8 +51,7 @@
         </span>
     </div>
     <script type="text/html" id="switchTpl">
-        <input type="checkbox" value="{{d.userID}}" lay-skin="switch" lay-text="冻结|解封" lay-filter="sexDemo" {{
-               d.userState== 0 ? "checked":"冻结" }}>
+        <input type="checkbox"  value="{{d.userID}}" lay-skin="switch" lay-text="冻结|解封" lay-filter="sexDemo" {{ d.userState == 0 ? "checked":"冻结" }}>
     </script>
 
     <!--  <script type="text/html" id="toolbarDemo">
@@ -66,107 +64,139 @@
     <!-- 表格-->
     <table id="demo" lay-filter="test" class="layui-table-cell"></table>
     <script type="text/javascript" th:inline="none">
-        layui.use(['layer', 'form', 'table', 'laydate', 'element', 'upload'], function () {
+        layui.use(['layer','form', 'table','laydate', 'element','upload'], function(){
             var table = layui.table
-                , laydate = layui.laydate
-                , upload = layui.upload
-                , $ = layui.jquery
+                ,laydate = layui.laydate
+                ,upload = layui.upload
+                ,$ = layui.jquery
                 , element = layui.element //元素操作
                 , form = layui.form;
             //第一个实例
             table.render({
                 elem: '#demo'
-                , url: '/user/findUser' //数据接口
-                , id: 'id'
-                , toolbar: 'default'
-                , page: true //开启分页
-                , cols: [[ //表头
-                    {field: 'userID', title: 'ID', sort: true, fixed: 'left'}
-                    , {field: 'userName', title: '用户名',}
-                    , {field: 'userPassword', title: '密码', sort: true}
-                    , {field: 'userIntegrsl', title: '积分',}
-                    , {field: 'userIP', title: 'ip地址', sort: true}
-                    , {field: 'userLastTime', title: '访问时间', sort: true}
-                    , {field: 'userRegTime', title: '注册时间',}
-                    , {
-                        field: 'userImg', title: '头像', sort: true,
-                        templet: function (data) {
+                ,url: '/user/findUser' //数据接口
+                ,id:'id'
+                ,toolbar: 'default'
+                , toolbar: '#toolbarDemo'
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {field: 'userID', title: 'ID',  sort: true, fixed: 'left'}
+                    ,{field: 'userName', title: '用户名', }
+                    ,{field: 'userPassword', title: '密码',  sort: true}
+                    ,{field: 'userIntegrsl', title: '积分', }
+                    ,{field: 'userIP', title: 'ip地址',  sort: true}
+                    ,{field: 'userLastTime', title: '访问时间', sort: true}
+                    ,{field: 'userRegTime', title: '注册时间', }
+                  /*  ,{field:  'userImg', title: '头像', sort: true,
+                        templet:function (data) {
                             return "<img src='" + data.userImg + "'/>";
-                        }
-                    }
-                    , {field: 'userEmail', title: '邮箱',}
-                    , {field: 'userPhone', title: '手机号',}
-                    , {field: 'userState', title: '状态', templet: '#switchTpl', unresize: true}
-                    // ,{fixed: 'right', align:'center', toolbar: '#barDemo'}
+                        }}*/
+                    ,{field: 'userEmail', title: '邮箱',}
+                    ,{field: 'userPhone', title: '手机号', }
+                    ,{field: 'userState', title: '状态', templet: '#switchTpl', unresize: true }
+                     ,{fixed: 'right', align:'center',title: '操作', toolbar: '#barDemo'}
                 ]]
             });
 
             //搜索用户
             var $ = layui.$, layer = layui.layer, active = {
 
-                getCheckData: function () { //获取选中数据
+                getCheckData: function(){ //获取选中数据
                     var checkStatus = table.checkStatus('id')
-                        , data = checkStatus.data;
+                        ,data = checkStatus.data;
                     layer.alert(JSON.stringify(data));
                 },
                 // 模糊查询的页面重载
-                reload: function () { //拿到页面每一个值
+                reload : function() { //拿到页面每一个值
                     var sid = $("#xm").val();//下拉框ID
                     var text = $("#tiximin").val();//添加的文本的值
                     // 执行重载
                     table.reload('id', {
-                        page: {
-                            curr: 1// 重新从第 1 页开始
+                        page : {
+                            curr : 1// 重新从第 1 页开始
                         },
-                        where: {//传的参数到后台
-                            sid: sid,
-                            text: text,
+                        where : {//传的参数到后台
+                            sid  : sid,
+                            text : text,
                         }
                     });
                 }
             };
             // 查询按钮实现
-            $('.demoTable .layui-btn').on('click', function () {
-                alert("进来了")
+            $('.demoTable .layui-btn').on('click', function() {
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
             });
 
+            //监听工具条
+            table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                $.ajax({
+                    url:"/user/ckimg",
+                    type:"post",
+                    data:{
+                        uid:data.userID,
+                    },
+                    success:function (data) {
+                        if(layEvent === 'del'){
+                            layer.open({
+                                type:1
+                                ,title:false
+                                ,closeBtn:0
+                                ,skin:'layui-layer-nobg'
+                                ,shadeClose:true
+
+                                ,content:'<img src="'+data+'" style="align-content: center" >'
+                                ,scrollbar:false
+                            })
+
+                        }
+                    }
+                })
+
+            });
+
+
+
+
 
             //监听性别操作
-            form.on('switch(sexDemo)', function (obj) {
-                if (obj.elem.checked == true) {//冻结
+            form.on('switch(sexDemo)', function(obj){
+                if(obj.elem.checked==true){//冻结
                     //解封
                     $.ajax({
-                        url: "/user/jf",
-                        data: {
-                            uid: this.value,
+                        url:"/user/jf",
+                        data:{
+                            uid:this.value,
                         },
-                        success: function (data) {
-                            if (data == 1) {
-                                index = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                        success:function (data) {
+                            if(data==1){
+                                index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
                                 layer.alert('解封成功');
 
                             }
                         },
-                        error: function () {
+                        error:function () {
                             layer.alert('异常');
                         }
                     })
                 }
-                else {//冻结
+                else{//冻结
                     $.ajax({
-                        url: "/user/dj",
-                        data: {
-                            uid: this.value,
+                        url:"/user/dj",
+                        data:{
+                            uid:this.value,
                         },
-                        success: function (data) {
-                            if (data == 1) {
-                                index = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                        success:function (data) {
+                            if(data==1){
+                                index = layer.msg('正在切换中，请稍候',{icon: 16,time:false,shade:0.8});
                                 layer.alert('冻结成功');
                             }
                         },
-                        error: function () {
+                        error:function () {
                             layer.alert('异常');
                         }
                     })
@@ -178,15 +208,14 @@
     </script>
 
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">查看图片</a>
     </script>
+
 
 
 </div>
 <script>
-    layui.use('laydate', function () {
+    layui.use('laydate', function(){
         var laydate = layui.laydate;
 
         //执行一个laydate实例
@@ -201,44 +230,45 @@
     });
 
     /*用户-停用*/
-    function member_stop(obj, id) {
-        layer.confirm('确认要停用吗？', function (index) {
+    function member_stop(obj,id){
+        layer.confirm('确认要停用吗？',function(index){
 
-            if ($(obj).attr('title') == '启用') {
+            if($(obj).attr('title')=='启用'){
 
                 //发异步把用户状态进行更改
-                $(obj).attr('title', '停用')
+                $(obj).attr('title','停用')
                 $(obj).find('i').html('&#xe62f;');
 
                 $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!', {icon: 5, time: 1000});
+                layer.msg('已停用!',{icon: 5,time:1000});
 
-            } else {
-                $(obj).attr('title', '启用')
+            }else{
+                $(obj).attr('title','启用')
                 $(obj).find('i').html('&#xe601;');
 
                 $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!', {icon: 5, time: 1000});
+                layer.msg('已启用!',{icon: 5,time:1000});
             }
 
         });
     }
 
     /*用户-删除*/
-    function member_del(obj, id) {
-        layer.confirm('确认要删除吗？', function (index) {
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
             //发异步删除数据
             $(obj).parents("tr").remove();
-            layer.msg('已删除!', {icon: 1, time: 1000});
+            layer.msg('已删除!',{icon:1,time:1000});
         });
     }
 
 
-    function delAll(argument) {
+
+    function delAll (argument) {
 
         var data = tableCheck.getData();
 
-        layer.confirm('确认要删除吗？' + data, function (index) {
+        layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -246,5 +276,6 @@
     }
 </script>
 </body>
+<img th:src="${session.img}" id="img" style="display: none">
 
 </html>

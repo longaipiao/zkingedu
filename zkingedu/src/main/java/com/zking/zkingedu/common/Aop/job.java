@@ -29,7 +29,6 @@ public class job {
 
     @RequestMapping(value = "/")
     public String tz(Model m,HttpServletRequest request){
-        request.getSession().setAttribute("atts","a");
         ModelAndView mv = new ModelAndView();
         List<Advertising> alls = advertisingService.getAlls();
         m.addAttribute("ps",alls);

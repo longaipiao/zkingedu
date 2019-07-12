@@ -198,15 +198,11 @@
                         <div class="media-left">
                             <div class="user-avatar">
                                  <span th:if="${session.user} ne null ">
-                        <span th:if="${session.atts!=a}">
                             <a href="/user/userinfo/index"><img th:src="${session.user.userImg}" class="circle"  style="width:30px;height: 30px; display: inline" ></a>
                                         </span>
-                                     </span>
+
                                 <span th:if="${session.user} eq null  ">
                                     <img class="circle" src="/user/img/logo-grey.png">
-                                </span>
-                                <span th:if="${session.atts==a} eq null  ">
-                                     <img class="circle" src="/user/img/logo-grey.png">
                                 </span>
 
 
@@ -214,57 +210,44 @@
                         </div>
                         <div class="media-body">
                         <span th:if="${session.user} ne null ">
-                        <span th:if="${session.atts!=a}">
+
                             <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到实验楼</span>
                         </span>
-                        </span>
                             <span th:if="${session.user} eq null  ">
-                            <span class="media-heading username">欢迎</span>来到实验楼</span>
-                            </span>
-                            <span th:if="${session.atts==a} eq null  ">
                             <span class="media-heading username">欢迎</span>来到实验楼</span>
                             </span>
                             <p class="vip-remain">做实验，学编程</p>
                         </div>
                     </div>
-
                     <div class="row userinfo-data">
 
 
 
                         <hr>
                         <div class="btn-group-lr">
-                            <span th:if="${session.user} eq null  ">
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
-                            </span>
-                            <span th:if="${session.atts==a} eq null  ">
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
-                            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
-                            </span>
-                            <span th:if="${session.user} ne null ">
-                        <span th:if="${session.atts!=a}">
+                              <span th:if="${session.user} eq null  ">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
 
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} eq b">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
+                </span>
 
-                                            <a href="/user/zhuxiao" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注销</a>
-
-                              </span>
-                        </span>
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} ne b">
+            <a href="/user/zhuxiao" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注销</a>
+                 </span>
+                </span>
                         </div>
 
                     </div>
 
                     <div class="userinfo-footer row">
-                        <div class="col-md-6 col-xs-6 pos-left">
 
-                            <a href="#sign-modal" data-toggle="modal" data-sign="signin"><span
-                                    class="glyphicon glyphicon-bookmark"></span> 加入私有课</a>
-
-                        </div>
-                        <div class="col-md-6 col-xs-6 pos-right">
-                            <a href="/contribute" target="_blank"><span class="glyphicon glyphicon-send"></span>
-                                我要投稿</a>
-                        </div>
 
                         <div id="join-private-course" class="modal fade words-ctrl" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
@@ -298,6 +281,8 @@
             </div>
 
 
+
+            <!--最热课程数据绑定-->
             <div class="sidebox">
                 <div class="sidebox-header">
                     <h4 class="sidebox-title">最热体系</h4>

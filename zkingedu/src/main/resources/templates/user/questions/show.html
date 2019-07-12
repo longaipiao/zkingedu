@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th=" http://www.w3.org/1999/xhml" >
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" >
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,6 +77,9 @@
 </head>
 
 <body >
+
+
+
 	
       <input th:value="${id}"  type="hidden" id="hqid" />
         
@@ -197,24 +200,129 @@
 
 
         <div class="col-md-3 layout-side">
-                     <a class="btn side-btn" data-toggle="modal" data-target="#askquestion">我要发帖</a>
-                <div class="side-image">
-                    <a href="/vip" target="_blank">
-                        <img src="https://static.shiyanlou.com/img/banner-vip.png">
-                    </a>
-                </div>
-                <div class="sidebox side-list related-question">
-                    <div class="sidebox-header">
-                        <h4 class="sidebox-title">相关帖子</h4>
+
+          <span th:if="${session.user} eq null  ">
+        <a class="btn side-btn" href="#sign-modal" data-toggle="modal" data-sign="signin">我要发帖</a>
+          </span>
+
+            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} eq b">
+                            <a class="btn side-btn" href="#sign-modal" data-toggle="modal" data-sign="signin">我要发帖</a>
+                        </span>
+            </span>
+
+
+            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} ne b">
+            <a class="btn side-btn" href="/pst/addtz" data-toggle="modal" data-sign="signin">我要发帖</a>
+                        </span>
+            </span>
+
+
+
+            <div class="panel panel-default panel-userinfo">
+                <div class="panel-body body-userinfo">
+                    <div class="media userinfo-header">
+                        <div class="media-left">
+                            <div class="user-avatar">
+                                 <span th:if="${session.user} ne null ">
+                            <a href="/user/userinfo/index"><img th:src="${session.user.userImg}" class="circle"  style="width:30px;height: 30px; display: inline" ></a>
+                                        </span>
+
+                                <span th:if="${session.user} eq null  ">
+                                    <img class="circle" src="/user/img/logo-grey.png">
+                                </span>
+
+
+                            </div>
+                        </div>
+                        <div class="media-body">
+                        <span th:if="${session.user} ne null ">
+
+                            <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到实验楼</span>
+                        </span>
+                            <span th:if="${session.user} eq null  ">
+                            <span class="media-heading username">欢迎</span>来到实验楼</span>
+                            </span>
+                            <p class="vip-remain">做实验，学编程</p>
+                        </div>
                     </div>
-                    <div class="sidebox-body side-list-body"></div>
+
+                    <div class="row userinfo-data">
+
+                        <hr>
+                        <div class="btn-group-lr">
+                 <span th:if="${session.user} eq null  ">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
+
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} eq b">
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 login-btn" data-toggle="modal" data-sign="signin">登录</a>
+            <a href="#sign-modal" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注册</a>
+                 </span>
+                </span>
+
+                            <span th:if="${session.user} ne null  ">
+                        <span th:if="${session.s2} ne b">
+            <a href="/user/zhuxiao" type="button" class="btn btn-success col-md-5 col-xs-6 col-md-offset-1 register-btn" data-toggle="modal" data-sign="signup">注销</a>
+                 </span>
+                </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="userinfo-footer row">
+
+
+                        <div id="join-private-course" class="modal fade words-ctrl" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">加入私有课</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div style="margin:15px 0; font:16px;">输入教师提供的私有课程码可以加入教师的私有课程。</div>
+                                        <form id="private-course-form" method="POST" action="/courses/join">
+                                            <div class="form-group">
+                                                <label for="code">邀请码</label>
+                                                <input class="form-control" id="code" name="code" type="text" value="">
+                                                <input name="_csrf_token" type=hidden value="1483780974##87f89328c5616669f00302a263fe9061bb852818">
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" onclick="document.getElementById('private-course-form').submit();">确定</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+
+            <!--最热课程数据绑定-->
+            <div class="sidebox">
+                <div class="sidebox-header">
+                    <h4 class="sidebox-title">最热体系</h4>
+                </div>
+                <div class="sidebox-body course-content side-list-body" th:each="sys:${sysFive}">
+                    <a th:href="@{/user/resourseShow?courseId={id}(id=${sys.systemID})}"><img style="width:25px;height:25px" src="/user/img/1471513769430.png" th:src="${sys.systemImg}" >
+                        <span th:text="${sys.systemName}"></span></a>
+                </div>
+            </div>
+            <div class="side-image side-qrcode">
+                <img src="http://www.veryedu.cn/templates/zhuojing/images/index_129.jpg">
+                <div class="side-image-text">关注zking公众号，手机看教程</div>
+            </div>
+
         </div>
-
     </div>
-
-
-
 </div>
 
 
@@ -788,7 +896,9 @@
         </script>
     </div>
 </div>
-
+      <!--嵌套头部header-->
+      <div th:replace="user/header::header"></div>
+      <link rel="stylesheet" href="/user/layui/css/layui.css">
             
         
 	

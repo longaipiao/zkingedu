@@ -8,6 +8,7 @@ import com.qq.connect.javabeans.AccessToken;
 import com.qq.connect.javabeans.qzone.UserInfoBean;
 import com.qq.connect.oauth.Oauth;
 //import com.zhenzi.sms.ZhenziSmsClient;
+import com.zhenzi.sms.ZhenziSmsClient;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.Tool;
@@ -34,10 +35,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Controller
@@ -54,20 +52,20 @@ public class UserController {
     private Log mylog;
 
     //获取系统当前时间
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    String time = dateFormat.format(new Date());
+    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String time=dateFormat.format(new Date());
 
     // 短信平台相关参数
-   /* private String apiUrl = "https://sms_developer.zhenzikj.com";
+    private String apiUrl = "https://sms_developer.zhenzikj.com";
     private String appId = "101158";
-    private String appSecret ="NmNhYzRmMmUtNGQ0NS00MmJlLWFjNDYtNWYyOGQyMTYyYWRl";*/
+    private String appSecret ="NmNhYzRmMmUtNGQ0NS00MmJlLWFjNDYtNWYyOGQyMTYyYWRl";
     @Autowired
     private UserService userService;
 
     //用户注册
     @ResponseBody
     @RequestMapping(value = "/zc")
-    public String zc(String phone, String password) throws Exception {
+    public String zc(String phone,String password)throws Exception{
         //手机号
         user.setUserPhone(phone);
         //密码
@@ -85,7 +83,7 @@ public class UserController {
         //错误次数
         user.setUserCwcs(0);
         Integer n = userService.add(user);
-        if (n > 0) {
+        if(n>0){
             return "1";
         }
         return "2";
@@ -93,58 +91,54 @@ public class UserController {
 
     /**
      * 判断邮箱不能重复
-     *
      * @param
      * @return
      */
     @RequestMapping(value = "/Email")
     @ResponseBody
-    public String cfEmail(HttpServletRequest request, String Email) {
+    public String cfEmail(HttpServletRequest request,String Email){
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user=(User) session.getAttribute("user");
         String s = userService.cfEamil(Email);
-        if (s == null) {
+        if (s==null){
             //没有重复
             return "1";
         }
         return "2";
     }
-
     /**
      * 修改邮箱
      */
     @RequestMapping(value = "/updateEmail")
     @ResponseBody
-    public String updateEmail(String newEmail, HttpServletRequest request) {
+    public String updateEmail(String newEmail,HttpServletRequest request){
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user =(User) session.getAttribute("user");
         System.out.println(newEmail);
         Integer integer = userService.updateEamil(user.getUserID(), newEmail);
-        if (integer > 0) {
+        if(integer>0){
             User user1 = userService.getUser(user.getUserID());
-            session.setAttribute("user", null);
-            session.setAttribute("user", user1);
+            session.setAttribute("user",null);
+            session.setAttribute("user",user1);
             return "1";
         }
         return "2";
     }
-
     /**
      * 邮箱接口
-     *
      * @param
      * @return
      */
     @RequestMapping(value = "/Emailjk")
     @ResponseBody
-    public String Emailjk(HttpServletRequest request, HttpServletResponse response, String phone) {
+    public String Emailjk(HttpServletRequest request, HttpServletResponse response,String phone) {
         System.out.println(phone);
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
 
         try {
-            MailUtil.configMail(phone, verifyCode);
+            MailUtil.configMail(phone,verifyCode);
         } catch (Exception e) {
             System.out.println("发送错误");
             e.printStackTrace();
@@ -153,12 +147,7 @@ public class UserController {
        /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
         String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
 
-        //将验证码存到session中,同时存入创建时间
-        //以json存放，这里使用的是阿里的fastjson
-       /* json = new JSONObject();
-        json.put("mobile", mobile);
-        json.put("verifyCode", verifyCode);
-        json.put("createTime", System.currentTimeMillis());*/
+
         // 将认证码存入SESSION
         System.out.println(verifyCode);
         return verifyCode;
@@ -166,28 +155,28 @@ public class UserController {
 
     /**
      * 查询所有的用户信息
-     *
      * @return
      */
     @RequestMapping(value = "/findUser")
     @ResponseBody
-    public Map<String, Object> findUser(Integer page, Integer limit, HttpServletRequest request, String sid, String text) {
-        System.out.println(sid);
-        if (sid != null) {
-            if (text != "") {
-                if (sid.equals("0")) {//查询名字
+    public Map<String,Object> findUser(Integer page, Integer limit,HttpServletRequest request,String sid,String text){
+        if(sid!=null){
+            if(text!=""){
+                if(sid.equals("0")){//查询名字
                     System.out.println("进来了名字");
                     user.setUserName(text);
 
-                } else if (sid.equals("1")) {//查询手机号
+                }
+                else if(sid.equals("1")){//查询手机号
                     System.out.println("进来了手机号");
                     user.setUserPhone(text);
 
-                } else if (sid.equals("2")) {//查询邮箱号
-                    user.setUserEmail(text);
-
                 }
-            } else {
+                else if(sid.equals("2")){//查询邮箱号
+                    user.setUserEmail(text);
+                }
+            }
+            else{
                 user.setUserEmail("");
                 user.setUserPhone("");
                 user.setUserName("");
@@ -196,33 +185,37 @@ public class UserController {
         }
         System.out.println(user);
         HttpSession session = request.getSession();
-        PageInfo<User> users = userService.getAll(user, page, limit);
+        PageInfo<User> users = userService.getAll(user,page, limit);
+        List<User> list = users.getList();
+        for (User user1 : list) {
+
+        }
+
         System.out.println(user);
-        Map<String, Object> maps = new HashMap<>();
-        maps.put("msg", "");
-        maps.put("code", 0);
-        maps.put("count", users.getTotal());
-        maps.put("data", users.getList());
-        session.setAttribute("zs", users.getTotal());
+        Map<String,Object> maps = new HashMap<>();
+        maps.put("msg","");
+        maps.put("code",0);
+        maps.put("count",users.getTotal());
+        maps.put("data",users.getList());
+        session.setAttribute("zs",users.getTotal());
         return maps;
     }
 
     /**
      * 冻结
-     *
      * @param uid
      * @return
      */
     @RequestMapping(value = "/dj")
     @ResponseBody
-    public String dj(Integer uid, HttpServletRequest request) {
+    public String dj(Integer uid,HttpServletRequest request){
         Integer integer = userService.updateSpase(uid);
-        if (integer > 0) {
+        if(integer>0){
             //放入日志
-            Emp emp = (Emp) request.getSession().getAttribute("emp");
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
             mylog.setEmp(emp);
             mylog.setLogTime(time);
-            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "冻结了一个用户，用户id为：" + uid);
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"冻结了一个用户，用户id为："+uid);
             mylog.setLogDetails(stringBuilder.toString());
             logService.addLog(mylog);
             //放入日志结束
@@ -230,23 +223,21 @@ public class UserController {
         }
         return "2";
     }
-
     /**
      * 解封
-     *
      * @param uid
      * @return
      */
     @RequestMapping(value = "/jf")
     @ResponseBody
-    public String jf(Integer uid, HttpServletRequest request) {
+    public String jf(Integer uid,HttpServletRequest request){
         Integer integer = userService.updatejf(uid);
-        if (integer > 0) {
+        if(integer>0){
             //放入日志
-            Emp emp = (Emp) request.getSession().getAttribute("emp");
+            Emp emp =(Emp) request.getSession().getAttribute("emp");
             mylog.setEmp(emp);
             mylog.setLogTime(time);
-            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName() + "解封了一个用户，用户id为：" + uid);
+            StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"解封了一个用户，用户id为："+uid);
             mylog.setLogDetails(stringBuilder.toString());
             logService.addLog(mylog);
             //放入日志结束
@@ -257,27 +248,26 @@ public class UserController {
 
     /**
      * 根据手机号和邮箱找回密码
-     *
      * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/zhphonepassoword")
-    public String zhphonepassoword(HttpServletRequest request, String phone, String userpasswordss) {
+    public String zhphonepassoword(HttpServletRequest request,String phone,String userpasswordss){
         HttpSession session = request.getSession();
         Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
         Pattern e = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
-        if (p.matcher(phone).matches()) {//是手机号就根据手机号修改密码
+        if(p.matcher(phone).matches()){//是手机号就根据手机号修改密码
             Integer integer = userService.updatePhonePassword(phone, userpasswordss);
-            if (integer > 0) {
-                session.setAttribute("user", null);
+            if(integer>0){
+                session.setAttribute("user",null);
                 return "1";
             }
         }
-        if (e.matcher(phone).matches()) {//是邮箱就根据手机号修改密码
+        if(e.matcher(phone).matches()){//是邮箱就根据手机号修改密码
             Integer integer = userService.updateEmmitPassword(phone, userpasswordss);
-            if (integer > 0) {
-                session.setAttribute("user", null);
+            if(integer>0){
+                session.setAttribute("user",null);
                 return "1";
             }
         }
@@ -288,9 +278,9 @@ public class UserController {
     //判断手机号不能重复
     @ResponseBody
     @RequestMapping(value = "/cf")
-    public String cf(String phone) {
+    public String cf(String phone){
         String pdcf = userService.pdcf(phone);
-        if (pdcf == null) {
+        if(pdcf==null){
             //没有重复
             return "1";
         }
@@ -299,50 +289,62 @@ public class UserController {
     }
 
 
+
     /**
      * 测试
-     *
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/cs")
-    public String cs() {
+    public String cs(){
         User user = userService.getUser(42);
 
-        System.out.println(user.getUserIP() + "ip地址");
+        System.out.println(user.getUserIP()+"ip地址");
         return null;
     }
 
     /**
      * 手机号修改密码
-     *
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updatePhonepassword")
-    public String updatePhonepassword(String phone, HttpServletRequest request, String password2) {
+    public String updatePhonepassword(String phone,HttpServletRequest request,String password2){
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Integer n = userService.updatePhonePassword(phone, password2);
-        if (n > 0) {
-            session.setAttribute("user", null);
+        if(n>0){
+            session.setAttribute("user",null);
             return "1";
         }
         return null;
 
     }
 
+    /**
+     * 查看图片
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/ckimg")
+    public  String ckimg(String uid,HttpServletRequest request){
+        User user = userService.getUser(Integer.parseInt(uid));
+
+        return user.getUserImg();
+    }
+
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
-    public String Hqyzm(HttpServletRequest request, HttpServletResponse response, String phone) throws Exception {
+    public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
         System.out.println("进来了手机号验证码");
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
         //发送短信
-       /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
-        String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
+        ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+        String result = client.send(phone, "您正在注册zking在线课堂用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");
 
         //将验证码存到session中,同时存入创建时间
         //以json存放，这里使用的是阿里的fastjson
@@ -358,7 +360,6 @@ public class UserController {
 
     /**
      * 修改头像
-     *
      * @param request
      * @param response
      * @param upload
@@ -367,16 +368,16 @@ public class UserController {
      */
     @RequestMapping(value = "/updateupload")
     @ResponseBody
-    public String upload(HttpServletRequest request, HttpServletResponse response, String upload) throws Exception {
+    public String upload(HttpServletRequest request, HttpServletResponse response,String upload) throws Exception {
         System.out.println(upload);
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user =(User) session.getAttribute("user");
         Integer n = userService.updateupload(user.getUserID(), upload);
-        if (n > 0) {
+        if(n>0){
             //在根据手机号查一遍
             User userlogin = userService.userlogin(user);
-            session.setAttribute("user", null);
-            session.setAttribute("user", userlogin);
+            session.setAttribute("user",null);
+            session.setAttribute("user",userlogin);
             return "1";
         }
         return "2";
@@ -386,7 +387,6 @@ public class UserController {
 
     /**
      * qq接口
-     *
      * @param request
      * @param response
      * @return
@@ -394,11 +394,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/LoginCallback2")
-    public String LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
+    public boolean LoginCallback(HttpServletRequest request, HttpServletResponse response) throws QQConnectException {
         HttpSession session = request.getSession();
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
-            System.out.println("Token:" + accessTokenObj.getAccessToken());
+            System.out.println("Token:"+accessTokenObj.getAccessToken());
             if (accessTokenObj.getAccessToken().equals("")) {
                 System.out.print("没有获取到响应参数");
             } else {
@@ -410,32 +410,37 @@ public class UserController {
                 //3.去数据库查找有没有openId如果有，登陆过，没有则是新用户
                 com.qq.connect.api.qzone.UserInfo qzoneUserInfo = new com.qq.connect.api.qzone.UserInfo(token, userOpenID);
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
-                System.out.println("openid:" + userOpenID + "————用户昵称：" + userInfoBean.getNickname());
+                System.out.println("openid:"+userOpenID+"————用户昵称："+userInfoBean.getNickname());
                 //4.根据openId和access_Token获取用户信息
                 //查询数据库里面有没有这个openId如果有把这个用户的信息拿出来没有就添加
                 User qquser = userService.getopenid(userOpenID);
 
-                session.setAttribute("nickName", userInfoBean.getNickname());
-                session.setAttribute("Avatar", userInfoBean.getAvatar().getAvatarURL50());
-                session.setAttribute("openid", userOpenID);
-                if (qquser == null) {
-
-                    try {
+                session.setAttribute("nickName",userInfoBean.getNickname());
+                session.setAttribute("Avatar",userInfoBean.getAvatar().getAvatarURL50());
+                session.setAttribute("openid",userOpenID);
+                if(qquser==null){
+                    try{
                         response.sendRedirect("/user/binding");
-                    } catch (IOException e) {
+                    }catch (IOException e){
                         e.printStackTrace();
                     }
-                } else if (qquser.getUserPhone() == null) {
-                    try {
+                }
+                else if(qquser.getUserPhone()==null){
+                    try{
                         response.sendRedirect("/user/binding");
-                    } catch (IOException e) {
+                    }catch (IOException e){
                         e.printStackTrace();
                     }
-                } else {
-                    session.setAttribute("user", qquser);
-                    try {
-                        response.sendRedirect("/user/");
-                    } catch (IOException e) {
+                }
+                else{
+                   session.setAttribute("user",qquser);
+                    User user=(User) session.getAttribute("user");
+                    //修改ip地址
+                    userService.updateipaddrlastTime(user.getUserID(),IpAddress.getIpAddr(request),new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                    try{
+                        response.sendRedirect("/user/");//登入界面
+                       return false;
+                    }catch (IOException e){
                         e.printStackTrace();
                     }
                 }
@@ -444,7 +449,8 @@ public class UserController {
         } catch (QQConnectException e) {
             e.printStackTrace();
         }
-        return "user/index";
+        return true;
+
     }
 
     /**
@@ -452,15 +458,15 @@ public class UserController {
      */
     @RequestMapping(value = "/qqlogin")
     @ResponseBody
-    public String qqlogin(String phone, String upwd, HttpServletRequest request) {
+    public String qqlogin(String phone,String upwd,HttpServletRequest request){
 
         HttpSession session = request.getSession();
         //qqid
-        String userOpenID = (String) session.getAttribute("openid");
+        String userOpenID=(String) session.getAttribute("openid");
         //qq头像
-        String Avatar = (String) session.getAttribute("Avatar");
+        String Avatar=(String) session.getAttribute("Avatar");
         //qq名字
-        String nickName = (String) session.getAttribute("nickName");
+        String nickName=(String) session.getAttribute("nickName");
         //qqid
         user.setUserOpenID(userOpenID);
         //注册时间
@@ -481,32 +487,31 @@ public class UserController {
         user.setUserIP(IpAddress.getIpAddr(request));
         //增加这个openid
         Integer add = userService.add(user);
-        if (add > 0) {
-            Integer integer = userService.updateOpenid(userOpenID, phone, upwd);//修改成功后在根据openid查询用户数据
-            if (integer != null) {
+        if(add>0){
+            Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
+            if(integer!=null){
                 System.out.println(integer);
                 User qquser = userService.getopenid(userOpenID);
-                session.setAttribute("user", qquser);
+                session.setAttribute("user",qquser);
                 return "1";
             }
         }
 
         return "2";
     }
-
     /**
      * qq登入绑定老用户
      */
     @RequestMapping(value = "/yjqqlogin")
     @ResponseBody
-    public String yjqqlogin(String phone, HttpServletRequest request) {
+    public String yjqqlogin(String phone,HttpServletRequest request){
         HttpSession session = request.getSession();
-        String openid = (String) session.getAttribute("openid");
-        Integer integer = userService.updateOpenids(phone, openid, IpAddress.getIpAddr(request));//根据用户手机号增加openid
-        if (integer != null) {
+        String openid=(String) session.getAttribute("openid");
+        Integer integer = userService.updateOpenids(phone,openid,IpAddress.getIpAddr(request));//根据用户手机号增加openid
+        if(integer!=null){
             System.out.println(integer);
             User qquser = userService.getopenid(openid);
-            session.setAttribute("user", qquser);
+            session.setAttribute("user",qquser);
             return "1";
         }
         return "2";
@@ -515,22 +520,22 @@ public class UserController {
     //用户登入
     @ResponseBody
     @RequestMapping(value = "/login")
-    public String login(String userPhone, String upwd, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
         HttpSession session = request.getSession();
         //手机号
         user.setUserPhone(userPhone);
         //密码
         user.setUserPassword(upwd);
         User userlogin = userService.userlogin(user);
-        if (userlogin != null) {
+        if(userlogin!=null){
             Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            if (integer > 0) {
-                session.setAttribute("user", userlogin);
+            if(integer>0){
+                session.setAttribute("user",userlogin);
                 return "1";
             }
         }
         //密码错误
-        if (userlogin == null) {
+        if(userlogin==null){
             //修改错误次数加1
             userService.updateCwcs(userPhone);
            /*  //查询错误次数
@@ -542,23 +547,22 @@ public class UserController {
         }
         return "";
     }
-
     /**
      * 注销
      */
     @RequestMapping(value = "/zhuxiao")
-    public void zhuxiao(HttpServletResponse response, HttpServletRequest request) {
+    public void zhuxiao(HttpServletResponse response,HttpServletRequest request){
         HttpSession session = request.getSession();
         //清空用户的session
-        session.setAttribute("user", null);
-        session.setAttribute("b", null);
-        session.setAttribute("a", null);
-        session.setAttribute("nickName", null);
-        session.setAttribute("Avatar", null);
-        session.setAttribute("openid", null);
-        try {
+        session.setAttribute("user",null);
+        session.setAttribute("b",null);
+        session.setAttribute("a",null);
+        session.setAttribute("nickName",null);
+        session.setAttribute("Avatar",null);
+        session.setAttribute("openid",null);
+        try{
             response.sendRedirect("/user/");
-        } catch (Exception e) {
+        }catch (Exception e){
             System.out.println("异常");
             e.printStackTrace();
         }
@@ -567,39 +571,36 @@ public class UserController {
 
     /**
      * 用户点击qq联合登陆
-     *
      * @return
      */
     @RequestMapping("/qqLogin")
     public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
         //自动组装qq登陆连接，重定向到qq登陆页面
         String authorizeURL = new Oauth().getAuthorizeURL(request);
-        System.out.println("联合登陆请求地址:" + authorizeURL);
-        return "redirect:" + authorizeURL;
+        System.out.println("联合登陆请求地址:"+authorizeURL);
+        return "redirect:"+authorizeURL;
     }
 
     /**
      * 修改手机号
-     *
      * @param
      * @return
      */
     @RequestMapping("/updatePhone")
     @ResponseBody
-    public String updatePhone(String phone, HttpServletRequest request) {
+    public String updatePhone(String phone,HttpServletRequest request){
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user=(User) session.getAttribute("user");
         Integer integer = userService.updatePhone(user.getUserPhone(), phone);
-        if (integer > 0) {
+        if(integer>0){
             User user1 = userService.getUser(user.getUserID());
-            session.setAttribute("user", null);
-            session.setAttribute("user", user1);
+            session.setAttribute("user",null);
+            session.setAttribute("user",user1);
             return "1";
         }
 
         return "2";
     }
-
     //随机昵称
     public static String getRandomJianHan(int len) {
         String ret = "";

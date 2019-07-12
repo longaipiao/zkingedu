@@ -1,11 +1,16 @@
 
 var s=0;
 var time=60;
-    function updatePhone3() {
-        //获得手机号文本框的值
-        var phone = $("#userphone").val();
-        //判断重复
-        var captcha_v5 = $("#usercaptcha_v").val();
+function updatePhone3() {
+    //获得手机号文本框的值
+    var phone = $("#userphone").val();
+    //判断重复
+    var captcha_v5 = $("#usercaptcha_v").val();
+    if ("" === phone) {
+        alert("手机号不能为空");
+    } else if ("" === captcha_v5) {
+        alert("验证码不能为空")
+    } else {
         $.ajax({
             url: "/user/cf",
             type: "post", //请求方式
@@ -23,7 +28,7 @@ var time=60;
                             url: "/user/updatePhone",
                             type: "post",
                             data: {
-                                phone:phone,
+                                phone: phone,
                             },
                             success: function (sh) {
                                 if (sh == 1) {
@@ -40,6 +45,7 @@ var time=60;
         })
 
     }
+}
 
 
 
@@ -49,10 +55,10 @@ $('#sendPhone2').click(function(){
     //手机号验证
     var pdphones=/^1[3-9]\d{9}$/;
     if(""==phones){
-        alert("手机号不能为空")
+        alert("手机号不能为空");
     }
     else if(!pdphones.test(phones)){
-        $("#sd").html("手机号格式不对");
+        alert("手机号格式不对");
     }
     else {
         $.ajax({

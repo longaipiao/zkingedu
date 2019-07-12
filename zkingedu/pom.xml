@@ -152,12 +152,12 @@
             <version>2.0.1</version>
         </dependency>
 
-        <!--引入qqSDK依赖
+        <!--引入qqSDK依赖-->
         <dependency>
             <groupId>com.sdk4j</groupId>
             <artifactId>sdk4j</artifactId>
             <version>1.0</version>
-        </dependency>-->
+        </dependency>
 
         <!--导入AspectJ-->
         <dependency>
@@ -182,12 +182,12 @@
         </dependency>
 
 
-        <!-- 引入zhenxi
+        <!-- 引入zhenxi-->
         <dependency>
             <groupId>com.zhenzi</groupId>
             <artifactId>sms</artifactId>
             <version>1.0.0</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>

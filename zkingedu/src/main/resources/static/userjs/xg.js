@@ -1,15 +1,12 @@
 var s=0;
 //用手机号修改密码
 function updatephonepassword() {
-    alert("进来了");
     //获得手机号文本框的值
     var phones=$("#phone").val();
     //邮箱认证
     var Emails=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
     //获得用户手机号文本框的值
     var inputShou=$("#yhphone").val();
-
-    alert(inputShou);
     //获得用户输入原来密码的的值
     var password1=$("#password1").val();
     //获得用户输入密码的值
@@ -79,8 +76,6 @@ function updatephonepassword() {
         }
 
         if(Emails.test(phones)){//如果是邮箱
-            alert(inputEmail);
-            alert("进来了邮箱号");
             if(inputEmail==phones){
                 if (s != captcha_v) {
                     alert("验证码错误")
