@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,7 +82,8 @@
 
 <body>
 
-<input type="text" th:value="${leibie}" id="cgldez">
+<input type="hidden" th:value="${leibie}" id="cgldez">
+
 	
         
         
@@ -675,11 +676,9 @@
         ga('create', 'UA-89338452-1', 'auto');
         ga('send', 'pageview');
         </script>
+        <!--嵌套头部header-->
+        <div th:replace="user/header::header"></div>
     </div>
 </div>
-
-
-
-
 </body>
 </html>
