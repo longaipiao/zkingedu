@@ -12,6 +12,7 @@ import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.MessageUtil;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.System;
 import java.net.SocketTimeoutException;
 import java.util.*;
@@ -56,6 +58,24 @@ public class PostController {
     private MessageUtil messageUtil;
 
     Integer userById = SessionUtil.getUserById();
+
+
+    //根据session获取uid
+    int getUserid(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        //假设如果user不为空的话则返回id
+        if (user!=null){
+            return user.getUserID();
+        }
+        //如果为空的话，则放回为0
+        else {
+            return 0;
+        }
+    }
+
+
+
+
     /**
      * 增加贴子的方法
      * @return
@@ -63,10 +83,10 @@ public class PostController {
 
     @RequestMapping(value = "/addpost")
     @ResponseBody
-    public int addPost(Post pt, String zt,HttpServletRequest request, HttpServletResponse response){
+    public int addPost(Post pt, String zt,HttpServletRequest request, HttpServletResponse response,HttpSession session){
 
-        //假设获取用户id
-        Integer uid=8;
+        //获取用户id
+        Integer uid=getUserid(session);
         pt.setPostUid(uid);
         pt.setPostState(Integer.parseInt(zt));
         pt.setPostTime(new Date().toLocaleString());//获取当前时间
@@ -97,10 +117,10 @@ public class PostController {
      */
     @RequestMapping(value = "/getAllposts")
     @ResponseBody
-    public Map<String,Object> findTool(Integer page, Integer pageSize){
+    public Map<String,Object> findTool(Integer page, Integer pageSize,HttpSession session){
         //假装有一个用户id
         //获得所有的文章
-        PageInfo<Post> allposts = postService.getAllposts(8, page, pageSize);
+        PageInfo<Post> allposts = postService.getAllposts(getUserid(session), page, pageSize);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");
         maps.put("code",0);
@@ -113,9 +133,7 @@ public class PostController {
     //跳转到论坛详细界面
     @RequestMapping(value = "/tzxx")
     @ResponseBody
-    public Map<String,Object> xxlt(Integer id){
-        Integer uid=3;
-
+    public Map<String,Object> xxlt(Integer id,HttpSession session){
         //开始调用找到帖子的方法
         Map<String, Object> postandUse = postService.getPostandUse(id);
         Map<String,Object> maps = new HashMap<>();
@@ -131,7 +149,10 @@ public class PostController {
         maps.put("j",postandUse.get("post_num"));
         maps.put("k",postandUse.get("jishu"));
         maps.put("mg",postandUse.get("user_img"));
-        maps.put("l",3);//设置用户ID
+
+        maps.put("l",getUserid(session));//设置用户ID
+
+
 
         return maps;
     }
@@ -195,9 +216,9 @@ public class PostController {
      */
     @RequestMapping(value = "/addTcomment")
     @ResponseBody
-    public int addTct(Tcomment tcomment){
+    public int addTct(Tcomment tcomment,HttpSession session){
         //获取用户ID
-        Integer uid=9;
+        Integer uid=getUserid(session);
         //回复者的id，设置
         tcomment.setTcommentUid(uid);
         //设置评论时间
@@ -288,9 +309,9 @@ public class PostController {
      */
     @RequestMapping(value = "/querygive")
     @ResponseBody
-    public int queryGive(Integer id){
-        //假设用户的id为3
-        Integer uid=3;
+    public int queryGive(Integer id,HttpSession session){
+        //获取uid
+        Integer uid=getUserid(session);
         Give give=new Give();
         //设置uid
         give.setGiveUid(uid);
@@ -309,9 +330,9 @@ public class PostController {
      */
     @RequestMapping(value = "/addorDelGive")
     @ResponseBody
-    public int addordeleteGive(Integer id){
+    public int addordeleteGive(Integer id,HttpSession session){
         //获取用户的id
-        Integer uid=3;
+        Integer uid=getUserid(session);
         Give give2=new Give();
         give2.setGiveUid(uid);
         give2.setGivePid(id);
@@ -344,10 +365,10 @@ public class PostController {
      */
     @RequestMapping(value = "/addordelCollection")
     @ResponseBody
-    public int addCollection(Integer id){
+    public int addCollection(Integer id,HttpSession session){
         //假设一个用户id
         //查询是否已经收藏了
-        Integer uid=3;
+        Integer uid=getUserid(session);
         Hoarding hoarding=new Hoarding();
         hoarding.setCollectionUid(uid);
         hoarding.setCollectionState(2);
@@ -369,7 +390,6 @@ public class PostController {
 
         }
 
-
         //给收藏表对象赋值
 
         return 5 ;
@@ -383,9 +403,9 @@ public class PostController {
      */
     @RequestMapping(value = "/queryCollection")
     @ResponseBody
-    public int queryColle(Integer id){
-        //假设一个用户id
-        Integer uid=3;
+    public int queryColle(Integer id,HttpSession session){
+        //获取用户id
+        Integer uid=getUserid(session);
         Hoarding hoarding=new Hoarding();
         hoarding.setCollectionUid(uid);
         hoarding.setCollectionState(2);
@@ -402,9 +422,9 @@ public class PostController {
      */
     @RequestMapping(value = "/updatePcat")
     @ResponseBody
-    public int updatePostCate(Integer pzt,Integer pid){
-        //假设一个用户ID
-        Integer uid=8;
+    public int updatePostCate(Integer pzt,Integer pid,HttpSession session){
+        //获取用户ID
+        Integer uid=getUserid(session);
         if(pzt==0){//如果pzt=0的话，修改成隐藏
             postService.update(uid, 1,pid);
             //调用查询的方法，把状态查询出来
@@ -428,9 +448,9 @@ public class PostController {
      */
     @RequestMapping(value = "/updatePState")
     @ResponseBody
-    public int updaPoSta(Integer id){
-        //假设一个uid=8
-        Integer uid=8;
+    public int updaPoSta(Integer id,HttpSession session){
+        //获取用户id
+        Integer uid=getUserid(session);
         //修改状态为3
         Integer zt=3;
         int i = postService.updatePostzt(uid, zt, id);
@@ -470,9 +490,9 @@ public class PostController {
      */
     @RequestMapping(value = "/getAllpbid")
     @ResponseBody
-    public Map<String,Object> getAllPostByUID(Integer page,Integer pageSize){
+    public Map<String,Object> getAllPostByUID(Integer page,Integer pageSize,HttpSession session){
         //假设uid=3
-        Integer uid=3;
+        Integer uid=getUserid(session);
         PageInfo<Map<String, Object>> allpstByUId = postService.getAllpstByUId(page, pageSize, uid);
         Map<String,Object> m=new HashMap<>();
         m.put("msg","");
@@ -491,9 +511,9 @@ public class PostController {
      */
     @RequestMapping(value = "/deletecollec")
     @ResponseBody
-    public int deleteCollection(Integer id){
-        //假设uid=3
-        Integer uid=3;
+    public int deleteCollection(Integer id,HttpSession session){
+        //获取uid
+        Integer uid=getUserid(session);
         Hoarding hoarding=new Hoarding();
         hoarding.setCollectionUid(uid);
         hoarding.setCollectionZpid(id);

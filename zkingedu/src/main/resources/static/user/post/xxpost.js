@@ -2,10 +2,7 @@
 //查看回复的展开和收缩的方法
 function aha(aa){
     $("#"+aa+"").toggle();
-
 }
-
-
 
  var huifuid="";//回复者的uid
  var plfuid="";//评论的父id
@@ -16,18 +13,9 @@ var  current="";
 
 //回复评论的时候调用这个方法
 function plkk(cs,cs2,cs3){
-
     $("#quxhuifu").show();//展示取消按钮
-
     huifuid=cs;     //给回复id赋值
-
-
     plfuid=cs3;
-    alert("回复名字:"+cs2);
-    alert("回复uid:"+huifuid);
-    alert("评论父id"+plfuid);
-
-
 }
 
 
@@ -67,60 +55,71 @@ function delpl(a,b) {
 
 //点赞和取消点赞
 function dz(){
-    $.ajax({
-        type:"post",
-        url:"/pst/addorDelGive",
-        dataType:"json",
-        data:{
-            id:id
-        },
-        success:function(data){
-            if(data==4){
-                var r=parseInt($("#dzl").text());
-                var g=r+1;
-                $("#dzl").text(g);
-                $("#tb").css({color: "red"});
-            }
-            if(data==3){
-                var r=parseInt($("#dzl").text());
-                var g=r-1;
-                $("#dzl").text(g);
-                $("#tb").css({color: ""});
+    if(userid!=0) {
+        $.ajax({
+            type: "post",
+            url: "/pst/addorDelGive",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data == 4) {
+                    var r = parseInt($("#dzl").text());
+                    var g = r + 1;
+                    $("#dzl").text(g);
+                    $("#tb").css({color: "red"});
+                }
+                if (data == 3) {
+                    var r = parseInt($("#dzl").text());
+                    var g = r - 1;
+                    $("#dzl").text(g);
+                    $("#tb").css({color: ""});
+                }
+
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
             }
 
-        },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
-        }
-
-    });
+        });
+    }
+    else{
+        alert("请先登录");
+    }
 }
+
 
 
 //收藏的方法
 
 function ghg() {
-
-    $.ajax({
-        type:"post",
-        url:"/pst/addordelCollection",
-        dataType:"json",
-        data:{
-            id:id
-        },
-        success:function(data){
-            if(data==3){
-                $("#sc").text("收藏");
+    if(userid!=0) {
+        $.ajax({
+            type: "post",
+            url: "/pst/addordelCollection",
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data == 3) {
+                    $("#sc").text("收藏");
+                }
+                if (data == 4) {
+                    $("#sc").text("取消收藏");
+                }
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
             }
-            if (data==4){
-                $("#sc").text("取消收藏");
-            }
-        },
-        error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
-        }
 
-    });
+        });
+    }
+    else{
+        alert("请先登录");
+    }
+
 
 }
 
@@ -156,59 +155,7 @@ $(function () {
 
 
 //发表评论
-    $("#fb").click(function () {
-
-        if($("#editor").val()==""){
-            alert("请填写评论内容");
-        }
-        else {
-            //如果回复id为空，也就是一级评论。即对贴子的评论
-            if (huifuid == "") {
-                tcommentUid2 = tieid;
-                tcommentFid = 0;
-            }
-            //否者的话则是回复
-            else {
-                tcommentUid2 = huifuid;
-                tcommentFid = plfuid;
-            }
-
-
-            $.ajax({
-                type: "post",
-                url: "/pst/addTcomment",
-                dataType: "json",
-                data: {
-                    tcommentCid: id  //帖子id
-                    , tcommentContent: $("#editor").val() //获取评论内容
-                    , tcommentUid2: tcommentUid2   //回复谁的id
-                    , tcommentFid: tcommentFid     //评论父id
-                },
-                success: function (data) {
-                    if (data > 0) {
-                        $("#quxhuifu").hide();//隐藏取消回复
-                        tcommentUid2 = tieid;   //恢复  作者的uid
-                        tcommentFid = 0;     //回复  评论的父id
-                        huifuid = "";//给回复id复原
-                        $("#editor").attr("text", "");
-                        initdata();
-                    } else {
-
-                        $("#quxhuifu").hide();//隐藏取消回复
-                        tcommentUid2 = tieid;   //恢复  作者的uid
-                        tcommentFid = 0;     //回复  评论的父id
-                        huifuid = "";//给回复id复原
-                        alert("评论失败");
-                    }
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            });
-            return false;
-        }
-    });
-
+    yy();
 
 
 
@@ -228,12 +175,6 @@ $(function () {
 
     });
 
-
-
-
-
-
-
   //查看是否已经收藏
     sc();
 
@@ -245,6 +186,66 @@ $(function () {
     });
 
 
+function yy() {
+        $("#fb").click(function () {
+            if (userid!=0) {//如果部位空的话
+                if ($("#editor").val() == "") {
+                    alert("请填写评论内容");
+                } else {
+                    //如果回复id为空，也就是一级评论。即对贴子的评论
+                    if (huifuid == "") {
+                        tcommentUid2 = tieid;
+                        tcommentFid = 0;
+                    }
+                    //否者的话则是回复
+                    else {
+                        tcommentUid2 = huifuid;
+                        tcommentFid = plfuid;
+                    }
+
+
+                    $.ajax({
+                        type: "post",
+                        url: "/pst/addTcomment",
+                        dataType: "json",
+                        data: {
+                            tcommentCid: id  //帖子id
+                            , tcommentContent: $("#editor").val() //获取评论内容
+                            , tcommentUid2: tcommentUid2   //回复谁的id
+                            , tcommentFid: tcommentFid     //评论父id
+                        },
+                        success: function (data) {
+                            if (data > 0) {
+                                $("#quxhuifu").hide();//隐藏取消回复
+                                tcommentUid2 = tieid;   //恢复  作者的uid
+                                tcommentFid = 0;     //回复  评论的父id
+                                huifuid = "";//给回复id复原
+                                $("#editor").attr("text", "");
+                                initdata();
+                            } else {
+
+                                $("#quxhuifu").hide();//隐藏取消回复
+                                tcommentUid2 = tieid;   //恢复  作者的uid
+                                tcommentFid = 0;     //回复  评论的父id
+                                huifuid = "";//给回复id复原
+                                alert("评论失败");
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + jqXHR.status);
+                        }
+                    });
+                    return false;
+                }
+            }
+            else{
+                alert("请先登录");
+            }
+        });
+
+
+
+}
 
 
 function initdata() {
@@ -382,7 +383,7 @@ function initdata() {
 //查看点赞记录
 function querydz() {
     //如果用户id不为空时
-    if (userid!=null) {
+    if (userid!=0) {
         $.ajax({
             type: "post",
             url: "/pst/querygive",
@@ -457,6 +458,7 @@ function jztzxx() {
                 "\n" +
                 "\n" +
                 "\n" +
+
                 "   <button type=\"button\" class=\"layui-btn  layui-btn-sm\" id='sc' onclick='ghg()'>收藏</button>\n" +
                 "\n" +
                 "\n" +
@@ -492,7 +494,7 @@ function jztzxx() {
 
 //查询是否已经收藏了
 function sc() {
-    if(userid!=null) {//如果id不为空的话就查找
+    if(userid!=0) {//如果id不为空的话就查找
         $.ajax({
             type: "post",
             url: "/pst/queryCollection",
