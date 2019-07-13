@@ -114,7 +114,7 @@ public class UserController {
     public String updateEmail(String newEmail,HttpServletRequest request){
         HttpSession session = request.getSession();
         User user =(User) session.getAttribute("user");
-        System.out.println(newEmail);
+        //System.out.println(newEmail);
         Integer integer = userService.updateEamil(user.getUserID(), newEmail);
         if(integer>0){
             User user1 = userService.getUser(user.getUserID());
@@ -132,7 +132,7 @@ public class UserController {
     @RequestMapping(value = "/Emailjk")
     @ResponseBody
     public String Emailjk(HttpServletRequest request, HttpServletResponse response,String phone) {
-        System.out.println(phone);
+        //System.out.println(phone);
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
@@ -140,7 +140,7 @@ public class UserController {
         try {
             MailUtil.configMail(phone,verifyCode);
         } catch (Exception e) {
-            System.out.println("发送错误");
+            //System.out.println("发送错误");
             e.printStackTrace();
         }
         //发送短信
@@ -149,7 +149,7 @@ public class UserController {
 
 
         // 将认证码存入SESSION
-        System.out.println(verifyCode);
+        //System.out.println(verifyCode);
         return verifyCode;
     }
 
@@ -163,12 +163,12 @@ public class UserController {
         if(sid!=null){
             if(text!=""){
                 if(sid.equals("0")){//查询名字
-                    System.out.println("进来了名字");
+                    //System.out.println("进来了名字");
                     user.setUserName(text);
 
                 }
                 else if(sid.equals("1")){//查询手机号
-                    System.out.println("进来了手机号");
+                    //System.out.println("进来了手机号");
                     user.setUserPhone(text);
 
                 }
@@ -183,7 +183,7 @@ public class UserController {
             }
 
         }
-        System.out.println(user);
+        //System.out.println(user);
         HttpSession session = request.getSession();
         PageInfo<User> users = userService.getAll(user,page, limit);
         List<User> list = users.getList();
@@ -191,7 +191,7 @@ public class UserController {
 
         }
 
-        System.out.println(user);
+        //System.out.println(user);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");
         maps.put("code",0);
@@ -299,7 +299,7 @@ public class UserController {
     public String cs(){
         User user = userService.getUser(42);
 
-        System.out.println(user.getUserIP()+"ip地址");
+        //System.out.println(user.getUserIP()+"ip地址");
         return null;
     }
 
@@ -338,7 +338,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
-        System.out.println("进来了手机号验证码");
+        //System.out.println("进来了手机号验证码");
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
@@ -353,7 +353,7 @@ public class UserController {
         json.put("verifyCode", verifyCode);
         json.put("createTime", System.currentTimeMillis());*/
         // 将认证码存入SESSION
-        System.out.println(verifyCode);
+        //System.out.println(verifyCode);
         return verifyCode;
 
     }
@@ -369,7 +369,7 @@ public class UserController {
     @RequestMapping(value = "/updateupload")
     @ResponseBody
     public String upload(HttpServletRequest request, HttpServletResponse response,String upload) throws Exception {
-        System.out.println(upload);
+        //System.out.println(upload);
         HttpSession session = request.getSession();
         User user =(User) session.getAttribute("user");
         Integer n = userService.updateupload(user.getUserID(), upload);
@@ -398,9 +398,9 @@ public class UserController {
         HttpSession session = request.getSession();
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
-            System.out.println("Token:"+accessTokenObj.getAccessToken());
+            //System.out.println("Token:"+accessTokenObj.getAccessToken());
             if (accessTokenObj.getAccessToken().equals("")) {
-                System.out.print("没有获取到响应参数");
+                //System.out.print("没有获取到响应参数");
             } else {
                 //1.根据code获取access_token
                 String token = accessTokenObj.getAccessToken();
@@ -410,7 +410,7 @@ public class UserController {
                 //3.去数据库查找有没有openId如果有，登陆过，没有则是新用户
                 com.qq.connect.api.qzone.UserInfo qzoneUserInfo = new com.qq.connect.api.qzone.UserInfo(token, userOpenID);
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
-                System.out.println("openid:"+userOpenID+"————用户昵称："+userInfoBean.getNickname());
+                //System.out.println("openid:"+userOpenID+"————用户昵称："+userInfoBean.getNickname());
                 //4.根据openId和access_Token获取用户信息
                 //查询数据库里面有没有这个openId如果有把这个用户的信息拿出来没有就添加
                 User qquser = userService.getopenid(userOpenID);
@@ -478,7 +478,7 @@ public class UserController {
         //昵称
         user.setUserName(nickName);
         //图片
-        // System.out.println(new transferImgForRoundImgage().transferImgForRoundImgage(userInfoBean.getAvatar().getAvatarURL100()));
+        // //System.out.println(new transferImgForRoundImgage().transferImgForRoundImgage(userInfoBean.getAvatar().getAvatarURL100()));
 
         user.setUserImg(Avatar);
         //错误次数
@@ -490,7 +490,7 @@ public class UserController {
         if(add>0){
             Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
             if(integer!=null){
-                System.out.println(integer);
+                //System.out.println(integer);
                 User qquser = userService.getopenid(userOpenID);
                 session.setAttribute("user",qquser);
                 return "1";
@@ -509,7 +509,7 @@ public class UserController {
         String openid=(String) session.getAttribute("openid");
         Integer integer = userService.updateOpenids(phone,openid,IpAddress.getIpAddr(request));//根据用户手机号增加openid
         if(integer!=null){
-            System.out.println(integer);
+            //System.out.println(integer);
             User qquser = userService.getopenid(openid);
             session.setAttribute("user",qquser);
             return "1";
@@ -563,7 +563,7 @@ public class UserController {
         try{
             response.sendRedirect("/user/");
         }catch (Exception e){
-            System.out.println("异常");
+            //System.out.println("异常");
             e.printStackTrace();
         }
 
@@ -577,7 +577,7 @@ public class UserController {
     public String requestQQLogin(HttpServletRequest request) throws QQConnectException {
         //自动组装qq登陆连接，重定向到qq登陆页面
         String authorizeURL = new Oauth().getAuthorizeURL(request);
-        System.out.println("联合登陆请求地址:"+authorizeURL);
+        //System.out.println("联合登陆请求地址:"+authorizeURL);
         return "redirect:"+authorizeURL;
     }
 
