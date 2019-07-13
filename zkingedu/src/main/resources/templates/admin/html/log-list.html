@@ -30,7 +30,7 @@
       <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
   </div>
 
-  <!--usertable数据展示-->
+  <!--table数据展示-->
   <table id="loglist" lay-filter="test">
 
   </table>
@@ -69,7 +69,7 @@
                       ,{field: 'log_id', title: 'ID', width:100, sort: true, fixed: 'left'}
                       ,{field: 'emp_name', title: '操作人员', width:100, sort: true}
                       ,{field: 'log_details', title: '操作详情', width:380}
-                      ,{field: 'log_time', title: '操作时间', width:180}
+                      ,{field: 'log_time', title: '操作时间', width:180,fixed: 'right'}
                   ]
                   ]
                   ,id : 'id'//表格id

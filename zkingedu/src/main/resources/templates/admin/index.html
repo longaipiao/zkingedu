@@ -27,17 +27,15 @@
 
 <shiro:lacksPermission name="login">
     <script>
-        // $(function () {
-        layui.use('layer', function () {
-            $ = layui.jquery;
-            var layer = layui.layer;
-
-            layer.alert("请前往登录", {icon: 4}, function () {
-                $(location).attr('href', '/admin');
-            });
-        });
-
+        // layui.use('layer', function () {
+        //     $ = layui.jquery;
+        //     var layer = layui.layer;
+        //
+        //     layer.alert("请前往登录", {icon: 4}, function () {
+        //         $(location).attr('href', '/admin');
+        //     });
         // });
+        window.location.href="/admin";
     </script>
 </shiro:lacksPermission>
 <shiro:hasPermission name="login">

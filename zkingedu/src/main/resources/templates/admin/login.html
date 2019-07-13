@@ -65,5 +65,23 @@
         });
     })
 </script>
+<script>
+
+    $(function(){
+        pushHistory();
+        window.addEventListener("popstate", function(e) {
+            // alert("监听到返回按钮事件啦");
+            //根据自己的需求实现自己的功能
+            window.location.href = '/admin'
+        }, false);
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+        }
+    });
+</script>
 </body>
 </html>

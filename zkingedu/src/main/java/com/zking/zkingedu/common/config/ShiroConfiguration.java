@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.LinkedHashMap;
+
 /**
  * shiro的配置类
  *
@@ -28,24 +30,20 @@ public class ShiroConfiguration {
         bean.setLoginUrl("/admin");
         bean.setSuccessUrl("/admin/index");
         //配置访问权限
-//        LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
-//        filterChainDefinitionMap.put("/login", "anon"); //表示可以匿名访问
-//        filterChainDefinitionMap.put("/user/loginUser", "anon");
-//        filterChainDefinitionMap.put("/laypage", "anon");
-//        filterChainDefinitionMap.put("/user/logout*","anon");
-//        filterChainDefinitionMap.put("/error","anon");
-//        filterChainDefinitionMap.put("/index.*","authc");
-//        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-//        filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
-//        filterChainDefinitionMap.put("/*.*", "authc");
-//        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+        LinkedHashMap<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
+        filterChainDefinitionMap.put("/admin/login", "anon"); //表示可以匿名访问
+        filterChainDefinitionMap.put("/admin", "anon");
+        filterChainDefinitionMap.put("/admin/logOut", "anon");
+        filterChainDefinitionMap.put("/error","anon");
+        filterChainDefinitionMap.put("/admin/index", "authc");//表示需要认证才可以访问
+        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }
 
     //配置核心安全事务管理器
     @Bean(name = "securityManager")
     public SecurityManager securityManager(@Qualifier("authRealm") AuthRealm authRealm) {
-        System.err.println("--------------shiro已经加载----------------");
+//        System.err.println("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(authRealm);
         return manager;

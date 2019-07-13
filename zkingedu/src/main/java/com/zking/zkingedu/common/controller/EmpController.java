@@ -45,9 +45,7 @@ public class EmpController {
      */
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Object alogin(HttpServletRequest request){
-        String name = request.getParameter("name");
-        String pass = request.getParameter("pass");
+    public Object alogin(@RequestParam("name")String name,@RequestParam("pass")String pass, HttpServletRequest request){
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(name, pass);
         Subject subject = SecurityUtils.getSubject();
         try {
