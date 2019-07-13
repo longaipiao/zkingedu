@@ -14,7 +14,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">体系名称</label>
         <div class="layui-input-block">
-            <input type="text" name="systemName" lay-verify="title" autocomplete="off" placeholder="请输入体系名称" class="layui-input">
+            <input type="text" name="systemName" lay-verify="title" autocomplete="off" placeholder="请输入体系名称"
+                   class="layui-input">
         </div>
     </div>
 
@@ -23,13 +24,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">体系封面</label>
         <div class="layui-input-block">
-            <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button><br />
+            <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button>
+            <br/>
             <img class="layui-upload-img" id="preview" style="width: 150px;margin-top: 5px">
             <p id="uploadError"></p>
             <input type="hidden" lay-verify="imgurl" name="systemImg" id="newsImg" value=""/>
         </div>
     </div>
-
 
 
     <div class="layui-form-item layui-form-text">
@@ -41,33 +42,33 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit=""  id="sub" lay-filter="demo1">立即提交</button>
+            <button class="layui-btn" lay-submit="" id="sub" lay-filter="demo1">立即提交</button>
         </div>
     </div>
 </form>
 </body>
 <script>
-    layui.use(['form', 'layedit','upload'], function(){
+    layui.use(['form', 'layedit', 'upload'], function () {
         var form = layui.form
-            ,layer = parent.layer === undefined ? layui.layer : parent.layer
-            ,layedit = layui.layedit
-            ,upload = layui.upload
-            ,$ = layui.jquery;
+            , layer = parent.layer === undefined ? layui.layer : parent.layer
+            , layedit = layui.layedit
+            , upload = layui.upload
+            , $ = layui.jquery;
 
 
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#onePicUpload'
-            ,url: '/file/imgupload'
-            ,before: function(obj){
+            , url: '/file/imgupload'
+            , before: function (obj) {
                 //预读本地文件
-                obj.preview(function(index, file, result){
+                obj.preview(function (index, file, result) {
                     $('#preview').attr('src', result); //图片链接（base64）
                 });
             }
-            ,done: function(res){
+            , done: function (res) {
                 //如果上传失败
-                if(res.code > 0){
+                if (res.code > 0) {
                     return layer.msg(res.msg);
                 }
                 //上传成功
@@ -75,41 +76,41 @@
                 $("#newsImg").val(res.data.src);
                 layer.msg('上传成功')
             }
-            ,error: function(){
+            , error: function () {
                 //失败状态，并实现重传
                 var uploadError = $('#uploadError');
                 uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                uploadError.find('.demo-reload').on('click', function(){
+                uploadError.find('.demo-reload').on('click', function () {
                     uploadInst.upload();
                 });
             }
         });
 
         //监听提交
-        form.on('submit(demo1)', function(data){
+        form.on('submit(demo1)', function (data) {
             //弹出loading
-            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
             var msg;
             $.ajax({
                 type: "post",
                 url: "/user/addSystem",
-                data:data.field,
-                dataType:"json",
-                success:function(d){
-                    if(d.code==0){
-                        msg="添加成功！";
-                    }else{
-                        msg=d.msg;
+                data: data.field,
+                dataType: "json",
+                success: function (d) {
+                    if (d.code == 0) {
+                        msg = "添加成功！";
+                    } else {
+                        msg = d.msg;
                     }
                 }
             });
-            setTimeout(function(){
+            setTimeout(function () {
                 top.layer.close(index);
                 layer.msg(msg);
                 layer.closeAll("iframe");
                 //刷新父页面
                 parent.location.reload();
-            },2000);
+            }, 2000);
             return false;
         });
 

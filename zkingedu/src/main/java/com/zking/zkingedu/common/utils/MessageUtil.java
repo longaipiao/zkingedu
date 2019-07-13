@@ -16,22 +16,21 @@ public class MessageUtil {
     @Autowired
     private MessageService messageService;
 
-    public void addMessage(Message message){
+    public void addMessage(Message message) {
         try {
             int i = messageService.addMessage(message);
-            if(i>0){
+            if (i > 0) {
                 log.info("消息添加成功");
-            }
-            else{
+            } else {
                 log.info("消息添加失败");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info("**********消息异常抛出*******");
         }
     }
 
 
-    public void addMessage(Integer messageUid1,Integer messageUid2,Integer messagePid,String msg){
+    public void addMessage(Integer messageUid1, Integer messageUid2, Integer messagePid, String msg) {
         Message message = new Message();
         message.setMessageUid1(messageUid1);
         message.setMessageUid2(messageUid2);
@@ -42,13 +41,12 @@ public class MessageUtil {
         message.setMessageState(1);
         try {
             int i = messageService.addMessage(message);
-            if(i>0){
+            if (i > 0) {
                 log.info("消息添加成功");
-            }
-            else{
+            } else {
                 log.info("消息添加失败");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info("**********消息异常抛出*******");
         }
     }

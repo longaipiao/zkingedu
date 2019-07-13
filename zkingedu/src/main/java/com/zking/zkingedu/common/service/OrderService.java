@@ -31,7 +31,7 @@ public interface OrderService {
     /**
      * 根据用户id查询该用户的订单
      */
-    public PageInfo<Map<String,Object>> findOrderUid(Integer userID, Integer page, Integer limit);
+    public PageInfo<Map<String, Object>> findOrderUid(Integer userID, Integer page, Integer limit);
 
 
     /**
@@ -50,18 +50,18 @@ public interface OrderService {
     /**
      * 根据用户id查询订单表中是否存在重负的视频
      */
-    public Integer finduidsidcid(Integer userId,Integer courseId,Integer sectionId);
+    public Integer finduidsidcid(Integer userId, Integer courseId, Integer sectionId);
 
     /**
      * 后台的订单查询记录
      */
-    public PageInfo<Map<String,Object>> findOrder(String userName,String orderID, Integer page, Integer limit);
+    public PageInfo<Map<String, Object>> findOrder(String userName, String orderID, Integer page, Integer limit);
 
     /**
      * 根据用户id查询出自己的资源
      * 阿飘
      */
-    public PageInfo<Map<String,Object>> findziyuanUid(Integer userID,Integer page,Integer limit);
+    public PageInfo<Map<String, Object>> findziyuanUid(Integer userID, Integer page, Integer limit);
 
     /**
      * 查询订单收入的总金额数

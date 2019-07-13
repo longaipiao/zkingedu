@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-  
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title>账单页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
     <link href="layui/css/layui.css"/>
     <link rel="stylesheet" href="/admin/css/font.css">
     <link rel="stylesheet" href="/admin/css/xadmin.css">
@@ -16,97 +17,99 @@
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <script src="/layui/layui.js"></script>
     <script src="/layui/lay/modules/laypage.js"></script>
-  </head>
-  <!--admin/html/member-list.html-->
-  
-  <body>
-  <br/>
-  <div class="demoTable">
+</head>
+<!--admin/html/member-list.html-->
+
+<body>
+<br/>
+<div class="demoTable">
     <label>搜索名称 ：</label>
     <div class="layui-inline">
-      <input class="layui-input" type="text" name="username" id="uname" lay-verify="username" autocomplete="off">
+        <input class="layui-input" type="text" name="username" id="uname" lay-verify="username" autocomplete="off">
     </div>&nbsp;&nbsp;&nbsp;
     <button class="layui-btn" data-type="reload" lay-submit="" lay-filter="*">搜索</button>
-  </div>
+</div>
 
-  <!--usertable数据展示-->
-  <table id="zhangdan" lay-filter="test"></table>
-
-
-  <script type="text/javascript">
-
-      $(function () {
-          layui.use(['layer','form', 'table','laydate', 'element'], function(){
-              var table = layui.table;
-              var layer = layui.layer //弹层
-                  , table = layui.table //表格
-                  ,laydate = layui.laydate
-                  , element = layui.element //元素操作
-                  , form = layui.form;
-
-              //第一个实例
-              table.render({
-                  elem: '#zhangdan'
-                  ,height: 420
-                  ,url: '/findBillUname' //数据接口
-                  ,page: true //开启分页
-                  //,skin: 'line' //表格风格
-                  , totalRow: true //开启合计行
-                  ,cols: [
-                      [ //表头
-                          {checkbox: true, fixed: true}
-                          ,{field: 'bill_id', title: '账单ID', width:80, sort: true, fixed: 'left'}
-                          ,{field: 'user_name', title: '用户名称', width:100}
-                          ,{field: 'bill_integral', title: '积分', width:100, sort: true}
-                          ,{field: 'bill_time', title: '账单时间', width:180, sort: true}
-                          ,{field: 'bill_content', title: '账单内容', width: 380}
-                            //类型0收入1支出
-                          ,{field: 'bill_type',title: '类型', width: 150,
-                           templet:function(d){
-                              if(1==d.bill_type){
-                                  return "<span style='color: blue;'>收入</span>";
-                              }else{
-                                  return '<span style="color: #c00;">支出</span>';
-                              }
-                          }}
-                      ]
-                  ],id : 'id'//表格id
-              });
+<!--usertable数据展示-->
+<table id="zhangdan" lay-filter="test"></table>
 
 
-              var $ = layui.$, layer = layui.layer, active = {
-                  getCheckData: function(){ //获取选中数据
-                      var checkStatus = table.checkStatus('id')
-                          ,data = checkStatus.data;
-                      layer.alert(JSON.stringify(data));
-                  },
-                  // 模糊查询的页面重载
-                  reload : function() { //拿到页面每一个值
-                      var userName = $('#uname').val();
-                      //alert(userName);
-                      // 执行重载
-                      table.reload('id', {
-                          page : {
-                              curr : 1// 重新从第 1 页开始
-                          },
-                          where : {//传的参数到后台
-                              'userName' : userName,
-                          }
-                      });
-                  }
-              };
-              // 查询按钮实现
-              $('.demoTable .layui-btn').on('click', function() {
-                  var type = $(this).data('type');
-                  active[type] ? active[type].call(this) : '';
-              });
+<script type="text/javascript">
 
-          });
-      });
+    $(function () {
+        layui.use(['layer', 'form', 'table', 'laydate', 'element'], function () {
+            var table = layui.table;
+            var layer = layui.layer //弹层
+                , table = layui.table //表格
+                , laydate = layui.laydate
+                , element = layui.element //元素操作
+                , form = layui.form;
 
-   </script>
+            //第一个实例
+            table.render({
+                elem: '#zhangdan'
+                , height: 420
+                , url: '/findBillUname' //数据接口
+                , page: true //开启分页
+                //,skin: 'line' //表格风格
+                , totalRow: true //开启合计行
+                , cols: [
+                    [ //表头
+                        {checkbox: true, fixed: true}
+                        , {field: 'bill_id', title: '账单ID', width: 80, sort: true, fixed: 'left'}
+                        , {field: 'user_name', title: '用户名称', width: 100}
+                        , {field: 'bill_integral', title: '积分', width: 100, sort: true}
+                        , {field: 'bill_time', title: '账单时间', width: 180, sort: true}
+                        , {field: 'bill_content', title: '账单内容', width: 380}
+                        //类型0收入1支出
+                        , {
+                        field: 'bill_type', title: '类型', width: 150,
+                        templet: function (d) {
+                            if (1 == d.bill_type) {
+                                return "<span style='color: blue;'>收入</span>";
+                            } else {
+                                return '<span style="color: #c00;">支出</span>';
+                            }
+                        }
+                    }
+                    ]
+                ], id: 'id'//表格id
+            });
 
 
-  </body>
+            var $ = layui.$, layer = layui.layer, active = {
+                getCheckData: function () { //获取选中数据
+                    var checkStatus = table.checkStatus('id')
+                        , data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                },
+                // 模糊查询的页面重载
+                reload: function () { //拿到页面每一个值
+                    var userName = $('#uname').val();
+                    //alert(userName);
+                    // 执行重载
+                    table.reload('id', {
+                        page: {
+                            curr: 1// 重新从第 1 页开始
+                        },
+                        where: {//传的参数到后台
+                            'userName': userName,
+                        }
+                    });
+                }
+            };
+            // 查询按钮实现
+            $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+        });
+    });
+
+</script>
+
+
+</body>
 
 </html>

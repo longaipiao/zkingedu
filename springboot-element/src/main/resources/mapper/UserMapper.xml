@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zking.springbootelement.dao.UserDao">
+
+    <!--查询所有的用户-->
+    <select id="findAll" resultType="com.zking.springbootelement.model.User" parameterType="string">
+        select * from user where 1 = 1
+        <if test="Uname!=null">
+            and uname like '%${Uname}%'
+        </if>
+    </select>
+</mapper>

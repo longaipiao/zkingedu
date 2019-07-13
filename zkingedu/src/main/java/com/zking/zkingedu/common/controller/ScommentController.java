@@ -28,13 +28,13 @@ public class ScommentController {
 
     /**
      * 根据课程id  查询课程下所有评论
-     * @param cid
-     * 颜
+     *
+     * @param cid 颜
      * @return
      */
     @ResponseBody
     @RequestMapping("/getScomment")
-    public ResultUtil getScommentByCid(@RequestParam("cid")Integer cid,Integer page,Integer limit){
+    public ResultUtil getScommentByCid(@RequestParam("cid") Integer cid, Integer page, Integer limit) {
         try {
             PageBean<Integer> pageBean = new PageBean<>();
             pageBean.setPageIndex(page);
@@ -51,16 +51,17 @@ public class ScommentController {
     /**
      * 前台用户评论课程
      * yan
+     *
      * @param scomment
      * @return
      */
     @Transactional
     @ResponseBody
     @RequestMapping("/addScomment")
-    public ResultUtil UserAddScomment(Scomment scomment){
+    public ResultUtil UserAddScomment(Scomment scomment) {
         try {
             int i = scommentService.UseraddScomment(scomment);
-            if(i>0){
+            if (i > 0) {
                 return ResultUtil.ok("评论成功");
             }
             return ResultUtil.error("您的操作过于频繁");
@@ -74,16 +75,17 @@ public class ScommentController {
     /**
      * 根据课程评论id删除评论
      * yan
+     *
      * @param id
      * @return
      */
     @Transactional
     @ResponseBody
     @RequestMapping(value = "/delScommentById")
-    public ResultUtil UserDelScommentById(@Param("id") Integer id){
+    public ResultUtil UserDelScommentById(@Param("id") Integer id) {
         try {
             int i = scommentService.delScommentById(id);
-            if(i>0){
+            if (i > 0) {
                 return ResultUtil.ok("删除评论成功");
             }
             return ResultUtil.error("您的操作过于频繁");

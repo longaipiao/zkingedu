@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 视频表
+ *
  * @ClassName Video
  * @Author likai
  **/

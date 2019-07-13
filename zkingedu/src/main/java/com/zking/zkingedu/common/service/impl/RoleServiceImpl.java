@@ -17,6 +17,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleDao roleDao;
+
     @Override
     public List<Role> getRoles(String roleName) {
         return roleDao.getRoles(roleName);
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateRoleByID(Integer roleID, String roleName) {
-        return roleDao.updateRoleByID(roleID,roleName);
+        return roleDao.updateRoleByID(roleID, roleName);
     }
 
     @Override

@@ -13,9 +13,9 @@ public interface SectionDao {
 
     /**
      * 根据课程id获取所有的章节
-     *      * @param cid
-     * @return
-     * yan
+     * * @param cid
+     *
+     * @return yan
      */
     List<Section> getSectionsBycid(Integer cid);
 
@@ -29,14 +29,14 @@ public interface SectionDao {
      * 根据课程id获取所有的章节视频  模糊查询 分页
      * yan
      */
-    List<Section> getSectionByCidAndPageSearch(@Param("section") Section section,@Param("cid") Integer cid);
+    List<Section> getSectionByCidAndPageSearch(@Param("section") Section section, @Param("cid") Integer cid);
 
 
     /**
      * 添加课程
+     *
      * @param section
-     * @return
-     * yan
+     * @return yan
      */
     int addSection(Section section);
 
@@ -44,6 +44,7 @@ public interface SectionDao {
     /**
      * 根据id  查询章节信息
      * yan
+     *
      * @param id
      * @return
      */
@@ -53,6 +54,7 @@ public interface SectionDao {
     /**
      * 修改章节
      * yan
+     *
      * @param section
      * @return
      */
@@ -62,11 +64,11 @@ public interface SectionDao {
     /**
      * 批量删除章节
      * yan
+     *
      * @param ids
      * @return
      */
     int delSections(List<Integer> ids);
-
 
 
 }

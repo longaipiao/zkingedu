@@ -6,8 +6,6 @@ $(function () {
         var $ = layui.jquery;
 
 
-
-
 //获取所有的菜单动态生成菜单===============================================================
         $.ajax({
 
@@ -19,8 +17,8 @@ $(function () {
                 /*alert(data.mname);*/
                 //先添加所有的主材单
                 $.each(data, function (i, obj) {
-                    var  content='<li class="layui-nav-item">';
-                    content += '<a href="javascript:;" class="site-demo-active"> <i class="layui-icon">'+obj.icons+'</i>' + obj.mname + '</a>';
+                    var content = '<li class="layui-nav-item">';
+                    content += '<a href="javascript:;" class="site-demo-active"> <i class="layui-icon">' + obj.icons + '</i>' + obj.mname + '</a>';
                     //这里是添加所有的子菜单
                     content += loadchild(obj.menuList);
                     content += '</li>';
@@ -50,7 +48,7 @@ $(function () {
             if (obj != null && obj.length > 0) {
                 $.each(obj, function (i, note) {
                     content += '<dd>';
-                    content += '<a href="javascript:void(0)" data-url="' + note.href + '" data-title="' + note.mname + '" data-id="' + note.mid + '" name="item" class="site-demo-active" ><i class="layui-icon">'+note.icons+'</i>' + note.mname + '</a>';
+                    content += '<a href="javascript:void(0)" data-url="' + note.href + '" data-title="' + note.mname + '" data-id="' + note.mid + '" name="item" class="site-demo-active" ><i class="layui-icon">' + note.icons + '</i>' + note.mname + '</a>';
                     if (note == null) {
                         return;
                     }

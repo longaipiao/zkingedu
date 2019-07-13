@@ -64,7 +64,7 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
      */
     -->
     <select id="findIntegrsl" resultType="java.lang.Integer">
-        select user_integrsl from t_user where user_id = #{userID}
+        select user_integrsl from t_user where  user_id = #{userID}
     </select>
     <!-- 根据openid修改用户-->
     <update id="updateOpenid" >

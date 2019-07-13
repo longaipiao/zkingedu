@@ -7,16 +7,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**   
-* @Title: MailHelper.java 
-* @Package com.jarvis.base.util 
-* @Description:mail工具类
-* @author Jack  
-* @date 2017年9月2日 下午3:39:46 
-* @version V1.0   
-*/ 
-public class MailHelper
-{
+/**
+ *   
+ *
+ * @author Jack 
+ * @version V1.0  
+ * @Title: MailHelper.java
+ * @Package com.jarvis.base.util
+ * @Description:mail工具类
+ * @date 2017年9月2日 下午3:39:46
+ */
+public class MailHelper {
     /**
      * 简单的发邮件方式    邮件内容只有标题和邮件内容  支持单个个用户发送
      *
@@ -30,15 +31,14 @@ public class MailHelper
      * @throws EmailException
      */
     public static void sendSimpleEmail(String host, String username, String password, String subject, String contents,
-                                       String toEmailAddress, String fromEmailAddress) throws EmailException
-    {
+                                       String toEmailAddress, String fromEmailAddress) throws EmailException {
         SimpleEmail email = new SimpleEmail();
         email.setHostName(host);
         email.setAuthentication(username, password);
         email.addTo(toEmailAddress);
         email.setFrom(fromEmailAddress, fromEmailAddress);
         email.setSubject(subject);
-        email.setContent((Object)contents, "text/plain;charset=GBK");
+        email.setContent((Object) contents, "text/plain;charset=GBK");
         email.send();
     }
 
@@ -54,19 +54,17 @@ public class MailHelper
      * @param fromEmailAddress 发件人的邮件地址
      * @throws EmailException
      */
-    public static void sendSimpleEmail(String host, String username, String password, String subject, String contents, String [] toEmailAddress, String fromEmailAddress) throws EmailException
-    {
+    public static void sendSimpleEmail(String host, String username, String password, String subject, String contents, String[] toEmailAddress, String fromEmailAddress) throws EmailException {
         SimpleEmail email = new SimpleEmail();
         email.setHostName(host);
         email.setAuthentication(username, password);
         //发送给多个人
-        for (int i = 0; i < toEmailAddress.length; i++)
-        {
+        for (int i = 0; i < toEmailAddress.length; i++) {
             email.addTo(toEmailAddress[i], toEmailAddress[i]);
         }
         email.setFrom(fromEmailAddress, fromEmailAddress);
         email.setSubject(subject);
-        email.setContent((Object)contents, "text/plain;charset=GBK");
+        email.setContent((Object) contents, "text/plain;charset=GBK");
         email.send();
     }
 
@@ -87,20 +85,15 @@ public class MailHelper
 
     public static void sendMultiPartEmail(String host, String username, String password, String subject,
                                           String contents, String toEmailAddress, String fromEmailAddress,
-                                          String []multiPaths) throws MalformedURLException, EmailException
-    {
+                                          String[] multiPaths) throws MalformedURLException, EmailException {
         List<EmailAttachment> attachmentList = new ArrayList<EmailAttachment>();
-        if (multiPaths != null)
-        {
-            for (int i = 0; i < multiPaths.length; i++)
-            {
+        if (multiPaths != null) {
+            for (int i = 0; i < multiPaths.length; i++) {
                 EmailAttachment attachment = new EmailAttachment();
                 if (multiPaths[i].indexOf("http") == -1)   //判断当前这个文件路径是否在本地  如果是：setPath  否则  setURL;
                 {
                     attachment.setPath(multiPaths[i]);
-                }
-                else
-                {
+                } else {
                     attachment.setURL(new URL(multiPaths[i]));
                 }
                 attachment.setDisposition(EmailAttachment.ATTACHMENT);
@@ -141,20 +134,15 @@ public class MailHelper
 
     public static void sendMultiPartEmail(String host, String username, String password, String subject,
                                           String contents, String[] toEmailAddress, String fromEmailAddress,
-                                          String []multiPaths) throws MalformedURLException, EmailException
-    {
+                                          String[] multiPaths) throws MalformedURLException, EmailException {
         List<EmailAttachment> attachmentList = new ArrayList<EmailAttachment>();
-        if (multiPaths != null)
-        {
-            for (int i = 0; i < multiPaths.length; i++)
-            {
+        if (multiPaths != null) {
+            for (int i = 0; i < multiPaths.length; i++) {
                 EmailAttachment attachment = new EmailAttachment();
                 if (multiPaths[i].indexOf("http") == -1)   //判断当前这个文件路径是否在本地  如果是：setPath  否则  setURL;
                 {
                     attachment.setPath(multiPaths[i]);
-                }
-                else
-                {
+                } else {
                     attachment.setURL(new URL(multiPaths[i]));
                 }
                 attachment.setDisposition(EmailAttachment.ATTACHMENT);
@@ -168,8 +156,7 @@ public class MailHelper
         email.setHostName(host);
         email.setAuthentication(username, password);
         //发送给多个人
-        for (int i = 0; i < toEmailAddress.length; i++)
-        {
+        for (int i = 0; i < toEmailAddress.length; i++) {
             email.addTo(toEmailAddress[i], toEmailAddress[i]);
         }
         email.setFrom(fromEmailAddress, fromEmailAddress);
@@ -195,8 +182,7 @@ public class MailHelper
      * @param fromEmailAddress 发件人邮件地址
      * @throws EmailException
      */
-    public static void sendHtmlEmail(String host, String username, String password, String subject, String contents, String toEmailAddress, String fromEmailAddress) throws EmailException
-    {
+    public static void sendHtmlEmail(String host, String username, String password, String subject, String contents, String toEmailAddress, String fromEmailAddress) throws EmailException {
         HtmlEmail email = new HtmlEmail();
         //email.setDebug(true);
         email.setHostName(host);
@@ -220,14 +206,12 @@ public class MailHelper
      * @param fromEmailAddress 发件人邮件地址
      * @throws EmailException
      */
-    public static void sendHtmlEmail(String host, String username, String password, String subject, String contents, String[] toEmailAddress, String fromEmailAddress) throws EmailException
-    {
+    public static void sendHtmlEmail(String host, String username, String password, String subject, String contents, String[] toEmailAddress, String fromEmailAddress) throws EmailException {
         HtmlEmail email = new HtmlEmail();
         email.setHostName(host);
         email.setAuthentication(username, password);
         //发送给多个人
-        for (int i = 0; i < toEmailAddress.length; i++)
-        {
+        for (int i = 0; i < toEmailAddress.length; i++) {
             email.addTo(toEmailAddress[i], toEmailAddress[i]);
         }
         email.setFrom(fromEmailAddress, fromEmailAddress);

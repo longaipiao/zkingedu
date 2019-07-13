@@ -15,6 +15,7 @@ public interface CourseTypeService {
     /**
      * 获取所有的课程
      * yan
+     *
      * @return
      */
     List<CourseType> getCourseTypes();
@@ -22,6 +23,7 @@ public interface CourseTypeService {
     /**
      * yan
      * 查询所有课程类别  分页查询
+     *
      * @param courseType
      * @return
      */
@@ -31,16 +33,17 @@ public interface CourseTypeService {
     /**
      * 查询所有课程类别  分页   搜索
      * yan
+     *
      * @param pageBean
      * @return
      */
     ResultUtil getCoursesAndPageSearch(PageBean<CourseType> pageBean);
 
 
-
     /**
      * yan
      * 添加课程类别
+     *
      * @param courseType
      * @return
      */
@@ -50,6 +53,7 @@ public interface CourseTypeService {
     /**
      * yan
      * 修改课程类型
+     *
      * @param courseType
      * @return
      */
@@ -59,6 +63,7 @@ public interface CourseTypeService {
     /**
      * 删除多个课程类型
      * yan
+     *
      * @param ids
      * @return
      */

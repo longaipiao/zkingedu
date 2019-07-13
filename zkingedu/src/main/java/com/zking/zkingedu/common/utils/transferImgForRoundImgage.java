@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class transferImgForRoundImgage {
-    public BufferedImage transferImgForRoundImgage(String url){
+    public BufferedImage transferImgForRoundImgage(String url) {
         BufferedImage resultImg = null;
         try {
             if (StringUtils.isBlank(url)) {

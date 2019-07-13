@@ -9,7 +9,7 @@ public class ResponsUtil {
 
 
     //响应 数据到前端
-    public static void printout(HttpServletResponse response,Object str)throws Exception{
+    public static void printout(HttpServletResponse response, Object str) throws Exception {
 
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;carset=utf-8");
@@ -23,9 +23,6 @@ public class ResponsUtil {
         out.flush();
         out.close();
     }
-
-
-
 
 
 }

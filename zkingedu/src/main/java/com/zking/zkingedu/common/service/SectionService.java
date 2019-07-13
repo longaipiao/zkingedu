@@ -14,9 +14,9 @@ public interface SectionService {
 
     /**
      * 根据课程id获取所有的章节
+     *
      * @param cid
-     * @return
-     * yan
+     * @return yan
      */
     List<Section> getSectionsBycid(Integer cid);
 
@@ -27,7 +27,8 @@ public interface SectionService {
 
 
     /**
-     *  根据课程id获取所有的章节视频  模糊查询 分页
+     * 根据课程id获取所有的章节视频  模糊查询 分页
+     *
      * @param cid
      * @param pageBean
      * @return
@@ -37,9 +38,9 @@ public interface SectionService {
 
     /**
      * 添加课程
+     *
      * @param section
-     * @return
-     * yan
+     * @return yan
      */
     int addSection(Section section);
 
@@ -47,6 +48,7 @@ public interface SectionService {
     /**
      * 根据id  查询章节信息
      * yan
+     *
      * @param id
      * @return
      */
@@ -56,6 +58,7 @@ public interface SectionService {
     /**
      * 修改章节
      * yan
+     *
      * @param section
      * @return
      */
@@ -65,14 +68,11 @@ public interface SectionService {
     /**
      * 批量删除章节
      * yan
+     *
      * @param ids
      * @return
      */
     int delSections(List<Integer> ids);
-
-
-
-
 
 
 }

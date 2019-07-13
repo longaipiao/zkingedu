@@ -30,11 +30,11 @@ public class Emp implements Serializable {
     //错误次数
     private Integer empError;
     //员工角色
-    private Set<Role> roles=new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     private Role role;
 
-    public Role getRole(){
+    public Role getRole() {
         for (Role role1 : roles) {
             this.role = role1;
         }

@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.VideoDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--视频接口Mapper-->
 
 
@@ -14,8 +14,10 @@
 
     <!--根据章节id  查询视频-->
     <select id="getVideoById" resultType="com.zking.zkingedu.common.model.Video">
-        select <include refid="VideoSql"/> from t_video where video_sid=#{sid};
+        select
+        <include refid="VideoSql"/>
+        from t_video where video_sid=#{sid};
     </select>
-    
+
 
 </mapper>

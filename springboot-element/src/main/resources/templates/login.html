@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>后台登录</title>
+    <link href="/scripts/element-ui/index.css" rel="stylesheet" />
+    <link href="/css/iconfont/iconfont.css" rel="stylesheet" />
+    <style type="text/css">
+        *{margin:0; padding:0}
+        html,body{height:100%; width:100%;}
+        body {
+            background: url(/images/login-bg.jpg) no-repeat;
+            background-size:cover;
+        }
+        .login-inner {
+            max-width: 1200px;
+            position: relative;
+            margin: 0 auto;
+        }
+        .lg-box {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            margin-top: -150px;
+            width: 310px;
+            height: 300px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .lg-box>h2{text-align:center; margin-bottom:10px; font-size:20px;}
+        .lg-footer {
+            position: absolute;
+            bottom: 5px;
+            height: 30px;
+            line-height: 30px;
+            width: 100%;
+            left:0;
+            border-top: rgba(255,255,255,.15) 1px solid;
+            text-align:center; color:#fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="lg-aside">
+            <a href="/"></a>
+        </div>
+        <div class="lg-box">
+            <h2>用户登录</h2>
+            <el-form ref="loginForm" :model="loginForm" :rules="rules">
+                <el-form-item prop="username">
+                    <el-input v-model="loginForm.username" placeholder="用户名" clearable>
+                        <i slot="prefix" class="el-icon-custom-user el-icon--right"></i>
+                    </el-input>
+                </el-form-item>
+                <el-form-item prop="userpwd">
+                    <el-input v-model="loginForm.userpwd" type="password" placeholder="密码" 
+                              prefix-icon="el-icon-lock" v-on:keyup.enter.native="submitForm('loginForm')" clearable></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="success" style="width:100%; font-weight:bold; font-size:16px;" v-on:click="submitForm('loginForm')">登录</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="lg-footer">
+            版权所有 江学美（个人学习） &copy; 2018
+        </div>
+    </div>
+    <script src="/scripts/vue.min.js"></script>
+    <script src="/scripts/element-ui/index.js"></script>
+    <script src="/scripts/axios.min.js"></script>
+    <script type="text/javascript">
+        var login = new Vue({
+            el: '.login-container',
+            data: {
+                loginForm: {
+                    username: '',
+                    userpwd: ''
+                },
+                rules: {
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 3, max:16, message: '长度在3-16个字符', trigger: 'blur' }
+                    ],
+                    userpwd: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 3, max: 16, message: '长度在3-16个字符', trigger: 'blur' }
+                    ]
+                }
+            },
+            methods: {
+                submitForm(formName) {
+                    var _that = this;
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            //发送ajax请求去后台验证用户名和密码
+                            axios.post('/admin/home/ValidateLogin', this.loginForm)
+                                .then(function (res) {
+                                    if (res.data.status == 200) {
+                                        window.location.href = "/admin/home";
+                                    } else {
+                                        _that.$message.error(res.data.msg);
+                                    }
+                            });
+                        } else {
+                            console.log('表单验证失败！');
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 章节表
+ *
  * @ClassName Section
  * @Author likai
  **/

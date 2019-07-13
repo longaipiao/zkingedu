@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.OrderDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--订单接口Mapper-->
     <sql id="orderAll">
         order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state
@@ -18,12 +18,12 @@
 
     <!--查询课程id是否存在-->
     <select id="findCourseID" resultType="java.lang.Integer" parameterType="integer">
-        select order_sid from t_order where order_sid = #{courseID}
+        select DISTINCT order_sid from t_order where order_sid = #{courseID}
     </select>
 
     <!--查询用户id是否存在-->
     <select id="findUserID" resultType="java.lang.Integer" parameterType="integer">
-        select order_uid from t_order where order_uid = #{userID}
+        select DISTINCT order_uid from t_order where order_uid = #{userID}
     </select>
 
     <!--根据用户id查询该用户的订单-->

@@ -18,6 +18,7 @@ public interface CourseTypeDao {
     /**
      * yan
      * 查询所有课程类别  分页查询
+     *
      * @param courseType
      * @return
      */
@@ -27,6 +28,7 @@ public interface CourseTypeDao {
     /**
      * yan
      * 添加课程类别
+     *
      * @param courseType
      * @return
      */
@@ -36,6 +38,7 @@ public interface CourseTypeDao {
     /**
      * yan
      * 修改课程类型
+     *
      * @param courseType
      * @return
      */
@@ -45,6 +48,7 @@ public interface CourseTypeDao {
     /**
      * 删除多个课程类型
      * yan
+     *
      * @param ids
      * @return
      */

@@ -1,15 +1,17 @@
 package com.zking.zkingedu.common.utils;
+
 import java.security.MessageDigest;
 
 public class MD5Util2 {
     /**
      * Title: MD5加密 生成32位md5码
      * Description: TestDemo
-     * @author lu
-     * @date 2016年6月23日 下午2:36:07
+     *
      * @param inStr
      * @return 返回32位md5码
      * @throws Exception
+     * @author lu
+     * @date 2016年6月23日 下午2:36:07
      */
     public static String md5Encode(String inStr) throws Exception {
         MessageDigest md5 = null;
@@ -32,13 +34,15 @@ public class MD5Util2 {
         }
         return hexValue.toString();
     }
+
     /**
      * Title: MD5加密
      * Description: TestDemo
-     * @author lu
-     * @date 2016年6月23日 下午2:43:31
+     *
      * @param inStr
      * @return
+     * @author lu
+     * @date 2016年6月23日 下午2:43:31
      */
     public static String md5(String inStr) {
         MessageDigest md5 = null;
@@ -69,10 +73,11 @@ public class MD5Util2 {
     /**
      * Title: 加密解密算法 执行一次加密，两次解密
      * Description: TestDemo
-     * @author lu
-     * @date 2016年6月23日 下午2:37:29
+     *
      * @param inStr
      * @return
+     * @author lu
+     * @date 2016年6月23日 下午2:37:29
      */
     public static String convertMD5(String inStr) {
 
@@ -84,6 +89,7 @@ public class MD5Util2 {
         return s;
 
     }
+
     public static String md5Decode(String str) {
         return convertMD5(convertMD5(str));
     }

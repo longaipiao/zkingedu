@@ -19,9 +19,9 @@ public class VideoServiceImpl implements VideoService {
 
     /**
      * 根据章节id  查询视频
+     *
      * @param sid
-     * @return
-     * yan
+     * @return yan
      */
     @Override
     public Video getVideoById(Integer sid) {

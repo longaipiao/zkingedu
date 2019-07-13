@@ -2,16 +2,17 @@ package com.zking.zkingedu.common.utils;
 
 import java.io.*;
 
-/**   
-* @Title: Base64Util.java 
-* @Package com.jarvis.base.util 
-* @Description:Base64工具类
-* @author Jack  
-* @date 2017年9月2日 下午5:10:32 
-* @version V1.0   
-*/ 
-public final class Base64Util
-{
+/**
+ *   
+ *
+ * @author Jack 
+ * @version V1.0  
+ * @Title: Base64Util.java
+ * @Package com.jarvis.base.util
+ * @Description:Base64工具类
+ * @date 2017年9月2日 下午5:10:32
+ */
+public final class Base64Util {
     private static final int BASELENGTH = 255;
 
     private static final int LOOKUPLENGTH = 64;
@@ -34,40 +35,32 @@ public final class Base64Util
 
     private static byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];
 
-    static
-    {
-        for (int i = 0; i < BASELENGTH; i++)
-        {
+    static {
+        for (int i = 0; i < BASELENGTH; i++) {
             base64Alphabet[i] = -1;
         }
-        for (int i = 'Z'; i >= 'A'; i--)
-        {
+        for (int i = 'Z'; i >= 'A'; i--) {
             base64Alphabet[i] = (byte) (i - 'A');
         }
-        for (int i = 'z'; i >= 'a'; i--)
-        {
+        for (int i = 'z'; i >= 'a'; i--) {
             base64Alphabet[i] = (byte) (i - 'a' + 26);
         }
-        for (int i = '9'; i >= '0'; i--)
-        {
+        for (int i = '9'; i >= '0'; i--) {
             base64Alphabet[i] = (byte) (i - '0' + 52);
         }
 
         base64Alphabet['+'] = 62;
         base64Alphabet['/'] = 63;
 
-        for (int i = 0; i <= 25; i++)
-        {
+        for (int i = 0; i <= 25; i++) {
             lookUpBase64Alphabet[i] = (byte) ('A' + i);
         }
 
-        for (int i = 26, j = 0; i <= 51; i++, j++)
-        {
+        for (int i = 26, j = 0; i <= 51; i++, j++) {
             lookUpBase64Alphabet[i] = (byte) ('a' + j);
         }
 
-        for (int i = 52, j = 0; i <= 61; i++, j++)
-        {
+        for (int i = 52, j = 0; i <= 61; i++, j++) {
             lookUpBase64Alphabet[i] = (byte) ('0' + j);
         }
 
@@ -75,30 +68,24 @@ public final class Base64Util
         lookUpBase64Alphabet[63] = (byte) '/';
     }
 
-    public static boolean isBase64(String isValidString)
-    {
+    public static boolean isBase64(String isValidString) {
         return isArrayByteBase64(isValidString.getBytes());
     }
 
-    public static boolean isBase64(byte octect)
-    {
+    public static boolean isBase64(byte octect) {
         // shall we ignore white space? JEFF??
         return (octect == PAD || base64Alphabet[octect] != -1);
     }
 
-    public static boolean isArrayByteBase64(byte[] arrayOctect)
-    {
+    public static boolean isArrayByteBase64(byte[] arrayOctect) {
         int length = arrayOctect.length;
-        if (length == 0)
-        {
+        if (length == 0) {
             // shouldn't a 0 length array be valid base64 data?
             // return false;
             return true;
         }
-        for (int i = 0; i < length; i++)
-        {
-            if (!isBase64(arrayOctect[i]))
-            {
+        for (int i = 0; i < length; i++) {
+            if (!isBase64(arrayOctect[i])) {
                 return false;
             }
         }
@@ -111,13 +98,11 @@ public final class Base64Util
      * @param src String object to be encoded.
      * @return encoded String;
      */
-    public static String encodeString(String src)
-    {
+    public static String encodeString(String src) {
         return encode(src);
     }
 
-    public static String encodeBytes(byte[] src)
-    {
+    public static String encodeBytes(byte[] src) {
         if (src == null || src.length == 0) {
             return null;
         }
@@ -131,15 +116,12 @@ public final class Base64Util
      * @param src String object to be encoded.
      * @return encoded String;
      */
-    public static String encode(String src)
-    {
+    public static String encode(String src) {
         String target = null;
-        if (src != null)
-        {
+        if (src != null) {
             byte[] bts1 = src.getBytes();
             byte[] bts2 = encode(bts1);
-            if (bts2 != null)
-            {
+            if (bts2 != null) {
                 target = new String(bts2);
             }
         }
@@ -152,20 +134,16 @@ public final class Base64Util
      * @param binaryData Array containing binary data to encode.
      * @return Base64-encoded data.
      */
-    public static byte[] encode(byte[] binaryData)
-    {
+    public static byte[] encode(byte[] binaryData) {
         int lengthDataBits = binaryData.length * EIGHTBIT;
         int fewerThan24bits = lengthDataBits % TWENTYFOURBITGROUP;
         int numberTriplets = lengthDataBits / TWENTYFOURBITGROUP;
         byte encodedData[] = null;
 
-        if (fewerThan24bits != 0)
-        {
+        if (fewerThan24bits != 0) {
             // data not divisible by 24 bit
             encodedData = new byte[(numberTriplets + 1) * 4];
-        }
-        else
-        {
+        } else {
             // 16 or 8 bit
             encodedData = new byte[numberTriplets * 4];
         }
@@ -175,8 +153,7 @@ public final class Base64Util
         int encodedIndex = 0;
         int dataIndex = 0;
         int i = 0;
-        for (i = 0; i < numberTriplets; i++)
-        {
+        for (i = 0; i < numberTriplets; i++) {
             dataIndex = i * 3;
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
@@ -199,8 +176,7 @@ public final class Base64Util
         // form integral number of 6-bit groups
         dataIndex = i * 3;
         encodedIndex = i * 4;
-        if (fewerThan24bits == EIGHTBIT)
-        {
+        if (fewerThan24bits == EIGHTBIT) {
             b1 = binaryData[dataIndex];
             k = (byte) (b1 & 0x03);
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
@@ -208,9 +184,7 @@ public final class Base64Util
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
             encodedData[encodedIndex + 2] = PAD;
             encodedData[encodedIndex + 3] = PAD;
-        }
-        else if (fewerThan24bits == SIXTEENBIT)
-        {
+        } else if (fewerThan24bits == SIXTEENBIT) {
 
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
@@ -229,30 +203,24 @@ public final class Base64Util
         return encodedData;
     }
 
-    public static String decode(String src)
-    {
+    public static String decode(String src) {
         String target = null;
-        if (src != null)
-        {
+        if (src != null) {
             byte[] bts1 = src.getBytes();
             byte[] bts2 = decode(bts1);
-            if (bts2 != null)
-            {
+            if (bts2 != null) {
                 target = new String(bts2);
             }
         }
         return target;
     }
 
-    public static String decode(String src, String charSet) throws UnsupportedEncodingException
-    {
+    public static String decode(String src, String charSet) throws UnsupportedEncodingException {
         String target = null;
-        if (src != null)
-        {
+        if (src != null) {
             byte[] bts1 = src.getBytes();
             byte[] bts2 = decode(bts1);
-            if (bts2 != null)
-            {
+            if (bts2 != null) {
                 target = new String(bts2, charSet);
             }
         }
@@ -265,11 +233,9 @@ public final class Base64Util
      * @param base64Data Byte array containing Base64 data
      * @return Array containing decoded data.
      */
-    public static byte[] decode(byte[] base64Data)
-    {
+    public static byte[] decode(byte[] base64Data) {
         // handle the edge case, so we don't have to worry about it later
-        if (base64Data.length == 0)
-        {
+        if (base64Data.length == 0) {
             return null;
         }
 
@@ -285,18 +251,15 @@ public final class Base64Util
             // this sizes the output array properly - rlw
             int lastData = base64Data.length;
             // ignore the '=' padding
-            while (base64Data[lastData - 1] == PAD)
-            {
-                if (--lastData == 0)
-                {
+            while (base64Data[lastData - 1] == PAD) {
+                if (--lastData == 0) {
                     return new byte[0];
                 }
             }
             decodedData = new byte[lastData - numberQuadruple];
         }
 
-        for (int i = 0; i < numberQuadruple; i++)
-        {
+        for (int i = 0; i < numberQuadruple; i++) {
             dataIndex = i * 4;
             marker0 = base64Data[dataIndex + 2];
             marker1 = base64Data[dataIndex + 3];
@@ -304,8 +267,7 @@ public final class Base64Util
             b1 = base64Alphabet[base64Data[dataIndex]];
             b2 = base64Alphabet[base64Data[dataIndex + 1]];
 
-            if (marker0 != PAD && marker1 != PAD)
-            {
+            if (marker0 != PAD && marker1 != PAD) {
                 // No PAD e.g 3cQl
                 b3 = base64Alphabet[marker0];
                 b4 = base64Alphabet[marker1];
@@ -313,14 +275,10 @@ public final class Base64Util
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
                 decodedData[encodedIndex + 1] = (byte) (((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf));
                 decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
-            }
-            else if (marker0 == PAD)
-            {
+            } else if (marker0 == PAD) {
                 // Two PAD e.g. 3c[Pad][Pad]
                 decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
-            }
-            else if (marker1 == PAD)
-            {
+            } else if (marker1 == PAD) {
                 // One PAD e.g. 3cQ[Pad]
                 b3 = base64Alphabet[marker0];
 
@@ -335,8 +293,7 @@ public final class Base64Util
     /**
      * 隐藏工具类的构造方法
      */
-    protected Base64Util()
-    {
+    protected Base64Util() {
         throw new UnsupportedOperationException();
     }
 
@@ -345,7 +302,8 @@ public final class Base64Util
      */
     private static final int CACHE_SIZE = 1024;
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * BASE64字符串解码为二进制数据
      * </p>
@@ -358,7 +316,8 @@ public final class Base64Util
         return Base64Util.decode(base64.getBytes());
     }
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * 二进制数据编码为BASE64字符串
      * </p>
@@ -371,7 +330,8 @@ public final class Base64Util
         return new String(Base64Util.encode(bytes));
     }
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * 将文件编码为BASE64字符串
      * </p>
@@ -388,13 +348,14 @@ public final class Base64Util
         return encodeByte(bytes);
     }
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * BASE64字符串转回文件
      * </p>
      *
      * @param filePath 文件绝对路径
-     * @param base64 编码字符串
+     * @param base64   编码字符串
      * @throws Exception
      */
     public static void decodeToFile(String filePath, String base64) throws Exception {
@@ -402,7 +363,8 @@ public final class Base64Util
         byteArrayToFile(bytes, filePath);
     }
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * 文件转换为二进制数组
      * </p>
@@ -430,12 +392,13 @@ public final class Base64Util
         return data;
     }
 
-        /** *//**
+    /** */
+    /**
      * <p>
      * 二进制数据写文件
      * </p>
      *
-     * @param bytes 二进制数据
+     * @param bytes    二进制数据
      * @param filePath 文件生成目录
      */
     public static void byteArrayToFile(byte[] bytes, String filePath) throws Exception {

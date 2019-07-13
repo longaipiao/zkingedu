@@ -20,8 +20,8 @@ public class CourseTypeServiceImpl implements CourseTypeService {
 
     /**
      * //查询所有课程类型
-     * @return
-     * yan
+     *
+     * @return yan
      */
     @Override
     public List<CourseType> getCourseTypes() {
@@ -32,6 +32,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     /**
      * yan
      * 查询所有课程类别  分页查询
+     *
      * @param courseType
      * @return
      */
@@ -43,6 +44,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     /**
      * yan
      * 查询所有课程类别  分页 搜索
+     *
      * @param pageBean
      * @return
      */
@@ -56,7 +58,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
             result.setCount(String.valueOf(page.getTotal()));
             result.setMsg("success");
             result.setCode(0);
-            return  result;
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.error(e.getMessage());
@@ -66,6 +68,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     /**
      * yan
      * 添加课程类别
+     *
      * @param courseType
      * @return
      */
@@ -77,6 +80,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     /**
      * yan
      * 修改课程类型
+     *
      * @param courseType
      * @return
      */
@@ -88,6 +92,7 @@ public class CourseTypeServiceImpl implements CourseTypeService {
     /**
      * 删除多个课程类型
      * yan
+     *
      * @param ids
      * @return
      */

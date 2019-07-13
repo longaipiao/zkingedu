@@ -23,6 +23,7 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * 增加消息的方法
+     *
      * @param message 消息对象
      * @return
      */
@@ -37,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
      */
     @Override
     public PageInfo<Map<String, Object>> findMessage(Integer userID, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<Map<String, Object>> messages = messageDao.findMessage(userID);
         return new PageInfo<>(messages);
     }
@@ -62,6 +63,7 @@ public class MessageServiceImpl implements MessageService {
 
     /**
      * 根据消息id查询评论id
+     *
      * @param messageId 消息id
      * @return
      */

@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.HoardingDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+  <!--  <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--公sql-->
     <sql id="hoardingSql">
         collection_id,collection_zpid,collection_uid,collection_state,collection_time
@@ -13,33 +13,36 @@
 
     <!--收藏接口Mapper-->
     <select id="getHoardingsByUid" resultType="hashmap">
-        select a.collection_id,b.course_sid,b.course_num,b.course_id,b.course_name,b.course_desc,b.course_img,c.user_id from t_collection a,t_course b,t_user c
-        WHERE a.collection_zpid=b.course_id AND a.collection_uid=c.user_id AND a.collection_uid=#{uid} AND a.collection_state=1 ORDER BY a.collection_time DESC
+        select a.collection_id,b.course_sid,b.course_num,b.course_id,b.course_name,b.course_desc,b.course_img,c.user_id
+        from t_collection a,t_course b,t_user c
+        WHERE a.collection_zpid=b.course_id AND a.collection_uid=c.user_id AND a.collection_uid=#{uid} AND
+        a.collection_state=1 ORDER BY a.collection_time DESC
     </select>
-
 
 
     <!--查询课程id  有多少人收藏  统计-->
     <select id="getCourseNumber" resultType="integer">
         select count(0) from t_collection where collection_zpid=#{courseId} AND collection_state=1
     </select>
-    
-    
+
+
     <!--根据用户id  和课程id  查询表内是否有记录-->
     <select id="getHoardingByUidAndCid" resultType="com.zking.zkingedu.common.model.Hoarding">
-        select <include refid="hoardingSql"/> from t_collection where collection_zpid=#{cid} AND collection_state=1 and collection_uid=#{uid}
+        select
+        <include refid="hoardingSql"/>
+        from t_collection where collection_zpid=#{cid} AND collection_state=1 and collection_uid=#{uid}
     </select>
-    
-    
+
+
     <!--用户收藏课程-->
     <insert id="addHoardingAndCourse">
         insert into t_collection (collection_zpid,collection_uid,collection_state,collection_time)
-         values (#{cid},#{uid},1,now());
+        values (#{cid},#{uid},1,now());
     </insert>
 
 
     <!--用户取消收藏课程-->
     <delete id="delHoardingByuidAndCid">
-        delete from t_collection where collection_zpid=#{cid}  and collection_uid=#{uid} AND collection_state=1
+        delete from t_collection where collection_zpid=#{cid} and collection_uid=#{uid} AND collection_state=1
     </delete>
 </mapper>

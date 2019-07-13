@@ -32,6 +32,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * yan
      * 根据课程体系id  查询对应的课程
+     *
      * @param courseid
      * @return
      */
@@ -43,9 +44,9 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 根据课程id  查询课程信息
+     *
      * @param id
-     * @return
-     * yan
+     * @return yan
      */
     @Override
     public Course getCourseBYcourseID(Integer id) {
@@ -55,6 +56,7 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 根据课程ID查询单个课程的积分数量在和用户积分对比，判断能不能看此课程视频
+     *
      * @param courseid 课程id
      * @return
      */
@@ -66,9 +68,9 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 添加查询课程  课程搜索页面
+     *
      * @param course
-     * @return
-     * yan
+     * @return yan
      */
     @Override
     public List<Course> getCourseSearch(Course course) {
@@ -79,16 +81,17 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 前台课程搜索多条件搜索
      * yan
+     *
      * @param pageBean
      * @return
      */
     @Transactional
     @Override
     public ResultUtil SearchCourse(PageBean<Course> pageBean) {
-        if(pageBean.getPageIndex()==null){
+        if (pageBean.getPageIndex() == null) {
             pageBean.setPageIndex(1);
         }
-        if(pageBean.getPageSize()==null){
+        if (pageBean.getPageSize() == null) {
             pageBean.setPageSize(9);
         }
         try {
@@ -105,14 +108,15 @@ public class CourseServiceImpl implements CourseService {
             return resul;
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultUtil(500,"数据接口异常",e.getMessage());
+            return new ResultUtil(500, "数据接口异常", e.getMessage());
         }
     }
 
 
     /**
      * 根据课程id查询课程名称
-     * @param courseid  课程id
+     *
+     * @param courseid 课程id
      * @return
      */
     @Override
@@ -123,8 +127,8 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 获取最热课程 四个播放量排序
-     * @return
-     * yan
+     *
+     * @return yan
      */
     @Override
     public List<Course> getCoursefour() {
@@ -134,6 +138,7 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 根据课程id查询出此视频是否免费
+     *
      * @param courseID 课程id
      * @return
      */
@@ -145,15 +150,16 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 查询所有的课程信息
      * yan
-     * @param pageBean  查询参数
+     *
+     * @param pageBean 查询参数
      * @return
      */
     @Override
     public ResultUtil getAllCoursesAndSearchByPage(PageBean<Course> pageBean) {
-        if(pageBean.getPageIndex()==null){
+        if (pageBean.getPageIndex() == null) {
             pageBean.setPageIndex(1);
         }
-        if(pageBean.getPageSize()==null){
+        if (pageBean.getPageSize() == null) {
             pageBean.setPageSize(10);
         }
         try {
@@ -175,14 +181,15 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 查询所有的课程信息
      * yan
-     * @return  map
+     *
+     * @return map
      */
     @Override
     public ResultUtil getAllCourses(PageBean<Course> pageBean) {
-        if(pageBean.getPageIndex()==null){
+        if (pageBean.getPageIndex() == null) {
             pageBean.setPageIndex(1);
         }
-        if(pageBean.getPageSize()==null){
+        if (pageBean.getPageSize() == null) {
             pageBean.setPageSize(10);
         }
         try {
@@ -205,6 +212,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 课程添加
      * yan
+     *
      * @param course
      * @return
      */
@@ -217,6 +225,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * yan
      * 根据课程id  查询
+     *
      * @param sid
      * @return
      */
@@ -228,6 +237,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 课程信息修改
      * yan
+     *
      * @param course
      * @return
      */
@@ -239,13 +249,14 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 修改课程状态  0显示  1影藏
      * yan
+     *
      * @param id
      * @param stateid
      * @return
      */
     @Override
     public int editCourseState(Integer id, Integer stateid) {
-        return courseDao.editCourseState(id,stateid);
+        return courseDao.editCourseState(id, stateid);
     }
 
 
@@ -253,17 +264,19 @@ public class CourseServiceImpl implements CourseService {
      * yan
      * 修改课程点击量
      * 课程点击量加一
+     *
      * @param id
      * @return
      */
     @Override
     public int updatecliNum(Integer id, Integer num) {
-        return courseDao.updatecliNum(id,num);
+        return courseDao.updatecliNum(id, num);
     }
 
     /**
      * 更新  课程免费章节数  以及课程购买总积分
      * yan
+     *
      * @param id 课程id
      * @return
      */

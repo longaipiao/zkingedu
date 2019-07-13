@@ -1,7 +1,6 @@
 package com.zking.zkingedu.common.quartz;
 
 
-
 import com.zking.zkingedu.common.model.ScheduleTriggerParam;
 import com.zking.zkingedu.common.service.IScheduleTriggerParamService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +23,6 @@ public class MyJob1 implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         List<ScheduleTriggerParam> scheduleTriggerParams =
                 scheduleTriggerParamService.queryScheduleParam(2);
-        System.out.println("size:"+scheduleTriggerParams.size());
+        System.out.println("size:" + scheduleTriggerParams.size());
     }
 }

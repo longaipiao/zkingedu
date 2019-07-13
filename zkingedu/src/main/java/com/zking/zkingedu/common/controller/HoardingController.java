@@ -26,13 +26,14 @@ public class HoardingController {
     /**
      * 获取登录后的用户 收藏的课程信息  分页
      * yan
+     *
      * @param page
      * @param limit
      * @return
      */
     @ResponseBody
     @RequestMapping("/getCourseHoarding")
-    public ResultUtil getHoardings(Integer page,Integer limit){
+    public ResultUtil getHoardings(Integer page, Integer limit) {
         Integer uid = SessionUtil.getUserById();
         PageBean<Integer> pageBean = new PageBean<>();
         pageBean.setT(uid);
@@ -47,15 +48,16 @@ public class HoardingController {
      * 如果用户收藏了课程  则取消收藏
      * 如果用户没收藏课程   则收藏
      * yan
-     * @param  用户id
+     *
+     * @param 用户id
      * @param cid
-     * @return  code=1 收藏  code=2取消收藏  500未登录||异常
+     * @return code=1 收藏  code=2取消收藏  500未登录||异常
      */
     @ResponseBody
     @RequestMapping(value = "/addHoardingAndCourse")
-    public ResultUtil userAndHoardingCourse(Integer cid){
+    public ResultUtil userAndHoardingCourse(Integer cid) {
         Integer userById = SessionUtil.getUserById();//用户id
-        if(userById!=null){
+        if (userById != null) {
             return hoardingService.UserAddHoardingAnddelByUidAndCid(userById, cid);
         }
         return ResultUtil.error("请登陆后收藏");

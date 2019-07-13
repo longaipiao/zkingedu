@@ -26,7 +26,7 @@ public interface BillDao {
     /**
      * 根据用户名称查询出账单信息
      */
-    public List<Map<String,Object>> findBillUname(@Param("userName") String userName);
+    public List<Map<String, Object>> findBillUname(@Param("userName") String userName);
 
 
     /**

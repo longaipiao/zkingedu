@@ -12,6 +12,7 @@ public interface MenuService {
      * 根据角色ID获取单个角色的权限
      */
     List<Menu> getMenuByRoleID(Integer roleID);
+
     /**
      * 获取所有菜单项
      */

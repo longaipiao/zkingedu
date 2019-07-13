@@ -16,10 +16,10 @@ public class SessionUtil {
 
     /**
      * 从session中获取员工信息
-     * @return
-     * yan
+     *
+     * @return yan
      */
-    public static Emp getEmp(){
+    public static Emp getEmp() {
         /**
          * 模拟登陆员工为1
          */
@@ -31,9 +31,10 @@ public class SessionUtil {
 
     /**
      * 获取用户  模拟登陆 用户为2的
+     *
      * @return
      */
-    public static User getUser(){
+    public static User getUser() {
         User user = new User();
         user.setUserID(2);
         return user;
@@ -42,9 +43,11 @@ public class SessionUtil {
 
     /**
      * 获取为2 的用户  模拟
+     *
      * @return
      */
-    public static Integer getUserById(){
-        return 3;
+    public static Integer getUserById() {
+
+        return null;
     }
 }

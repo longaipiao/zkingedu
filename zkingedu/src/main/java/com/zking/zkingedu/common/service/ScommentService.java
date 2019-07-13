@@ -16,6 +16,7 @@ public interface ScommentService {
     /**
      * 根据课程id  查询课程下面所有评论
      * yan
+     *
      * @param cid
      * @return
      */
@@ -25,15 +26,17 @@ public interface ScommentService {
     /**
      * 使用流加载  课程评论  类似分页
      * yan
+     *
      * @param pageBean
      * @return
      */
-   ResultUtil getScommentByPage(PageBean<Integer> pageBean);
+    ResultUtil getScommentByPage(PageBean<Integer> pageBean);
 
 
     /**
      * 前台用户课程评论增加
      * yan
+     *
      * @param scomment
      * @return
      */
@@ -43,6 +46,7 @@ public interface ScommentService {
     /**
      * 删除课程评论
      * yan
+     *
      * @param id
      * @return
      */
@@ -52,6 +56,7 @@ public interface ScommentService {
     /**
      * 根据课程id  查询有多少课程评论
      * yan
+     *
      * @param cid
      * @return
      */

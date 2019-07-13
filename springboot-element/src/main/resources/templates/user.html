@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" media="screen" />
+        <title>用户管理</title>
+        <link href="/scripts/element-ui/index.css" rel="stylesheet" />
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.common.dev.js"></script>
+        <script src="/scripts/element-ui/index.js"></script>
+</head>
+<body>
+
+   <h1>我是用户中心</h1>
+   <div id="app">
+       <Button @click='current="my-one"' style="color: darkblue">用户列表</Button>
+       <Button @click='current="my-two"' style="color: darkblue">角色列表</Button>
+       <Button @click='current="my-three"' style="color: darkblue">爱情列表</Button>
+       <br>
+       <!--动态组件-->
+       <component :is="current"></component>
+   </div>
+
+
+
+</body>
+   <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                current:'my-one'      //这个是默认第一个选项卡出来
+            },
+            components: {
+                'my-one': {
+                    template: '<div><h2>one</h2><p>oneone</p></div>'  //这个是选项卡的内容
+                },
+                'my-two': {
+                    template: '<div><h2>222</h2><p>222</p></div>'  //这个是选项卡的内容
+                },
+                'my-three': {
+                    template: '<div><h2>333</h2><p>333</p></div>' //这个是选项卡的内容
+
+                }
+            },
+                methods : function () {
+
+                }
+        });
+
+
+    </script>
+
+
+</html>

@@ -11,7 +11,7 @@ public class PasswordHelper {
     public static final String ALGORITHM_NAME = "md5";//基础散列算法
     public static final int HASH_ITERATIONS = 2;//自定义散列次数
 
-    public void encryptPassword(User user){
+    public void encryptPassword(User user) {
         //随机字符串作为salt因子，实际参与运算的salt我们还引入其他干扰因子
 
     }

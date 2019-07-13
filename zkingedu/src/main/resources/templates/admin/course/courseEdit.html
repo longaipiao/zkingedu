@@ -12,276 +12,277 @@
 </head>
 
 
-
-<input type="hidden"th:value="${course['course_sid']}" id="sid" >
-<input type="hidden"th:value="${course['course_type']}" id="tid" >
-<input type="hidden"th:value="${course['course_id']}" id="id" >
+<input type="hidden" th:value="${course['course_sid']}" id="sid">
+<input type="hidden" th:value="${course['course_type']}" id="tid">
+<input type="hidden" th:value="${course['course_id']}" id="id">
 
 <body>
-    <form class="layui-form" action="">
+<form class="layui-form" action="">
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">体系阶段</label>
-                <div class="layui-input-inline" id="sel0">
-                    <!--<select name="quiz">
-                        <option value="">请选择问题</option>
-                        <optgroup label="城市记忆">
-                            <option value="你工作的第一个城市">你工作的第一个城市</option>
-                        </optgroup>
-                        <optgroup label="学生时代">
-                            <option value="你的工号">你的工号</option>
-                            <option value="你最喜欢的老师">你最喜欢的老师</option>
-                        </optgroup>
-                    </select>-->
-                </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">体系阶段</label>
+            <div class="layui-input-inline" id="sel0">
+                <!--<select name="quiz">
+                    <option value="">请选择问题</option>
+                    <optgroup label="城市记忆">
+                        <option value="你工作的第一个城市">你工作的第一个城市</option>
+                    </optgroup>
+                    <optgroup label="学生时代">
+                        <option value="你的工号">你的工号</option>
+                        <option value="你最喜欢的老师">你最喜欢的老师</option>
+                    </optgroup>
+                </select>-->
             </div>
         </div>
+    </div>
 
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">课程名称</label>
-                <div class="layui-input-block">
-                    <input type="text" name="courseName" th:value="${course['course_name']}"  lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-        </div>
-
-
-
-        <!--轮播图片  -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">课程封面</label>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">课程名称</label>
             <div class="layui-input-block">
-                <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button><br />
-                <img class="layui-upload-img" id="preview" th:src="${course['course_img']}" style="width: 150px;margin-top: 5px">
-                <p id="uploadError"></p>
-                <input type="hidden" lay-verify="required" th:value="${course['course_img']}" name="courseImg" id="newsImg" value=""/>
+                <input type="text" name="courseName" th:value="${course['course_name']}" lay-verify="required"
+                       autocomplete="off" placeholder="请输入标题" class="layui-input">
             </div>
         </div>
+    </div>
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">购买积分(套)</label>
-                <div class="layui-input-inline">
-                    <input type="tel" name="courseInte" th:value="${course['course_inte']}" lay-verify="number" autocomplete="off" class="layui-input">
-                </div>
+
+    <!--轮播图片  -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程封面</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button>
+            <br/>
+            <img class="layui-upload-img" id="preview" th:src="${course['course_img']}"
+                 style="width: 150px;margin-top: 5px">
+            <p id="uploadError"></p>
+            <input type="hidden" lay-verify="required" th:value="${course['course_img']}" name="courseImg" id="newsImg"
+                   value=""/>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">购买积分(套)</label>
+            <div class="layui-input-inline">
+                <input type="tel" name="courseInte" th:value="${course['course_inte']}" lay-verify="number"
+                       autocomplete="off" class="layui-input">
             </div>
         </div>
+    </div>
 
 
-
-
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">课程分类</label>
-                <div class="layui-input-block" id="sel1">
-                    <!--<select name="interest" lay-filter="aihao">
-                        <option value=""selected="">请选择分类</option>
-                        <option value="0">写作</option>
-                        <option value="1" >阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>-->
-                </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">课程分类</label>
+            <div class="layui-input-block" id="sel1">
+                <!--<select name="interest" lay-filter="aihao">
+                    <option value=""selected="">请选择分类</option>
+                    <option value="0">写作</option>
+                    <option value="1" >阅读</option>
+                    <option value="2">游戏</option>
+                    <option value="3">音乐</option>
+                    <option value="4">旅行</option>
+                </select>-->
             </div>
         </div>
+    </div>
 
-        <div class="layui-form-item layui-form-text">
-            <div class="layui-inline">
-                <label class="layui-form-label">课程介绍</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" th:value="${course['course_desc']}" th:text="${course['course_desc']}" name="courseDesc" lay-verify="required" class="layui-textarea"></textarea>
-                </div>
-            </div>
-        </div>
-        <!--<div class="layui-form-item layui-form-text">
-          <label class="layui-form-label">编辑器</label>
-          <div class="layui-input-block">
-            <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-          </div>
-        </div>-->
-        <div class="layui-form-item">
+    <div class="layui-form-item layui-form-text">
+        <div class="layui-inline">
+            <label class="layui-form-label">课程介绍</label>
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <textarea placeholder="请输入内容" th:value="${course['course_desc']}" th:text="${course['course_desc']}"
+                          name="courseDesc" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>
-    </form>
+    </div>
+    <!--<div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">编辑器</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+      </div>
+    </div>-->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 
 
-    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-    <script>
-        layui.use(['form', 'layedit', 'laydate','upload','jquery'], function(){
-            var form = layui.form
-                ,layer = parent.layer === undefined ? layui.layer : parent.layer
-                ,layedit = layui.layedit
-                ,$ = layui.jquery
-                ,upload = layui.upload;
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'upload', 'jquery'], function () {
+        var form = layui.form
+            , layer = parent.layer === undefined ? layui.layer : parent.layer
+            , layedit = layui.layedit
+            , $ = layui.jquery
+            , upload = layui.upload;
 
-            /**
-             * 绑定所有的体系阶段
-             * 3
-             */
-            $.ajax({
-                url:"/user/getSystemAndStageMenu",
-                type:"post",
-                dataType:"json",
-                success:function (data) {
-                    var dom = mysystemStageMenu(data);
-                    $("#sel0").html(dom);
-                    form.render();
-                }
-            })
-
-
-            /**
-             *动态绑定所有的课程类型
-             * yan
-             */
-            $.ajax({
-                url:"/user/getCourseTypes",
-                type:"post",
-                dataType:"json",
-                success:function (data) {
-                    var dom = mycourseTypeMenu(data);
-                    $("#sel1").html(dom);
-                    form.render();
-                }
-            })
+        /**
+         * 绑定所有的体系阶段
+         * 3
+         */
+        $.ajax({
+            url: "/user/getSystemAndStageMenu",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                var dom = mysystemStageMenu(data);
+                $("#sel0").html(dom);
+                form.render();
+            }
+        })
 
 
-            //创建一个编辑器
-            var editIndex = layedit.build('LAY_demo_editor');
+        /**
+         *动态绑定所有的课程类型
+         * yan
+         */
+        $.ajax({
+            url: "/user/getCourseTypes",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                var dom = mycourseTypeMenu(data);
+                $("#sel1").html(dom);
+                form.render();
+            }
+        })
 
 
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#onePicUpload'
-                ,url: '/file/imgupload'
-                ,before: function(obj){
-                    //预读本地文件
-                    obj.preview(function(index, file, result){
-                        $('#preview').attr('src', result); //图片链接（base64）
-                    });
-                }
-                ,done: function(res){
-                    //如果上传失败
-                    if(res.code > 0){
-                        return layer.msg(res.msg);
-                    }
-                    //上传成功
-                    //设置src给图片隐藏域
-                    $("#newsImg").val(res.data.src);
-                    layer.msg('上传成功')
-                }
-                ,error: function(){
-                    //失败状态，并实现重传
-                    var uploadError = $('#uploadError');
-                    uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                    uploadError.find('.demo-reload').on('click', function(){
-                        uploadInst.upload();
-                    });
-                }
-            });
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
 
 
-
-            //监听提交
-            form.on('submit(demo1)', function(data){
-                //弹出loading
-                var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-                var msg;
-                $.ajax({
-                    type: "post",
-                    url: "/user/editCourse?courseID="+$("#id").val(),
-                    data:data.field,
-                    dataType:"json",
-                    success:function(d){
-                        if(d.code==0){
-                            msg="操作成功";
-                        }else{
-                            msg=d.msg;
-                        }
-                    }
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#onePicUpload'
+            , url: '/file/imgupload'
+            , before: function (obj) {
+                //预读本地文件
+                obj.preview(function (index, file, result) {
+                    $('#preview').attr('src', result); //图片链接（base64）
                 });
-                setTimeout(function(){
-                    top.layer.close(index);
-                    layer.msg(msg);
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                },2000);
-                return false;
-            });
-
-            //表单初始赋值
-            form.val('example', {
-                "username": "贤心" // "name": "value"
-                ,"password": "123456"
-                ,"interest": 1
-                ,"like[write]": true //复选框选中状态
-                ,"close": true //开关状态
-                ,"sex": "女"
-                ,"desc": "我爱 layui"
-            })
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg(res.msg);
+                }
+                //上传成功
+                //设置src给图片隐藏域
+                $("#newsImg").val(res.data.src);
+                layer.msg('上传成功')
+            }
+            , error: function () {
+                //失败状态，并实现重传
+                var uploadError = $('#uploadError');
+                uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                uploadError.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
         });
 
 
-        /**
-         * 绑定体系阶段数据绑定
-         * yan
-         */
-        function mysystemStageMenu(data) {
-
-            var sid=$("#sid").val();//获取阶段id
-            var a = data.data;
-            var str ="<select name=\"courseSid\" lay-verify=\"required\"><option value=\"\" lay-search>请选择体系阶段</option>";
-            for (var i=0;i<a.length;i++){
-                str+="<optgroup label=\""+data.data[i].sysName+"\">";
-                for (var j=0;j<a[i].stages.length;j++){
-                    if(sid==a[i].stages[j].systemID){
-                        str+="<option value=\""+a[i].stages[j].systemID+"\" selected=\"\">"+a[i].stages[j].systemName+"</option>";
-                        continue;
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            //弹出loading
+            var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
+            var msg;
+            $.ajax({
+                type: "post",
+                url: "/user/editCourse?courseID=" + $("#id").val(),
+                data: data.field,
+                dataType: "json",
+                success: function (d) {
+                    if (d.code == 0) {
+                        msg = "操作成功";
+                    } else {
+                        msg = d.msg;
                     }
-                    str+="<option value=\""+a[i].stages[j].systemID+"\">"+a[i].stages[j].systemName+"</option>";
                 }
-                str+="</optgroup>";
-            }
-            str+="</select>";
-            return str;
-        }
+            });
+            setTimeout(function () {
+                top.layer.close(index);
+                layer.msg(msg);
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
+            }, 2000);
+            return false;
+        });
+
+        //表单初始赋值
+        form.val('example', {
+            "username": "贤心" // "name": "value"
+            , "password": "123456"
+            , "interest": 1
+            , "like[write]": true //复选框选中状态
+            , "close": true //开关状态
+            , "sex": "女"
+            , "desc": "我爱 layui"
+        })
+    });
 
 
-        /**
-         * 绑定课程类别下拉框
-         * <select name="interest" lay-filter="aihao">
-             <option value=""selected="">请选择分类</option>
-             <option value="0">写作</option>
-             <option value="1" >阅读</option>
-             <option value="2">游戏</option>
-             <option value="3">音乐</option>
-             <option value="4">旅行</option>
-           </select>
-         */
-        function mycourseTypeMenu(data) {
-            var tid = $("#tid").val();//获取类别id
-            var db=data.data;
-            var str ="<select name=\"courseType.tId\" lay-verify=\"required\" lay-filter=\"aihao\"> <option value=\"\"selected=\"\">请选择分类</option>";
-            for (var i=0;i<db.length;i++){
-                if(tid==db[i].tid){
-                    str+="<option value=\""+db[i].tid+"\" selected=\"\">"+db[i].tname+"</option>";
+    /**
+     * 绑定体系阶段数据绑定
+     * yan
+     */
+    function mysystemStageMenu(data) {
+
+        var sid = $("#sid").val();//获取阶段id
+        var a = data.data;
+        var str = "<select name=\"courseSid\" lay-verify=\"required\"><option value=\"\" lay-search>请选择体系阶段</option>";
+        for (var i = 0; i < a.length; i++) {
+            str += "<optgroup label=\"" + data.data[i].sysName + "\">";
+            for (var j = 0; j < a[i].stages.length; j++) {
+                if (sid == a[i].stages[j].systemID) {
+                    str += "<option value=\"" + a[i].stages[j].systemID + "\" selected=\"\">" + a[i].stages[j].systemName + "</option>";
                     continue;
                 }
-                str+="<option value=\""+db[i].tid+"\">"+db[i].tname+"</option>";
+                str += "<option value=\"" + a[i].stages[j].systemID + "\">" + a[i].stages[j].systemName + "</option>";
             }
-            str+="</select>";
-
-            return str;
+            str += "</optgroup>";
         }
-    </script>
+        str += "</select>";
+        return str;
+    }
+
+
+    /**
+     * 绑定课程类别下拉框
+     * <select name="interest" lay-filter="aihao">
+     <option value=""selected="">请选择分类</option>
+     <option value="0">写作</option>
+     <option value="1" >阅读</option>
+     <option value="2">游戏</option>
+     <option value="3">音乐</option>
+     <option value="4">旅行</option>
+     </select>
+     */
+    function mycourseTypeMenu(data) {
+        var tid = $("#tid").val();//获取类别id
+        var db = data.data;
+        var str = "<select name=\"courseType.tId\" lay-verify=\"required\" lay-filter=\"aihao\"> <option value=\"\"selected=\"\">请选择分类</option>";
+        for (var i = 0; i < db.length; i++) {
+            if (tid == db[i].tid) {
+                str += "<option value=\"" + db[i].tid + "\" selected=\"\">" + db[i].tname + "</option>";
+                continue;
+            }
+            str += "<option value=\"" + db[i].tid + "\">" + db[i].tname + "</option>";
+        }
+        str += "</select>";
+
+        return str;
+    }
+</script>
 
 </body>
 </html>

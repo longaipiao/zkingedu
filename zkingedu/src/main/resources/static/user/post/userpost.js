@@ -1,38 +1,37 @@
-
-
-function yx(aa,bb){
-      $.ajax({
-          type:"post",
-          url:"/pst/updatePcat",
-          dataType:"json",
-          data:{
-              pzt:aa,
-              pid:bb
-          },
-          success:function(data){
-              if(data==1){
-                  inintdata();
-                  alert("对用户隐藏成功");
-              }
-              if (data==0){
-                  inintdata();
-                  alert("对用户显示成功");
-              }
-          },
-          error:function(jqXHR){
-              alert("发生错误："+ jqXHR.status);
-          }
-      });
+function yx(aa, bb) {
+    $.ajax({
+        type: "post",
+        url: "/pst/updatePcat",
+        dataType: "json",
+        data: {
+            pzt: aa,
+            pid: bb
+        },
+        success: function (data) {
+            if (data == 1) {
+                inintdata();
+                alert("对用户隐藏成功");
+            }
+            if (data == 0) {
+                inintdata();
+                alert("对用户显示成功");
+            }
+        },
+        error: function (jqXHR) {
+            alert("发生错误：" + jqXHR.status);
+        }
+    });
 
 }
+
 //
 
 
 //删除自己的帖子，假删
-function delPost(aa){
-    var t=confirm("你确定要删除帖子吗？");
-    if (t==true) {
-       $.ajax({
+function delPost(aa) {
+    var t = confirm("你确定要删除帖子吗？");
+    if (t == true) {
+        $.ajax({
             type: "post",
             url: "/pst/updatePState",
             dataType: "json",
@@ -52,15 +51,11 @@ function delPost(aa){
 }
 
 
-
-
-
-
 $(function () {
 
     //方法二则直接使分用layui-v2.0.2里面的页功能，没有用到core.js里面的方法
 
-  inintdata();
+    inintdata();
 
 
 });

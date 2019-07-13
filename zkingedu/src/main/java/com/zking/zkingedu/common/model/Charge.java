@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 充值记录表
+ *
  * @ClassName Charge
  * @Author likai
  **/

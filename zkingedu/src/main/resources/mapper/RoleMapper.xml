@@ -22,8 +22,8 @@
     </update>
     <insert id="addMenuRoleByID" parameterType="int">
         insert into t_menu_role (role_id,menu_id) values
-        <foreach collection ="list" item="item" separator =",">
-        (#{item.roleID},#{item.menuID})
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleID},#{item.menuID})
         </foreach>
     </insert>
     <insert id="addRole" useGeneratedKeys="true" keyProperty="roleID" parameterType="role">
