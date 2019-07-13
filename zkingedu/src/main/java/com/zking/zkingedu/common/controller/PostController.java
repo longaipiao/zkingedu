@@ -56,9 +56,6 @@ public class PostController {
     @Autowired
     private MessageUtil messageUtil;
 
-//    Integer userById = SessionUtil.getUserById();
-
-
     //根据session获取uid
     int getUserid(HttpSession session){
         User user = (User) session.getAttribute("user");
@@ -248,7 +245,7 @@ public class PostController {
             int i = postService.addTcomment(tcomment);
 
             //添加日志
-            messageUtil.addMessage(getUserid(session),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"评论了你");
+            messageUtil.addMessage(SessionUtil.getUserById(),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"评论了你");
             //如果i>0的话，则返回i,否者是0,发表失败
             return i>0?i:0;
         }
@@ -258,7 +255,8 @@ public class PostController {
             tcomment.setTcommentLounum(null);
             //调用方法
             int i = postService.addTcomment(tcomment);
-            messageUtil.addMessage(getUserid(session),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"回复了你");
+            //添加日志
+            messageUtil.addMessage(SessionUtil.getUserById(),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"回复了你");
             return i > 0 ? i : 0;
         }
 

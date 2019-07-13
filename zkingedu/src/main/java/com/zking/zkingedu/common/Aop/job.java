@@ -53,7 +53,7 @@ public class job {
             try {
                 // uploadFile.transferTo(new
                 // File(req.getServletContext().getRealPath("WEB-INF/upload"),img));
-                File f=new File("F:\\git2\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
+                File f=new File("F:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
                 if(!f.exists()){
                     f.mkdirs();
                 }

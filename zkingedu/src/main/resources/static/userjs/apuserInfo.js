@@ -431,7 +431,7 @@ function ydzt(message_id) {
     //alert(messageID);
     $.post('/updateMessageState', {messageid: messageID}, function (data) {
         //alert(data);
-        window.location.href = '/user/showCourse?sid=' + data;
+        window.location.href = '/pst/userinfo/' + data;
     });
 
 

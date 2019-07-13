@@ -229,7 +229,6 @@
                            data-stat="course_comment" data-toggle="tab">课程评论(<span
                                 th:text="${scommentNum}">0</span>)</a>
                     </li>
-
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
 
                     <!--从后台获取的课程id-->
@@ -258,7 +257,8 @@
                             <span th:if="${se.sectionInte>0}">
                                     <em style="color: red">积分</em>
                             </span>
-
+                            <!--积分的隐藏域-->
+                            <input type="hidden" id="sectionInte" th:value="${se.sectionInte}"/>
                             <div class="pull-right lab-item-ctrl">
                                 <!-- <a class="btn btn-primary" th:href="@{'/user/video?sid='+${course.courseID}+'&id='+${se.sectionID}}" data-toggle="modal" data-sign="signin" data-next="/courses/1">开始学习</a>-->
                                 <!--课程id  隐藏-->
@@ -867,6 +867,13 @@
         /*if(user==user1 && course==course1){
             $("#qtsp").hide();
         }*/
+
+        //如果整套视频不要积分，就不会显示购买按钮
+        var sectionInte = $("#sectionInte").val();
+        //alert(sectionInte);
+        if(sectionInte==0||sectionInte==undefined){
+            $("#qtsp").hide();
+        }
 
 
 

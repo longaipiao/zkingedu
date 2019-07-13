@@ -2,10 +2,13 @@ package com.zking.zkingedu.common.utils;
 
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpSession;
  * yan
  */
 public class SessionUtil {
+
 
 
 
@@ -51,10 +55,6 @@ public class SessionUtil {
     }
 
 
-    /**
-     * 获取为 的用户  模拟
-     * @return
-     */
     /**
      * 获取为2 的用户  模拟
      *

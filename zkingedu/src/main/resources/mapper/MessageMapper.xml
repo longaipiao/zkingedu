@@ -20,7 +20,7 @@
 
     <!--根据用户id查询所以的消息通知-->
     <select id="findMessage" resultType="java.util.Map">
-        select u.user_img, m.* from t_message m,t_user u where m.message_uid1 = u.user_id and u.user_id = #{userID}
+        select u.user_img, m.* from t_message m,t_user u where m.message_uid1 = u.user_id and m.message_uid2 = #{userID}
         ORDER BY message_state asc
     </select>
 
@@ -31,7 +31,7 @@
 
     <!--查询有多少条消息记录-->
     <select id="findCountjl" parameterType="integer" resultType="integer">
-        select COUNT(message_id) from t_message where message_uid1 = #{userID} and message_state = 1
+        select COUNT(message_id) from t_message where message_uid2 = #{userID} and message_state = 1
     </select>
 
     <!--根据消息id查询评论id-->
