@@ -296,4 +296,41 @@ public class SystemServiceImpl implements SystemService {
         }
         return maps;
     }
+
+
+    /**
+     * 删除体系
+     * yan
+     * @param sid  体系id
+     * @return
+     */
+    @Override
+    public int delSystemById(Integer sid) {
+        return systemDao.delSystemById(sid);
+    }
+
+
+    /**
+     * 查询父体系下面阶段数量
+     * @param sid
+     * yan
+     * @return
+     */
+    @Override
+    public Integer selSysByFidNum(Integer sid) {
+        return systemDao.selSysByFidNum(sid);
+    }
+
+
+
+    /**
+     * 查询体系阶段下面的阶段课程数量
+     * yan
+     * @param sid
+     * @return
+     */
+    @Override
+    public Integer selStageAndCourseNum(Integer sid) {
+        return systemDao.selStageAndCourseNum(sid);
+    }
 }

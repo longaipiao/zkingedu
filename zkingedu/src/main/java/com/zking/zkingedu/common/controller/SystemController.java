@@ -345,4 +345,66 @@ public class SystemController {
     }
 
 
+    /**
+     * 删除体系
+     * yan
+     * @param sid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delSys")
+    public ResultUtil delSystemById(Integer sid){
+        try {
+            //1.查询体系下面阶段数量
+            Integer num = systemService.selSysByFidNum(sid);
+            if(num>0){
+                return ResultUtil.error("该体系下存在阶段数据，无法直接删除");
+            }
+            else {//体系下面没有阶段
+                int i = systemService.delSystemById(sid);
+                if(i>0){
+                    return ResultUtil.ok("操作成功");
+                }
+                else {
+                    return ResultUtil.ok("您的操作过于频繁...");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
+
+
+    /**
+     * 删除体系阶段
+     * yan
+     * @param sid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delSysByStage")
+    public ResultUtil delSystemAndStageById(Integer sid){
+        try {
+            //1.查询体系下面阶段数量
+            Integer n = systemService.selStageAndCourseNum(sid);
+            if(n>0){
+                return ResultUtil.error("该阶段下存在课程数据，无法直接删除");
+            }
+            else {//体系下面没有阶段
+                int i = systemService.delSystemById(sid);
+                if(i>0){
+                    return ResultUtil.ok("操作成功");
+                }
+                else {
+                    return ResultUtil.ok("您的操作过于频繁...");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
 }

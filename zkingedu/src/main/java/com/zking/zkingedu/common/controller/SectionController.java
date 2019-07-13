@@ -151,8 +151,6 @@ public class SectionController {
     @ResponseBody
     @RequestMapping("/addSection")
     public ResultUtil addSection(Section section, HttpServletRequest request){
-//        System.err.println("进来了==========================================");
-//        System.err.println("section = " + section);
         if(section==null){
             return ResultUtil.error();
         }
@@ -239,21 +237,25 @@ public class SectionController {
     @RequestMapping(value = "/delSections")
     public ResultUtil delSections(@RequestParam(value = "ids[]") List<Integer> ids,HttpServletRequest request){
         try {
+            //1.删除之前查询章节课程，便于更新
+            Section section = sectionService.getSectionById(ids.get(ids.size()-1));
             int i = sectionService.delSections(ids);
             if(i>0){
                 //更新  课程免费章节数  以及课程购买总积分
-                editCourseInteAndFree(ids);
+                editCourseInteAndFree(section.getSectionCid());
                 //放入日志
                 Emp emp =(Emp) request.getSession().getAttribute("emp");
                 mylog.setEmp(emp);
                 mylog.setLogTime(time);
-                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"添加了课程章节，章节id为"+ids.toString());
+                StringBuilder stringBuilder = new StringBuilder(emp.getEmpName()+"删除了课程章节，章节id为"+ids.toString());
                 mylog.setLogDetails(stringBuilder.toString());
                 logService.addLog(mylog);
                 //放入日志结束
-                return ResultUtil.ok("操作成功");
+                return ResultUtil.ok("删除章节成功");
             }
-            return ResultUtil.error("您的操作过于频繁");
+            else {
+                return ResultUtil.error("您的操作过于频繁");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.error(e.getMessage());
@@ -271,10 +273,23 @@ public class SectionController {
      */
     public int editCourseInteAndFree(List<Integer> ids)throws Exception{
         Integer secId = ids.get(ids.size()-1);
-//        System.err.println("=========================章节id:"+secId);
         Section section = sectionService.getSectionById(secId);
         //开始更新课程数据
         int i = courseService.editFreeAndInte(section.getSectionCid());
+        return i;
+    }
+
+
+    /**
+     * 更新  课程免费章节数  以及课程购买总积分
+     * 重载
+     * @param sid
+     * @return
+     * @throws Exception
+     */
+    public int editCourseInteAndFree(Integer sid)throws Exception{
+        //开始更新课程数据
+        int i = courseService.editFreeAndInte(sid);
         return i;
     }
 

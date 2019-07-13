@@ -54,6 +54,13 @@ public interface SystemDao {
 
 
     /**
+     * 根据体系fid查询该体系下面有多少课程
+     * @param fid
+     * @return System
+     */
+    Integer getSysCourseNum(Integer fid);
+
+    /**
      * admin
      * 获取所有的体系信息  1级
      * @return
@@ -135,5 +142,32 @@ public interface SystemDao {
      * @return
      */
     List<System> getSystemByRe();
+
+
+    /**
+     * 删除体系
+     * yan
+     * @param sid  体系id
+     * @return
+     */
+    int delSystemById(@Param("id") Integer sid);
+
+
+    /**
+     * 查询父体系下面阶段数量
+     * yan
+     * @param sid
+     * @return
+     */
+    Integer selSysByFidNum(@Param("id")Integer sid);
+
+
+    /**
+     * 查询体系阶段下面的阶段课程数量
+     * yan
+     * @param sid
+     * @return
+     */
+    Integer selStageAndCourseNum(@Param("sid")Integer sid);
 
 }

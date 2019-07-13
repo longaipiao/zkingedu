@@ -56,6 +56,9 @@ public class PostController {
     @Autowired
     private MessageUtil messageUtil;
 
+//    Integer userById = SessionUtil.getUserById();
+
+
     //根据session获取uid
     int getUserid(HttpSession session){
         User user = (User) session.getAttribute("user");

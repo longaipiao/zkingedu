@@ -43,8 +43,7 @@
             , limit: 5
             , cols: [
                 [
-                    {type: 'checkbox', fixed: 'left'}
-                    , {field: 'systemID', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
+                    {field: 'systemID', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
                     , {field: 'systemName', title: '阶段名称', width: 250}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                 ]
@@ -96,9 +95,26 @@
             var data = obj.data;
             //console.log(obj)
             if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
+                layer.confirm('确认要删除阶段吗，删除后将无法还原', function (index) {
                     layer.close(index);
+                    $.ajax({
+                        type: "post",
+                        url: "/user/delSysByStage",
+                        async:true,
+                        data:{
+                            sid : data.systemID
+                        },
+                        //dataType:"json",
+                        success:function(d){
+                            if(d.code==0){
+                                layer.msg(d.msg);
+                                obj.del();
+                            }
+                            else{
+                                layer.msg(d.msg);
+                            }
+                        }
+                    });
                 });
             } else if (obj.event === 'edit') {
                 //例子2

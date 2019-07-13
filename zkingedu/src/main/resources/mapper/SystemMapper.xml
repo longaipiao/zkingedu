@@ -63,6 +63,11 @@
         select COUNT(*) as sources_num from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}
     </select>
 
+    <!--根据体系fid查询该体系下面有多少课程-->
+    <select id="getSysCourseNum" resultType="integer">
+        select COUNT(0)  from t_system a,t_course b where b.course_sid=a.system_id AND a.system_fid=#{fid}
+    </select>
+
 
     <!--admin 获取所有的体系信息  1级-->
     <select id="getAllSystems" resultType="com.zking.zkingedu.common.model.System" parameterType="com.zking.zkingedu.common.model.System">
@@ -119,5 +124,26 @@
     <select id="getSystemByRe" resultType="com.zking.zkingedu.common.model.System">
 
     </select>
+
+
+    <!--删除体系-->
+    <delete id="delSystemById">
+        delete from t_system where system_id=#{id}
+    </delete>
+
+
+    <!--查询父体系下面阶段数量-->
+    <select id="selSysByFidNum" resultType="integer">
+        select count(0) from t_system where system_fid=#{id}
+    </select>
+    
+    
+    
+    <!--查询体系阶段下面的阶段课程数量-->
+    <select id="selStageAndCourseNum" resultType="integer">
+            SELECT count(0) FROM t_course WHERE course_sid=#{sid}
+    </select>
+    
+  
 
 </mapper>

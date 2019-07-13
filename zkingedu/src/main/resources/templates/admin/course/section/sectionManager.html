@@ -45,7 +45,7 @@
             ,url:'/user/getSectionsList?id='+$("#cid").val()
             ,toolbar: '#toolbarDemo'
             ,title: '章节数据表'
-            ,limit:5
+            ,limit:8
             ,id:"idtable"
             ,cols: [
                 [
@@ -94,29 +94,34 @@
                         layer.msg("请选择需要删除的章节");
                         break;
                     }
+
                     else{
-                        var arr=new Array();
-                        for (var i=0;i<data.length;i++){
-                            arr[i]=data[i].sectionID;
-                        }
-                        // console.log(arr);
-                        $.ajax({
-                            type: "get",
-                            url:"/user/delSections",
-                            data:{
-                                ids : arr
-                            },
-                            dataType:"json",
-                            success:function (data) {
-                                if(data.code==0){
-                                    table.reload("idtable");
-                                    layer.msg(data.msg);
-                                }
-                                else{
-                                    layer.msg("您的操作过于频繁...");
-                                }
+                        layer.confirm('确定要删除这'+data.length+"个章节吗？", function(index){
+                            layer.close(index);
+                            var arr=new Array();
+                            for (var i=0;i<data.length;i++){
+                                arr[i]=data[i].sectionID;
                             }
-                        })
+                            // console.log(arr);
+                            $.ajax({
+                                type: "get",
+                                url:"/user/delSections",
+                                data:{
+                                    ids : arr
+                                },
+                                dataType:"json",
+                                success:function (data) {
+                                    if(data.code==0){
+                                        table.reload("idtable");
+                                        layer.msg(data.msg);
+                                    }
+                                    else{
+                                        layer.msg("您的操作过于频繁...");
+                                    }
+                                }
+                            })
+
+                        });
                     }
                     break;
                 case 'add':
@@ -135,10 +140,31 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             //console.log(obj)
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
+            if(obj.event === 'del'){//删除单个章节
+                layer.confirm('确定要删除章节吗？', function(index){
                     layer.close(index);
+                    var arr=new Array();
+                    arr[0]=data.sectionID;
+                    // console.log(arr);
+                    $.ajax({
+                        type: "get",
+                        url:"/user/delSections",
+                        data:{
+                            ids : arr
+                        },
+                        dataType:"json",
+                        success:function (data) {
+                            if(data.code==0){
+                                obj.del();
+                                // table.reload("idtable");
+                                layer.msg(data.msg);
+                            }
+                            else{
+                                layer.msg("您的操作过于频繁...");
+                            }
+                        }
+                    })
+
                 });
             } else if(obj.event === 'edit'){
                 layer.open({
@@ -234,7 +260,6 @@
                 })
             }
         });
-
 
     });
 </script>

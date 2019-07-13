@@ -37,12 +37,10 @@
         #invite-user .modal-body {
             overflow: hidden;
         }
-
         #invite-user .modal-body .form-label {
             margin-bottom: 16px;
-            font-size: 14px;
+            font-size:14px;
         }
-
         #invite-user .modal-body .form-invite {
             width: 80%;
             padding: 6px 12px;
@@ -52,7 +50,6 @@
             float: left;
             margin-right: 10px;
         }
-
         #invite-user .modal-body .msg-modal-style {
             background-color: #7dd383;
             margin-top: 10px;
@@ -60,14 +57,12 @@
             text-align: center;
             width: 100%;
         }
-
         #invite-user .modal-body .modal-flash {
             position: absolute;
             top: 53px;
             right: 74px;
             z-index: 999;
         }
-
         /* end modal */
 
         .en-footer {
@@ -109,83 +104,26 @@
             margin-bottom: -50px;
             font-size: 13px;
         }
-
         p.join-vip-faq img {
-            height: 13px;
-            width: 13px;
-            margin-top: -2px;
+            height:13px;
+            width:13px;
+            margin-top:-2px;
         }
-
         a.vip-without-bean {
-            font-size: 18px;
-            line-height: 30px;
+            font-size:18px;
+            line-height:30px;
         }
     </style>
+
 
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top header">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#header-navbar-collapse" aria-expanded="false">
-                <span class="sr-only">实验楼</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/user/index.html">
-                <img src="/user/img/logo_03.png">
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="header-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown active">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                        课程
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="active" href="/user/courses/index.html">全部课程</a></li>
-                        <li><a class="" href="/user/courses/index.html?status=preview">即将上线</a></li>
-                        <li><a class="" href="/user/developer/index.html">开发者</a></li>
-                    </ul>
-                </li>
-                <li class="">
-                    <a href="/user/paths/index.html">路径</a>
-                </li>
-                <li class="">
-                    <a href="/user/questions/index.html">讨论区</a>
-                </li>
-                <li class=" bootcamp new-nav logo-1111">
-                    <a href="/user/bootcamp/index.html">训练营</a>
-
-                </li>
-                <li class=" new-nav logo-1111">
-                    <a href="/user/vip/index.html">会员</a>
-
-                </li>
-
-            </ul>
 
 
-            <div class="navbar-right btns">
-                <a class="btn btn-default navbar-btn sign-in" data-sign="signin" href="#sign-modal" data-toggle="modal">登录</a>
-                <a class="btn btn-default navbar-btn sign-up" data-sign="signup" href="#sign-modal" data-toggle="modal">注册</a>
-            </div>
 
-
-            <form class="navbar-form navbar-right" action="/user/search" method="get" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程/问答">
-                </div>
-            </form>
-        </div>
-    </div>
-</nav>
 
 
 <div class="container layout layout-margin-top">
@@ -207,7 +145,7 @@
                     <h4 class="pull-left course-infobox-title">
                         <span th:text="${course.courseName}">Linux 基础入门（新版）</span>
                     </h4>
-                    <div class="pull-right course-infobox-follow">
+                    <div class="pull-right " style="font-size:16px;color:#999;cursor:pointer">
 
                         <!--===============================-->
                         <!--===============================-->
@@ -215,16 +153,14 @@
                         <!--===============================-->
                         <!--收藏  爱心标签-->
                         <span class="course-infobox-followers" id="courseNum" th:text="${courseNum}">0</span>
-
-
                         <span>人关注</span>
                         <span th:if="${isCheck!=null}">
                             <i class="fa fa-star-o courseCheck" id="sac"
-                               th:onclick="|javascript:myHoarding(this,'${courseId}')|"></i>
+                               th:onclick="|javascript:myHoarding(this,'${course.courseID}')|"></i>
                         </span>
                         <span th:if="${isCheck==null}">
                             <i class="fa fa-star-o" id="sac"
-                               th:onclick="|javascript:myHoarding(this,'${courseId}')|"></i>
+                               th:onclick="|javascript:myHoarding(this,'${course.courseID}')|"></i>
                         </span>
                     </div>
                 </div>
@@ -241,26 +177,39 @@
                 </div>
             </div>
 
-            <!--如果视频id  不等于空展示课程信息-->
-            <div class="content course-infobox" th:if="${section!=null}">
-                <div class="clearfix course-infobox-body">
-                    <!--影藏标签 存放视频的id-->
-                    <form>
-                        <input type="hidden" id="videoId" th:value="${section.videoId}" value=""/>
-                    </form>
-                    <!--视频播放器-->
-                    <div id="youkuplayer" style="width:820px;height:403px"></div>
-                    <script type="text/javascript" src="//player.youku.com/jsapi"></script>
-                    <script type="text/javascript">
-                        var player = new YKU.Player('youkuplayer', {
-                            styleid: '0',
-                            client_id: '59c9a21060e1d847',
-                            vid: document.getElementById("videoId").value,
-                            newPlayer: true,
-                            autoplay: true
-                        });
-                    </script>
+
+            <!--<div class="layui-row">
+                <div class="layui-col-xs12 layui-col-md12">
+                    &lt;!&ndash;如果视频id  不等于空展示课程信息&ndash;&gt;
+
                 </div>
+            </div>-->
+
+            <div class="content course-infobox" th:if="${section!=null}">
+                <div class="layui-row">
+                    <div class="layui-col-xs12 layui-col-md12">
+                        <!--如果视频id  不等于空展示课程信息-->
+                        <div class="clearfix course-infobox-body">
+                            <!--影藏标签 存放视频的id-->
+                            <form>
+                                <input type="hidden" id="videoId" th:value="${section.videoId}" value=""/>
+                            </form>
+                            <!--视频播放器-->
+                            <div id="youkuplayer" style="width:auto;height:400px"></div>
+                            <script type="text/javascript" src="//player.youku.com/jsapi"></script>
+                            <script type="text/javascript">
+                                var player = new YKU.Player('youkuplayer', {
+                                    styleid: '0',
+                                    client_id: '59c9a21060e1d847',
+                                    vid: document.getElementById("videoId").value,
+                                    newPlayer: true,
+                                    autoplay: true
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="clearfix course-infobox-footer">
                     <div class="pull-right course-infobox-learned"><span th:text="${course.courseNum}">85243</span> 人学过
                     </div>
@@ -284,7 +233,7 @@
                     <button style="margin-left: 680px;" id="qtsp" type="button" class="btn btn-info">购买全套视频</button>
 
                     <!--从后台获取的课程id-->
-                    <input type="hidden" id="courseID" th:value="${courseId}"/>
+                    <input type="hidden" id="courseID" th:value="${course.courseID}"/>
                 </ul>
 
 
@@ -328,8 +277,7 @@
 
                                 <div class="comment-form-unlogin" th:if="${user==null}">
                                     请
-                                    <a href="#sign-modal" data-toggle="modal" data-sign="signin" data-next="/courses/1">
-                                        登录 </a>
+                                    <a href="#sign-modal" data-toggle="modal" data-sign="signin" data-next="/courses/1"> 登录 </a>
                                     后发表评论
                                 </div>
                                 <div th:if="${user!=null}">
@@ -435,24 +383,7 @@
 </div>
 
 
-<div class="modal fade" id="invite-user" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
-                <h4 class="modal-title">邀请好友，双方都可获赠实验豆！</h4>
-            </div>
-            <div class="modal-body">
 
-                <p><h4><a href="#sign-modal" data-toggle="modal" data-sign="signin">登录</a>后邀请好友注册，您和好友将分别获赠3个实验豆！
-            </h4></p>
-
-                <div id="msg-modal"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
     <div class="modal-dialog" rolw="document">
@@ -711,116 +642,8 @@
 </div>
 
 
-<!--<div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div class="modal-body">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#signin-form" aria-controls="signin-form" role="tab" data-toggle="tab">登录</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#signup-form" aria-controls="signup-form" role="tab" data-toggle="tab">注册</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="signin-form">
-                        <form action="/login" method="post">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-envelope" style="margin:0;"></i>
-                                    </div>
-                                    <input type="email" name="login" class="form-control" placeholder="请输入邮箱">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-lock" style="margin:0;"></i>
-                                    </div>
-                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
-                                </div>
-                            </div>
-                            <div class="form-inline verify-code-item" style="display:none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" name="captcha_v" class="form-control" placeholder="请输入验证码">
-                                    </div>
-                                </div>
-                                <img class="verify-code" src="" source="https://www.shiyanlou.com/captcha.gif">
-                            </div>
-                            <div class="form-group remember-login">
-                                <input name="remember" type="checkbox" value="y"> 下次自动登录
-                                <a class="pull-right" href="/user/reset_password/index.html">忘记密码？</a>
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary" name="submit" type="submit" value="进入实验楼">
-                            </div>
-                            <div class="form-group widget-signin">
-                                <span>快速登录</span>
-                                <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-                                <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-                                <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-                                <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-                                <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
-                            </div>
-                            <div class="form-group error-msg">
-                                <div class="alert alert-danger" role="alert"></div>
-                            </div>
-                        </form>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="signup-form">
-                        <form action="/register" method="post">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-envelope" style="margin:0;"></i>
-                                    </div>
-                                    <input type="email" name="email" class="form-control" placeholder="请输入邮箱">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-lock" style="margin:0;"></i>
-                                    </div>
-                                    <input type="password" name="password" class="form-control" placeholder="请输入密码">
-                                </div>
-                            </div>
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" name="captcha_v" class="form-control" placeholder="请输入验证码">
-                                    </div>
-                                </div>
-                                <img class="verify-code" src="" source="https://www.shiyanlou.com/captcha.gif">
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary" name="submit" type="submit" value="注册">
-                            </div>
-                            <div class="form-group agree-privacy">
-                                注册表示您已经同意我们的<a href="/user/privacy/index.html" target="_blank">隐私条款</a>
-                            </div>
-                            <div class="form-group widget-signup">
-                                <span>快速注册</span>
-                                <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-                                <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-                                <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-                                <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-                                <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
-                            </div>
-                            <div class="form-group error-msg">
-                                <div class="alert alert-danger" role="alert"></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
+
+
 
 
 <div id="base-data"
@@ -936,8 +759,7 @@
                 <a href="/user/bootcamp/index.html" target="_blank">实战训练营</a><br>
                 <a href="/user/vip/index.html" target="_blank">会员服务</a><br>
                 <a href="/user/courses/reports/index.html" target="_blank">实验报告</a><br>
-                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"
-                   target="_blank">常见问题</a><br>
+                <a href="/user/questions/index.html?tag=%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" target="_blank">常见问题</a><br>
                 <a href="/user/privacy/index.html" target="_blank">隐私条款</a>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-2 footer-col">
@@ -947,7 +769,7 @@
                 <a href="/user/paths/bigdata/index.html" target="_blank">大数据学习路径</a><br>
                 <a href="/user/paths/java/index.html" target="_blank">Java学习路径</a><br>
                 <a href="/user/paths/php/index.html" target="_blank">PHP学习路径</a><br>
-                <a href="/user/paths/index.html" , target="_blank">全部</a>
+                <a href="/user/paths/index.html", target="_blank">全部</a>
             </div>
         </div>
     </div>
@@ -961,7 +783,7 @@
         </script>
         <script>
             var _hmt = _hmt || [];
-            (function () {
+            (function() {
                 var hm = document.createElement("script");
                 hm.src = "//hm.baidu.com/hm.js?6eb47a3aeda6ea31fa53985fdfdc78e8";
                 var s = document.getElementsByTagName("script")[0];
@@ -969,17 +791,10 @@
             })();
         </script>
         <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
             ga('create', 'UA-89338452-1', 'auto');
             ga('send', 'pageview');
         </script>
@@ -1054,8 +869,12 @@
         }*/
 
 
-        //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
-        layui.use(['flow', 'layer'], function () {
+
+
+
+
+            //layer.alert('您还剩余:'+ s1 +'积分，此课程需要'+ s2 +'积分购买。',{skin: 'layui-layer-lan',closeBtn: 0,anim: 1});
+        layui.use(['flow','layer'], function(){
             flow = layui.flow;
             var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
             layer = layui.layer;
@@ -1068,8 +887,9 @@
                 , isLazyimg: false
                 , done: function (page, next) { //加载下一页
                     //模拟插入
+                    var cid = $("#courseID").val();//课程id
                     var lis = [];
-                    $.post("/scomment/getScomment", {'page': page, "limit": 1, "cid": 1}, function (data) {
+                    $.post("/scomment/getScomment", {'page': page, "limit": 5, "cid": cid}, function (data) {
                         var json = data.data;
                         //模拟插入
                         setTimeout(function () {
@@ -1143,10 +963,16 @@
 
             //发布评论
             $("#fabb").on("click", function () {
+                var uid = $("#userId").val();
                 layer.prompt({
                     formType: 2
                 }, function (value, index1) {
-                    layer.msg("value:" + value + "userId:" + $("#userId").val() + "__courseId:" + $("#courseID").val());
+                    if(uid==null||uid==0){
+                        layer.msg("请登录后发表评论");
+                        layer.close(index1);
+                        return;
+                    }
+                    // layer.msg("value:" + value + "userId:" + $("#userId").val() + "__courseId:" + $("#courseID").val());
                     $.ajax({
                         type: "post",
                         url: "/scomment/addScomment",
@@ -1286,6 +1112,7 @@
         $.ajax({
             type: "post",
             url: "/hoarding/addHoardingAndCourse",
+            sync:false,
             data: {
                 cid: cid,//课程id
             },
@@ -1301,7 +1128,7 @@
                     $(obj).removeClass("courseCheck");
                 }
                 else {//收藏异常
-                    layer.msg(data.msg);
+                    layer.msg(data.data);
                 }
             }
         });
@@ -1335,6 +1162,9 @@
     //window.location.href = "/user/video?sid="+course+"&id="+section;
 </script>
 
+<!--嵌套头部header-->
+<div th:replace="user/header::header"></div>
+<link rel="stylesheet" href="/user/layui/css/layui.css">
 <style>
 
     /*选中*/

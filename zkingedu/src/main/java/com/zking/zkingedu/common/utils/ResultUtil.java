@@ -98,6 +98,9 @@ public class ResultUtil {
         return new ResultUtil(500,"您的操作过于频繁，请稍后再试 ");
     }
     public static ResultUtil error(String str){
-        return new ResultUtil(500,str);
+        ResultUtil result = new ResultUtil();
+        result.setCode(500);
+        result.setMsg(str);
+        return result;
     }
 }

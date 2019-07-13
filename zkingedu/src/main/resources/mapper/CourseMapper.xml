@@ -128,5 +128,16 @@
          course_inte=(select SUM(section_inte) from t_section where section_cid=#{id}) where course_id=#{id}
     </update>
 
+    
+    <!--课程删除-->
+    <delete id="delCourse">
+        delete from t_course where course_id=#{id}
+    </delete>
+    
+    
+    <!--查询课程下面是否有章节信息，返回数量-->
+    <select id="getCourseAndSectionNum" resultType="integer">
+        SELECT COUNT(0) FROM t_section WHERE section_cid=#{id}
+    </select>
 
 </mapper>

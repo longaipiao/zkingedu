@@ -100,14 +100,14 @@ public class CourseController {
         if(u!=null){
 
         Integer courseIntegrsl = courseService.findCourseIntegrsl(sid);
-        System.err.println("整套课程的积分是：" + courseIntegrsl);
+//        System.err.println("整套课程的积分是：" + courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl", u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl", courseIntegrsl);
 
         //课程id
         model.addAttribute("courseId", sid);
-        System.err.println("课程id是：" + sid);
+//        System.err.println("课程id是：" + sid);
         model.addAttribute("userId", SessionUtil.getUserById());
 
         //单个用户的积分
@@ -132,7 +132,6 @@ public class CourseController {
         mv.addObject("section", null);//视频id默认为空
         mv.addObject("course", courseBYcourseID);
 
-        System.err.println("评论数量==================================" + scommentService.getScommentAndCousecNumber(sid));
         mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
         mv.addObject("courseNum", hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
         mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
@@ -157,8 +156,6 @@ public class CourseController {
             mv.addObject("sections", sectionsBycid);
             mv.addObject("section", null);//视频id默认为空
             mv.addObject("course", courseBYcourseID);
-
-            System.err.println("评论数量==================================" + scommentService.getScommentAndCousecNumber(sid));
             mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
             mv.addObject("courseNum", hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
             mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
@@ -187,9 +184,9 @@ public class CourseController {
         if(u!=null){
 
 
-        System.err.println("用户的积分是："+u.getUserIntegrsl());
+//        System.err.println("用户的积分是："+u.getUserIntegrsl());
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
-        System.err.println("整套课程的积分是："+courseIntegrsl);
+//        System.err.println("整套课程的积分是："+courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl",u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
@@ -215,7 +212,7 @@ public class CourseController {
         //根据章节id获取视频信息
         //Video videoById = videoService.getVideoById(id);
         Section section = sectionService.getSectionById(id);
-        System.err.println("section 章节信息= " + section);
+//        System.err.println("section 章节信息= " + section);
 
         User user = new User();
         user.setUserID(SessionUtil.getUserById());
@@ -223,6 +220,7 @@ public class CourseController {
         mv.addObject("sections",sectionsBycid);
         mv.addObject("section",section);//视频id默认为空
         mv.addObject("course",courseBYcourseID);
+        mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
         mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
         mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
         mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
@@ -238,7 +236,6 @@ public class CourseController {
             //根据章节id获取视频信息
             //Video videoById = videoService.getVideoById(id);
             Section section = sectionService.getSectionById(id);
-            System.err.println("section 章节信息= " + section);
 
             User user = new User();
             user.setUserID(SessionUtil.getUserById());
@@ -246,6 +243,7 @@ public class CourseController {
             mv.addObject("sections",sectionsBycid);
             mv.addObject("section",section);//视频id默认为空
             mv.addObject("course",courseBYcourseID);
+            mv.addObject("scommentNum", scommentService.getScommentAndCousecNumber(sid));//课程评论数量
             mv.addObject("courseNum",hoardingService.getCourseNumber(sid));//查询课程 下面有多少人收藏 统计
             mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
             mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
@@ -495,8 +493,35 @@ public class CourseController {
     }
 
 
-
-
+    /**
+     * 根据课程id  删除课程  如果该课程下面有章节信息，无法删除
+     * yan
+     * @param cid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delCourse")
+    public ResultUtil delCourseById(Integer cid){
+        try {
+            //1.查询该课程下面是否存在章节信息
+            Integer num = courseService.getCourseAndSectionNum(cid);
+            if(num>0){
+                return ResultUtil.error("该课程下操作课程章节，无法删除");
+            }
+            else {
+                //没有章节  删除课程
+                int i = courseService.delCourse(cid);
+                if(i>0){
+                    return ResultUtil.ok("课程删除成功");
+                }
+                else{
+                    return ResultUtil.ok("您的操作过于频繁");
+                }
+            }
+        } catch (Exception e) {
+            return new ResultUtil(500,"您的操作过于频繁",e.getMessage());
+        }
+    }
 
 
 

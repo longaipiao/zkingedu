@@ -151,4 +151,21 @@ public interface CourseDao {
      */
     int editFreeAndInte(@Param("id") Integer id);
 
+
+    /**
+     * 课程删除
+     * yan
+     * @param id
+     * @return
+     */
+    int delCourse(@Param("id") Integer id);
+
+
+    /**
+     * 查询课程下面是否有章节信息，返回数量
+     * yan
+     * @param id
+     * @return
+     */
+    Integer getCourseAndSectionNum(@Param("id") Integer id);
 }

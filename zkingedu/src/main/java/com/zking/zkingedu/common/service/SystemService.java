@@ -3,7 +3,6 @@ package com.zking.zkingedu.common.service;
 import com.zking.zkingedu.common.model.System;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -112,7 +111,7 @@ public interface SystemService {
      * admin添加体系阶段
      * yan
      *
-     * @param fid       体系id
+     * @param        体系id
      * @param stageName 阶段名称
      * @return
      */
@@ -164,4 +163,31 @@ public interface SystemService {
      */
     List<System> getsystemsFive();
 
+
+    /**
+     * 删除体系
+     * yan
+     * @param sid  体系id
+     * @return
+     */
+    int delSystemById(Integer sid);
+
+
+    /**
+     * 查询父体系下面阶段数量
+     * yan
+     * @param sid
+     * @return
+     */
+    Integer selSysByFidNum(Integer sid);
+
+
+
+    /**
+     * 查询体系阶段下面的阶段课程数量
+     * yan
+     * @param sid
+     * @return
+     */
+    Integer selStageAndCourseNum(Integer sid);
 }

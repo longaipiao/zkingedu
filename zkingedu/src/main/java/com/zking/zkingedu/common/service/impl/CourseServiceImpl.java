@@ -285,4 +285,29 @@ public class CourseServiceImpl implements CourseService {
     public int editFreeAndInte(Integer id) {
         return courseDao.editFreeAndInte(id);
     }
+
+
+    /**
+     * 课程删除
+     * yan
+     * @param id
+     * @return
+     */
+    @Override
+    public int delCourse(Integer id) {
+        return courseDao.delCourse(id);
+    }
+
+
+
+    /**
+     * 查询课程下面是否有章节信息，返回数量
+     * yan
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getCourseAndSectionNum(Integer id) {
+        return courseDao.getCourseAndSectionNum(id);
+    }
 }

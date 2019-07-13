@@ -71,7 +71,7 @@
         form.on('submit(demo3)', function(data){
             //弹出loading
             var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:5000,shade:0.6});
-            var msg;
+            var msg="操作成功";
             $.ajax({
                 type: "post",
                 url: "/user/updateSection",
@@ -79,7 +79,7 @@
                 dataType:"json",
                 success:function(d){
                     if(d.code==0){
-                        msg="修改成功";
+                        msg=d.msg;
                     }else{
                         msg=d.msg;
                     }
