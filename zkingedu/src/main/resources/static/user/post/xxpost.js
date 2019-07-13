@@ -274,7 +274,7 @@ function jztzxx() {
                 "\n" +
                 "\n" +
                 "        <div class=\"user-avatar \">\n" +
-                "        <a class=\"avatar\" href=\"/user/347060\" target=\"_blank\">\n" +
+                "        <a class=\"avatar\" href=\"#\" >\n" +
                 "        <img src=\""+data.mg+"\">\n" +
                 "        </a>\n" +
                 "\n" +
@@ -285,7 +285,7 @@ function jztzxx() {
                 "\n" +
                 "\n" +
                 "        <div class=\"user-username \">\n" +
-                "        <a  class=\"username\" href=\"/user/347060\" target=\"_blank\" >\n" +
+                "        <a  class=\"username\" href=\"#\" >\n" +
                 "        " + data.f + "\n" +
                 "        </a>\n" +
                 "        <span class=\"user-level\">L4</span>\n" +

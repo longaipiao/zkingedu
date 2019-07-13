@@ -104,7 +104,7 @@ function inintdata() {
             content += '<div class="col-md-10">';
             content += '<div class="col-sm-2 question-item-author">';
             content += '<div class="user-avatar ">';
-            content += '<a class="avatar" href="../user/13/study.html" target="_blank">';
+            content += '<a class="avatar" href="#" >';
 
             content += '<img src="https://dn-simplecloud.shiyanlou.com/gravataradmin.png?imageView2/1/w/100/h/100">';
             content += '</a>';
@@ -116,7 +116,7 @@ function inintdata() {
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';
-            content += '<a class="avatar" href="../user/13/study.html" target="_blank">' + o.postTime + '</a>';
+            content += '<a class="avatar" href="#" >' + o.postTime + '</a>';
 
             content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i class="layui-icon">&#xe705;</i>' + o.postNum + '</span>'
             content += '</div>';

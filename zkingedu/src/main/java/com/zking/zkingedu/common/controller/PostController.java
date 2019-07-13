@@ -53,12 +53,8 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-
     @Autowired
     private MessageUtil messageUtil;
-
-    Integer userById = SessionUtil.getUserById();
-
 
     //根据session获取uid
     int getUserid(HttpSession session){
@@ -166,10 +162,8 @@ public class PostController {
     public List<Tcomment> getTs(Integer id,Integer page,Integer pageSize,HttpSession session){
         //根据id获取所欲的评论
         List<Map<String,Object>> allTandUser = postService.getAllTandUser(id);
-
         //将评论分级，装进集合
         List<Tcomment> tcomments=new ArrayList<>();
-
         for (Map<String, Object> map : allTandUser) {
             //if((Integer) map.get("tcomment_fid")==0){
             Tcomment tcomment=new Tcomment();
@@ -224,6 +218,8 @@ public class PostController {
     @RequestMapping(value = "/addTcomment")
     @ResponseBody
     public int addTct(Tcomment tcomment,HttpSession session){
+        //根据id获取用户名
+        String s = postService.queryUserByid(tcomment.getTcommentUid2());
         //获取用户ID
         Integer uid=getUserid(session);
         //回复者的id，设置
@@ -247,10 +243,9 @@ public class PostController {
             }
             //获取方法，开始增加
             int i = postService.addTcomment(tcomment);
-            //根据id获取用户名
-            String s = postService.queryUserByid(tcomment.getTcommentUid2());
+
             //添加日志
-            messageUtil.addMessage(2,tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"评论了");
+            messageUtil.addMessage(getUserid(session),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"评论了你");
             //如果i>0的话，则返回i,否者是0,发表失败
             return i>0?i:0;
         }
@@ -260,6 +255,7 @@ public class PostController {
             tcomment.setTcommentLounum(null);
             //调用方法
             int i = postService.addTcomment(tcomment);
+            messageUtil.addMessage(getUserid(session),tcomment.getTcommentUid2(),tcomment.getTcommentCid(),s+"回复了你");
             return i > 0 ? i : 0;
         }
 
@@ -280,10 +276,7 @@ public class PostController {
         if(fid==0){
             //删除父级评论的同时把子类的评论也删除
             int i = postService.deletePl(uid);
-
             int i1 = postService.deleteFpl(uid);
-
-
         }
         //如果是子级评论
         if(fid!=0){
@@ -359,7 +352,6 @@ public class PostController {
             give.setGiveUid(uid);
             int i = postService.addGive(give);
             return 4;
-
         }
         return 1;
     }
@@ -391,10 +383,8 @@ public class PostController {
             hoarding1.setCollectionUid(uid);
             hoarding1.setCollectionZpid(id);
             hoarding1.setCollectionState(2);
-
             int u = postService.addCollection(hoarding);
             return 4;//说明增加收藏成功
-
         }
 
         //给收藏表对象赋值

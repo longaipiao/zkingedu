@@ -77,7 +77,7 @@ function ini() {
             content += '<div class="col-md-10">';
             content += '<div class="col-sm-2 question-item-author">';
             content += '<div class="user-avatar ">';
-            content += '<a class="avatar" href="../user/13/study.html" target="_blank">';
+            content += '<a class="avatar" href="#" >';
 
             content += '<img src="' + o.user_img + '">';
             content += '</a>';
@@ -89,7 +89,7 @@ function ini() {
             content += '</h4>';
             content += '<div class="question-item-summary">';
             content += '<div class="user-username ">';
-            content += '<a class="avatar" href="../user/13/study.html" target="_blank">' + o.post_time + '</a>';
+            content += '<a class="avatar" href="#" >' + o.post_time + '</a>';
 
             content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i class="layui-icon">&#xe705;</i>' + o.post_num + '</span>'
             content += '</div>';

@@ -98,7 +98,7 @@ function jz() {
                         "\n" +
                         "\n" +
                         "        <div class=\"user-avatar \">\n" +
-                        "        <a class=\"avatar\" href=\"../user/13/study.html\" target=\"_blank\">\n" +
+                        "        <a class=\"avatar\" href=\"#\" >\n" +
                         "        <img src=\""+item.user_img+"\">\n" +
                         "        </a>\n" +
                         "\n" +
@@ -120,7 +120,7 @@ function jz() {
                         "\n" +
                         "\n" +
                         "        <div class=\"user-username \">\n" +
-                        "        <a class=\"avatar\" href=\"/user/user/13/study.html\" target=\"_blank\">\n" +
+                        "        <a class=\"avatar\" href=\"#\" >\n" +
                         "\n" +
                         "        " + item.user_name + "\n" +
                         "\n" +
