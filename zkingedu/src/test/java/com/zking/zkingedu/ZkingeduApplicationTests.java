@@ -24,7 +24,6 @@ public class ZkingeduApplicationTests {
 
     @Test
     public void contextLoads() {
-        System.out.println("爱情是什么");
         PageInfo<Map<String, Object>> orderUid = orderService.findOrderUid(2, 1, 2);
         List<Map<String, Object>> list = orderUid.getList();
         for (Map<String, Object> objectMap : list) {
@@ -36,7 +35,6 @@ public class ZkingeduApplicationTests {
 
     @Test
     public void ss() {
-        System.out.println("爱情是什么");
         PageInfo<Map<String, Object>> order = orderService.findOrder("", "", 1, 3);
         List<Map<String, Object>> list = order.getList();
         for (Map<String, Object> stringObjectMap : list) {
@@ -48,7 +46,6 @@ public class ZkingeduApplicationTests {
 
     @Test
     public void dsad() {
-        System.out.println("爱情是什么");
         PageInfo<Map<String, Object>> mapPageInfo = orderService.findziyuanUid(2, 1, 2);
         List<Map<String, Object>> list = mapPageInfo.getList();
         for (Map<String, Object> stringObjectMap : list) {

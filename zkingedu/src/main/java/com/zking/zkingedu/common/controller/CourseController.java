@@ -100,14 +100,12 @@ public class CourseController {
         if(u!=null){
 
         Integer courseIntegrsl = courseService.findCourseIntegrsl(sid);
-//        System.err.println("整套课程的积分是：" + courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl", u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl", courseIntegrsl);
 
         //课程id
         model.addAttribute("courseId", sid);
-//        System.err.println("课程id是：" + sid);
         model.addAttribute("userId", SessionUtil.getUserById());
 
         //单个用户的积分
@@ -137,7 +135,7 @@ public class CourseController {
         mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
         mv.addObject("coursefours", courseService.getCoursefour());//获取最热的四个课程（播放量）
 
-        mv.setViewName("/user/courses/show1");
+        mv.setViewName("user/courses/show1");
             return mv;
         }else{
             //获取所有的章节视频
@@ -161,7 +159,7 @@ public class CourseController {
             mv.addObject("isCheck", hoardingService.getHoardingByUidAndCid(user.getUserID(), sid));//用户id'  课程id'
             mv.addObject("coursefours", courseService.getCoursefour());//获取最热的四个课程（播放量）
 
-            mv.setViewName("/user/courses/show1");
+            mv.setViewName("user/courses/show1");
             return mv;
         }
     }
@@ -184,9 +182,7 @@ public class CourseController {
         if(u!=null){
 
 
-//        System.err.println("用户的积分是："+u.getUserIntegrsl());
         int courseIntegrsl = courseService.findCourseIntegrsl(sid);
-//        System.err.println("整套课程的积分是："+courseIntegrsl);
 
         request.getSession().setAttribute("userintegrsl",u.getUserIntegrsl());
         request.getSession().setAttribute("courseIntegrsl",courseIntegrsl);
@@ -194,9 +190,7 @@ public class CourseController {
 
         //课程id
         model.addAttribute("courseId",sid);
-//        System.err.println("课程id是："+sid);
         model.addAttribute("userId",SessionUtil.getUserById());
-//        System.err.println("用户id是"+2);
 
         //单个用户的积分
         mv.addObject("userintegrsl",u.getUserIntegrsl());
@@ -212,7 +206,6 @@ public class CourseController {
         //根据章节id获取视频信息
         //Video videoById = videoService.getVideoById(id);
         Section section = sectionService.getSectionById(id);
-//        System.err.println("section 章节信息= " + section);
 
         User user = new User();
         user.setUserID(SessionUtil.getUserById());
@@ -225,7 +218,7 @@ public class CourseController {
         mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
         mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
 
-        mv.setViewName("/user/courses/show1");
+        mv.setViewName("user/courses/show1");
         return mv;
         }else{
             //获取所有的章节视频
@@ -248,7 +241,7 @@ public class CourseController {
             mv.addObject("isCheck",hoardingService.getHoardingByUidAndCid(user.getUserID(),sid));//用户id'  课程id'
             mv.addObject("coursefours",courseService.getCoursefour());//获取最热的四个课程（播放量）
 
-            mv.setViewName("/user/courses/show1");
+            mv.setViewName("user/courses/show1");
             return mv;
         }
     }
@@ -267,7 +260,7 @@ public class CourseController {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
-        mv.setViewName("/user/courses/index");
+        mv.setViewName("user/courses/index");
         return mv;
     }
 
@@ -285,7 +278,6 @@ public class CourseController {
         pageBean.setT(course);
         pageBean.setPageIndex(page);//当前页
         pageBean.setPageSize(limit);//没页多少条
-        System.err.println("数据接收：==============================" + pageBean);
         return courseService.SearchCourse(pageBean);
     }
 
@@ -432,7 +424,6 @@ public class CourseController {
     @ResponseBody
     @RequestMapping("/editCourse")
     public ResultUtil editCourse(Course course, HttpServletRequest request) {
-//        System.err.println("====================后台接收的到数据:"+course);
         try {
             int i = courseService.updateCourse(course);
             if (i > 0) {

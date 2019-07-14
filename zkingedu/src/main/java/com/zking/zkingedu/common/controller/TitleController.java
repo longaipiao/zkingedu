@@ -47,11 +47,9 @@ public class TitleController {
         if (sid.equals("0")) {
             title2.setTitleCid(null);
         }
-        System.out.println(title2 + "dasdasd");
         List<Map<String, Object>> maps = new ArrayList<>();
         List<Title> all = titleService.getAll(title2);//所有的题目
         for (Title title : all) {//题目对于的答案
-            System.out.println("数据" + title);
             HashMap<String, Object> map = new HashMap<>();
             map.put("id", title.getTitleID());
             map.put("pid", 0);
@@ -65,6 +63,7 @@ public class TitleController {
                 map2.put("id", answer.getAnswerID());
                 map2.put("pid", answer.getAnswerTid());
                 map2.put("title", answer.getAnswerContent());
+                map2.put("state", answer.getAnswerState());
                 map2.put("abcd", answer.getAnswerAbcd());
                 maps.add(map2);
             }
@@ -102,7 +101,6 @@ public class TitleController {
             }
             maps.put("treelist", treelist);
             map.add(maps);
-            System.out.println(map);
         }
 
         return map;
@@ -116,9 +114,6 @@ public class TitleController {
     @RequestMapping(value = "/addtm")
     @ResponseBody
     public String addTm(Title title, String a, String b, String c, String d, String tm, String s, String titleDescribe, String titleContent) {
-        System.out.println("哈哈");
-        System.out.println(s + "答案为b");
-        System.out.println(title.getTitleContent());
         Answer a1 = new Answer();//答案a的对象
         Answer b2 = new Answer();//答案b的对象
         Answer c2 = new Answer();//答案d的对象
@@ -222,8 +217,6 @@ public class TitleController {
     @RequestMapping(value = "/updatetm")
     @ResponseBody
     public String updatetm(Title title, String a, String b, String c, String d, String s, String titleDescribe, String titleContent, String tid) {
-        System.out.println("进来了方法");
-        System.out.println(s + "正确");
         //增加题目
         title.setTitleDescribe(titleDescribe);
         title.setTitleContent(titleContent);

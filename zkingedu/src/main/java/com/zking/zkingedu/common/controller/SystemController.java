@@ -74,11 +74,10 @@ public class SystemController {
         ModelAndView mv = new ModelAndView();
         System systemBySid = systemService.getSystemBySid(courseId);
         mv.addObject("system", systemBySid);
-//        log.info("============================体系信息:"+systemBySid);
         List<System> systems = systemService.getsystemsonByFId(courseId);
-
+        mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         mv.addObject("systems", systems);
-        mv.setViewName("/user/paths/show");
+        mv.setViewName("user/paths/show");
         return mv;
     }
 
@@ -146,7 +145,7 @@ public class SystemController {
      */
     @RequestMapping("/addSystemPage")
     public String pageAddSystem() {
-        return "/admin/course/systemAdd";
+        return "admin/course/systemAdd";
     }
 
 
@@ -207,7 +206,7 @@ public class SystemController {
             e.printStackTrace();
         }
         mv.addObject("system", system);
-        mv.setViewName("/admin/course/systemEdit");
+        mv.setViewName("admin/course/systemEdit");
         return mv;
     }
 
@@ -221,7 +220,6 @@ public class SystemController {
     @ResponseBody
     @RequestMapping("/editSystem")
     public ResultUtil updateSystem(System system, HttpServletRequest request) {
-//        log.info("接收的数据：==============================="+system);
         int i = systemService.updateSystem(system);
         if (i > 0) {
             //放入日志
@@ -248,7 +246,7 @@ public class SystemController {
         ModelAndView mv = new ModelAndView();
 
         mv.addObject("id", systemID);
-        mv.setViewName("/admin/course/stage/stageManger");
+        mv.setViewName("admin/course/stage/stageManger");
         return mv;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -240,7 +240,7 @@
                 data:data.field,
                 ataType:"json",
                 success:function(d){
-                    if(d.code==0){
+                    if(d==1){
                         layer.alert("修改成功！");
                     }else{
                         layer.alert("修改失败");

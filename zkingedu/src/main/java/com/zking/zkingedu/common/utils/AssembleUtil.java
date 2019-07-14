@@ -82,10 +82,8 @@ public class AssembleUtil {
 		    
 		    String[] sourceArr = new String[] { "1", "2", "3", "4", "5","6","7" };
 	        String[] resultArr = getAssemble(sourceArr, 3);
-	        System.out.println("累计组合："+resultArr.length+","+Arrays.toString(resultArr));
-	        
+
 	        String sourceStr = "1,2,3,4,5,6,7";
 	        String[] resultArr2 = getAssemble(sourceStr, 3);
-	        System.out.println("累计组合："+resultArr2.length+","+Arrays.toString(resultArr2));
 	}
 }

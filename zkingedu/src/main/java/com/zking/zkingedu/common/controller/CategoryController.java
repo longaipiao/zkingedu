@@ -57,7 +57,6 @@ public class CategoryController {
             }
             maps.put("treelist",treelist);
             map.add(maps);
-            System.out.println(map);
         }
 
         return map;
@@ -115,7 +114,6 @@ public class CategoryController {
     @RequestMapping(value = "/sc")
     @ResponseBody
     public  String delete(String aid,String fid){
-        System.out.println(aid);
         Integer updatety = categoryService.delete(Integer.parseInt(aid),Integer.parseInt(fid));
         if(updatety>0){
             return "1";

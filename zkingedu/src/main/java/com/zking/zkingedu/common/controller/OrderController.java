@@ -72,7 +72,6 @@ public class OrderController {
         //3:根据课程id和用户id查询订单表的
 
         User user = (User) request.getSession().getAttribute("user");
-        System.err.println("session中的值是："+user);
 
         //查询订单表中是否有课程id
         Integer courseID1 = orderService.findCourseID(courseID);
@@ -86,12 +85,10 @@ public class OrderController {
         else{
             //        log.info("***************开始查询这个课程需要多少积分*******************");
             Integer courseInte = courseService.findCourseInte(courseID);
-            System.err.println("课程的是否需要积分：" + courseInte);
 
 
 //        log.info("***************开始查询这个用户剩下多少积分*******************");
             Integer userintegrsl = userService.findIntegrsl(SessionUtil.getUserById());//用户id
-            System.err.println("用户剩下积分为：" + userintegrsl);
             /*if(userID==SessionUtil.getUserById()&&courseID==courseID1){
                 return "4";
             }*/
@@ -169,17 +166,14 @@ public class OrderController {
     @RequestMapping(value = "/gmdangeship")
     public void gmdgzhangjie(Model model,HttpServletRequest request, HttpServletResponse response, Integer sid, Integer id, Integer courseInte) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
-        System.err.println("session中的值是："+user);
         //判断用户是否登录
         if(user==null){
             ResponseUtil.write(response,4);
         }else{
             //用户的积分
             int userintegrsl = userService.findIntegrsl(SessionUtil.getUserById());
-            System.err.println("用户积分是："+userintegrsl);
             //查询订单表中是否存在
             Integer s = orderService.finduidsidcid(SessionUtil.getUserById(), sid, id);
-            System.err.println("是否存在："+s);
             //购买过的视频
             if(s==1){
                 ResponseUtil.write(response,1);//已经购买过的视频，直接放行观看。
@@ -281,13 +275,10 @@ public class OrderController {
 
         //订单收入的总金额
         Integer orderSum = orderService.orderSum();
-        //System.err.println("orderSum:"+orderSum);
         //用户充值的积分总数
         Integer billIntegraltype1 = billService.billIntegraltype1();
-        //System.err.println("billIntegraltype1:"+billIntegraltype1);
         //用户消费的积分总数
         Integer billIntegraltype0 = billService.billIntegraltype0();
-        //System.err.println("billIntegraltype0:"+billIntegraltype0);
 
         Map<String,Object> maps = new HashMap<>();
         maps.put("orderSum",orderSum);

@@ -113,7 +113,7 @@
 
 
 
-<nav class="navbar navbar-default navbar-fixed-top header">
+<!--<nav class="navbar navbar-default navbar-fixed-top header">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse"
@@ -166,7 +166,7 @@
             </form>
         </div>
     </div>
-</nav>
+</nav>-->
 
 <script>
     layui.use('upload', function () {
@@ -353,7 +353,7 @@
                     </div>
                     <div class="userinfo-banner-status">
                         <span>积分:</span>
-                        <strong><span th:text="${session.user.userIntegrsl}"></span></strong>
+                        <strong><span id="jfs"></span></strong>
                     </div>
                 </div>
             </div>
@@ -565,7 +565,7 @@
                                                         <input type="text" name="captcha_v" class="form-control"  id="captcha_v" placeholder="请输入验证码">
                                                     </div>
                                                 </div>
-                                                <button id="sendPhone10" class="layui-btn">获取验证码</button>
+                                                <button id="sendPhone10" type="button" class="layui-btn">获取验证码</button>
                                             </div>
                                             <div class="form-group">
                                                 <input class="btn btn-primary"  type="button" onclick="updatephonepassword()" value="手机号修改" />

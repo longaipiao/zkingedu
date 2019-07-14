@@ -96,7 +96,7 @@ public class UrlController {
      */
     @RequestMapping(value = "/amdin/orderList")
     public String orderlist(){
-        return "/admin/html/cate";
+        return "admin/html/cate";
     }
     /**
      * 后台的题库跳转路径
@@ -146,14 +146,14 @@ public class UrlController {
      */
     @RequestMapping(value = "/orderzhangdan")
     public String orderzhangdan(){
-        return "/admin/html/member-list";
+        return "admin/html/member-list";
     }
     /**
      * 后台的账单列表的跳转路径
      */
     @RequestMapping(value = "/ordershouru")
     public String ordersshouru(){
-        return "/admin/html/member-lists";
+        return "admin/html/member-lists";
     }
 
 
@@ -162,7 +162,7 @@ public class UrlController {
      */
     @RequestMapping(value = "/loglist")
     public String Loglist(){
-        return "/admin/html/log-list";
+        return "admin/html/log-list";
     }
 
 

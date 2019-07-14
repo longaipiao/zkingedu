@@ -158,5 +158,10 @@ public class UserServiceImpl implements UserService {
         return userDao.updateIntegral(CourseIntegral, userID);
     }
 
+    @Override
+    public Integer getUserphone(String phone) {
+        return userDao.getUserphone(phone);
+    }
+
 
 }

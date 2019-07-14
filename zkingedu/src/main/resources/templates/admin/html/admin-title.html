@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <!--suppress ALL-->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/admin/css/font.css">
     <link rel="stylesheet" href="/admin/css/xadmin.css">
-    <script type="text/javascript" src="/admin/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/user/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="/admin/js/xadmin.js"></script>
     <script type="text/javascript" src="/admin/js/addadvertising.js"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
@@ -151,7 +151,7 @@
                             if(item.level == 0){
                                 return '<span><i class="layui-icon x-show" status="true">&#xe623;</i>'+item.title+'</span>';
                             }else if(item.level == 1){
-                                if(item.state == 0){
+                                if(item.state == 1){
                                     return '<span style="color: red">'+item.abcd+' '+item.title+'</span>';
                                 }
                                 else{

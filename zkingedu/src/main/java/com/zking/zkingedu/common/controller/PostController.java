@@ -699,6 +699,7 @@ public class PostController {
     @RequestMapping(value = "/userinfo/{id}",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     public ModelAndView tz(@PathVariable("id") Integer id,ModelAndView mv){
         mv.addObject("id",id);
+        mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         mv.setViewName("user/questions/show");
         return mv;
     }

@@ -93,4 +93,7 @@ public interface UserDao {
     public int updateIntegral(@Param("CourseIntegral") Integer CourseIntegral, @Param("userID") Integer userID);
 
 
+    //跟据手机号查询用户状态
+    public Integer getUserphone(@Param("phone")String phone);
+
 }

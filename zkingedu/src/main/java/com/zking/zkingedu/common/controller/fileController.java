@@ -27,6 +27,8 @@ public class fileController {
     @RequestMapping(value = "/imgupload", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
     @ResponseBody
     public ResultUtil uploadFile(MultipartFile file, HttpServletRequest req) {
+        //获取服务器路径
+        String contextPath = req.getSession().getServletContext().getRealPath("/");
         if (file == null) {
             return ResultUtil.error("文件不能为空！");
         }
@@ -38,16 +40,14 @@ public class fileController {
             try {
                 // uploadFile.transferTo(new
                 // File(req.getServletContext().getRealPath("WEB-INF/upload"),img));
-                File f = new File("E:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
+                File f = new File(contextPath+"/imgs");//保存到服务器图片路径
                 if (!f.exists()) {
                     f.mkdirs();
                 }
                 file.transferTo(new File(f, img));
-
-                System.out.println("img是图片是：" + img);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (IOException e) { 
                 e.printStackTrace();
             }
             Map<String, String> map = new HashMap<>();

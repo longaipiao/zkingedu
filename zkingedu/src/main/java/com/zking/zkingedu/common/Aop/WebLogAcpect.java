@@ -54,7 +54,7 @@ public class WebLogAcpect {
                 try {
                     //重定向提交
                     request.getSession().setAttribute("s2","b");
-                    response.sendRedirect("/user/");
+                    response.sendRedirect("/");
                     return false;
                 }catch (IOException e){
                     e.printStackTrace();

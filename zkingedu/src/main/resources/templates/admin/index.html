@@ -41,14 +41,15 @@
 <shiro:hasPermission name="login">
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="/admin/index">码奴堡后台管理中心</a></div>
+        <div class="logo"><a href="/admin/index"><img src="/user/img/logo.png" style="width: 160px;height: 50px;">系统
+        </a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
-        <ul class="layui-nav left fast-add" lay-filter="">
+        <!--<ul class="layui-nav left fast-add" lay-filter="">
             <li class="layui-nav-item">
                 <a href="javascript:;">+新增</a>
-                <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dl class="layui-nav-child"> &lt;!&ndash; 二级菜单 &ndash;&gt;
                     <dd><a onClick="x_admin_show('课程','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>课程</a>
                     </dd>
                     <dd><a onClick="x_admin_show('文章','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>文章</a>
@@ -57,7 +58,7 @@
                     </dd>
                 </dl>
             </li>
-        </ul>
+        </ul>-->
         <ul class="layui-nav right" lay-filter="">
             <li class="layui-nav-item">
                 <a href="javascript:;" th:text="${session.emp.empName}"></a>
@@ -67,7 +68,7 @@
                     <dd><a href="/admin/logOut">退出</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item to-index"><a href="/user/">前台首页</a></li>
+            <li class="layui-nav-item to-index"><a onClick="x_admin_show('前台首页','http://localhost:8899/')">前台首页</a></li>
         </ul>
 
     </div>
@@ -173,16 +174,16 @@
                                 <li><a _href="/user/stageManager"><i class="iconfont">&#xe6a7;</i><cite>课程管理</cite></a>
                                 </li>
                             </shiro:hasPermission>
-                            <shiro:hasPermission name="视频/章节管理">
+                            <!--<shiro:hasPermission name="视频/章节管理">
                                 <li><a _href="/html/message-list"><i
                                         class="iconfont">&#xe6a7;</i><cite>视频/章节管理</cite></a></li>
-                            </shiro:hasPermission>
+                            </shiro:hasPermission>-->
                             <li><a _href="/user/courseTypePage"><i class="iconfont">&#xe6a7;</i><cite>类别管理</cite></a>
                             </li>
-                            <shiro:hasPermission name="文档管理">
+                            <!--<shiro:hasPermission name="文档管理">
                                 <li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>文档管理</cite></a>
                                 </li>
-                            </shiro:hasPermission>
+                            </shiro:hasPermission>-->
                         </ul>
                     </li>
                 </shiro:hasPermission>

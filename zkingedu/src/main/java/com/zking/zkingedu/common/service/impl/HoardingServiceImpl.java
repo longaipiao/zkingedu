@@ -136,7 +136,6 @@ public class HoardingServiceImpl implements HoardingService {
         try {
             //1.查询用户是否收藏了该课程
             Hoarding hoarding = hoardingDao.getHoardingByUidAndCid(uid, cid);
-//            System.err.println("用户信息：===================="+hoarding);
             if(hoarding!=null){//收藏了
                 //执行取消收藏
                 int i = hoardingDao.delHoardingByuidAndCid(uid, cid);

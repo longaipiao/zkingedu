@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.AdvertisingDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
     <!--广告接口Mapper--><sql id="adversql">
       advertising_id,advertising_img,advertising_url,advertising_state,advertising_name,advertising_time
    </sql>

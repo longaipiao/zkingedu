@@ -98,7 +98,7 @@ public class MD5Util2 {
         String s = new String("13917114404");
 //        System.out.println(md5Decode("a6aeb3ffa55fc7d664406af9c3bd0f1b"));
 //        System.out.println("原始：" + s);
-        System.out.println("MD5后：" + md5("order_no=1319886901&subject=????&pay_type=43&money=10.00&app_id=10835&extra=&c40da4c40a14406eb3a0e6fb51c18d7c"));
+//        System.out.println("MD5后：" + md5("order_no=1319886901&subject=????&pay_type=43&money=10.00&app_id=10835&extra=&c40da4c40a14406eb3a0e6fb51c18d7c"));
 //        System.out.println("加密的：" + convertMD5(s));
 //        System.out.println("解密的：" + convertMD5(convertMD5(s)));
 //        System.out.println(md5("13917114404"));

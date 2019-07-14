@@ -38,9 +38,8 @@ public class MessageController {
     @ResponseBody
     public Map<String,Object> findmessage(Integer page,Integer limit){
 //        System.out.println("page:"+page+"        *****        limit:"+limit);
-        log.info("*********开始查询消息的数据**********");
+//        log.info("*********开始查询消息的数据**********");
         PageInfo<Map<String, Object>> message = messageService.findMessage(SessionUtil.getUserById(),page,limit);
-//        System.err.println(message);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);
@@ -55,13 +54,13 @@ public class MessageController {
     @RequestMapping(value = "/updateMessageState")
     @ResponseBody
     public int updateState(Integer messageid){
-        log.info("**********开始修改已读状态*********");
+//        log.info("**********开始修改已读状态*********");
         int state = messageService.updateState(messageid);
         int messahePid = messageService.findMessahePid(messageid);
         if(state==1){
-            log.info("修改成功");
+//            log.info("修改成功");
         }else{
-            log.info("修改失败");
+//            log.info("修改失败");
         }
         return messahePid;
     }

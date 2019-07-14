@@ -23,7 +23,6 @@ public class AuthRealm extends AuthorizingRealm {
     //认证.登录
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        //System.err.println("进入认证");
         UsernamePasswordToken utoken=(UsernamePasswordToken) token;//获取用户输入的token
         String empname = utoken.getUsername();
         Emp emp = empService.findByEmpName(empname);
@@ -32,7 +31,6 @@ public class AuthRealm extends AuthorizingRealm {
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        //System.err.println("进入授权");
         Emp emp=(Emp) principal.fromRealm(this.getClass().getName()).iterator().next();//获取session中的用户
         List<String> permissions=new ArrayList<>();
         Set<Role> roles = emp.getRoles();

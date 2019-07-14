@@ -42,7 +42,6 @@ public class AdvertisingController {
     @ResponseBody
     public Map<String,Object> findUser(Advertising advertising,Integer page, Integer limit, HttpServletRequest request){
         HttpSession session = request.getSession();
-        System.out.println(advertising.getAdvertisingName()+"哈哈哈");
         PageInfo<Advertising> users = advertisingService.getAll(advertising,page,limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");
@@ -111,7 +110,7 @@ public class AdvertisingController {
         System.out.println(advertising.getAdvertisingName());
         System.out.println(advertising.getAdvertisingID());
         System.out.println(advertising.getAdvertisingImg());
-       Integer advertsing = advertisingService.updateadvertsing(advertising);
+        Integer advertsing = advertisingService.updateadvertsing(advertising);
         ResponseUtil.write(response,advertsing);
     }
 

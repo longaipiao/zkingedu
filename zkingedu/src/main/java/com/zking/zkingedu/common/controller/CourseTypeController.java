@@ -88,7 +88,7 @@ public class CourseTypeController {
      */
     @RequestMapping("/courseTypePage")
     public String pageCourseType() {
-        return "/admin/course/courseType/courseTypeManager";
+        return "admin/course/courseType/courseTypeManager";
     }
 
 

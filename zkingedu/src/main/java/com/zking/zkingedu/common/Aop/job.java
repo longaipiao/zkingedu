@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
-@RequestMapping(value = "/user")
 public class job {
     @Autowired
     private AdvertisingService advertisingService;
@@ -27,6 +26,12 @@ public class job {
     @Autowired
     private Advertising advertising;
 
+    /**
+     * 首页
+     * @param m
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/")
     public String tz(Model m,HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
@@ -38,10 +43,11 @@ public class job {
 
 
 
-    @RequestMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
+    @RequestMapping(value = "/user/upload", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
     @ResponseBody
     public ResultUtil uploadFile(MultipartFile file, HttpServletRequest req) {
-        System.out.println("进来了");
+        //获取服务器路径
+        String contextPath = req.getSession().getServletContext().getRealPath("/");
         if (file == null) {
 
         }
@@ -53,7 +59,7 @@ public class job {
             try {
                 // uploadFile.transferTo(new
                 // File(req.getServletContext().getRealPath("WEB-INF/upload"),img));
-                File f=new File("F:\\zkingedu\\zkingedu\\target\\classes\\static\\imgs");
+                File f=new File(contextPath+"/imgs");
                 if(!f.exists()){
                     f.mkdirs();
                 }

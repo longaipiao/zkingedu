@@ -63,7 +63,6 @@ public class PageController {
     @ResponseBody
     @RequestMapping("/redis")
     public List<Emp> getEmps() {
-        //log.info("请求成功。。。");
         return empDao.getemps("%%");
     }
 
@@ -115,7 +114,6 @@ public class PageController {
      */
     @RequestMapping("videoshow")
     public String videoShow() {
-        log.info("进来了");
         return "user/courses/show";
     }
 
@@ -227,14 +225,15 @@ public class PageController {
 
         if ("course".equals(type)) {//搜索课程
             mv.addObject("content", SearchName);
-            mv.setViewName("/user/courses/index");
+            mv.setViewName("user/courses/index");
             //mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             return mv;//跳转至课程搜索页面
         }
         else  {
             mv.addObject("leibie",SearchName);
-           // mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
-            mv.setViewName("/user/questions/index");
+            mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+            // mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+            mv.setViewName("user/questions/index");
             return mv;//搜索论坛帖子
         }
     }
@@ -267,17 +266,12 @@ public class PageController {
         model.addAttribute("titles", gettitles);//数据渲染
         session.setAttribute("titles", gettitles);//阅卷需要
         model.addAttribute("size", gettitles.size());//判空
-        System.err.println(getcat + "哈哈哈哈哈");
-        System.err.println(gettitles);
-        System.err.println(gettitles.size());
         model.addAttribute("getCategoryName",getcat.getCategoryName());//展示渲染
         model.addAttribute("titles",gettitles);//数据渲染
         session.setAttribute("titles",gettitles);//阅卷需要
         model.addAttribute("size",gettitles.size());//判空
-//        System.err.println(getcat+"哈哈哈哈哈");
-//        System.err.println(gettitles);
-//        System.err.println(gettitles.size());
-        return "/user/grid";
+
+        return "user/grid";
     }
 
     /**
@@ -287,10 +281,10 @@ public class PageController {
     public String tiku(Model model, Integer categoryFID) {
         List<Category> category = categoryService.getCategory();//获取所有的题库类别
         List<Category> gettikuzitype = categoryService.gettikuzitype(categoryFID);
-        //model.addAttribute("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+        model.addAttribute("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
         model.addAttribute("gettikuzitype",gettikuzitype);//子
         model.addAttribute("category",category);//父
-        return "/user/tiku";
+        return "user/tiku";
     }
 
 

@@ -20,12 +20,12 @@ public class MessageUtil {
         try {
             int i = messageService.addMessage(message);
             if (i > 0) {
-                log.info("消息添加成功");
+//                log.info("消息添加成功");
             } else {
-                log.info("消息添加失败");
+//                log.info("消息添加失败");
             }
         } catch (Exception e) {
-            log.info("**********消息异常抛出*******");
+//            log.info("**********消息异常抛出*******");
         }
     }
 
@@ -42,12 +42,12 @@ public class MessageUtil {
         try {
             int i = messageService.addMessage(message);
             if (i > 0) {
-                log.info("消息添加成功");
+//                log.info("消息添加成功");
             } else {
-                log.info("消息添加失败");
+//                log.info("消息添加失败");
             }
         } catch (Exception e) {
-            log.info("**********消息异常抛出*******");
+//            log.info("**********消息异常抛出*******");
         }
     }
 

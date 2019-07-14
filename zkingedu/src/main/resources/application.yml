@@ -2,7 +2,7 @@
 server:
    servlet:
      context-path: /
-   port: 8899
+   port: 80
 #配置数据库
 spring:
   datasource:
@@ -82,7 +82,7 @@ mybatis:
     #驼峰命名==匈牙利
     map-underscore-to-camel-case: true
     #sql日志打印
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 使全局的映射器启用或禁用缓存
     cache-enabled: true
 

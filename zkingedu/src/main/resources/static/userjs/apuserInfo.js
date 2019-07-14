@@ -2,6 +2,16 @@
 
 $(function () {
 
+    $.post('/user/findinteginte',function (data) {
+        var jf = $("#jfs").val();
+        var sa = data.jfs;
+        var a = jf+=sa;
+        $("#jfs").html(a);
+    });
+
+
+
+
     /**
      * 获取消息的记录数   messageCount
      * 阿飘

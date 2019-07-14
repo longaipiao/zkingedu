@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:http="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 <footer th:fragment="header">
@@ -15,8 +16,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/user/">
-                    <img src="/user/img/logo_03.png">
+                <a class="navbar-brand" href="/">
+                    <img src="/user/img/logo.png">
                 </a>
             </div>
 
@@ -160,7 +161,7 @@
                                             <input type="text" name="captcha_v" class="form-control"  id="captcha_v" placeholder="请输入验证码">
                                         </div>
                                     </div>
-                                    <button id="sendPhone" class="verify-code">获取验证码</button>
+                                    <button id="sendPhone" type="button" class="layui-btn">获取验证码</button>
 
                                 </div>
 
@@ -200,6 +201,7 @@
         })
     }
 </script>
+
 
 </body>
 </html>

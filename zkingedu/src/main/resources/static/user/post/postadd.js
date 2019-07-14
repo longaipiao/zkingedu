@@ -16,7 +16,6 @@ layui.use(['table', 'layer', 'jquery', 'layedit', 'laydate'], function () {
     form.on('submit(demo1)', function (data) {
         //获取整个内容的值
         var postContent = $("#editor").val();
-        alert(data.field.postState);
 
         $.ajax({
             type: "post",

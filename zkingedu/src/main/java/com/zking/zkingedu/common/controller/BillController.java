@@ -34,14 +34,12 @@ public class BillController {
     @ResponseBody
     public Map<String,Object> findbill(Integer page,Integer limit){
         //需要修改用户id的   后期用户id得从session中获取
-        log.info("**********开始查询账单信息*********");
         PageInfo<Bill> bills = billService.findAll(SessionUtil.getUserById(), page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);
         maps.put("count",bills.getTotal());
         maps.put("data",bills.getList());
-        log.info("**********结束查询账单信息*********");
         return maps;
     }
 
@@ -49,14 +47,12 @@ public class BillController {
     @RequestMapping(value = "/findBillUname")
     @ResponseBody
     public Map<String,Object> findbillUname(String userName,Integer page,Integer limit){
-        log.info("**********开始查询账单信息*********");
         PageInfo<Map<String, Object>> billUname = billService.findBillUname(userName, page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","success");
         maps.put("code",0);
         maps.put("count",billUname.getTotal());
         maps.put("data",billUname.getList());
-        log.info("**********结束查询账单信息*********");
         return maps;
     }
 

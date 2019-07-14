@@ -34,7 +34,7 @@ public class WebAppConfig implements HandlerInterceptor {
 
 
         if(session.getAttribute("user")==null){//如果为空直接进入首页
-            response.sendRedirect("/user/");
+            response.sendRedirect("/");
             return false;
         }
        else{
@@ -42,7 +42,7 @@ public class WebAppConfig implements HandlerInterceptor {
             User user2 = userService.getUser(user.getUserID());
             if (!IpAddress.getIpAddr(request).equals(user2.getUserIP())){
                 //重定向提交
-                response.sendRedirect("/user/");
+                response.sendRedirect("/");
                 return false;
             }
         }

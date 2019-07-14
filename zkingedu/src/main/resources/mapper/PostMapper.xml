@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.PostDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-   <!-- <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
     <!--帖子接口Mapper-->
      <insert id="addPost" parameterType="com.zking.zkingedu.common.model.Post">
               insert  into
@@ -151,7 +151,7 @@
     <select id="getPandU" resultType="java.util.HashMap">
               select a.*,b.user_id,b.user_img,b.user_name,(select COUNT(tcomment_id) FROM t_tcomment where tcomment_cid=a.post_id) jishu
                             from t_post a,t_user b
-                 where a.post_uid=b.user_id and post_state!=3
+                 where a.post_uid=b.user_id and post_state!=3 and post_state!=1
         <if test="cid!=null ">
             and a.post_category=#{cid}
         </if>

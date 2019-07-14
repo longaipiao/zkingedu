@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.OrderDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
     <!--订单接口Mapper-->
     <sql id="orderAll">
         order_id,order_uid,order_sid,order_cid,order_integral,charge_time,order_state

@@ -85,7 +85,7 @@ public class SectionController {
         mv.addObject("course",courseBYcourseID);
         mv.addObject("section",section);//章节数据
         mv.addObject("sections",sectionsBycid);
-        mv.setViewName("/user/courses/show");
+        mv.setViewName("user/courses/show");
 
         return mv;
     }
@@ -102,7 +102,7 @@ public class SectionController {
     @RequestMapping("/sectionManager")
     public ModelAndView pageSectionManager(@RequestParam(value = "id") Integer id,ModelAndView mv){
         mv.addObject("id",id);
-        mv.setViewName("/admin/course/section/sectionManager");
+        mv.setViewName("admin/course/section/sectionManager");
         return mv;
     }
 
@@ -136,7 +136,7 @@ public class SectionController {
     @RequestMapping(value = "/sectionAddPage")
     public ModelAndView pageSectionAdd(@RequestParam(value = "cid")Integer cid,ModelAndView mv){
         mv.addObject("id",cid);
-        mv.setViewName("/admin/course/section/sectionAdd");
+        mv.setViewName("admin/course/section/sectionAdd");
         return mv;
     }
 
@@ -187,7 +187,7 @@ public class SectionController {
     public ModelAndView pagePreUpSection(@RequestParam(value = "sid") Integer sid,ModelAndView mv){
         Section section = sectionService.getSectionById(sid);
         mv.addObject("section",section);
-        mv.setViewName("/admin/course/section/sectionEdit");
+        mv.setViewName("admin/course/section/sectionEdit");
         return mv;
     }
 
@@ -300,9 +300,7 @@ public class SectionController {
     @RequestMapping(value = "/findzhangjieId")
     @ResponseBody
     public Section finzhangjieid(Integer sectionid){
-        log.info("**********开始查询章节id*********");
         Section sectionById = sectionService.getSectionById(sectionid);
-        System.out.println("返回的对象是："+sectionById);
         return sectionById;
     }
 

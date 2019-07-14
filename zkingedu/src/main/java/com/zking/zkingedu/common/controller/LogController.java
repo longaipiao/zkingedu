@@ -23,7 +23,6 @@ public class LogController {
     @RequestMapping(value = "/findlog")
     @ResponseBody
     public Map<String, Object> findLog(Log log, Integer page, Integer limit) {
-        System.out.println("**********开始查询日志消息**********");
         PageInfo<Map<String, Object>> logs = logService.findLog(log, page, limit);
         Map<String, Object> maps = new HashMap<>();
         maps.put("msg", "success");

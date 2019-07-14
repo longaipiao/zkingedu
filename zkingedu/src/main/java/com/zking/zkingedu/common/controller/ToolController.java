@@ -51,8 +51,6 @@ public class ToolController {
     @RequestMapping(value = "/findTool")
     @ResponseBody
     public Map<String,Object> findTool(Tool tool,Integer page, Integer limit){
-//        System.out.println("我想你了");
-        //System.out.println(tool.getToolName());
         PageInfo<Tool> tools = toolService.findAll(tool,page, limit);
         Map<String,Object> maps = new HashMap<>();
         maps.put("msg","");
@@ -92,7 +90,6 @@ public class ToolController {
         ModelAndView mv = new ModelAndView();
         Tool tool = toolService.findImg(toolID);
         mv.addObject("tools",tool);
-        System.err.println(tool);
         mv.setViewName("admin/html/integral-list");
         //log.info("************结束查询图片的方法***********");
         return mv;
