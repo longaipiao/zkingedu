@@ -1,5 +1,6 @@
 package com.zking.zkingedu;
 
+import com.alibaba.druid.sql.visitor.functions.Substring;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.service.OrderService;
 import org.junit.Test;
@@ -58,13 +59,10 @@ public class ZkingeduApplicationTests {
 
     @Test
     public void sdasd() {
-        Map<String, Object> maps = new HashMap<>();
-        maps.put("3213", "订单收入金额");
-        maps.put("321321", "账单支出积分记录");
-        String[] str = new String[]{maps.toString()};
-        for (String s : str) {
-            System.out.println(s);
-        }
+        double s = 20.0;
+        String str = String.valueOf(s);
+        String substring = str.substring(0,str.lastIndexOf("."));
+        System.out.println(substring);
     }
 
 

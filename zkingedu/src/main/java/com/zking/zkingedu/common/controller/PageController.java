@@ -1,13 +1,9 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.dao.EmpDao;
-import com.zking.zkingedu.common.model.Category;
-import com.zking.zkingedu.common.model.Emp;
-import com.zking.zkingedu.common.service.SystemService;
-import com.zking.zkingedu.common.model.Title;
-import com.zking.zkingedu.common.service.AnswerService;
-import com.zking.zkingedu.common.service.CategoryService;
-import com.zking.zkingedu.common.service.TitleService;
+import com.zking.zkingedu.common.model.*;
+import com.zking.zkingedu.common.service.*;
+import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.System;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +41,21 @@ public class PageController {
 
     @Autowired
     private CategoryService categoryService;
+
+    //充值记录表的注入
+    @Resource
+    private ChargeService chargeService;
+    //账单表的记录
+    @Resource
+    private BillService billService;
+
+    @Resource
+    private UserService userService;
+
+    @Autowired
+    private Charge charge;
+    @Autowired
+    private Bill bill;
 
     @Resource
     private EmpDao empDao;
@@ -118,7 +133,53 @@ public class PageController {
      * 个人中心的路径
      */
     @RequestMapping(value = "/userinfo/index")
-    public String userinfo() {
+    public String userinfo(HttpServletRequest request) {
+        if(request.getParameter("total_amount")!=null){
+            String total_amount = request.getParameter("total_amount");
+            //System.err.println("回调之后的金额："+total_amount);
+            double Integral = Double.parseDouble(total_amount) * 10;
+            //System.err.println("回调之后的积分："+Integral);
+
+            String integrala = String.valueOf(Integral);
+            String integral = integrala.substring(0,integrala.lastIndexOf("."));
+
+            //System.out.println("截取后的积分："+integral);
+            //        //log.info("获取金额和积分");
+//        //log.info("开始增加充值记录表的数据");
+            charge.setChargeUid(SessionUtil.getUserById());//用户id
+            charge.setChargeMoney(Double.parseDouble(total_amount));//收入金额
+
+            charge.setChargeIntegral(Integer.parseInt(integral));//充值积分
+            //充值时间
+            charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            charge.setChargeState(1);//状态
+            int i = chargeService.addCharge(charge);//开始执行充值的方法
+//        //log.info("结束增加充值记录表的数据");
+            if (i > 0) {
+                log.info("****充值记录表成功******");
+                //修改用户的积分的方法
+                int i1 = userService.updateIntegral(Integer.parseInt(integral), SessionUtil.getUserById());
+                if (i1 > 0) {
+                    log.info("*****修改用户积分成功******");
+                } else {
+                    log.info("****充值记录表失败******");
+                }
+            } else {
+                log.info("****充值记录表失败******");
+            }
+
+//        //log.info("开始增加账单表的数据");
+            bill.setBillUid(SessionUtil.getUserById());//用户id
+            bill.setBillType(1);//充值状态
+            bill.setBillIntegral(Integer.parseInt(integral));//充值积分
+            //账单时间
+            bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            //账单内容
+            bill.setBillContent("本次在本平台消费金额为" + Double.parseDouble(total_amount) + "元，" + "充值积分为" + Integral + ",充值完成。");
+            bill.setBillState(1);//状态
+            billService.addBill(bill);
+            //log.info("结束增加账单表的数据");
+        }
         return "user/userinfo/userinfo";
     }
 

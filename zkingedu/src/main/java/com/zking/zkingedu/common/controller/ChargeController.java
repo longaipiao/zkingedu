@@ -66,47 +66,12 @@ public class ChargeController {
      * @param body           商品描述
      * @return String
      */
+
     @RequestMapping(value = "/pay")
     public String aliPay(String outTradeNo, String chargeIntegral, String chargeMoney, String body, HttpServletRequest request, HttpServletResponse response) {
         System.out.println("进入充值积分的方法");
         // 为防止订单号重否 此处模拟生成唯一订单号
         outTradeNo = PayUtils.createUnilCode();
-//        //log.info("获取金额和积分");
-        String Money = request.getParameter("chargeMoney");
-        String Integral = request.getParameter("chargeIntegral");
-//        //log.info("开始增加充值记录表的数据");
-        charge.setChargeUid(SessionUtil.getUserById());//用户id
-        charge.setChargeMoney(Double.parseDouble(Money));//收入金额
-        charge.setChargeIntegral(Integer.parseInt(Integral));//充值积分
-        //充值时间
-        charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        charge.setChargeState(1);//状态
-        int i = chargeService.addCharge(charge);//开始执行充值的方法
-//        //log.info("结束增加充值记录表的数据");
-        if (i > 0) {
-            log.info("****充值记录表成功******");
-            //修改用户的积分的方法
-            int i1 = userService.updateIntegral(Integer.parseInt(Integral), SessionUtil.getUserById());
-            if (i1 > 0) {
-                log.info("*****修改用户积分成功******");
-            } else {
-                log.info("****充值记录表失败******");
-            }
-        } else {
-            log.info("****充值记录表失败******");
-        }
-
-//        //log.info("开始增加账单表的数据");
-        bill.setBillUid(SessionUtil.getUserById());//用户id
-        bill.setBillType(1);//充值状态
-        bill.setBillIntegral(Integer.parseInt(Integral));//充值积分
-        //账单时间
-        bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        //账单内容
-        bill.setBillContent("本次在本平台消费金额为" + Double.parseDouble(Money) + "元，" + "充值积分为" + Integer.parseInt(Integral) + ",充值完成。");
-        bill.setBillState(1);//状态
-        billService.addBill(bill);
-        //log.info("结束增加账单表的数据");
         //支付宝支付
         return chargeService.alipay(outTradeNo, chargeIntegral, chargeMoney.toString(), body, AlipayConfig.NOTIFY_URL, request, response);
     }
@@ -115,9 +80,8 @@ public class ChargeController {
     /**
      * 支付宝异步回调
      */
-   /* @RequestMapping(value = "/alipay/orderNotify", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/alipay/orderNotify", method = RequestMethod.GET)
     private String getReceiveMap(HttpServletRequest request){
-
 
         return "http://localhost:8899/user/userinfo/index";
     }*/
