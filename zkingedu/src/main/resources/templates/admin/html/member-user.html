@@ -64,6 +64,7 @@
     <!-- 表格-->
     <table id="demo" lay-filter="test" class="layui-table-cell"></table>
     <script type="text/javascript" th:inline="none">
+        $(function () {
         layui.use(['layer','form', 'table','laydate', 'element','upload'], function(){
             var table = layui.table
                 ,laydate = layui.laydate
@@ -204,7 +205,9 @@
                 }
             });
 
-        });
+         });
+
+        })
     </script>
 
     <script type="text/html" id="barDemo">

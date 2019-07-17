@@ -287,7 +287,7 @@ public class TitleController {
         for (int i = 0; i < titles.size(); ++i) {
             if (maps.get(titles.get(i).getTitleID() + "") != null) {//答案的json中存在
                 for (Answer answer : titles.get(i).getAnswerss()) {//遍历该题目的答案
-                    if (answer.getAnswerState() == 0) {//从4个答案中找出真确的答案
+                    if (answer.getAnswerState() == 1) {//从4个答案中找出真确的答案
                         if (maps.get(titles.get(i).getTitleID() + "").equals(answer.getAnswerAbcd())) {//答案的json的值等于正确答案的话
                             score += 2;//分数加2
                         } else {

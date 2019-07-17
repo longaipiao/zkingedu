@@ -55,8 +55,8 @@ public class UserController {
 
     // 短信平台相关参数
     private String apiUrl = "https://sms_developer.zhenzikj.com";
-    private String appId = "101158";
-    private String appSecret ="NmNhYzRmMmUtNGQ0NS00MmJlLWFjNDYtNWYyOGQyMTYyYWRl";
+    private String appId = "101153";
+    private String appSecret ="ZjkxNTMwOGEtMTQzMS00N2IxLWFmYjEtN2MwMGE3ZDAyZmU0";
     @Autowired
     private UserService userService;
 
@@ -73,7 +73,7 @@ public class UserController {
         //状态
         user.setUserState(0);
         //积分
-        user.setUserIntegrsl(0);
+        user.setUserIntegrsl(500);
         //昵称
         user.setUserName(getRandomJianHan(3));
         //图片
@@ -403,14 +403,14 @@ public class UserController {
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
                     try{
-                        response.sendRedirect("user/binding");
+                        response.sendRedirect("/user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
                 }
                 else if(qquser.getUserPhone()==null){
                     try{
-                        response.sendRedirect("user/binding");
+                        response.sendRedirect("/user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -457,7 +457,7 @@ public class UserController {
         //状态
         user.setUserState(0);
         //积分
-        user.setUserIntegrsl(0);
+        user.setUserIntegrsl(500);
         //昵称
         user.setUserName(nickName);
         //图片
@@ -587,6 +587,7 @@ public class UserController {
 
         return "2";
     }
+
     //随机昵称
     public static String getRandomJianHan(int len) {
         String ret = "";

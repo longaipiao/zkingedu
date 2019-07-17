@@ -116,6 +116,8 @@ public class UserServiceImpl implements UserService {
         return userDao.updatejf(uid);
     }
 
+
+
     /**
      * 查询用户积分的方法
      */

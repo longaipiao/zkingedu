@@ -52,7 +52,6 @@
                                 },
                                 success: function (data) {
                                     if(data==1){
-                                        alert("注册成功")
                                         location.href="/";
                                     }
                                 },

@@ -67,6 +67,8 @@ public interface UserService {
 
     //根据用户id解封
     Integer updatejf(@Param("uid") Integer uid);
+    //跟据手机号查询用户状态
+    public Integer getUserphone(@Param("phone")String phone);
 
 
     /**
@@ -95,8 +97,6 @@ public interface UserService {
      * 根据用户id 充值积分的方法
      */
     public int updateIntegral(Integer CourseIntegral, Integer userID);
-    //跟据手机号查询用户状态
-    public Integer getUserphone(@Param("phone")String phone);
 
 
 

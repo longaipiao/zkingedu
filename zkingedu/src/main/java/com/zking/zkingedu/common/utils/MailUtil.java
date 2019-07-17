@@ -52,7 +52,7 @@ public class MailUtil {
         // 邮件的标题
         message.setSubject("zking在线课堂。您本次的验证码为："+value+"。如非本人操作，请无视");
         // 邮件的文本内容
-        message.setContent("<font style='color:red'>JavaMail发送邮件成功！</font>", "text/html;charset=UTF-8");
+        message.setContent("<font style='color:red'>zking在线课堂。您本次的验证码为:"+value+"。如非本人操作，请无视</font>", "text/html;charset=UTF-8");
         // 返回创建好的邮件对象
         return message;
     }
