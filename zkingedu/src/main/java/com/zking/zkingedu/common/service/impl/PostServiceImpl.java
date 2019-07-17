@@ -243,8 +243,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Map<String, Object>> getAllTandUser(Integer id) {
-        return postDao.getAllTandUser(id
-        );
+        return postDao.getAllTandUser(id);
     }
 
     @Override

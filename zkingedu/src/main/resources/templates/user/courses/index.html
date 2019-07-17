@@ -403,9 +403,7 @@
 <script src="/user/static/plupload/2.1.9/js/plupload.full.min.js"></script>
 <script src="/user/static/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
 <script src="/user/static/videojs/video.min.js"></script>
-<script src="/userjs/zc.js"></script>
-<script src="/userjs/login.js"></script>
-<script src="/userjs/index.js"></script>
+
 <script src="/user/static/bootstrap-tour/0.11.0/js/bootstrap-tour.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script src="/user/static/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -428,8 +426,6 @@
 
 <script src="/user/app/dest/course/index.js?=2016121272249"></script>
 
-<!--包含底部-->
-<div th:replace="user/footer::footer"></div>
 
 
 <!--引入layui-->
@@ -476,6 +472,7 @@
 
     layui.use(['laypage', 'layer'], function(){
         var laypage = layui.laypage,layer = layui.layer;
+
         //绑定头部
         mytype();
 
@@ -614,10 +611,17 @@
 
 </script>
 
-<!--嵌套头部header-->
-<div th:replace="user/header::header"></div>
 <script src="/userjs/zc.js"></script>
 <script src="/userjs/login.js"></script>
+
+<!--嵌套头部header-->
+<div th:replace="user/header::header"></div>
+
+
+
+
+<!--包含底部-->
+<div th:replace="user/footer::footer"></div>
 
 </body>
 </html>

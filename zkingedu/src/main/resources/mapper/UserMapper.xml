@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
-<!--    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
+    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
 
     <!--用户接口Mapper-->
 

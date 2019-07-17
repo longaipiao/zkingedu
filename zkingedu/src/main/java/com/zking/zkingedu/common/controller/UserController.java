@@ -129,7 +129,6 @@ public class UserController {
     @RequestMapping(value = "/Emailjk")
     @ResponseBody
     public String Emailjk(HttpServletRequest request, HttpServletResponse response,String phone) {
-        System.out.println(phone);
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);

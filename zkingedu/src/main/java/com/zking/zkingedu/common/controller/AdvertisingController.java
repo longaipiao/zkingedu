@@ -94,7 +94,6 @@ public class AdvertisingController {
     @ResponseBody
     public String getsjzt(){
         Integer getsjzt = advertisingService.getsjzt();
-        System.out.println(getsjzt);
         if(getsjzt>=5){
             return "1";
         }
@@ -107,9 +106,6 @@ public class AdvertisingController {
      */
     @RequestMapping(value = "/updateadvertising")
     public void updateTool(Advertising advertising,HttpServletResponse response) throws Exception {
-        System.out.println(advertising.getAdvertisingName());
-        System.out.println(advertising.getAdvertisingID());
-        System.out.println(advertising.getAdvertisingImg());
         Integer advertsing = advertisingService.updateadvertsing(advertising);
         ResponseUtil.write(response,advertsing);
     }

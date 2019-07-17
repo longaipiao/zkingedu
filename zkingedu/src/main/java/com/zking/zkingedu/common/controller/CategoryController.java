@@ -89,7 +89,6 @@ public class CategoryController {
     @RequestMapping(value = "/ty")
     @ResponseBody
     public  String ty(String categoryID){
-        System.out.println(categoryID);
         Integer updatety = categoryService.updatety(Integer.parseInt(categoryID));
         if(updatety>0){
             return "1";

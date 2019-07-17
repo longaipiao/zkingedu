@@ -29,7 +29,6 @@ public class WebAppConfig implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        System.out.println("哈哈哈");
         HttpSession session = request.getSession();
 
 
@@ -46,10 +45,6 @@ public class WebAppConfig implements HandlerInterceptor {
                 return false;
             }
         }
-
-
-
-
         return true;
     }
 

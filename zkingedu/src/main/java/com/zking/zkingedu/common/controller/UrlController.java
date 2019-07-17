@@ -137,7 +137,7 @@ public class UrlController {
             m.addAttribute("ps",map);
             System.out.println(map);
         }
-        return "/admin/html/admin-title";
+        return "admin/html/admin-title";
     }
 
 

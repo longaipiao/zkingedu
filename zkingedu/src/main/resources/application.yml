@@ -2,7 +2,7 @@
 server:
    servlet:
      context-path: /
-   port: 80
+   port: 8899
 #配置数据库
 spring:
   datasource:
@@ -94,6 +94,8 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+
 
 
 

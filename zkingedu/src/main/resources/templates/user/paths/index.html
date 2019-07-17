@@ -453,12 +453,52 @@ $('.org-body-courses .media h4').each(function() {
 });
 </script>
 
+<script>
+    $(function () {
+        reqData();
+    })
 
+
+    //数据接口请求
+    function reqData() {
+        $.ajax({
+            type:"GET",
+            url:"/user/CourseEight",
+            dataType:"json", //预期服务器返回数据的类型
+            success:function(data){
+                mycourseData(data.data);
+            }
+        })
+    }
+
+    function mycourseData(data) {
+        var str="";
+        for (var i=0;i<data.length;i++){
+            str+=" <div class=\"col-sm-6\">\n" +
+                "            <a href=\"/user/resourseShow?courseId="+data[i].systemID+"\" >\n" +
+                "                <div class=\"path-item\">\n" +
+                "                    <div class=\"col-xs-5 col-md-4  path-img\">\n" +
+                "                        <img src=\""+data[i].systemImg+"\">\n" +
+                "                    </div>\n" +
+                "                    <div class=\"col-xs-7 col-md-8\">\n" +
+                "                        <div class=\"path-name\">"+data[i].systemName+"</div>\n" +
+                "                        <div class=\"path-course-num\"><span>"+data[i].sourcesNum+"</span> 门课程</div>\n" +
+                "                    </div>"+
+                "                    <div class=\"desc-layer\">\n" +
+                "                        <div class=\"center\">"+data[i].systemDesc+"</div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "            </a>\n" +
+                "        </div>";
+        }
+        $("#coursedata").html(str);
+    }
+</script>
 
 <!--包含底部-->
 <div th:replace="user/footer::footer"></div>
 
-            
+
         
 	
 </body>

@@ -69,7 +69,6 @@ public class ChargeController {
 
     @RequestMapping(value = "/pay")
     public String aliPay(String outTradeNo, String chargeIntegral, String chargeMoney, String body, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("进入充值积分的方法");
         // 为防止订单号重否 此处模拟生成唯一订单号
         outTradeNo = PayUtils.createUnilCode();
         //支付宝支付

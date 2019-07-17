@@ -197,34 +197,38 @@
 
 
     var time=60;
-    $('#sendPhone').click(function(){
-        //获得手机号文本框的值
-        var phones=$("#phone").val();
-        //手机号验证
-        var pdphones=/^1[3-9]\d{9}$/;
-        if(""==phones){
-            alert("手机号不能为空");
-        }
-        else if(!pdphones.test(phones)){
-            alert("格式不对");
-        }
-        else {
-            $.ajax({
-                url: "/user/Hqyzm",
-                type: 'post',
-                data: {
-                    phone: phones,
-                },
-                success:function(n) {
-                    s=n;
-                    timeStartss();
-                },
-                error: function () {
-                    alert('注册失败');
-                }
-            });
-        }
-    });
+
+    $(function () {
+        $('#sendPhone').click(function(){
+            //获得手机号文本框的值
+            var phones=$("#phone").val();
+            //手机号验证
+            var pdphones=/^1[3-9]\d{9}$/;
+            if(""==phones){
+                alert("手机号不能为空");
+            }
+            else if(!pdphones.test(phones)){
+                alert("格式不对");
+            }
+            else {
+                $.ajax({
+                    url: "/user/Hqyzm",
+                    type: 'post',
+                    data: {
+                        phone: phones,
+                    },
+                    success:function(n) {
+                        s=n;
+                        timeStartss();
+                    },
+                    error: function () {
+                        alert('注册失败');
+                    }
+                });
+            }
+        });
+    })
+
 
 
     function timeStartss(){
