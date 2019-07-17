@@ -606,7 +606,7 @@
                 var str="";
                 for (var i=0;i<objs.length;i++){
                     str+="<div class=\"col-xs-12 col-sm-6 col-md-4\">" +
-                        "<a href=\"/user/resourseShow?courseId="+objs[i].systemID+"\">" +
+                        "<a href=\"/user/resourseShow/"+objs[i].systemID+"\">" +
                         "<div class=\"path-item\">" +
                         "<div class=\"col-xs-5 col-sm-4 path-img\">" +
                         "<img src="+objs[i].systemImg+">" +
@@ -648,12 +648,10 @@
              * 最热课程数据绑定
              */
             function myFourdata(data) {
-
                 var str="";
-
                 for (var i=0;i<data.length;i++){
                     str+="<div class=\"col-md-3 col-sm-6  course\">\n" +
-                        "<a class=\"course-box\" href=\"/user/showCourse?sid="+data[i].courseID+"\">\n" +
+                        "<a class=\"course-box\" href=\"/user/showCourse/"+data[i].courseID+"\">\n" +
                         "<div class=\"sign-box\">\n" +
                         "<i class=\"fa fa-star-o course-follow pull-right\"\n" +
                         "                data-follow-url=\"/courses/1/follow\"\n" +

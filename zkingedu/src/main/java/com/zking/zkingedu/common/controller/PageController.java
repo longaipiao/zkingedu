@@ -179,13 +179,12 @@ public class PageController {
         if ("course".equals(type)) {//搜索课程
             mv.addObject("content", SearchName);
             mv.setViewName("user/courses/index");
-            //mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
+            mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             return mv;//跳转至课程搜索页面
         }
         else  {
             mv.addObject("leibie",SearchName);
             mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
-            // mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             mv.setViewName("user/questions/index");
             return mv;//搜索论坛帖子
         }

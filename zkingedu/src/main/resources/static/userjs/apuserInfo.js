@@ -367,7 +367,7 @@ $(function () {
                 $.each(res.data, function (i, o) {
                     //alert(o.billType);
                     content += "<div class=\"col-md-4 col-sm-6  course\">\n" +
-                        "\t\t\t\t\t\t\t\t\t\t<a class=\"course-box\" href=\"/user/showCourse?sid=" + o.course_id + "\">\n" +
+                        "\t\t\t\t\t\t\t\t\t\t<a class=\"course-box\" href=\"/user/showCourse/" + o.course_id + "\">\n" +
                         "\t\t\t\t\t\t\t\t\t\t\t<div class=\"sign-box\">\n" +
                         "\n" +
                         "\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-star-o course-follow pull-right\"\n" +

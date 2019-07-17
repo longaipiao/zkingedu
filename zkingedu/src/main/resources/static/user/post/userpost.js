@@ -1,3 +1,10 @@
+
+var layer;//layer插件
+
+layui.use('layer',function () {
+    layer = layui.layer;
+});
+
 function yx(aa, bb) {
     $.ajax({
         type: "post",
@@ -10,15 +17,15 @@ function yx(aa, bb) {
         success: function (data) {
             if (data == 1) {
                 inintdata();
-                alert("对用户隐藏成功");
+                layer.msg("对用户隐藏成功");
             }
             if (data == 0) {
                 inintdata();
-                alert("对用户显示成功");
+                layer.msg("对用户显示成功");
             }
         },
         error: function (jqXHR) {
-            alert("发生错误：" + jqXHR.status);
+            layer.msg("发生错误：" + jqXHR.status);
         }
     });
 
@@ -29,7 +36,33 @@ function yx(aa, bb) {
 
 //删除自己的帖子，假删
 function delPost(aa) {
-    var t = confirm("你确定要删除帖子吗？");
+
+
+    //询问框
+    var index = layer.confirm('你确定要删除帖子吗？', {
+        btn: ['确认','取消'] //按钮
+    }, function(){
+        $.ajax({
+            type: "post",
+            url: "/pst/updatePState",
+            dataType: "json",
+            data: {
+                id: aa
+            },
+            success: function (data) {
+                if (data > 0) {
+                    layer.msg("删除成功");
+                    inintdata();//开始刷新
+                    layer.close(index);
+                }
+            },
+            error: function (jqXHR) {
+                layer.msg("发生错误：" + jqXHR.status);
+            }
+        });
+    });
+
+   /* var t = layer.confirm("你确定要删除帖子吗？");
     if (t == true) {
         $.ajax({
             type: "post",
@@ -44,10 +77,10 @@ function delPost(aa) {
                 }
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
         });
-    }
+    }*/
 }
 
 

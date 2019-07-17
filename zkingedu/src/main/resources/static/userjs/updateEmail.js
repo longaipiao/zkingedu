@@ -1,4 +1,12 @@
 
+
+    var layer;//layer插件
+
+    layui.use('layer',function () {
+        layer = layui.layer;
+    });
+
+
     var s=0;
     var time=60;
     function updateEmail() {
@@ -7,7 +15,7 @@
         //判断重复
         var captcha_v5 = $("#userEmailcaptcha_v").val();
         if(""==Email){
-            alert("邮箱不能为空");
+            layer.msg("邮箱不能为空");
         }else{
             $.ajax({
                 url: "/user/Email",
@@ -17,10 +25,10 @@
                 },
                 success: function (data) {
                     if (data == 2) {
-                        alert("该邮箱重复了")
+                        layer.msg("该邮箱重复了")
                     } else {
                         if (s != captcha_v5) {
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         } else {
                             $.ajax({
                                 url: "/user/updateEmail",
@@ -30,10 +38,10 @@
                                 },
                                 success: function (sh) {
                                     if (sh == 1) {
-                                        alert("修改成功");
+                                        layer.msg("修改成功");
                                         location.href = "/user/userinfo/index";
                                     } else if (sh == 2) {
-                                        alert("修改失败")
+                                        layer.msg("修改失败")
                                     }
                                 }
                             })
@@ -52,10 +60,10 @@
         //手机号验证
         var Emails=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
         if(""==Email){
-            alert("邮箱不能为空")
+            layer.msg("邮箱不能为空")
         }
         else if(!Emails.test(Email)){
-            alert("邮箱格式不对");
+            layer.msg("邮箱格式不对");
         }
         else {
             $.ajax({
@@ -69,7 +77,7 @@
                     timeStart7();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }

@@ -13,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,8 +67,8 @@ public class SystemController {
      * 获取体系id 查询所有子体系以及子体系下面的课程
      */
     @ResponseBody
-    @RequestMapping("/resourseShow")
-    public ModelAndView coursepathsShow(Integer courseId) {
+    @GetMapping("/resourseShow/{courseId}")
+    public ModelAndView coursepathsShow(@PathVariable(value = "courseId") Integer courseId) {
         ModelAndView mv = new ModelAndView();
         System systemBySid = systemService.getSystemBySid(courseId);
         mv.addObject("system", systemBySid);

@@ -3,10 +3,10 @@
         var userPhone=$("#userPhone").val();
         var upwd=$("#upwd").val();
         if(""==userPhone){
-            alert("手机号不能为空");
+            layer.msg("手机号不能为空");
         }
         else if (""==upwd){
-            alert("密码不能为空");
+            layer.msg("密码不能为空");
         }else {
             $.ajax({
                 url: "/user/login",
@@ -19,7 +19,7 @@
                     if (data == 1) {
                         location.href = "/";
                     } else {
-                        alert("账户或密码错误");
+                        layer.msg("账户或密码错误");
                     }
                 }
             })

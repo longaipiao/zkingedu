@@ -1,36 +1,21 @@
 package com.zking.zkingedu.common.controller;
 
-import com.alibaba.druid.sql.visitor.functions.Now;
-
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zking.zkingedu.common.dao.EmpDao;
-import com.zking.zkingedu.common.dao.PostDao;
 import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.service.PostService;
 import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.MessageUtil;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpResponse;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.lang.System;
-import java.net.SocketTimeoutException;
 import java.util.*;
 
 /**
@@ -85,7 +70,7 @@ public class PostController {
         Integer uid=getUserid(session);
         pt.setPostUid(uid);
         pt.setPostState(Integer.parseInt(zt));
-        pt.setPostTime(new Date().toLocaleString());//获取当前时间
+//        pt.setPostTime(new Date().toLocaleString());//获取当前时间
         pt.setPostNum(0);//设置浏览量
         int i = postService.addPost(pt);//调用增加方法*/
 

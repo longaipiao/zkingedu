@@ -1,4 +1,11 @@
 
+    var layer;//layer插件
+
+    layui.use('layer',function () {
+        layer = layui.layer;
+    });
+
+
     var s=0;
 //用手机号修改密码
     function updatephonepassword() {
@@ -24,30 +31,30 @@
         //手机号验证
         var pdphone=/^1[3-9]\d{9}$/;
         if ("" == phones) {
-            alert("手机号不能为空")
+            layer.msg("手机号不能为空")
         } else if("" == password1){
-            alert("原密码不能为空")
+            layer.msg("原密码不能为空")
         } else if(""== captcha_v){
-            alert("验证码不能为空")
+            layer.msg("验证码不能为空")
         } else  if(""== password2){
-            alert("修改的密码不能为空")
+            layer.msg("修改的密码不能为空")
         } else if(""== password3){
-            alert("确认密码不能为空")
+            layer.msg("确认密码不能为空")
         } else if(password2==passwordy){
-            alert("跟上次密码不能一样")
+            layer.msg("跟上次密码不能一样")
         } else if(password2.length<=6 && password2.length>=18){
-            alert("密码只能在6到18位")
+            layer.msg("密码只能在6到18位")
         }
         else if (passwordy!=password1){
-            alert("跟原密码不一样")
+            layer.msg("跟原密码不一样")
         } else if(password2!=password3){
-            alert("两次密码不一样")
+            layer.msg("两次密码不一样")
         }
         else {
             if(pdphone.test(phones)){//如果是手机号
                 if (inputShou == phones) {
                     if (s != captcha_v) {
-                        alert("验证码错误")
+                        layer.msg("验证码错误")
                     } else {
                         //注册方法
                         $.ajax({
@@ -59,20 +66,20 @@
                             },
                             success: function (data) {
                                 if (data == 1) {
-                                    alert("修改成功")
+                                    layer.msg("修改成功")
                                     location.href = "/";
                                 }
                                 else{
-                                    alert("修改失败")
+                                    layer.msg("修改失败")
                                 }
                             },
                             error: function () {
-                                alert("修改失败")
+                                layer.msg("修改失败")
                             }
                         })
                     }
                 } else {
-                    alert("手机号不是绑定账号的手机号");
+                    layer.msg("手机号不是绑定账号的手机号");
 
                 }
             }
@@ -80,7 +87,7 @@
             if(Emails.test(phones)){//如果是邮箱
                 if(inputEmail==phones){
                     if (s != captcha_v) {
-                        alert("验证码错误")
+                        layer.msg("验证码错误")
                     } else {
                         //注册方法
                         $.ajax({
@@ -92,18 +99,18 @@
                             },
                             success: function (data) {
                                 if (data == 1) {
-                                    alert("修改成功")
+                                    layer.msg("修改成功")
                                     location.href = "/";
                                 }
                             },
                             error: function () {
-                                alert("修改失败")
+                                layer.msg("修改失败")
                             }
                         })
                     }
                 }
                 else {
-                    alert("邮箱不是绑定账号的邮箱号");
+                    layer.msg("邮箱不是绑定账号的邮箱号");
                 }
             }
 
@@ -131,7 +138,7 @@
         //手机号验证
         var pdphones=/^1[3-9]\d{9}$/;
         if(""==phones){
-            alert("手机号和邮箱不能为空")
+            layer.msg("手机号和邮箱不能为空")
         }
         else if(pdphones.test(phones)){//如果是手机号码
             $.ajax({
@@ -145,7 +152,7 @@
                     timeStart1();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }
@@ -161,7 +168,7 @@
                     timeStart1();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }

@@ -176,10 +176,10 @@
             <div class="media-body">
                         <span th:if="${session.user} ne null ">
 
-                            <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到实验楼</span>
+                            <span class="media-heading username">欢迎<span th:text="${session.user.userName}"></span>来到zking课堂</span>
                         </span>
                 <span th:if="${session.user} eq null  ">
-                            <span class="media-heading username">欢迎</span>来到实验楼</span>
+                            <span class="media-heading username">欢迎</span>来到zking课堂</span>
                 </span>
                 <p class="vip-remain">做实验，学编程</p>
             </div>
@@ -249,7 +249,7 @@
                     <h4 class="sidebox-title">最热体系</h4>
                 </div>
                 <div class="sidebox-body course-content side-list-body" th:each="sys:${sysFive}">
-                    <a th:href="@{/user/resourseShow?courseId={id}(id=${sys.systemID})}"><img style="width:25px;height:25px" src="/user/img/1471513769430.png" th:src="${sys.systemImg}" >
+                    <a th:href="@{/user/resourseShow/{id}(id=${sys.systemID})}"><img style="width:25px;height:25px" src="/user/img/1471513769430.png" th:src="${sys.systemImg}" >
                         <span th:text="${sys.systemName}"></span></a>
                 </div>
             </div>

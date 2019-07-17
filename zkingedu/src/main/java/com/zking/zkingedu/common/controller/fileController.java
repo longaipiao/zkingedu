@@ -23,7 +23,6 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class fileController {
 
-
     @RequestMapping(value = "/imgupload", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
     @ResponseBody
     public ResultUtil uploadFile(MultipartFile file, HttpServletRequest req) {

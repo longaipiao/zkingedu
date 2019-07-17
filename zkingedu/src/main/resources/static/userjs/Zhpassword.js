@@ -5,6 +5,13 @@
     var x = 0;
     var a = 0;
 
+    var layer;//layer插件
+
+    layui.use('layer',function () {
+        layer = layui.layer;
+    });
+
+
     function updatePhonepassword() {
         //获得手机号和邮箱文本框的值
         var phones = $("#phoneEmail").val();
@@ -13,13 +20,13 @@
         //获得确认密码的值
         var newuserpassword = $("#usercaptcha_v").val();
         if ("" == userpassword) {
-            alert("密码不能为空");
+            layer.msg("密码不能为空");
         } else if ("" == newuserpassword) {
-            alert("确认密码不能为空");
+            layer.msg("确认密码不能为空");
         } else if (userpassword.length <=6 && userpassword.length >=18) {
-            alert("密码只能6到1位")
+            layer.msg("密码只能6到1位")
         } else if (userpassword != newuserpassword) {
-            alert("两次密码不一样");
+            layer.msg("两次密码不一样");
         } else {
             $.ajax({
                 url: "/user/zhphonepassoword",
@@ -30,7 +37,7 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("找回成功");
+                        layer.msg("找回成功");
                         location.href = "/";
                     }
                 }
@@ -51,7 +58,7 @@
         //手机号验证
         var pdphones = /^1[3-9]\d{9}$/;
         if ("" == phones) {
-            alert("手机号和邮箱不能为空");
+            layer.msg("手机号和邮箱不能为空");
         }
         else if (pdphones.test(phones)) {//如果是手机号码
             $.ajax({
@@ -62,13 +69,13 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("该手机号没有注册")
+                        layer.msg("该手机号没有注册")
                         //给x赋值
                         x = 1;
                     }
                     else {
                         if (s != captcha_v) {
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         }
                         else {
                             tk();//弹框
@@ -86,12 +93,12 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("该邮箱没有注册");
+                        layer.msg("该邮箱没有注册");
                         //给y赋值
                         y = 1;
                     } else {
                         if (s != captcha_v) {
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         }
                         else {
                             tk();
@@ -129,7 +136,7 @@
         //手机号验证
         var pdphones = /^1[3-9]\d{9}$/;
         if ("" == phones) {
-            alert("手机号和邮箱不能为空")
+            layer.msg("手机号和邮箱不能为空")
         }
         else if (pdphones.test(phones)) {//如果是手机号码
             $.ajax({
@@ -143,7 +150,7 @@
                     timeStart9();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }
@@ -159,7 +166,7 @@
                     timeStart9();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }

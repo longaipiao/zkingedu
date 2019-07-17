@@ -169,7 +169,9 @@
 </nav>-->
 
 <script>
-    layui.use('upload', function () {
+    var layer;
+    layui.use(['upload','layer'], function () {
+        layer = layui.layer;
         var $ = layui.jquery
             , upload = layui.upload;
         //普通图片上传
@@ -765,6 +767,11 @@
 
     <script type="text/javascript">
         function submitForm(action) {
+            var money = $("#money").val();
+            if(null==money||0==money){
+                layer.msg("请输入充值金额");
+                return;
+            }
             document.getElementById("form").action = action;
             document.getElementById("form").submit();
         }

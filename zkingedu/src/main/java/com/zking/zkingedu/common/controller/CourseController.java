@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -93,8 +94,8 @@ public class CourseController {
      *
      * @return sid 是课程ID
      */
-    @RequestMapping("/showCourse")
-    public ModelAndView SystemRequestCourse(Integer sid, HttpServletRequest request, Model model,ModelAndView mv){
+    @RequestMapping("/showCourse/{sid}")
+    public ModelAndView SystemRequestCourse(@PathVariable(value = "sid") Integer sid, HttpServletRequest request, Model model, ModelAndView mv){
 
         User u = (User) request.getSession().getAttribute("user");
         if(u!=null){
@@ -173,8 +174,8 @@ public class CourseController {
      * @param id
      * @return
      */
-    @RequestMapping("/showVideo")
-    public ModelAndView SystemRequestCourse(@RequestParam(value = "sid") Integer sid, @RequestParam(value = "id") Integer id, HttpServletRequest request, Model model){
+    @RequestMapping("/showVideo/{sid}/{id}")
+    public ModelAndView SystemRequestCourse(@PathVariable(value = "sid") Integer sid, @PathVariable(value = "id") Integer id, HttpServletRequest request, Model model){
         ModelAndView mv = new ModelAndView();
         //获取登录过来的用户积分    需要后期改变用户ID
         //int integrsl = userService.findIntegrsl(SessionUtil.getUserById());

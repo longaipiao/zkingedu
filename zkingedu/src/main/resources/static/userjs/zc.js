@@ -1,5 +1,14 @@
 
     var s=0;
+
+    var layer;//layer插件
+
+    layui.use('layer',function () {
+        layer = layui.layer;
+
+    });
+
+
 //注册
     function zc() {
         //获得手机号文本框的值
@@ -19,27 +28,27 @@
             },
             success:function (data) {
                 if(data==2){
-                    alert("手机号重复了");
+                    layer.msg("手机号重复了");
                 }
                 else{
                     if(""==phone){
-                        alert("手机号不能为空");
+                        layer.msg("手机号不能为空");
                     }
                     else if(!pdphone.test(phone)){
-                        alert("手机号格式不对");
+                        layer.msg("手机号格式不对");
                     }
                     else if(""==password){
-                        alert("密码不能为空");
+                        layer.msg("密码不能为空");
                     }
                     else if(password.length <=6 && password.length >=18){
-                        alert("密码只能在6到18位");
+                        layer.msg("密码只能在6到18位");
                     }
                     else if(""==captcha_v){
-                        alert("验证码不能为空");
+                        layer.msg("验证码不能为空");
                     }
                     else{
                         if(s!=captcha_v){
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         }
                         else{
                             //注册方法
@@ -78,19 +87,19 @@
         //判断重复
         var captcha_v5=$("#captcha_v").val();
         if(""==phone){
-            alert("手机号不能为空");
+            layer.msg("手机号不能为空");
         }
         else if(!pdphone.test(phone)){
-            alert("手机号格式不对");
+            layer.msg("手机号格式不对");
         }
         else if(""==password){
-            alert("密码不能为空");
+            layer.msg("密码不能为空");
         }
         else if(password.length <=6 && password.length >=18){
-            alert("密码只能在6到18位");
+            layer.msg("密码只能在6到18位");
         }
         else if(""==captcha_v){
-            alert("验证码不能为空");
+            layer.msg("验证码不能为空");
         }
         else {
             $.ajax({
@@ -101,10 +110,10 @@
                 },
                 success: function (data) {
                     if (data == 2) {
-                        alert("该手机号已经绑定了可以直接登入");
+                        layer.msg("该手机号已经绑定了可以直接登入");
                     } else {
                         if (s != captcha_v5) {
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         } else {
                             $.ajax({
                                 url: "/user/qqlogin",
@@ -114,12 +123,12 @@
                                     upwd: $("#password").val()
                                 },
                                 success: function (sh) {
-                                    alert(sh)
+                                    layer.msg(sh)
                                     if (sh == 1) {
-                                        alert("绑定成功");
+                                        layer.msg("绑定成功");
                                         location.href = "/";
                                     } else if (sh == 2) {
-                                        alert("登入失败")
+                                        layer.msg("登入失败")
                                     }
                                 }
                             })
@@ -138,12 +147,12 @@
         //手机号验证
         var pdphone=/^1[3-9]\d{9}$/;
         if(""==phone){
-            alert("手机号不能为空");
+            layer.msg("手机号不能为空");
         }
         else if(!pdphone.test(phone)){
-            alert("手机号格式不对");
+            layer.msg("手机号格式不对");
         }else if(""==captcha_v5){
-            alert("验证码不能为空");
+            layer.msg("验证码不能为空");
         }else {
             $.ajax({
                 url: "/user/cf",
@@ -153,7 +162,7 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("该手机号没有注册该平台")
+                        layer.msg("该手机号没有注册该平台")
                     } else {
                         $.ajax({
                             url:"/user/yjqqlogin",
@@ -163,11 +172,11 @@
                             },
                             success:function (data) {
                                 if(data==2){
-                                    alert("该手机号已经绑定了qq号")
+                                    layer.msg("该手机号已经绑定了qq号")
                                 }
                                 else{
                                     if (s != captcha_v5) {
-                                        alert("验证码错误")
+                                        layer.msg("验证码错误")
                                     } else {
                                         $.ajax({
                                             url: "/user/yjqqlogin",
@@ -177,10 +186,10 @@
                                             },
                                             success: function (sh) {
                                                 if (sh == 1) {
-                                                    alert("绑定成功")
+                                                    layer.msg("绑定成功")
                                                     location.href = "/";
                                                 } else if (sh == 2) {
-                                                    alert("登入失败")
+                                                    layer.msg("登入失败")
                                                 }
                                             }
                                         })
@@ -204,10 +213,10 @@
             //手机号验证
             var pdphones=/^1[3-9]\d{9}$/;
             if(""==phones){
-                alert("手机号不能为空");
+                layer.msg("手机号不能为空");
             }
             else if(!pdphones.test(phones)){
-                alert("格式不对");
+                layer.msg("格式不对");
             }
             else {
                 $.ajax({
@@ -221,7 +230,7 @@
                         timeStartss();
                     },
                     error: function () {
-                        alert('注册失败');
+                        layer.msg('注册失败');
                     }
                 });
             }

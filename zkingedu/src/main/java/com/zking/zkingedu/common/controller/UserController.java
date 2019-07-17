@@ -508,8 +508,8 @@ public class UserController {
         user.setUserPassword(upwd);
         User userlogin = userService.userlogin(user);
         Integer userphone = userService.getUserphone(userPhone);
-        if(userphone==0){
-            if(userlogin!=null){
+        if(userlogin!=null){
+            if(userphone==0){
                 Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 if(integer>0){
                     session.setAttribute("user",userlogin);
@@ -531,9 +531,7 @@ public class UserController {
         else{
             return "3";
         }
-
         return "";
-
     }
     /**
      * 注销

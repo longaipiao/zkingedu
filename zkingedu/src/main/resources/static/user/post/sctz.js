@@ -1,7 +1,7 @@
 //删除自己的帖子，假删
 function delPostTz(aa) {
 
-    var t = confirm("你确定要取消取消这个吗？");
+    /*var t = confirm("你确定要取消取消这个吗？");
     if (t == true) {
         $.ajax({
             type: "post",
@@ -16,10 +16,33 @@ function delPostTz(aa) {
                 }
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
         });
-    }
+    }*/
+
+    var index = layer.confirm('你确定要取消收藏这个吗？', {
+        btn: ['确认','取消'] //按钮
+    }, function(){
+        $.ajax({
+            type: "post",
+            url: "/pst/deletecollec",
+            dataType: "json",
+            data: {
+                id: aa
+            },
+            success: function (data) {
+                if (data > 0) {
+                    ini();//开始刷新
+                    layer.close(index);
+                }
+            },
+            error: function (jqXHR) {
+                layer.msg("发生错误：" + jqXHR.status);
+            }
+        });
+    })
+
 }
 
 

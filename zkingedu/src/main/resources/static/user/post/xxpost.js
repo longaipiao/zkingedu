@@ -1,4 +1,11 @@
 
+
+var layer;//layer插件
+
+layui.use('layer',function () {
+    layer = layui.layer;
+});
+
 //查看回复的展开和收缩的方法
 function aha(aa){
     $("#"+aa+"").toggle();
@@ -50,13 +57,13 @@ function dz(){
 
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
 
         });
     }
     else{
-        alert("请先登录");
+        layer.msg("请先登录");
     }
 }
 
@@ -82,13 +89,13 @@ function ghg() {
                 }
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
 
         });
     }
     else{
-        alert("请先登录");
+        layer.msg("请先登录");
     }
 
 
@@ -105,7 +112,7 @@ $(function () {
               userid=data;
         },
         error: function (jqXHR) {
-            alert("发生错误：" + jqXHR.status);
+            layer.msg("发生错误：" + jqXHR.status);
         }
     });
 
@@ -143,7 +150,7 @@ $(function () {
     $("#fb").click(function () {
         if (userid!=0) {//如果部位空的话
             if ($("#editor").val() == "") {
-                alert("请填写评论内容");
+                layer.msg("请填写评论内容");
             } else {
                 //如果回复id为空，也就是一级评论。即对贴子的评论
                 if (huifuid == "") {
@@ -181,18 +188,18 @@ $(function () {
                             tcommentUid2 = tieid;   //恢复  作者的uid
                             tcommentFid = 0;     //回复  评论的父id
                             huifuid = "";//给回复id复原
-                            alert("评论失败");
+                            layer.msg("评论失败");
                         }
                     },
                     error: function (jqXHR) {
-                        alert("发生错误：" + jqXHR.status);
+                        layer.msg("发生错误：" + jqXHR.status);
                     }
                 });
                 return false;
             }
         }
         else{
-            alert("请先登录");
+            layer.msg("请先登录");
         }
     });
 
@@ -209,7 +216,7 @@ $(function () {
         success:function(data){
         },
         error:function(jqXHR){
-            alert("发生错误："+ jqXHR.status);
+            layer.msg("发生错误："+ jqXHR.status);
         }
 
     });
@@ -236,7 +243,7 @@ function querydz() {
                dzzt=data//给点赞状态赋值
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
         });
 
@@ -327,7 +334,7 @@ function jztzxx() {
             $("#nr").html(data.a);
         },
         error: function (jqXHR) {
-            alert("发生错误：" + jqXHR.status);
+            layer.msg("发生错误：" + jqXHR.status);
         }
     });
 }
@@ -444,8 +451,6 @@ function initdata() {
                         "                    \n" +
                         "                </div>\n" +
                         "                </div>\n"
-
-
                 }
 
             });
@@ -454,7 +459,7 @@ function initdata() {
 
         },
         error: function (jqXHR) {
-            alert("发生错误：" + jqXHR.status);
+            layer.msg("发生错误：" + jqXHR.status);
         }
     });
 }
@@ -474,7 +479,7 @@ function sc() {
                sczt=data//给收藏状态赋值
             },
             error: function (jqXHR) {
-                alert("发生错误：" + jqXHR.status);
+                layer.msg("发生错误：" + jqXHR.status);
             }
 
         });
@@ -486,7 +491,7 @@ function sc() {
 //删除评论的方法
 function delpl(a,b) {
 
-    var t=confirm("你确定要删除吗？");
+    /*var t=confirm("你确定要删除吗？");
     if(t==true){
         $.ajax({
             type:"post",
@@ -498,17 +503,39 @@ function delpl(a,b) {
             },
             success:function(data){
                 if (data>0){
-                    alert("删除成功");
+                    layer.msg("删除成功");
                     initdata();
                 }
             },
             error:function(jqXHR){
-                alert("发生错误："+ jqXHR.status);
+                layer.msg("发生错误："+ jqXHR.status);
             }
-
         });
+    }*/
 
-    }
+    var index = layer.confirm('你确定要删除吗？', {
+        btn: ['确认','取消'] //按钮
+    }, function(){
+        $.ajax({
+            type:"post",
+            url:"/pst/delPl",
+            dataType:"json",
+            data:{
+                uid:a,
+                fid:b
+            },
+            success:function(data){
+                if (data>0){
+                    layer.msg("删除成功");
+                    initdata();
+                    layer.close(index);
+                }
+            },
+            error:function(jqXHR){
+                layer.msg("发生错误："+ jqXHR.status);
+            }
+        });
+    })
 
 }
 

@@ -1,4 +1,11 @@
 
+    var layer;//layer插件
+
+    layui.use('layer',function () {
+        layer = layui.layer;
+
+    });
+
     var s=0;
     var time=60;
     function updatePhone3() {
@@ -7,9 +14,9 @@
         //判断重复
         var captcha_v5 = $("#usercaptcha_v").val();
         if ("" === phone) {
-            alert("手机号不能为空");
+            layer.msg("手机号不能为空");
         } else if ("" === captcha_v5) {
-            alert("验证码不能为空")
+            layer.msg("验证码不能为空")
         } else {
             $.ajax({
                 url: "/user/cf",
@@ -19,10 +26,10 @@
                 },
                 success: function (data) {
                     if (data == 2) {
-                        alert("该手机号重复了")
+                        layer.msg("该手机号重复了")
                     } else {
                         if (s != captcha_v5) {
-                            alert("验证码错误")
+                            layer.msg("验证码错误")
                         } else {
                             $.ajax({
                                 url: "/user/updatePhone",
@@ -32,10 +39,10 @@
                                 },
                                 success: function (sh) {
                                     if (sh == 1) {
-                                        alert("修改成功");
+                                        layer.msg("修改成功");
                                         location.href = "/user/userinfo/index";
                                     } else if (sh == 2) {
-                                        alert("修改失败")
+                                        layer.msg("修改失败")
                                     }
                                 }
                             })
@@ -55,10 +62,10 @@
         //手机号验证
         var pdphones=/^1[3-9]\d{9}$/;
         if(""==phones){
-            alert("手机号不能为空");
+            layer.msg("手机号不能为空");
         }
         else if(!pdphones.test(phones)){
-            alert("手机号格式不对");
+            layer.msg("手机号格式不对");
         }
         else {
             $.ajax({
@@ -72,7 +79,7 @@
                     timeStart2();
                 },
                 error: function () {
-                    alert('注册失败');
+                    layer.msg('注册失败');
                 }
             });
         }

@@ -10,7 +10,7 @@
      <insert id="addPost" parameterType="com.zking.zkingedu.common.model.Post">
               insert  into
                           t_post(post_uid,post_name,post_content,post_time,post_state,post_category,post_num)
-              values (#{postUid},#{postName},#{postContent},#{postTime},#{postState},#{postCategory},#{postNum})
+              values (#{postUid},#{postName},#{postContent},now(),#{postState},#{postCategory},#{postNum})
      </insert>
 
 <!--    获取所有分类的帖子-->

@@ -764,6 +764,7 @@
     }
 
 
+
     $(function () {
         //alert("用户:"+$("#userintegrsl").val());
         //alert("课程:"+$("#courseIntegrsl").val());
@@ -822,7 +823,7 @@
                                     str = "<div class=\"answer-item\">\n" +
                                         "                                    <div class=\"answer-head\">\n" +
                                         "                                        <div class=\"user-avatar \">\n" +
-                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                        "                                            <a class=\"avatar\" href=\"javascript:void(0);\" target=\"_blank\">\n" +
                                         "                                                <img src=\"" + json[i].user.userImg + "\">\n" +
                                         "                                            </a>\n" +
                                         "                                        </div>\n" +
@@ -830,7 +831,7 @@
                                         "                                    <div class=\"answer-detail\">\n" +
                                         "                                        <span class=\"comment-reply\">\n" +
                                         "                                            <div class=\"user-username \">\n" +
-                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                        "                                                <a class=\"username\" href=\"javascript:void(0);\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
                                         "                                                        " + json[i].user.userName + "\n" +
                                         "                                                </a>\n" +
                                         "                                                <span class=\"user-level\">V</span>\n" +
@@ -850,7 +851,7 @@
                                     str = "<div class=\"answer-item\">\n" +
                                         "                                    <div class=\"answer-head\">\n" +
                                         "                                        <div class=\"user-avatar \">\n" +
-                                        "                                            <a class=\"avatar\" href=\"/user/162034\" target=\"_blank\">\n" +
+                                        "                                            <a class=\"avatar\" href=\"javascript:void(0);\" target=\"_blank\">\n" +
                                         "                                                <img src=\"" + json[i].user.userImg + "\">\n" +
                                         "                                            </a>\n" +
                                         "                                        </div>\n" +
@@ -858,7 +859,7 @@
                                         "                                    <div class=\"answer-detail\">\n" +
                                         "                                        <span class=\"comment-reply\">\n" +
                                         "                                            <div class=\"user-username \">\n" +
-                                        "                                                <a class=\"username\" href=\"/user/162034\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
+                                        "                                                <a class=\"username\" href=\"javascript:void(0);\" style=\"margin-left: 20px;\" target=\"_blank\">\n" +
                                         "                                                        " + json[i].user.userName + "\n" +
                                         "                                                </a>\n" +
                                         "                                                <span class=\"user-level\">V</span>\n" +
@@ -993,13 +994,13 @@
             success: function (data) {
 
                 if (parseInt(jf) == 0) {
-                    window.location.href = "/user/showVideo?sid=" + course + "&id=" + section;
+                    window.location.href = "/user/showVideo/" + course + "/" + section;
                 } else {
                     if (parseInt(data) == 4) {
                         layer.msg("您还没有登录，快去登录吧！", {icon: 5});
                     } else {
                         if (data == 1) {
-                            window.location.href = "/user/showVideo?sid=" + course + "&id=" + section;
+                            window.location.href = "/user/showVideo/" + course + "/" + section;
                         } else if (data == 2) {
                             layer.msg("您的积分不足，快去充值吧。");
                         } else if (data = 3) {
@@ -1015,7 +1016,7 @@
                                     success: function (data) {
                                         if (data == 4) {
                                             layer.msg("购买成功！");
-                                            window.location.href = "/user/showVideo?sid=" + course + "&id=" + section;
+                                            window.location.href = "/user/showVideo/" + course + "/" + section;
                                         }
                                     }
                                 });
@@ -1048,9 +1049,8 @@
                     layer.msg(data.msg);
                     myCourseNum(2);//刷新收藏数量
                     $(obj).removeClass("courseCheck");
-                }
-                else {//收藏异常
-                    layer.msg(data.data);
+                }else{//收藏异常
+                    layer.msg(data.msg);
                 }
             }
         });
