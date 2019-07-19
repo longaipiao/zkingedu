@@ -15,7 +15,6 @@ public class ZkingeduApplication  {
 //    SpringBootServletInitializer
     public static void main(String[] args)  {
         SpringApplication.run(ZkingeduApplication.class, args);
-
     }
 
 

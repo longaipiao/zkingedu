@@ -3,7 +3,6 @@ package com.zking.zkingedu.common.Aop;
 import com.zking.zkingedu.common.model.Advertising;
 import com.zking.zkingedu.common.service.AdvertisingService;
 import com.zking.zkingedu.common.utils.ResultUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,6 @@ public class job {
         m.addAttribute("ps",alls);
         return "user/index";
     }
-
 
 
 

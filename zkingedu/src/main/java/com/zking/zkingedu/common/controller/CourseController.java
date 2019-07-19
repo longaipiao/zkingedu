@@ -312,6 +312,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping("/stageManager")
+    @RequiresAuthentication
     public String StageManager() {
         return "admin/course/courseManager";
     }
@@ -328,6 +329,7 @@ public class CourseController {
      */
     @ResponseBody
     @RequestMapping("/getCourses")
+    @RequiresAuthentication
     public ResultUtil getCourses(Integer page, Integer limit, Course course) {
         PageBean<Course> pageBean = new PageBean<>();
         pageBean.setPageSize(limit);
@@ -335,6 +337,7 @@ public class CourseController {
         pageBean.setT(course);
         return courseService.getAllCourses(pageBean);
     }
+
 
 
     /**
@@ -409,6 +412,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping("/PreUpCourseloaddata")
+    @RequiresAuthentication
     public ModelAndView editPerUpCourse(@RequestParam(value = "sid") Integer sid) {
         ModelAndView mv = new ModelAndView();
         //加载数据

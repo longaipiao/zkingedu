@@ -24,7 +24,7 @@
     <select id="getAllPosts" parameterType="integer" resultType="com.zking.zkingedu.common.model.Post">
                select post_id,post_name,post_time,post_state,post_num
                                from t_post
-               where post_uid=#{postUid} and post_state!=3
+               where post_uid=#{postUid} and post_state!=3 ORDER BY post_time DESC
     </select>
 
 
@@ -168,7 +168,7 @@
     <select id="getApstByUId" parameterType="integer" resultType="java.util.HashMap">
                select a.post_id,a.post_name,a.post_time,a.post_num,c.user_img from
                                          t_post a,t_collection b,t_user c
-            where b.collection_uid=#{uid} and collection_state=2 AND a.post_id=b.collection_zpid AND b.collection_uid=c.user_id
+            where b.collection_uid=#{uid} and collection_state=2 AND a.post_id=b.collection_zpid AND b.collection_uid=c.user_id order by b.collection_time desc
     </select>
 
 

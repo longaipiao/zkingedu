@@ -5,6 +5,7 @@ import com.zking.zkingedu.common.model.Bill;
 import com.zking.zkingedu.common.service.BillService;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,7 @@ public class BillController {
 
     @RequestMapping(value = "/findBillUname")
     @ResponseBody
+    @RequiresAuthentication
     public Map<String,Object> findbillUname(String userName,Integer page,Integer limit){
         PageInfo<Map<String, Object>> billUname = billService.findBillUname(userName, page, limit);
         Map<String,Object> maps = new HashMap<>();

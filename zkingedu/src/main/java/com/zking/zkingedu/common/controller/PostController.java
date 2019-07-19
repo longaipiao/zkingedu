@@ -695,6 +695,10 @@ public class PostController {
      */
     @RequestMapping(value = "/addtz")
     public String t(){
+        User user = SessionUtil.getUser();
+        if(user==null){
+            return "user/questions/index";
+        }
         return "user/questions/post";
     }
 

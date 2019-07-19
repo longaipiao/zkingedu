@@ -372,7 +372,7 @@
                 </div>
                 <div class="sideobx-body course-content" th:each="cou:${coursefours}">
 
-                    <a href="/courses/204" th:href="@{/user/showCourse?sid={id}(id=${cou.courseID})}"
+                    <a href="/courses/204" th:href="@{/user/showCourse/{id}(id=${cou.courseID})}"
                        th:text="${cou.courseName}"></a>
                 </div>
             </div>
@@ -838,7 +838,7 @@
                                         "                                            </div>\n" +
                                         "                                         </span>\n" +
                                         "                                        <div class=\"answer-content markdown-body\">\n" +
-                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">" + json[i].scommentContent + "</a>\n" +
+                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">&nbsp;&nbsp;&nbsp;" + json[i].scommentContent + "</a>\n" +
                                         "                                        </div>\n" +
                                         "                                        <div>\n" +
                                         "                                            <span class=\"create-time\">时间：<span>" + json[i].scommentTime + "</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onclick='delScomment(" + json[i].scommentID + ")'>删除评论</a>" +
@@ -866,7 +866,7 @@
                                         "                                            </div>\n" +
                                         "                                         </span>\n" +
                                         "                                        <div class=\"answer-content markdown-body\">\n" +
-                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">" + json[i].scommentContent + "</a>\n" +
+                                        "                                            <a  href=\"javascript:void(0);\" style=\"color: #000000\">&nbsp;&nbsp;&nbsp;" + json[i].scommentContent + "</a>\n" +
                                         "                                        </div>\n" +
                                         "                                        <div>\n" +
                                         "                                            <span class=\"create-time\">时间：<span>" + json[i].scommentTime + "</span></span>\n" +
@@ -1089,6 +1089,8 @@
 <link rel="stylesheet" href="/user/layui/css/layui.css">
 <script src="/userjs/zc.js"></script>
 <script src="/userjs/login.js"></script>
+
+
 <style>
 
     /*选中*/

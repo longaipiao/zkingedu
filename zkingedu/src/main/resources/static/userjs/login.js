@@ -1,3 +1,10 @@
+
+var layer;//layer插件
+
+layui.use('layer',function () {
+    layer = layui.layer;
+});
+
     var s=0;
     function loginChak() {
         var userPhone=$("#userPhone").val();

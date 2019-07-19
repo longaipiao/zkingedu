@@ -37,6 +37,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/admin/fonts", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/admin/images", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/admin/js", "anon"); //表示可以匿名访问
+        filterChainDefinitionMap.put("/admin/html/**", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/admin/lib/layui", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/admin/WEB-INF", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/admin/favicon.ico", "anon"); //表示可以匿名访问
@@ -44,12 +45,12 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/admin/logOut", "anon");
         filterChainDefinitionMap.put("/error","anon");
         filterChainDefinitionMap.put("/admin/index", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/admin/*", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/admin/**", "authc");//表示需要认证才可以访问
+//        filterChainDefinitionMap.put("/admin/*", "authc");//表示需要认证才可以访问
+//        filterChainDefinitionMap.put("/admin/**", "authc");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/user/findUser", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/User/updateTool", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/User/addTool", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/findTool", "authc");//表示需要认证才可以访问
+//        filterChainDefinitionMap.put("/User/updateTool", "authc");//表示需要认证才可以访问
+//        filterChainDefinitionMap.put("/User/addTool", "authc");//表示需要认证才可以访问
+//        filterChainDefinitionMap.put("/findTool", "authc");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/pst/deletePandTcoms", "authc");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/pst/deletePost", "authc");//表示需要认证才可以访问
         filterChainDefinitionMap.put("/pst/updatePstate", "authc");//表示需要认证才可以访问

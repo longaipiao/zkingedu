@@ -18,13 +18,6 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionUtil {
 
-
-
-
-
-
-
-
     /**
      * 从session中获取员工信息
      *

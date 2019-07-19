@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.model.Category;
 import com.zking.zkingedu.common.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/category")
     @ResponseBody
+    @RequiresAuthentication
     public List<Map<String,Object>> getAll(){
         List<Map<String ,Object>> map=new ArrayList<>();
         List<Category> all = categoryService.getAll();
@@ -68,6 +70,7 @@ public class CategoryController {
      */
     @RequestMapping(value = "/addCategory")
     @ResponseBody
+    @RequiresAuthentication
     public String add(String categoryFid, String categoryName, HttpServletRequest request){
         HttpSession session = request.getSession();
         session.getAttribute("emp");
@@ -88,6 +91,7 @@ public class CategoryController {
      */
     @RequestMapping(value = "/ty")
     @ResponseBody
+    @RequiresAuthentication
     public  String ty(String categoryID){
         Integer updatety = categoryService.updatety(Integer.parseInt(categoryID));
         if(updatety>0){
@@ -100,6 +104,7 @@ public class CategoryController {
      */
     @RequestMapping(value = "/kq")
     @ResponseBody
+    @RequiresAuthentication
     public  String kq(String categoryID){
         Integer updatety = categoryService.updatekq(Integer.parseInt(categoryID));
         if(updatety>0){
@@ -112,6 +117,7 @@ public class CategoryController {
      */
     @RequestMapping(value = "/sc")
     @ResponseBody
+    @RequiresAuthentication
     public  String delete(String aid,String fid){
         Integer updatety = categoryService.delete(Integer.parseInt(aid),Integer.parseInt(fid));
         if(updatety>0){
@@ -124,6 +130,7 @@ public class CategoryController {
      */
     @RequestMapping(value = "/xg")
     @ResponseBody
+    @RequiresAuthentication
     public  String updateName(String aid,String name,String fid){
         Integer updatetys = categoryService.updateName(Integer.parseInt(aid),name,Integer.parseInt(fid));
         if(updatetys>0){

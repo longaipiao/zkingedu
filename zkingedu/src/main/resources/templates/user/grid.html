@@ -27,8 +27,10 @@
   <link rel="stylesheet" href="/user/app/css/libs/katex/0.6.0/katex.min.css">
   <link rel="stylesheet" href="/user/app/css/libs/videojs/5.11.7/video-js.min.css">
   <link rel="stylesheet" href="/user/app/css/dest/styles.css?=2016121272249">
-  <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
   <script src="/user/static/jquery/2.2.4/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+  <script src="/layui/layui.js"></script>
   <style>
     @font-face {
       font-family: "lantingxihei";
@@ -108,7 +110,7 @@
   </blockquote>
 
   <div th:if="${size}==0">
-    <h1><a href="/url/tiku">该题目类型还未录题库,敬请期待~点此返回上一级</a></h1>
+    <h1><a href="/user/tiku">该题目类型还未录题库,敬请期待~点此返回上一级</a></h1>
   </div>
   <div th:if="${size}!=0">
     <form class="layui-form" action="" lay-filter="example" id="forma">
@@ -165,7 +167,6 @@
 </div>
 
 
-<script type="text/javascript" src="/admin/lib/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
   layui.use(['util', 'laydate', 'layer','form'], function(){

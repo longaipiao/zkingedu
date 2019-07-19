@@ -12,6 +12,7 @@ import com.zking.zkingedu.common.utils.IdGeneratorUtils;
 import com.zking.zkingedu.common.utils.ResponseUtil;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -237,6 +238,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/findOrder")
     @ResponseBody
+    @RequiresAuthentication
     public Map<String,Object> findorder(String userName, String orderId, Integer page, Integer limit){
         PageInfo<Map<String, Object>> orders = orderService.findOrder(userName, orderId, page, limit);
         Map<String,Object> maps = new HashMap<>();
@@ -271,6 +273,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/findbbiao")
     @ResponseBody
+    @RequiresAuthentication
     public Map<String,Object> findbbiao(){
 
         //订单收入的总金额

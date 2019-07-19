@@ -132,6 +132,9 @@ function ini() {
 
         });
         $('#scsj').html(content);
+        if (res.count == 0) {
+            $("#scsj").html("<span style='font-size: 20px;color: red; align-content: center'>暂无数据！</span>");
+        }
     }
 
 }

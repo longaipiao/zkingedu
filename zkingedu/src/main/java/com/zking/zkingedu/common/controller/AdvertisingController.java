@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.model.Advertising;
 import com.zking.zkingedu.common.service.AdvertisingService;
 import com.zking.zkingedu.common.utils.ResponseUtil;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,14 @@ public class AdvertisingController {
     @Autowired
     private Advertising advertising;
 
+
     /**
      * 查询所有的广告信息
      * @return
      */
     @RequestMapping(value = "/findadvertising")
     @ResponseBody
+    @RequiresAuthentication
     public Map<String,Object> findUser(Advertising advertising,Integer page, Integer limit, HttpServletRequest request){
         HttpSession session = request.getSession();
         PageInfo<Advertising> users = advertisingService.getAll(advertising,page,limit);
@@ -50,6 +53,7 @@ public class AdvertisingController {
      * 增加广告的方法
      */
     @RequestMapping(value = "/user/addadvertising")
+    @RequiresAuthentication
     public void addadvertising(Advertising advertising, HttpServletResponse response) throws Exception {
         advertising.setAdvertisingTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
         //判断如果已经上架了五条广告改状态为0未上架
@@ -63,6 +67,7 @@ public class AdvertisingController {
      */
     @RequestMapping(value = "/updateStatesj")
     @ResponseBody
+    @RequiresAuthentication
     public String updatesj(Integer aid){
         Integer integer = advertisingService.updatesjState(aid);
         if(integer>0){
@@ -75,6 +80,7 @@ public class AdvertisingController {
      */
     @RequestMapping(value = "/updateStatexj")
     @ResponseBody
+    @RequiresAuthentication
     public String updatexj(Integer aid){
         Integer integer = advertisingService.updatexjState(aid);
         if(integer>0){
@@ -87,6 +93,7 @@ public class AdvertisingController {
      */
     @RequestMapping(value = "/getsjzt")
     @ResponseBody
+    @RequiresAuthentication
     public String getsjzt(){
         Integer getsjzt = advertisingService.getsjzt();
         if(getsjzt>=5){
@@ -100,6 +107,7 @@ public class AdvertisingController {
      * 修改广告的方法
      */
     @RequestMapping(value = "/updateadvertising")
+    @RequiresAuthentication
     public void updateTool(Advertising advertising,HttpServletResponse response) throws Exception {
         Integer advertsing = advertisingService.updateadvertsing(advertising);
         ResponseUtil.write(response,advertsing);
@@ -110,6 +118,7 @@ public class AdvertisingController {
      */
     @RequestMapping(value = "/deleteadvertising")
     @ResponseBody
+    @RequiresAuthentication
     public String deleteadvertising(Integer aid){
         Integer deleteadvertising = advertisingService.deleteadvertising(aid);
         if(deleteadvertising>0){

@@ -3,6 +3,7 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.model.Category;
 import com.zking.zkingedu.common.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,6 +68,7 @@ public class UrlController {
      * 后台开发者工具跳转路径
      */
     @RequestMapping(value = "/amdin/tool")
+    @RequiresAuthentication
     public String toolhref(){
         return "admin/html/integral-list";
     }
@@ -75,10 +77,13 @@ public class UrlController {
     /**
      * 后台增加开发者工具跳转路径
      */
-    @RequestMapping(value = "/admin/addtool")
+    @RequestMapping(value = "/addtool1")
+    @RequiresAuthentication
     public String addtool(){
+        System.err.println("dsadasdasdsa");
         return "admin/html/admin-addtool";
     }
+
 
     /**
      * 后台题库管理界面

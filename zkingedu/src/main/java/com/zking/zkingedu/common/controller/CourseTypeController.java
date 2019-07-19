@@ -48,7 +48,6 @@ public class CourseTypeController {
      */
     @ResponseBody
     @RequestMapping("/getCourseTypes")
-    @RequiresAuthentication
     public ResultUtil getCourses() {
         //获取所有课程类别
         List<CourseType> courseTypes = null;
