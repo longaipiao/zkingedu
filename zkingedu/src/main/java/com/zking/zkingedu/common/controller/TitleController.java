@@ -2,14 +2,12 @@ package com.zking.zkingedu.common.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zking.zkingedu.common.model.Answer;
-import com.zking.zkingedu.common.model.Category;
 import com.zking.zkingedu.common.model.Title;
 import com.zking.zkingedu.common.service.AnswerService;
 import com.zking.zkingedu.common.service.CategoryService;
 import com.zking.zkingedu.common.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 

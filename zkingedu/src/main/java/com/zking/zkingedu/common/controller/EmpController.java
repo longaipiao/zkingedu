@@ -1,4 +1,5 @@
 package com.zking.zkingedu.common.controller;
+import	java.util.function.IntFunction;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -9,7 +10,6 @@ import com.zking.zkingedu.common.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -241,6 +244,7 @@ public class EmpController {
         else
             return false;
     }
+
 
 
 }

@@ -2,7 +2,6 @@ package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.model.Scomment;
 import com.zking.zkingedu.common.service.ScommentService;
-import com.zking.zkingedu.common.service.UserService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import org.apache.ibatis.annotations.Param;

@@ -6,7 +6,9 @@ import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -341,6 +343,7 @@ public class CourseController {
      *
      * @return
      */
+    @RequiresAuthentication
     @RequestMapping(value = "/addCoursePage")
     public String enterAddCoursePage() {
         return "admin/course/courseAdd";
@@ -357,6 +360,7 @@ public class CourseController {
     @ResponseBody
     @Transactional
     @RequestMapping("/addCourse")
+    @RequiresAuthentication
     public ResultUtil adminAddCourse(Course course) {
         try {
             //获取当前员工信息
@@ -424,6 +428,7 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourse")
+    @RequiresAuthentication
     public ResultUtil editCourse(Course course, HttpServletRequest request) {
         try {
             int i = courseService.updateCourse(course);
@@ -456,6 +461,7 @@ public class CourseController {
     @Transactional
     @ResponseBody
     @RequestMapping("/editCourseState")
+    @RequiresAuthentication
     public ResultUtil editCourseState(@RequestParam(value = "id") Integer id, @RequestParam("state") boolean state, HttpServletRequest request) {
         try {
             Integer sid;
@@ -493,6 +499,7 @@ public class CourseController {
      */
     @ResponseBody
     @RequestMapping(value = "/delCourse")
+    @RequiresAuthentication
     public ResultUtil delCourseById(Integer cid){
         try {
             //1.查询该课程下面是否存在章节信息

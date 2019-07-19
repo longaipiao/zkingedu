@@ -1,15 +1,15 @@
 package com.zking.zkingedu.common.controller;
 
-import com.zking.zkingedu.common.dao.ScommentDao;
 import com.zking.zkingedu.common.model.Emp;
 import com.zking.zkingedu.common.model.Log;
 import com.zking.zkingedu.common.model.System;
-import com.zking.zkingedu.common.service.ScommentService;
 import com.zking.zkingedu.common.service.LogService;
+import com.zking.zkingedu.common.service.ScommentService;
 import com.zking.zkingedu.common.service.SystemService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,6 +91,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/getSystems")
+    @RequiresAuthentication
     public Object getSystemMenu(Integer page, Integer limit, System system) {
         PageBean<System> systemPageBean = new PageBean<>();
         systemPageBean.setPageIndex(page);
@@ -109,6 +110,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/addSystem")
+    @RequiresAuthentication
     public ResultUtil addSystem(System system, HttpServletRequest request) {
         int i = 0;
         try {
@@ -142,6 +144,7 @@ public class SystemController {
      * @return
      */
     @RequestMapping("/addSystemPage")
+    @RequiresAuthentication
     public String pageAddSystem() {
         return "admin/course/systemAdd";
     }
@@ -157,6 +160,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/updateSystemState")
+    @RequiresAuthentication
     public ResultUtil updateSystemState(boolean state, Integer systemId, HttpServletRequest request) {
         try {
             Integer stateid = 0;
@@ -217,6 +221,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/editSystem")
+    @RequiresAuthentication
     public ResultUtil updateSystem(System system, HttpServletRequest request) {
         int i = systemService.updateSystem(system);
         if (i > 0) {
@@ -240,6 +245,7 @@ public class SystemController {
      * @return yan
      */
     @RequestMapping("/pageStageManager")
+    @RequiresAuthentication
     public ModelAndView pageStageManager(@RequestParam("systemID") Integer systemID) {
         ModelAndView mv = new ModelAndView();
 
@@ -258,6 +264,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/getSystemStages")
+    @RequiresAuthentication
     public ResultUtil getSystemStages(@RequestParam("sid") Integer sid, Integer page, Integer limit) {
         PageBean<Integer> pageBean = new PageBean<>();
         pageBean.setT(sid);
@@ -277,6 +284,7 @@ public class SystemController {
     @Transactional
     @ResponseBody
     @RequestMapping("/addSystemStage")
+    @RequiresAuthentication
     public ResultUtil adminAddSystemStage(@RequestParam("fid") Integer fid, @RequestParam("stageName") String stageName, HttpServletRequest request) {
         int i = 0;
         try {
@@ -311,6 +319,7 @@ public class SystemController {
     @Transactional
     @ResponseBody
     @RequestMapping("/updateStageName")
+    @RequiresAuthentication
     public ResultUtil adminUpdateStageName(@RequestParam("sid") Integer sid, @RequestParam("stageName") String stageName, HttpServletRequest request) {
         int i = 0;
         try {
@@ -336,6 +345,7 @@ public class SystemController {
 
     @ResponseBody
     @RequestMapping("/getSystemAndStageMenu")
+    @RequiresAuthentication
     public ResultUtil getSysMenu() {
         return ResultUtil.ok(systemService.getSystemAndStageMenu());
     }
@@ -349,6 +359,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/delSys")
+    @RequiresAuthentication
     public ResultUtil delSystemById(Integer sid){
         try {
             //1.查询体系下面阶段数量
@@ -381,6 +392,7 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/delSysByStage")
+    @RequiresAuthentication
     public ResultUtil delSystemAndStageById(Integer sid){
         try {
             //1.查询体系下面阶段数量

@@ -3,7 +3,6 @@ package com.zking.zkingedu.common.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.service.MessageService;
-import com.zking.zkingedu.common.utils.MessageUtil;
 import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.misc.resources.Messages;
 
 import java.util.HashMap;
 import java.util.Map;

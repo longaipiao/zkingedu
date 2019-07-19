@@ -8,6 +8,7 @@ import com.zking.zkingedu.common.service.LogService;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,7 @@ public class CourseTypeController {
      */
     @ResponseBody
     @RequestMapping("/getCourseTypes")
+    @RequiresAuthentication
     public ResultUtil getCourses() {
         //获取所有课程类别
         List<CourseType> courseTypes = null;
@@ -71,6 +73,7 @@ public class CourseTypeController {
      */
     @ResponseBody
     @RequestMapping("/getAllCourseTypesAndPage")
+    @RequiresAuthentication
     public ResultUtil getTypesPageAndSearch(Integer page, Integer limit, CourseType courseType) {
         PageBean<CourseType> pageBean = new PageBean<>();
         pageBean.setT(courseType);
@@ -87,6 +90,7 @@ public class CourseTypeController {
      * @return
      */
     @RequestMapping("/courseTypePage")
+    @RequiresAuthentication
     public String pageCourseType() {
         return "admin/course/courseType/courseTypeManager";
     }
@@ -102,6 +106,7 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping("/courseType/add")
+    @RequiresAuthentication
     public ResultUtil addCourseType(CourseType courseType, HttpServletRequest request) {
         ResultUtil result;
         try {
@@ -137,6 +142,7 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping("/courseType/edit")
+    @RequiresAuthentication
     public ResultUtil updateCourseType(CourseType courseType, HttpServletRequest request) {
         ResultUtil result;
         try {
@@ -171,6 +177,7 @@ public class CourseTypeController {
     @Transactional
     @ResponseBody
     @RequestMapping(value = "/courseType/dels")
+    @RequiresAuthentication
     public ResultUtil delsCourserType(@RequestParam(value = "ids[]") List<Integer> ids, HttpServletRequest request) {
         try {
             int i = courseTypeService.delsCourseType(ids);

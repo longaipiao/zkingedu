@@ -1,7 +1,9 @@
 package com.zking.zkingedu.common.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zking.zkingedu.common.model.*;
+import com.zking.zkingedu.common.model.Bill;
+import com.zking.zkingedu.common.model.Order;
+import com.zking.zkingedu.common.model.User;
 import com.zking.zkingedu.common.service.BillService;
 import com.zking.zkingedu.common.service.CourseService;
 import com.zking.zkingedu.common.service.OrderService;
@@ -20,11 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

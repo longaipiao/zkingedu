@@ -3,7 +3,6 @@ package com.zking.zkingedu.common.controller;
 import com.zking.zkingedu.common.dao.EmpDao;
 import com.zking.zkingedu.common.model.*;
 import com.zking.zkingedu.common.service.*;
-import com.zking.zkingedu.common.utils.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.System;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @email 2417902780@qq.com

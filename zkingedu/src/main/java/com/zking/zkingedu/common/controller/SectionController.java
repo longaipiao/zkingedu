@@ -1,9 +1,6 @@
 package com.zking.zkingedu.common.controller;
 
 import com.zking.zkingedu.common.model.*;
-import com.zking.zkingedu.common.model.Course;
-import com.zking.zkingedu.common.model.Order;
-import com.zking.zkingedu.common.model.Section;
 import com.zking.zkingedu.common.service.*;
 import com.zking.zkingedu.common.utils.IdGeneratorUtils;
 import com.zking.zkingedu.common.utils.PageBean;
@@ -18,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.lang.System;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
