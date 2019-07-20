@@ -249,9 +249,9 @@ $(function () {
                 var content = "";
                 $.each(res.data, function (i, o) {
                     if (o.order_cid == 0) {
-                        content += '<div class="col-md-3  course" ><a class="course-box" href="/user/showCourse?sid=' + o.order_sid + '">';
+                        content += '<div class="col-md-3  course" ><a class="course-box" href="/user/showCourse/' + o.order_sid + '">';
                     } else {
-                        content += '<div class="col-md-3  course" ><a class="course-box" href="/user/video?sid=' + o.order_sid + '&id=' + o.order_cid + '">';
+                        content += '<div class="col-md-3  course" ><a class="course-box" href="/user/showVideo/' + o.order_sid + '/' + o.order_cid + '">';
                     }
                     content += '<div class="sign-box">';
                     content += '<i class="fa fa-star-o course-follow pull-right" data-follow-url="/courses/20/follow" data-unfollow-url="/courses/20/unfollow" style="display:none"></i>';

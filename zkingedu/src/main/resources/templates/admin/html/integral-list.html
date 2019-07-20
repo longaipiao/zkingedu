@@ -160,7 +160,7 @@
             //普通图片上传
             var uploadInst = upload.render({
                 elem: '#onePicUpload'
-                , url: 'http://image.zkingedu.top:8080/imgupload'
+                , url: '/file/imgupload'
                 , before: function (obj) {
                     //预读本地文件
                     obj.preview(function (index, file, result) {
@@ -190,7 +190,6 @@
 
             //监听提交
             form.on('submit(demo1)', function (data) {
-                alert(data.field);
                 //弹出loading
                 var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
                 var msg;

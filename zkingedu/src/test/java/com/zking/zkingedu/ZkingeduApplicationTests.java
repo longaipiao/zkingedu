@@ -1,6 +1,5 @@
 package com.zking.zkingedu;
 
-import com.alibaba.druid.sql.visitor.functions.Substring;
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.service.OrderService;
 import org.junit.Test;
@@ -9,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
