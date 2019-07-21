@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.TitleDao">
-
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
-
     <!--题目接口Mapper-->
     <sql id="titlesql">
         title_id,title_cid,title_content,title_describe,title_time,title_state
