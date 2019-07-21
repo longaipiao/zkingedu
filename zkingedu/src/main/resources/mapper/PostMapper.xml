@@ -64,7 +64,7 @@
     <insert id="addTcomment" parameterType="com.zking.zkingedu.common.model.Tcomment">
               insert  into
              t_tcomment(tcomment_cid,tcomment_uid,tcomment_content,tcomment_time,tcomment_fid,tcomment_dyuid,tcomment_lounum)
-             value (#{tcommentCid},#{tcommentUid},#{tcommentContent},#{tcommentTime},#{tcommentFid},#{tcommentUid2},#{tcommentLounum})
+             value (#{tcommentCid},#{tcommentUid},#{tcommentContent},now(),#{tcommentFid},#{tcommentUid2},#{tcommentLounum})
 
     </insert>
 

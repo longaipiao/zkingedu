@@ -30,7 +30,7 @@
     <select id="findOrderUid" resultType="java.util.Map" parameterType="integer">
         select o.order_id as order_id,o.order_integral as order_integral,
         c.course_name as course_name,o.charge_time as charge_time,o.order_state
-         as order_state from t_order o,t_course c where o.order_sid = c.course_id and o.order_uid = #{userID} and o.order_state = 1
+         as order_state from t_order o,t_course c where o.order_sid = c.course_id and o.order_uid = #{userID} and o.order_state = 1 ORDER BY o.charge_time desc
     </select>
 
     <!--购买单个章节视频的方法-->

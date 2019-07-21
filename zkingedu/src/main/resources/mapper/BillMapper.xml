@@ -19,7 +19,7 @@
 
     <!--根据用户id查询所以的账单信息数据-->
     <select id="findAll" parameterType="integer" resultType="com.zking.zkingedu.common.model.Bill">
-      select <include refid="billAll"/> from t_bill where bill_uid = #{userId}
+      select <include refid="billAll"/> from t_bill where bill_uid = #{userId} ORDER BY bill_time desc
     </select>
 
     <!--根据用户名称查询出账单信息-->
