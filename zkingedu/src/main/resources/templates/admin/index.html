@@ -178,8 +178,10 @@
                                 <li><a _href="/html/message-list"><i
                                         class="iconfont">&#xe6a7;</i><cite>视频/章节管理</cite></a></li>
                             </shiro:hasPermission>-->
+                            <shiro:hasPermission name="类别管理">
                             <li><a _href="/user/courseTypePage"><i class="iconfont">&#xe6a7;</i><cite>类别管理</cite></a>
                             </li>
+                            </shiro:hasPermission>-->
                             <!--<shiro:hasPermission name="文档管理">
                                 <li><a _href="/html/message-list"><i class="iconfont">&#xe6a7;</i><cite>文档管理</cite></a>
                                 </li>
@@ -198,8 +200,12 @@
                             <i class="iconfont nav_right">&#xe6a7;</i>
                         </a>
                         <ul class="sub-menu">
-                            <li><a _href="/pst/pkp"><i class="iconfont">&#xe6a7;</i><cite>帖子列表</cite></a></li>
-                            <li><a _href="/pst/lbindex"><i class="iconfont">&#xe6a7;</i><cite>帖子分类</cite></a></li>
+                            <shiro:hasPermission name="帖子列表">
+                                <li><a _href="/pst/pkp"><i class="iconfont">&#xe6a7;</i><cite>帖子列表</cite></a></li>
+                            </shiro:hasPermission>
+                            <shiro:hasPermission name="帖子分类">
+                                <li><a _href="/pst/lbindex"><i class="iconfont">&#xe6a7;</i><cite>帖子分类</cite></a></li>
+                            </shiro:hasPermission>
                         </ul>
                     </li>
                 </shiro:hasPermission>
