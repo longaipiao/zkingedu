@@ -149,6 +149,7 @@ public class UserController {
     @RequestMapping(value = "/findUser")
     @ResponseBody
     public Map<String,Object> findUser(Integer page, Integer limit,HttpServletRequest request,String sid,String text){
+        user.setUserPhone("");
         if(sid!=null){
             if(text!=""){
                 if(sid.equals("0")){//查询名字
@@ -510,17 +511,9 @@ public class UserController {
                     session.setAttribute("user",userlogin);
                     return "1";
                 }
-            }
-            //密码错误
-            if(userlogin==null){
-                //修改错误次数加1
-                userService.updateCwcs(userPhone);
-           /*  //查询错误次数
-             Integer cwcs = userService.getCwcs(userPhone);
-                 if(cwcs>5){
-                //修改用户的状态然后启动定时任务
-
-             }*/
+                else{
+                    return "2";
+                }
             }
         }
         else{

@@ -25,7 +25,11 @@ layui.use('layer',function () {
                 success: function (data) {
                     if (data == 1) {
                         location.href = "/";
-                    } else {
+                    }
+                    if(data==3){
+                        layer.msg("用戶被封禁");
+                    }
+                    if(data==2) {
                         layer.msg("账户或密码错误");
                     }
                 }
