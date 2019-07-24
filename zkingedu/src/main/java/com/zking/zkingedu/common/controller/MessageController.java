@@ -80,5 +80,19 @@ public class MessageController {
     }
 
 
+    /**
+     * 根据用户id和消息id删除
+     */
+    @RequestMapping(value = "/deleteymID")
+
+    @ResponseBody
+    public Integer deleteymId(Integer mid){
+        //获取登录过来的用户id
+        //System.out.println("消息id是："+mid);
+        int deleteymID = messageService.deleteymID(mid);
+        return deleteymID;
+    }
+
+
 
 }

@@ -47,5 +47,8 @@ public interface MessageDao {
      */
     public int findMessahePid(@Param("messageId") Integer messageId);
 
-
+    /**
+     * 根据用户id和消息id删除
+     */
+    public int deleteymID(@Param("mid") Integer mid);
 }

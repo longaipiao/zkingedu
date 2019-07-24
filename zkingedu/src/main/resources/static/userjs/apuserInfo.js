@@ -299,7 +299,8 @@ $(function () {
                             content += '</div>';
                             content += '</span>';
                             content += '<div class="answer-content markdown-body">';
-                            content += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' onclick='ydzt(\"" + o.message_id + "\")' style='color: #000000'>" + o.message_content + "</a>";
+                            content += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' onclick='ydzt(\"" + o.message_id + "\")' style='color: #000000'>" + o.message_content + "</a>" +
+                                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0);' onclick='ymdel(\"" + o.message_id + "\")' style='color: red'>删除</a>";
                             content += '</div>';
                             content += '<div>';
                             content += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="create-time">时间：<span>' + o.message_time + '</span></span>';
@@ -443,6 +444,19 @@ function ydzt(message_id) {
         //alert(data);
         window.location.href = '/pst/userinfo/' + data;
     });
+}
 
-
+/*删除消息的id*/
+function ymdel(message_id) {
+    var messageID = message_id;
+    //alert(messageID);
+    $.post('/deleteymID', {mid: messageID}, function (data) {
+        if(data>0){
+            layer.msg("消息删除成功",{icon: 16, time: 2000, shade: 0.2});
+            // 停顿一秒后,进行刷新详情页面.
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
+        }
+    });
 }

@@ -22,10 +22,10 @@ public class AlipayConfig {
     public static String ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvmz7XgHUenQqbq8QqzdhHKEe218VcNHQdwnqzNrgF5hAeLrdUNwoxMUDR4FbT2PUlc9dwR8jEqz+8wCpWyoGYRNwbPDZNxg0FC1AnVBd9SROiq7eWCRhpz/Y3TtwOV1yR6vDiTdtND54rkQbKBA5cir2iTWBQpa/BH7iaOfqsZdeM8zcKwbK5/aJEOGsxaYyNRJ+zKE8BIXUoToKDE9zTM5tBfXpvjIqxISJpc67lS12Pm559vScwGj10C4gSQSg2DkjWm9NGE7EirNYyV6DP8vVebPm2AOzF4wdmegwHoFoDsUixdQ3uovNaOTKtbrDeF2P4qcR+EKlAlYvh6zjxQIDAQAB";
     //http://vf6ipy.natappfree.cc
     // 服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    //public static String NOTIFY_URL = "http://www.zkingedu.top:8899";
-    public static String NOTIFY_URL = "http://ksvbuw.natappfree.cc";
+    public static String NOTIFY_URL = "http://www.zkingedu.top:8899";
+    //public static String NOTIFY_URL = "http://ksvbuw.natappfree.cc";
     //跳转页面，买家支付成功后跳转的页面
-    public static String RETURN_URL = "http://ksvbuw.natappfree.cc/user/userinfo/index#get8";
+    public static String RETURN_URL = "http://www.zkingedu.top:8899/user/userinfo/index#get8";
     // RSA2
     public static String SIGN_TYPE = "RSA2";
     // 编码格式

@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.MessageDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+   <!-- <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--消息接口Mapper-->
     <sql id="MessageAll">
         message_id,message_uid1,message_uid2,message_pid,message_name,message_content,message_time,message_state
@@ -39,4 +39,8 @@
         select message_pid from t_message where message_id = #{messageId}
     </select>
 
+    <!--根据用户id和消息id删除-->
+    <delete id="deleteymID" parameterType="integer">
+        delete from t_message where message_id=#{mid}
+    </delete>
 </mapper>

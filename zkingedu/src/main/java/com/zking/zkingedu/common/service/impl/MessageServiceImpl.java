@@ -72,4 +72,14 @@ public class MessageServiceImpl implements MessageService {
     public int findMessahePid(Integer messageId) {
         return messageDao.findMessahePid(messageId);
     }
+
+    /**
+     *  根据用户id和消息id删除
+     * @param mid 消息id
+     * @return
+     */
+    @Override
+    public int deleteymID( Integer mid) {
+        return messageDao.deleteymID(mid);
+    }
 }

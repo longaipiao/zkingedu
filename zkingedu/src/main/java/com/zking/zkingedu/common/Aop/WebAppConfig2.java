@@ -15,13 +15,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 拦截器
 * */
 @Configuration
-@Log4j
+
 public class WebAppConfig2 extends WebMvcConfigurerAdapter {
 
     @Autowired
     private WebAppConfig webAppConfig;
-    @Autowired
-    private LogService logService;
+
 
 
     /**

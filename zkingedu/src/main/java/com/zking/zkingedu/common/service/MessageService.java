@@ -45,4 +45,9 @@ public interface MessageService {
      */
     public int findMessahePid(Integer messageId);
 
+    /**
+     * 根据用户id和消息id删除
+     */
+    public int deleteymID(Integer mid);
+
 }
