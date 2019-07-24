@@ -26,8 +26,11 @@
     <select id="findBillUname" resultType="java.util.Map" parameterType="string">
         select u.user_name as user_name,b.* from t_user u,t_bill b where 1 = 1
         and u.user_id = b.bill_uid
+        <if test="userName==null">
+             ORDER BY b.bill_time desc
+        </if>
          <if test="userName!=null">
-              and u.user_name like '%${userName}%'
+              and u.user_name like '%${userName}%' ORDER BY b.bill_time desc
          </if>
     </select>
 
@@ -37,7 +40,7 @@
     </select>
     <!--查询用户消费的积分总数-->
     <select id="billIntegraltype0" resultType="java.lang.Integer">
-        select SUM(bill_integral) from t_bill where bill_type = 0
+        select SUM(bill_integral) from t_bill where bill_type = 2
     </select>
 
 

@@ -54,6 +54,16 @@ public class ToolServiceImpl implements ToolService {
     public int updateTool(Tool tool) {
         return toolDao.updateTool(tool);
     }
+
+    /**
+     * 根据工具id生成的方法
+     * @param tid 工具id
+     * @return
+     */
+    @Override
+    public int deleteToolById(Integer tid) {
+        return toolDao.deleteToolById(tid);
+    }
 }
 
 

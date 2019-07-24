@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableScheduling
+@EnableScheduling//开启定时任务注解
 @SpringBootApplication
 @MapperScan("com.zking.zkingedu.common.dao")//注入所有dao层接口
 @EnableTransactionManagement

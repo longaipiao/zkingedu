@@ -21,7 +21,7 @@
     <!--根据用户id查询所以的消息通知-->
     <select id="findMessage" resultType="java.util.Map">
         select u.user_img, m.* from t_message m,t_user u where m.message_uid1 = u.user_id and m.message_uid2 = #{userID}
-        ORDER BY message_state asc
+        ORDER BY message_state asc , message_time desc
     </select>
 
     <!--修改未读状态为已读状态-->

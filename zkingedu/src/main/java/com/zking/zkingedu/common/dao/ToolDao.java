@@ -1,6 +1,7 @@
 package com.zking.zkingedu.common.dao;
 
 import com.zking.zkingedu.common.model.Tool;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,5 +34,7 @@ public interface ToolDao {
      */
     public int updateTool(Tool tool);
 
+    //根据工具id生成的方法
+    public int deleteToolById(@Param("tid") Integer tid);
 
 }

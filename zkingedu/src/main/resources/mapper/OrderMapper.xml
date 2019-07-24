@@ -55,12 +55,19 @@
         o.order_integral as order_integral,o.charge_time charge_time,o.order_cid as order_cid
         from t_user u,t_order o,t_course c,t_section s
         where 1 = 1 and u.user_id = o.order_uid and o.order_sid = c.course_id
-        <if test="userName!=null">
-            and u.user_name like '%${userName}%'
+        <if test="userName==null or orderID==null">
+            ORDER BY o.charge_time DESC
         </if>
-        <if test="orderID!=null">
-            and o.order_id like '%${orderID}%'
+        <if test="userName!=null and orderID==null">
+            and u.user_name like '%${userName}%' ORDER BY o.charge_time DESC
         </if>
+        <if test="userName==null and orderID!=null">
+            and o.order_id like '%${orderID}%' ORDER BY o.charge_time DESC
+        </if>
+        <if test="userName!=null and orderID!=null">
+            and u.user_name like '%${userName}%' and o.order_id like '%${orderID}%' ORDER BY o.charge_time DESC
+        </if>
+
     </select>
 
 

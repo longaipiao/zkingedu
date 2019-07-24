@@ -35,4 +35,12 @@ public class LogServiceImpl implements LogService {
     public int addLog(Log log) {
         return logDao.addLog(log);
     }
+    /**
+     * 定时删除所有日志
+     * @return
+     */
+    @Override
+    public int deleLog() {
+        return logDao.deleLog();
+    }
 }

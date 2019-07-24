@@ -48,6 +48,7 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 
@@ -63,6 +64,7 @@
                 , laydate = layui.laydate
                 , element = layui.element //元素操作
                 , form = layui.form;
+
 
             //加载日期
             laydate.render({
@@ -82,7 +84,7 @@
                     , {field: 'toolID', title: 'ID', width: 80, sort: true, fixed: 'left'}
                     , {field: 'toolName', title: '工具标题', width: 150}
                     , {field: 'toolDescribe', title: '工具描述', width: 180, sort: true}
-                    , {field: 'toolURL', title: '工具链接', width: 180}
+                    , {field: 'toolURL', title: '工具链接', width: 120}
                     , {
                         field: 'toolImg', title: '工具图片', width: 130,
                         templet: function (data) {
@@ -92,7 +94,7 @@
                     , {field: 'toolTime', title: '工具添加时间', width: 180, sort: true}
                     , {//获取桌面的工具栏
                         fixed: 'right',
-                        width: 100,
+                        width: 140,
                         align: 'center',
                         toolbar: '#barDemo'
                     }
@@ -152,8 +154,19 @@
                         content: $("#toolupdate"),//引用的弹出层的页面层的方式加载修改界面表单
                         maxmin: true
                     });
-
-
+                }else if(layEvent === 'del'){
+                    //根据工具id查询出工具图片的方法
+                    $.post("/deleteTid", {toolId: data.toolID}, function (obj) {
+                        layer.msg("dsadsa")
+                        if(obj>0){
+                            layer.msg("删除成功",{icon: 1,shade: 0.8});
+                            setTimeout(function () {
+                                //刷新父页面
+                                location.reload();
+                            }, 2000);
+                        }
+                        //刷新父页面
+                    });
                 }
             });
 

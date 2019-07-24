@@ -19,6 +19,9 @@
         select
         <include refid="toolsql"/>
         from t_tool where 1 = 1
+        <if test="toolName == null">
+            ORDER BY tool_time desc
+        </if>
         <if test="toolName != null">
             and tool_name like '%${toolName}%'
         </if>
@@ -45,5 +48,10 @@
         tool_url = #{toolURL},tool_img = #{toolImg},tool_time = #{toolTime}
         where tool_id = #{toolID}
     </update>
+
+    <!--根据工具id生成的方法-->
+    <delete id="deleteToolById" parameterType="integer">
+        delete from t_tool where tool_id = #{tid}
+    </delete>
 
 </mapper>

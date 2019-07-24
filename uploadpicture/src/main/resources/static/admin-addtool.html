@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工具添加</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!--增加工具的界面-->
+<form class="layui-form" action="" id="tool">
+
+    <!--工具图片-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">工具图片</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="onePicUpload"><i class="layui-icon"></i>上传文件</button><br />
+            <img class="layui-upload-img" id="preview" style="width: 150px;margin-top: 5px">
+            <p id="uploadError"></p>
+            <input type="hidden" lay-verify="imgurl" name="toolImg" id="toolImg" value=""/>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" id="sub" lay-filter="demo1">立即提交</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['form', 'layedit','upload'], function(){
+        var form = layui.form
+            ,layer = parent.layer === undefined ? layui.layer : parent.layer
+            ,layedit = layui.layedit
+            ,upload = layui.upload
+            ,$ = layui.jquery;
+
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#onePicUpload'
+            ,url: '/imgupload'
+            ,before: function(obj){
+                //预读本地文件
+                obj.preview(function(index, file, result){
+                    $('#preview').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg(res.msg);
+                }
+                //上传成功
+                //设置src给图片隐藏域
+                $("#toolImg").val(res.data.src);
+                layer.msg('上传成功')
+            }
+            ,error: function(){
+                //失败状态，并实现重传
+                var uploadError = $('#uploadError');
+                uploadError.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                uploadError.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            alert(data.field);
+            //弹出loading
+            var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+            var msg;
+            $.ajax({
+                type: "post",
+                url: "/User/addTool",
+                data:data.field,
+                dataType:"json",
+                success:function(d){
+                    if(d.code==0){
+                        msg="添加成功！";
+                    }else{
+                        msg=d.msg;
+                    }
+                }
+            });
+            setTimeout(function(){
+                top.layer.close(index);
+                layer.msg(msg);
+                layer.closeAll("iframe");
+                //刷新父页面
+                parent.location.reload();
+            },2000);
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

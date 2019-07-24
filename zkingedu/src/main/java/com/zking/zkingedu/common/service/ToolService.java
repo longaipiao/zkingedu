@@ -2,6 +2,7 @@ package com.zking.zkingedu.common.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zking.zkingedu.common.model.Tool;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,4 +32,7 @@ public interface ToolService {
      * 根据工具id修改的方法
      */
     public int updateTool(Tool tool);
+
+    //根据工具id生成的方法
+    public int deleteToolById(Integer tid);
 }

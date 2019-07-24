@@ -114,6 +114,15 @@ public class ToolController {
         //log.info("************结束修改工具的方法****************");
     }
 
-
+    /**
+     * 根据工具id的方法
+     * @return
+     */
+    @RequestMapping(value = "/deleteTid")
+    @ResponseBody
+    public int deleteToolID(Integer toolId){
+        int tid = toolService.deleteToolById(toolId);
+        return tid;
+    }
 
 }

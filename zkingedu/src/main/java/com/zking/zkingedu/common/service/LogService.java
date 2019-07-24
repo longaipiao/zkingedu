@@ -24,4 +24,10 @@ public interface LogService {
      */
     int addLog(Log log);
 
+    /**
+     * 定时删除所有日志
+     * @return
+     */
+    public int deleLog();
+
 }

@@ -79,7 +79,9 @@ public class ChargeServiceImpl implements ChargeService {
             alipayBean.setSubject(subject);
             alipayBean.setTotal_amount(totalAmount);
             alipayBean.setBody(body);
-
+            //存入request中，为了更新。
+            request.getSession().setAttribute("totalAmount",totalAmount);
+            System.out.println("充值金额是："+totalAmount);
             // 1、获得初始化的AlipayClient
             AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.GATEWAY_URL, AlipayConfig.APP_ID, AlipayConfig.PRIVARY_KEY, AlipayConfig.FORMAT, AlipayConfig.CHARSET, AlipayConfig.PUBLIC_KEY, AlipayConfig.SIGN_TYPE);
             // 2、设置请求参数
@@ -98,55 +100,6 @@ public class ChargeServiceImpl implements ChargeService {
             response.getOutputStream().write(form.getBytes());
             response.getOutputStream().flush();
             response.getOutputStream().close();
-
-
-            //System.err.println("进入充值方法");
-        //if(request.getParameter("total_amount")!=null){
-            //String total_amount = request.getParameter("total_amount");
-            //System.err.println("回调之后的金额："+total_amount);
-            double Integral = Double.parseDouble(totalAmount) * 10;
-            //System.err.println("充值之后的积分："+Integral);
-
-            String integrala = String.valueOf(Integral);
-            String integral = integrala.substring(0,integrala.lastIndexOf("."));
-
-            //System.out.println("截取后的积分："+integral);
-            //        //log.info("获取金额和积分");
-//        //log.info("开始增加充值记录表的数据");
-            charge.setChargeUid(SessionUtil.getUserById());//用户id
-            charge.setChargeMoney(Double.parseDouble(totalAmount));//收入金额
-
-            charge.setChargeIntegral(Integer.parseInt(integral));//充值积分
-            //充值时间
-            charge.setChargeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            charge.setChargeState(1);//状态
-            int i = chargeService.addCharge(charge);//开始执行充值的方法
-//        //log.info("结束增加充值记录表的数据");
-            if (i > 0) {
-                log.info("****充值记录表成功******");
-                //修改用户的积分的方法
-                int i1 = userService.updateIntegral(Integer.parseInt(integral), SessionUtil.getUserById());
-                if (i1 > 0) {
-                    log.info("*****修改用户积分成功******");
-                } else {
-                    log.info("****充值记录表失败******");
-                }
-            } else {
-                log.info("****充值记录表失败******");
-            }
-
-//        //log.info("开始增加账单表的数据");
-            bill.setBillUid(SessionUtil.getUserById());//用户id
-            bill.setBillType(1);//充值状态
-            bill.setBillIntegral(Integer.parseInt(integral));//充值积分
-            //账单时间
-            bill.setBillTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            //账单内容
-            bill.setBillContent("本次在本平台消费金额为" + Double.parseDouble(totalAmount) + "元，" + "充值积分为" + Integral + ",充值完成。");
-            bill.setBillState(1);//状态
-            billService.addBill(bill);
-            log.info("结束增加账单表的数据");
-        //}
 
         }catch (Exception e){
 
