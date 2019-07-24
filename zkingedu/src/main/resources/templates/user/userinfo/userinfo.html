@@ -246,6 +246,23 @@
             });
         });
     }
+    //修改昵称
+    function ms3(){
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            var index = layer.open({
+                type:1,
+                title: '修改手机号',
+                content: $('#xgname'),
+                area: ['400px', '330px'],
+                maxWidth: 300,
+                shadeClose: true,
+                end:function () {
+                    $("#xgname").attr("style","display:none;");//隐藏
+                }
+            });
+        });
+    }
     //修改邮箱
     function ms2() {
         // alert("进来了")
@@ -431,7 +448,11 @@
                             <div class="form-group">
                                 <label for="inputShous" class="col-xs-4 control-label">昵称：</label>
                                 <div class="col-xs-3" style="margin-top: 5px">
-                                    <label th:text="${session.user.userName}"   id="inputShous" ></label>
+                                    <label id="inputShous" style="margin-top: -6px" >
+                                        <em th:text="${session.user.userName}">
+                                        </em>
+                                    <input type="button" class="btn btn-default navbar-btn sign-in" onclick="ms3()" value="修改"/>
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -513,6 +534,22 @@
 
                     </form>
 
+                    <!--修改名字弹框-->
+                    <form class="layui-form layui-form-pane" action="" id="xgname" style="display: none">
+                        <div class="layui-form-item" style="margin-top: 40px;margin-left: 40px">
+                            <label class="layui-form-label">昵称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="username" id="username" lay-verify="title" autocomplete="off" placeholder="请输入昵称" class="layui-input" style="width: 200px"/>
+                                <input type="hidden" id="phone" th:value="${session.user.userPhone}"/>
+                            </div>
+                        </div>
+
+                        <div style="margin-left: 100px">
+                            <button type="button" class="layui-btn" onclick="updatename()">修改</button>
+                        </div>
+
+                    </form>
+
                     <!--修改弹框 -->
                     <div class="modal fade" id="sign-modal" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-sm" role="document">
@@ -571,7 +608,7 @@
                                                 <button id="sendPhone10" type="button" class="layui-btn">获取验证码</button>
                                             </div>
                                             <div class="form-group">
-                                                <input class="btn btn-primary"  type="button" onclick="updatephonepassword()" value="手机号修改" />
+                                                <input class="btn btn-primary"  type="button" onclick="updatephonepassword()" value="修改密码" />
                                             </div>
                                         </form>
                                     </div>

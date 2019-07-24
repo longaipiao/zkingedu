@@ -97,6 +97,8 @@ public interface UserService {
      * 根据用户id 充值积分的方法
      */
     public int updateIntegral(Integer CourseIntegral, Integer userID);
+    //根据手机号修改用户名
+    public Integer updateName(@Param("phone")String phone,@Param("name") String name);
 
 
 

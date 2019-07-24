@@ -9,14 +9,21 @@
 
     var s=0;
     var time=60;
+    var phone23=0;
     function updateEmail() {
+        if(s==0){
+            s="ss";
+        }
         //获得邮箱文本框的值
         var Email = $("#userEmail").val();
         //判断重复
         var captcha_v5 = $("#userEmailcaptcha_v").val();
         if(""==Email){
             layer.msg("邮箱不能为空");
-        }else{
+        }else if(Email.match(" ")) {
+            layer.msg("邮箱不能有空格")
+        }
+        else{
             $.ajax({
                 url: "/user/Email",
                 type: "post", //请求方式
@@ -30,24 +37,61 @@
                         if (s != captcha_v5) {
                             layer.msg("验证码错误")
                         } else {
-                            $.ajax({
-                                url: "/user/updateEmail",
-                                type: "post",
-                                data: {
-                                    newEmail:Email,
-                                },
-                                success: function (sh) {
-                                    if (sh == 1) {
-                                        layer.msg("修改成功");
-                                        location.href = "/user/userinfo/index";
-                                    } else if (sh == 2) {
-                                        layer.msg("修改失败")
+                            if (Email != phone23) {
+                                layer.msg("验证码错误")
+                            } else {
+                                $.ajax({
+                                    url: "/user/updateEmail",
+                                    type: "post",
+                                    data: {
+                                        newEmail: Email,
+                                    },
+                                    success: function (sh) {
+                                        if (sh == 1) {
+                                            layer.msg("修改成功");
+                                            location.href = "/user/userinfo/index";
+                                        } else if (sh == 2) {
+                                            layer.msg("修改失败")
+                                        }
                                     }
-                                }
-                            })
+                                })
+                            }
                         }
                     }
                 },
+            })
+        }
+    }
+
+    //修改昵称
+    function updatename(){
+        var phone = $("#phone").val();
+        var username = $("#username").val();
+        if(username==""){
+            layer.msg("名字不能为空");
+        }
+        else if(username.match(" ")){
+            layer.msg("不能有空格");
+        }
+        else if(username.length<3 || username.length>16){
+            layer.msg("昵称必须3到16位");
+        }
+        else {
+            $.ajax({
+                url: "/user/updatename",
+                type: "post",
+                data: {
+                    phone: phone,
+                    name: username,
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg("修改成功");
+                        location.href = "/user/userinfo/index";
+                    } else if (data == 2) {
+                        layer.msg("修改失败")
+                    }
+                }
             })
         }
     }
@@ -62,6 +106,9 @@
         if(""==Email){
             layer.msg("邮箱不能为空")
         }
+        else if(Email.match(" ")) {
+            layer.msg("邮箱不能有空格")
+        }
         else if(!Emails.test(Email)){
             layer.msg("邮箱格式不对");
         }
@@ -74,6 +121,7 @@
                 },
                 success:function(n) {
                     s=n;
+                    phone23=Email;
                     timeStart7();
                 },
                 error: function () {

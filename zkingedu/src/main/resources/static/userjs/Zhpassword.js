@@ -1,5 +1,5 @@
 
-    var s = 0;
+
     var time = 60;
     var y = 0;
     var x = 0;
@@ -11,8 +11,10 @@
         layer = layui.layer;
     });
 
-
+    var s = 0;
+    var phone23=0;
     function updatePhonepassword() {
+
         //获得手机号和邮箱文本框的值
         var phones = $("#phoneEmail").val();
         //获得密码的值
@@ -23,9 +25,12 @@
             layer.msg("密码不能为空");
         } else if ("" == newuserpassword) {
             layer.msg("确认密码不能为空");
-        } else if (userpassword.length <=6 && userpassword.length >=18) {
-            layer.msg("密码只能6到1位")
-        } else if (userpassword != newuserpassword) {
+        } else if (userpassword.length<6 || userpassword.length>16) {
+            layer.msg("密码只能6到16位")
+        }
+        else if(userpassword.match(" ")){
+            layer.msg("密码不能输入空格");
+        }else if (userpassword != newuserpassword) {
             layer.msg("两次密码不一样");
         } else {
             $.ajax({
@@ -49,6 +54,9 @@
 
 //确定按钮
     function ms6() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号和邮箱文本框的值
         var phones = $("#phoneEmail").val();
         //获得验证码
@@ -59,6 +67,9 @@
         var pdphones = /^1[3-9]\d{9}$/;
         if ("" == phones) {
             layer.msg("手机号和邮箱不能为空");
+        }
+        else if(phones.match(" ")) {
+            layer.msg("邮箱和密码不能有空格")
         }
         else if (pdphones.test(phones)) {//如果是手机号码
             $.ajax({
@@ -78,7 +89,13 @@
                             layer.msg("验证码错误")
                         }
                         else {
-                            tk();//弹框
+                            if(phones!=phone23){
+                                layer.msg("验证码错误");
+                            }
+                            else{
+                                tk();//弹框
+                            }
+
                         }
                     }
                 },
@@ -101,7 +118,13 @@
                             layer.msg("验证码错误")
                         }
                         else {
-                            tk();
+                            if(phones!=phone23){
+                                layer.msg("验证码错误");
+                            }
+                            else{
+                                tk();
+                            }
+
                         }
                     }
 
@@ -136,40 +159,41 @@
         //手机号验证
         var pdphones = /^1[3-9]\d{9}$/;
         if ("" == phones) {
-            layer.msg("手机号和邮箱不能为空")
+            layer.msg("手机号和邮箱不能为空");
         }
         else if (pdphones.test(phones)) {//如果是手机号码
-            $.ajax({
-                url: "/user/Hqyzm",
-                type: 'post',
-                data: {
-                    phone: phones,
-                },
-                success: function (n) {
-                    s = n;
-                    timeStart9();
-                },
-                error: function () {
-                    layer.msg('注册失败');
-                }
-            });
-        }
-        else if (Emails.test(phones)) {
-            $.ajax({
-                url: "/user/Emailjk",
-                type: 'post',
-                data: {
-                    phone: phones,
-                },
-                success: function (n) {
-                    s = n;
-                    timeStart9();
-                },
-                error: function () {
-                    layer.msg('注册失败');
-                }
-            });
-        }
+                $.ajax({
+                    url: "/user/Hqyzm",
+                    type: 'post',
+                    data: {
+                        phone: phones,
+                    },
+                    success: function (n) {
+                        s = n;
+                        phone23 = phones;
+                        timeStart9();
+                    },
+                    error: function () {
+                        layer.msg('注册失败');
+                    }
+                });
+            } else if (Emails.test(phones)) {
+                $.ajax({
+                    url: "/user/Emailjk",
+                    type: 'post',
+                    data: {
+                        phone: phones,
+                    },
+                    success: function (n) {
+                        s = n;
+                        phone23 = phones;
+                        timeStart9();
+                    },
+                    error: function () {
+                        layer.msg('注册失败');
+                    }
+                });
+            }
     });
 
 

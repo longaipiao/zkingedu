@@ -94,6 +94,9 @@ public interface UserDao {
     //跟据手机号查询用户状态
     public Integer getUserphone(@Param("phone")String phone);
 
+    //根据手机号修改用户名
+    public Integer updateName(@Param("phone")String phone,@Param("name") String name);
+
 
 
 

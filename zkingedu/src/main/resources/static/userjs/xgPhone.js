@@ -7,8 +7,12 @@
     });
 
     var s=0;
+    var phone23=0;
     var time=60;
     function updatePhone3() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号文本框的值
         var phone = $("#userphone").val();
         //判断重复
@@ -17,7 +21,10 @@
             layer.msg("手机号不能为空");
         } else if ("" === captcha_v5) {
             layer.msg("验证码不能为空")
-        } else {
+        } else if(phone.match(" ")) {
+            layer.msg("手机号不能有空格")
+        }
+        else {
             $.ajax({
                 url: "/user/cf",
                 type: "post", //请求方式
@@ -31,21 +38,25 @@
                         if (s != captcha_v5) {
                             layer.msg("验证码错误")
                         } else {
-                            $.ajax({
-                                url: "/user/updatePhone",
-                                type: "post",
-                                data: {
-                                    phone: phone,
-                                },
-                                success: function (sh) {
-                                    if (sh == 1) {
-                                        layer.msg("修改成功");
-                                        location.href = "/user/userinfo/index";
-                                    } else if (sh == 2) {
-                                        layer.msg("修改失败")
+                            if (phone != phone23) {
+                                layer.msg("验证码错误")
+                            } else {
+                                $.ajax({
+                                    url: "/user/updatePhone",
+                                    type: "post",
+                                    data: {
+                                        phone: phone,
+                                    },
+                                    success: function (sh) {
+                                        if (sh == 1) {
+                                            layer.msg("修改成功");
+                                            location.href = "/user/userinfo/index";
+                                        } else if (sh == 2) {
+                                            layer.msg("修改失败")
+                                        }
                                     }
-                                }
-                            })
+                                })
+                            }
                         }
                     }
                 },
@@ -76,6 +87,7 @@
                 },
                 success:function(n) {
                     s=n;
+                    phone23=phones;
                     timeStart2();
                 },
                 error: function () {

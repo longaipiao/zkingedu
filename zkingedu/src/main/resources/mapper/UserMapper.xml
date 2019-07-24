@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zking.zkingedu.common.dao.UserDao">
-    <!--<cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
     <!--用户接口Mapper-->
 
@@ -92,7 +91,7 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     </select>
     <!-- 查询所有用户的信息 -->
     <select id="getAll"  resultType="user" parameterType="user">
-        select <include refid="Usersql"/> from t_user  where 1=1
+        select <include refid="Usersql"/> from t_user where 1=1
         <if test="userName !=null and userName!=''">
             and user_name like '%${userName}%'
         </if>
@@ -102,6 +101,7 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
         <if test="userEmail !=null and userEmail!=''">
             and user_email =#{userEmail}
         </if>
+        order by user_regTime desc
     </select>
     <!-- 根据用户id解封-->
     <update id="updatejf">
@@ -135,6 +135,11 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     <select id="getUserphone" resultType="integer">
     select user_state from t_user where user_phone=#{phone}
     </select>
+
+    <!--根据手机号修改用户名-->
+    <update id="updateName">
+        update t_user set user_name=#{name} where user_phone=#{phone}
+    </update>
 
 
 </mapper>

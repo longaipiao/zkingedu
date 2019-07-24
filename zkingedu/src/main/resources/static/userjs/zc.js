@@ -1,5 +1,5 @@
 
-    var s=0;
+
 
     var layer;//layer插件
 
@@ -7,10 +7,13 @@
         layer = layui.layer;
 
     });
-
-
+    var s=0;
+    var phone23=0;
 //注册
     function zc() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号文本框的值
         var phone=$("#phone").val();
         //获得密码的值
@@ -19,6 +22,7 @@
         var captcha_v=$("#captcha_v").val();
         //手机号验证
         var pdphone=/^1[3-9]\d{9}$/;
+        var reg = /^[A-Za-z0-9]{6,16}$/;
         //判断重复
         $.ajax({
             url:"/user/cf",
@@ -40,17 +44,23 @@
                     else if(""==password){
                         layer.msg("密码不能为空");
                     }
-                    else if(password.length <=6 && password.length >=18){
-                        layer.msg("密码只能在6到18位");
+                    else if(password.length<6 || password.length>16){
+                        layer.msg("密码必须由6-16位字母、数字组成.");
+                    }
+                    else if(password.match(" ")){
+                        layer.msg("密码不能输入空格");
                     }
                     else if(""==captcha_v){
                         layer.msg("验证码不能为空");
                     }
-                    else{
-                        if(s!=captcha_v){
-                            layer.msg("验证码错误")
-                        }
-                        else{
+                    else {
+                        if (s != captcha_v) {
+                            layer.msg("验证码错误");
+                        } else {
+                            //如果用户改手机号验证码也要重新更换
+                            if (phone != phone23) {
+                                layer.msg("验证码错误");
+                            } else {
                             //注册方法
                             $.ajax({
                                 url: "/user/zc",
@@ -60,14 +70,15 @@
                                     password: password,
                                 },
                                 success: function (data) {
-                                    if(data==1){
-                                        location.href="/";
+                                    if (data == 1) {
+                                        location.href = "/";
                                     }
                                 },
-                                error:function () {
+                                error: function () {
                                     layer.msg("注册失败")
                                 }
                             })
+                            }
                         }
                     }
                 }
@@ -225,6 +236,7 @@
                     },
                     success:function(n) {
                         s=n;
+                        phone23=phones;
                         timeStartss();
                     },
                     error: function () {

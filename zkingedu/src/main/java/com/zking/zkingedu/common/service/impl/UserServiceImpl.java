@@ -161,6 +161,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer updateName(String phone, String name) {
+        return userDao.updateName(phone,name);
+    }
+
+    @Override
     public Integer getUserphone(String phone) {
         return userDao.getUserphone(phone);
     }

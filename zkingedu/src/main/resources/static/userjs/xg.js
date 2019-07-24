@@ -7,8 +7,12 @@
 
 
     var s=0;
+    var phone23=0;
 //用手机号修改密码
     function updatephonepassword() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号文本框的值
         var phones=$("#phone").val();
         //邮箱认证
@@ -42,8 +46,14 @@
             layer.msg("确认密码不能为空")
         } else if(password2==passwordy){
             layer.msg("跟上次密码不能一样")
-        } else if(password2.length<=6 && password2.length>=18){
-            layer.msg("密码只能在6到18位")
+        } else if(password2.length<6 || password2.length>16){
+            layer.msg("密码只能在6到16位")
+        }
+        else if(phones.match(" ")) {
+            layer.msg("邮箱和密码不能有空格")
+        }
+        else if(password2.match(" ")){
+            layer.msg("密码不能输入空格");
         }
         else if (passwordy!=password1){
             layer.msg("跟原密码不一样")
@@ -56,37 +66,7 @@
                     if (s != captcha_v) {
                         layer.msg("验证码错误")
                     } else {
-                        //注册方法
-                        $.ajax({
-                            url: "/user/zhphonepassoword",
-                            type: "post", //请求方式
-                            data: {
-                                phone: phones,
-                                userpasswordss: password2,
-                            },
-                            success: function (data) {
-                                if (data == 1) {
-                                    layer.msg("修改成功")
-                                    location.href = "/";
-                                }
-                                else{
-                                    layer.msg("修改失败")
-                                }
-                            },
-                            error: function () {
-                                layer.msg("修改失败")
-                            }
-                        })
-                    }
-                } else {
-                    layer.msg("手机号不是绑定账号的手机号");
-
-                }
-            }
-
-            if(Emails.test(phones)){//如果是邮箱
-                if(inputEmail==phones){
-                    if (s != captcha_v) {
+                    if (phones != phone23) {
                         layer.msg("验证码错误")
                     } else {
                         //注册方法
@@ -101,12 +81,49 @@
                                 if (data == 1) {
                                     layer.msg("修改成功")
                                     location.href = "/";
+                                } else {
+                                    layer.msg("修改失败")
                                 }
                             },
                             error: function () {
                                 layer.msg("修改失败")
                             }
                         })
+                    }
+                    }
+                } else {
+                    layer.msg("手机号不是绑定账号的手机号");
+
+                }
+            }
+
+            if(Emails.test(phones)){//如果是邮箱
+                if(inputEmail==phones){
+                    if (s != captcha_v) {
+                        layer.msg("验证码错误")
+                    } else {
+                        if (phones != phone23) {
+                            layer.msg("验证码错误")
+                        } else {
+                            //注册方法
+                            $.ajax({
+                                url: "/user/zhphonepassoword",
+                                type: "post", //请求方式
+                                data: {
+                                    phone: phones,
+                                    userpasswordss: password2,
+                                },
+                                success: function (data) {
+                                    if (data == 1) {
+                                        layer.msg("修改成功")
+                                        location.href = "/";
+                                    }
+                                },
+                                error: function () {
+                                    layer.msg("修改失败")
+                                }
+                            })
+                        }
                     }
                 }
                 else {
@@ -149,6 +166,7 @@
                 },
                 success:function(n) {
                     s=n;
+                    phone23=phones;
                     timeStart1();
                 },
                 error: function () {
@@ -165,6 +183,7 @@
                 },
                 success:function(n) {
                     s=n;
+                    phone23=phones;
                     timeStart1();
                 },
                 error: function () {

@@ -44,8 +44,10 @@ public class UserController {
     @Autowired
     private Log mylog;
 
+    private Object object = new Object();
+
     //获取系统当前时间
-    SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    SimpleDateFormat dateFormat= new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
     String time=dateFormat.format(new Date());
 
     // 短信平台相关参数
@@ -58,28 +60,30 @@ public class UserController {
     //用户注册
     @ResponseBody
     @RequestMapping(value = "/zc")
-    public String zc(String phone,String password)throws Exception{
-        //手机号
-        user.setUserPhone(phone);
-        //密码
-        user.setUserPassword(password);
-        //注册时间
-        user.setUserRegTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        //状态
-        user.setUserState(0);
-        //积分
-        user.setUserIntegrsl(500);
-        //昵称
-        user.setUserName(getRandomJianHan(3));
-        //图片
-        user.setUserImg("/user/img/u=2245612340,853442449&fm=26&gp=0.png");
-        //错误次数
-        user.setUserCwcs(0);
-        Integer n = userService.add(user);
-        if(n>0){
-            return "1";
+    public String zc(String phone,String password)throws Exception {
+        synchronized (object) {
+            //手机号
+            user.setUserPhone(phone);
+            //密码
+            user.setUserPassword(password);
+            //注册时间
+            user.setUserRegTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+            //状态
+            user.setUserState(0);
+            //积分
+            user.setUserIntegrsl(2000);
+            //昵称
+            user.setUserName(getRandomJianHan(3));
+            //图片
+            user.setUserImg("/user/img/u=2245612340,853442449&fm=26&gp=0.png");
+            //错误次数
+            user.setUserCwcs(0);
+            Integer n = userService.add(user);
+            if (n > 0) {
+                return "1";
+            }
+            return "2";
         }
-        return "2";
     }
 
     /**
@@ -90,14 +94,17 @@ public class UserController {
     @RequestMapping(value = "/Email")
     @ResponseBody
     public String cfEmail(HttpServletRequest request,String Email){
-        HttpSession session = request.getSession();
-        User user=(User) session.getAttribute("user");
-        String s = userService.cfEamil(Email);
-        if (s==null){
-            //没有重复
-            return "1";
+        synchronized (object) {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            String s = userService.cfEamil(Email);
+            if (s == null) {
+                //没有重复
+                return "1";
+            }
+            return "2";
         }
-        return "2";
+
     }
     /**
      * 修改邮箱
@@ -105,16 +112,18 @@ public class UserController {
     @RequestMapping(value = "/updateEmail")
     @ResponseBody
     public String updateEmail(String newEmail,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User user =(User) session.getAttribute("user");
-        Integer integer = userService.updateEamil(user.getUserID(), newEmail);
-        if(integer>0){
-            User user1 = userService.getUser(user.getUserID());
-            session.setAttribute("user",null);
-            session.setAttribute("user",user1);
-            return "1";
+        synchronized (object) {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            Integer integer = userService.updateEamil(user.getUserID(), newEmail);
+            if (integer > 0) {
+                User user1 = userService.getUser(user.getUserID());
+                session.setAttribute("user", null);
+                session.setAttribute("user", user1);
+                return "1";
+            }
+            return "2";
         }
-        return "2";
     }
     /**
      * 邮箱接口
@@ -134,7 +143,7 @@ public class UserController {
             e.printStackTrace();
         }
         //发送短信
-       /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+      /* ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
         String result = client.send(phone, "您正在注册巨好贷用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");*/
 
 
@@ -322,10 +331,12 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/Hqyzm")
     public String Hqyzm(HttpServletRequest request, HttpServletResponse response,String phone) throws Exception {
+
         JSONObject json = null;
         //生成6位验证码
         String verifyCode = String.valueOf(new Random().nextInt(899999) + 100000);
-        //发送短信
+        System.err.println(verifyCode);
+       //发送短信
         ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
         String result = client.send(phone, "您正在注册zking在线课堂用户，验证码为:" + verifyCode + "，该码有效期为5分钟，该码只能使用一次!");
 
@@ -411,13 +422,13 @@ public class UserController {
                     }
                 }
                 else{
-                   session.setAttribute("user",qquser);
+                    session.setAttribute("user",qquser);
                     User user=(User) session.getAttribute("user");
                     //修改ip地址
                     userService.updateipaddrlastTime(user.getUserID(),IpAddress.getIpAddr(request),new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                     try{
                         response.sendRedirect("/");//登入界面  （原来：/user/）
-                       return false;
+                        return false;
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -430,6 +441,23 @@ public class UserController {
         return true;
     }
 
+    /**
+     * 根据手机号修改名字
+     */
+    @RequestMapping(value = "/updatename")
+    @ResponseBody
+    public String updateName(String phone,String name,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Integer integer = userService.updateName(phone,name);
+        if(integer>0){
+            User user1 = userService.getUser(user.getUserID());
+            session.setAttribute("user",null);
+            session.setAttribute("user",user1);
+            return "1";
+        }
+        return "2";
+    }
 
     /**
      * qq登入绑定新用户
@@ -437,43 +465,43 @@ public class UserController {
     @RequestMapping(value = "/qqlogin")
     @ResponseBody
     public String qqlogin(String phone,String upwd,HttpServletRequest request){
+        synchronized (object){
+            HttpSession session = request.getSession();
+            //qqid
+            String userOpenID=(String) session.getAttribute("openid");
+            //qq头像
+            String Avatar=(String) session.getAttribute("Avatar");
+            //qq名字
+            String nickName=(String) session.getAttribute("nickName");
+            //qqid
+            user.setUserOpenID(userOpenID);
+            //注册时间
+            user.setUserRegTime(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date()));
+            //状态
+            user.setUserState(0);
+            //积分
+            user.setUserIntegrsl(2000);
+            //昵称
+            user.setUserName(nickName);
+            //图片
 
-        HttpSession session = request.getSession();
-        //qqid
-        String userOpenID=(String) session.getAttribute("openid");
-        //qq头像
-        String Avatar=(String) session.getAttribute("Avatar");
-        //qq名字
-        String nickName=(String) session.getAttribute("nickName");
-        //qqid
-        user.setUserOpenID(userOpenID);
-        //注册时间
-        user.setUserRegTime(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        //状态
-        user.setUserState(0);
-        //积分
-        user.setUserIntegrsl(500);
-        //昵称
-        user.setUserName(nickName);
-        //图片
-
-        user.setUserImg(Avatar);
-        //错误次数
-        user.setUserCwcs(0);
-        //ip
-        user.setUserIP(IpAddress.getIpAddr(request));
-        //增加这个openid
-        Integer add = userService.add(user);
-        if(add>0){
-            Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
-            if(integer!=null){
-                User qquser = userService.getopenid(userOpenID);
-                session.setAttribute("user",qquser);
-                return "1";
+            user.setUserImg(Avatar);
+            //错误次数
+            user.setUserCwcs(0);
+            //ip
+            user.setUserIP(IpAddress.getIpAddr(request));
+            //增加这个openid
+            Integer add = userService.add(user);
+            if(add>0){
+                Integer integer = userService.updateOpenid(userOpenID,phone,upwd);//修改成功后在根据openid查询用户数据
+                if(integer!=null){
+                    User qquser = userService.getopenid(userOpenID);
+                    session.setAttribute("user",qquser);
+                    return "1";
+                }
             }
+            return "2";
         }
-
-        return "2";
     }
     /**
      * qq登入绑定老用户
@@ -481,45 +509,47 @@ public class UserController {
     @RequestMapping(value = "/yjqqlogin")
     @ResponseBody
     public String yjqqlogin(String phone,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        String openid=(String) session.getAttribute("openid");
-        Integer integer = userService.updateOpenids(phone,openid,IpAddress.getIpAddr(request));//根据用户手机号增加openid
-        if(integer!=null){
-            User qquser = userService.getopenid(openid);
-            session.setAttribute("user",qquser);
-            return "1";
+        synchronized (object) {
+            HttpSession session = request.getSession();
+            String openid = (String) session.getAttribute("openid");
+            Integer integer = userService.updateOpenids(phone, openid, IpAddress.getIpAddr(request));//根据用户手机号增加openid
+            if (integer != null) {
+                User qquser = userService.getopenid(openid);
+                session.setAttribute("user", qquser);
+                return "1";
+            }
+            return "2";
         }
-        return "2";
     }
 
     //用户登入
     @ResponseBody
     @RequestMapping(value = "/login")
-    public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception{
-        HttpSession session = request.getSession();
-        //手机号
-        user.setUserPhone(userPhone);
-        //密码
-        user.setUserPassword(upwd);
-        User userlogin = userService.userlogin(user);
+    public String login(String userPhone,String upwd,HttpServletRequest request,HttpServletResponse response)throws Exception {
+        synchronized (object) {
+            HttpSession session = request.getSession();
+            //手机号
+            user.setUserPhone(userPhone);
+            //密码
+            user.setUserPassword(upwd);
+            User userlogin = userService.userlogin(user);
 //        Integer userphone = userService.getUserphone(userPhone);
-        if(userlogin!=null){
-            System.err.println("用户信息:"+userlogin);
-            if(userlogin.getUserState()==0){
-                Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                if(integer>0){
-                    session.setAttribute("user",userlogin);
-                    return "1";
+            if (userlogin != null) {
+                System.err.println("用户信息:" + userlogin);
+                if (userlogin.getUserState() == 0) {
+                    Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                    if (integer > 0) {
+                        session.setAttribute("user", userlogin);
+                        return "1";
+                    }
+                } else {
+                    return "2";
                 }
+            } else {
+                return "3";
             }
-            else{
-                return "2";
-            }
+            return "";
         }
-        else{
-            return "3";
-        }
-        return "";
     }
     /**
      * 注销
