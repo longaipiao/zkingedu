@@ -34,14 +34,7 @@ public class WebAppConfig2 extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/user/userinfo/index", "/user/courses/index");
     }
 
-    /**
-     * 定时删除所有日志  每个月的每月的最后一天的11：59触发 0 59 23 L * ?
-     */
-    @Scheduled(cron = "0 59 23 L * ?")
-    public void dshirw(){
-        int lid = logService.deleLog();
-        log.info("定时删除日志成功！！！"+lid);
-    }
+
 
 
 }

@@ -27,7 +27,7 @@
     <div align="center">
         &nbsp;旧&nbsp;密&nbsp;码&nbsp;:
         <div class="layui-input-inline" style="width: 194px;">
-            <input type="text" id="pwd0" name="name" required lay-verify="name"
+            <input type="password" id="pwd0" name="name" required lay-verify="name"
                    autocomplete="off" class="layui-input">
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div align="center">
             新&nbsp;密&nbsp;码&nbsp;:
             <div class="layui-input-inline" style="width: 194px;">
-                <input type="text" id="pwd1" name="name" required lay-verify="name"
+                <input type="password" id="pwd1" name="name" required lay-verify="name"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div align="center">
             确认密码:
             <div class="layui-input-inline" style="width: 194px;">
-                <input type="text" id="pwd2" name="name" required lay-verify="name"
+                <input type="password" id="pwd2" name="name" required lay-verify="name"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -91,6 +91,10 @@
             }
             else if ($("#pwd1").val() == "") {
                 layer.msg("新密码不能为空", {icon: 2, time: 700, shade: [0.5, '#000', true]});
+                $("#pwd1").select();
+            }
+            else if($("#pwd1").val().match(" ")){
+                layer.msg("密码不能有空格", {icon: 2, time: 700, shade: [0.5, '#000', true]});
                 $("#pwd1").select();
             }
             else if ($("#pwd2").val() == "") {
