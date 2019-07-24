@@ -213,6 +213,7 @@ public class UserController {
      * 解封
      * @param uid
      * @return
+     * @return
      */
     @RequestMapping(value = "/jf")
     @ResponseBody
@@ -304,7 +305,6 @@ public class UserController {
             return "1";
         }
         return null;
-
     }
 
     /**
@@ -316,7 +316,6 @@ public class UserController {
     @RequestMapping(value = "/ckimg")
     public  String ckimg(String uid,HttpServletRequest request){
         User user = userService.getUser(Integer.parseInt(uid));
-
         return user.getUserImg();
     }
 
@@ -399,14 +398,14 @@ public class UserController {
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
                     try{
-                        response.sendRedirect("/user/binding");
+                        response.sendRedirect("user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
                 }
                 else if(qquser.getUserPhone()==null){
                     try{
-                        response.sendRedirect("/user/binding");
+                        response.sendRedirect("user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
@@ -503,17 +502,18 @@ public class UserController {
         //密码
         user.setUserPassword(upwd);
         User userlogin = userService.userlogin(user);
-        Integer userphone = userService.getUserphone(userPhone);
+//        Integer userphone = userService.getUserphone(userPhone);
         if(userlogin!=null){
-            if(userphone==0){
+            System.err.println("用户信息:"+userlogin);
+            if(userlogin.getUserState()==0){
                 Integer integer = userService.updateipaddrlastTime(userlogin.getUserID(), IpAddress.getIpAddr(request), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
                 if(integer>0){
                     session.setAttribute("user",userlogin);
                     return "1";
                 }
-                else{
-                    return "2";
-                }
+            }
+            else{
+                return "2";
             }
         }
         else{

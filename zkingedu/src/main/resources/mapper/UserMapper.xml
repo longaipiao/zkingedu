@@ -26,7 +26,7 @@ and b.rid=d.rid and b.rid = e.rid and c.pid = e.pid and uname=#{uname}
     </insert>
     <!-- 登入 -->
     <select id="userlogin" resultType="user">
-        select * from t_user where user_phone=#{user.userPhone} and user_password=#{user.userPassword} and user_state=0
+        select * from t_user where user_phone=#{user.userPhone} and user_password=#{user.userPassword}
     </select>
     <!-- 修改ip地址和最后访问时间-->
     <update id="updateipaddrlastTime">

@@ -27,10 +27,10 @@ layui.use('layer',function () {
                         location.href = "/";
                     }
                     if(data==3){
-                        layer.msg("用戶被封禁");
+                        layer.msg("账户或密码错误");
                     }
                     if(data==2) {
-                        layer.msg("账户或密码错误");
+                        layer.msg("用戶被封禁");
                     }
                 }
             })

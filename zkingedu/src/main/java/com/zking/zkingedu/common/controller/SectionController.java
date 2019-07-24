@@ -6,6 +6,7 @@ import com.zking.zkingedu.common.utils.IdGeneratorUtils;
 import com.zking.zkingedu.common.utils.PageBean;
 import com.zking.zkingedu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,6 +146,7 @@ public class SectionController {
     @Transactional
     @ResponseBody
     @RequestMapping("/addSection")
+    @RequiresAuthentication
     public ResultUtil addSection(Section section, HttpServletRequest request){
         if(section==null){
             return ResultUtil.error();
