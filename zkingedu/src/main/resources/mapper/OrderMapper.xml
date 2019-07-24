@@ -74,7 +74,7 @@
     <!--根据用户id查询出自己的资源-->
     <select id="findziyuanUid" resultType="java.util.Map" parameterType="integer">
         select c.course_name,c.course_img,o.order_sid,o.order_cid from t_order o,t_course c
-        where o.order_sid = c.course_id and o.order_uid = #{userID}
+        where o.order_sid = c.course_id and o.order_uid = #{userID} order by o.charge_time desc
     </select>
 
     <!-- 查询订单收入的总金额数-->

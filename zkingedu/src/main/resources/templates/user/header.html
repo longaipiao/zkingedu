@@ -70,11 +70,25 @@
                     </span>
                 </div>
                 <form class="navbar-form navbar-right" action="/user/PageSearch" method="post" role="search">
-                    <select class="form-control" name="type">
-                        <option value="course">课程</option>
-                        <option value="post">帖子</option>
-                    </select>
-                    <input type="text" class="form-control" name="SearchName" autocomplete="off" placeholder="搜索 课程/帖子">
+                    <span th:if="${SearchType} eq course">
+                        <select class="form-control" name="type">
+                            <option value="course" selected="selected">课程</option>
+                            <option value="post">帖子</option>
+                        </select>
+                    </span>
+                    <span th:if="${SearchType} eq post">
+                        <select class="form-control" name="type">
+                            <option value="course">课程</option>
+                            <option value="post" selected="selected">帖子</option>
+                        </select>
+                    </span>
+                    <span th:if="${SearchType} eq null">
+                        <select class="form-control" name="type">
+                            <option value="course">课程</option>
+                            <option value="post">帖子</option>
+                        </select>
+                    </span>
+                    <input type="text" th:value="${content}" class="form-control" name="SearchName" autocomplete="off" placeholder="搜索 课程/帖子">
                     <button type="submit"  class="layui-btn">搜索</button>
                 </form>
             </div>

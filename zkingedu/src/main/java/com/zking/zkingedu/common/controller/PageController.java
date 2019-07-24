@@ -65,6 +65,8 @@ public class PageController {
         return empDao.getemps("%%");
     }
 
+
+
     /**
      * 主页
      *
@@ -223,7 +225,7 @@ public class PageController {
      */
     @RequestMapping("/PageSearch")
     public ModelAndView Search(String type, String SearchName, ModelAndView mv) {
-
+        mv.addObject("SearchType",type);//查询类型
         if ("course".equals(type)) {//搜索课程
             mv.addObject("content", SearchName);
             mv.setViewName("user/courses/index");
@@ -231,6 +233,7 @@ public class PageController {
             return mv;//跳转至课程搜索页面
         }
         else  {
+            mv.addObject("content", SearchName);//搜索内容
             mv.addObject("leibie",SearchName);
             mv.addObject("sysFive",systemService.getsystemsFive());//加载右侧最热体系数据
             mv.setViewName("user/questions/index");

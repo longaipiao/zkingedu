@@ -355,11 +355,11 @@ function initdata() {
                     content += "<div class=\"answer-item\">\n" +
                         "                    <div class=\"answer-head\">\n" +
                         "                            <div class=\"user-avatar \">\n" +
-                        "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
+                        "                                        <a class=\"avatar\" href=\"javascript:void(0);\" >\n" +
                         "                                            <img src=\""+obj.user.userImg+"\">\n" +
                         "                                        </a>\n" +
                         "\n" +
-                        "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
+                        "                                        <a class=\"member-icon\" href=\"javascript:void(0);\" target=\"_blank\">\n" +
                         "\n" +
                         "                                <img src=\"\n" +
                         "                                            https://static.shiyanlou.com/img/vip-icon.png\n" +
@@ -373,7 +373,7 @@ function initdata() {
                         "\n" +
                         "                    <span class=\"comment-reply\">\n" +
                         "                            <div class=\"user-username \">\n" +
-                        "                                <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
+                        "                                <div class=\"username\" href=\"javascript:void(0);\" >\n" +
                         "                                        " + obj.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp;:\n" +
 
                         "                                    <span>(" + obj.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;#" + obj.tcommentLounum + "楼)</span>\n" +
@@ -404,11 +404,11 @@ function initdata() {
                         if (obj.tcommentID==obj2.tcommentFid) {
                             content += "<div class=\"answer-head\">\n" +
                                 "                                    <div class=\"user-avatar \">\n" +
-                                "                                        <a class=\"avatar\" href=\"/user/212008\" target=\"_blank\">\n" +
+                                "                                        <a class=\"avatar\" href=\"javascript:void(0);\" target=\"_blank\">\n" +
                                 "                                            <img src=\""+obj2.user.userImg+"\">\n" +
                                 "                                        </a>\n" +
                                 "\n" +
-                                "                                        <a class=\"member-icon\" href=\"/vip\" target=\"_blank\">\n" +
+                                "                                        <a class=\"member-icon\" href=\"javascript:void(0);\" >\n" +
                                 "\n" +
                                 "                                            <img src=\"\n" +
                                 "                                                    https://static.shiyanlou.com/img/vip-icon.png\n" +
@@ -421,7 +421,7 @@ function initdata() {
                                 "\n" +
                                 "                                <span class=\"comment-reply\">\n" +
                                 "                                    <div class=\"user-username \">\n" +
-                                "                                        <div class=\"username\" href=\"/user/212008\" target=\"_blank\">\n" +
+                                "                                        <div class=\"username\" href=\"javascript:void(0);\" target=\"_blank\">\n" +
                                 "\n" +
                                 "                                                " + obj2.user.userName + "&nbsp;&nbsp;&nbsp;&nbsp; 回复&nbsp;&nbsp;&nbsp;&nbsp; " + obj2.user2.userName + ":\n" +
                                 "                                            <span>(" + obj2.tcommentTime + "&nbsp;&nbsp;&nbsp;&nbsp;)</span>\n"

@@ -14,6 +14,7 @@
         <if test=" advertisingName != null">
             and advertising_name like '%${advertisingName}%'
         </if>
+        order by advertising_time desc
         <!--<if test="advertisingTime !=null">
             and advertising_time &gt;= #{advertisingTime}
         </if>

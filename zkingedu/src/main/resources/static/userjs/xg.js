@@ -14,7 +14,7 @@
             s="ss";
         }
         //获得手机号文本框的值
-        var phones=$("#phone").val();
+        var phones=$("#phoneyhs").val();
         //邮箱认证
         var Emails=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
         //获得用户手机号文本框的值
@@ -149,7 +149,7 @@
     $(function () {
     $('#sendPhone10').click(function(){
         //获得手机号文本框的值
-        var phones=$("#phone").val();
+        var phones=$("#phoneyhs").val();
 //邮箱认证
         var Emails=/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
         //手机号验证

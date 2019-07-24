@@ -16,7 +16,7 @@
         select a.collection_id,b.course_sid,b.course_num,b.course_id,b.course_name,b.course_desc,b.course_img,c.user_id
         from t_collection a,t_course b,t_user c
         WHERE a.collection_zpid=b.course_id AND a.collection_uid=c.user_id AND a.collection_uid=#{uid} AND
-        a.collection_state=1 ORDER BY a.collection_time DESC
+        a.collection_state=1 and b.course_state=0 ORDER BY a.collection_time DESC
     </select>
 
 

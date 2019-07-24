@@ -204,7 +204,7 @@ public class PostController {
     @ResponseBody
     public int addTct(Tcomment tcomment,HttpSession session){
         //根据id获取用户名
-        String s = postService.queryUserByid(tcomment.getTcommentUid2());
+        String s = postService.queryUserByid(SessionUtil.getUserById());
         //获取用户ID
         Integer uid=getUserid(session);
         //回复者的id，设置
@@ -330,6 +330,7 @@ public class PostController {
             give.setGiveUid(uid);
             give.setGiveTime(new Date().toLocaleString());
             int i = postService.delGive(give);
+
             return 3;
         }
         if(z==0) {//增加点赞
