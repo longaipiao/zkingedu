@@ -88,6 +88,9 @@
 
 //qq绑定账号
     function qqlogin() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号文本框的值
         var phone=$("#phone").val();
         var password=$("#password").val();
@@ -104,8 +107,11 @@
         else if(""==password){
             layer.msg("密码不能为空");
         }
-        else if(password.length <=6 && password.length >=18){
+        else if(password.length<6 || password.length>16){
             layer.msg("密码只能在6到18位");
+        }
+        else if(password.match(" ")){
+            layer.msg("密码不能有空格");
         }
         else if(""==captcha_v){
             layer.msg("验证码不能为空");
@@ -124,23 +130,27 @@
                         if (s != captcha_v5) {
                             layer.msg("验证码错误")
                         } else {
-                            $.ajax({
-                                url: "/user/qqlogin",
-                                type: "post",
-                                data: {
-                                    phone: $("#phone").val(),
-                                    upwd: $("#password").val()
-                                },
-                                success: function (sh) {
-                                    layer.msg(sh)
-                                    if (sh == 1) {
-                                        layer.msg("绑定成功");
-                                        location.href = "/";
-                                    } else if (sh == 2) {
-                                        layer.msg("登入失败")
+                            if (phone != phone23) {
+                                layer.msg("验证码错误")
+                            } else {
+                                $.ajax({
+                                    url: "/user/qqlogin",
+                                    type: "post",
+                                    data: {
+                                        phone: $("#phone").val(),
+                                        upwd: $("#password").val()
+                                    },
+                                    success: function (sh) {
+                                        layer.msg(sh)
+                                        if (sh == 1) {
+                                            layer.msg("绑定成功");
+                                            location.href = "/";
+                                        } else if (sh == 2) {
+                                            layer.msg("登入失败")
+                                        }
                                     }
-                                }
-                            })
+                                })
+                            }
                         }
                     }
                 },
@@ -149,6 +159,9 @@
     }
 //qq绑定已有的账号
     function qqlogins() {
+        if(s==0){
+            s="ss";
+        }
         //获得手机号文本框的值
         var phone=$("#phone").val();
         //判断重复
@@ -183,10 +196,13 @@
                                 if(data==2){
                                     layer.msg("该手机号已经绑定了qq号")
                                 }
-                                else{
+                                else {
                                     if (s != captcha_v5) {
                                         layer.msg("验证码错误")
                                     } else {
+                                        if (phone != phone23) {
+                                            layer.msg("验证码错误")
+                                        } else {
                                         $.ajax({
                                             url: "/user/yjqqlogin",
                                             type: "post",
@@ -202,6 +218,7 @@
                                                 }
                                             }
                                         })
+                                        }
                                     }
                                 }
                             }

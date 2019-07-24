@@ -409,14 +409,14 @@ public class UserController {
                 session.setAttribute("openid",userOpenID);
                 if(qquser==null){
                     try{
-                        response.sendRedirect("user/binding");
+                        response.sendRedirect("/user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
                 }
                 else if(qquser.getUserPhone()==null){
                     try{
-                        response.sendRedirect("user/binding");
+                        response.sendRedirect("/user/binding");
                     }catch (IOException e){
                         e.printStackTrace();
                     }
