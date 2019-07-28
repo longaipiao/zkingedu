@@ -90,7 +90,7 @@ public class EmpController {
     @ResponseBody
     @RequestMapping("/getEmps")
     public Object getEmps(int page, int limit,HttpServletRequest request) {
-        Page<Object> objects = PageHelper.startPage(page, limit);
+        Page<Object> pages = PageHelper.startPage(page, limit);
         String empName = request.getParameter("empName");
         if(empName==null)
             empName="";
@@ -98,7 +98,7 @@ public class EmpController {
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
         map.put("msg", "");
-        map.put("count", objects.getTotal());
+        map.put("count", pages.getTotal());
         map.put("data", emps);
         return map;
     }

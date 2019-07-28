@@ -16,7 +16,7 @@ public interface LogService {
     /*
      * 查询所以的日志消息
      */
-    public PageInfo<Map<String, Object>> findLog(Log log, Integer page, Integer limit);
+    PageInfo<Map<String, Object>> findLog(Log log, Integer page, Integer limit);
 
 
     /**
@@ -28,6 +28,6 @@ public interface LogService {
      * 定时删除所有日志
      * @return
      */
-    public int deleLog();
+    int deleLog();
 
 }

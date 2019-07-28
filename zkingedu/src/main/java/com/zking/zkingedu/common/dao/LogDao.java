@@ -15,7 +15,7 @@ public interface LogDao {
     /*
      * 查询所以的日志消息
      */
-    public List<Map<String,Object>> findLog(Log log);
+    List<Map<String,Object>> findLog(Log log);
 
 
 
@@ -28,6 +28,6 @@ public interface LogDao {
      * 定时删除所有日志
      * @return
      */
-    public int deleLog();
+    int deleLog();
 
 }

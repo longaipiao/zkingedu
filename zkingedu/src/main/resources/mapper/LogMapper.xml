@@ -23,7 +23,7 @@
         insert into t_log (log_eid,log_details,log_time) values (#{emp.empID},#{logDetails},#{logTime})
     </insert>
 
-    <!--查询所以的日志消息-->
+    <!--查询所有的日志消息-->
     <select id="findLog" resultType="java.util.Map" parameterType="com.zking.zkingedu.common.model.Log">
         select e.emp_name,l.* from t_log l,t_emp e where l.log_eid = e.emp_id and l.log_time like '%${logTime}%'
          ORDER BY l.log_time desc
