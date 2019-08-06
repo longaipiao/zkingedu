@@ -6,6 +6,8 @@
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
    <!-- <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--消息接口Mapper-->
+
+
     <sql id="MessageAll">
         message_id,message_uid1,message_uid2,message_pid,message_name,message_content,message_time,message_state
     </sql>

@@ -11,7 +11,7 @@
   </resultMap>
 
   <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-  <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+<!--  <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
 
   <sql id="Base_Column_List" >
     param_id, name, value, schedule_trigger_id

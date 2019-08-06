@@ -4,7 +4,7 @@
 <mapper namespace="com.zking.zkingedu.common.dao.LogDao">
 
     <!--使全局的映射器启用或禁用缓存  开启二级缓存-->
-    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>
+<!--    <cache type="com.zking.zkingedu.common.redis.MybatisRedisCache"></cache>-->
     <!--日志接口Mapper-->
     <sql id="logAll">
         log_id,log_eid,log_details,log_time
