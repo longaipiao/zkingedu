@@ -37,7 +37,7 @@
 				<div class="login-center clearfix">
 					<div class="login-center-img"><img src="/img/password.png"/></div>
 					<div class="login-center-input">
-						<input type="password" name=""value="" id="password" placeholder="请输入您的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'"/>
+						<input type="password" name=""value="" id="password" placeholder="请输入您的密码" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'"/>
 						<div class="login-center-input-text" >密码</div>
 					</div>
 				</div>
@@ -85,7 +85,6 @@
 					else {
 						layer.msg("用户名或密码有误");
 						$("#login_form").removeClass('shake_effect');
-						$("#user_name").val("");
 						$("#password").val("");
 						setTimeout(function () {
 							$("#login_form").addClass('shake_effect')
