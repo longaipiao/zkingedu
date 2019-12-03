@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.107.120.48/zxpt?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://120.76.62.113/zxpt?useUnicode=true&characterEncoding=utf8
     username: root
-    password: 123456
+    password: jiajia
     type: com.alibaba.druid.pool.DruidDataSource
   #德鲁伊连接配置
     druid:
