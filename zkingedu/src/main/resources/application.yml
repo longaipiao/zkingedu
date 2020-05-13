@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://120.76.62.113/zxpt?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://120.76.62.113:3306/zxpt?useUnicode=true&characterEncoding=utf8
     username: root
     password: jiajia
     type: com.alibaba.druid.pool.DruidDataSource
